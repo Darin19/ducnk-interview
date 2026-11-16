@@ -1,0 +1,200 @@
+Thêm trường thông tin
+  Mở rộng khả năng quản lý dữ liệu: Cho phép người dùng bổ sung thêm các trường dữ liệu mới vào form/ticket/module hiện tại mà hệ thống chưa có sẵn.
+  Tăng tính linh hoạt: Đáp ứng nhu cầu nghiệp vụ thay đổi liên tục, tránh việc phải chỉnh sửa code hay cấu trúc DB mỗi lần phát sinh yêu cầu mới.
+  Tùy biến theo bối cảnh sử dụng: Người dùng có thể tự định nghĩa thông tin cần theo dõi (ví dụ: “Loại khách hàng”, “Mức độ ưu tiên”, “Kênh tiếp nhận”…).
+  Hỗ trợ báo cáo/analytics: Các trường dữ liệu bổ sung sẽ trở thành nguồn thông tin đầu vào cho thống kê, dashboard, KPI.
+  Cho phép tạo mới trường dữ liệu (text, số, ngày, dropdown…).
+  Gắn trường này vào màn hình đang xem (ví dụ: ticket, khách hàng, sản phẩm).
+  Quản lý hiển thị: bắt buộc/không bắt buộc, có thể tìm kiếm/lọc, có trong báo cáo hay không.
+  Đảm bảo tính toàn vẹn dữ liệu (validation, quyền truy cập).
+
+Quản lý template
+🎯 Mục đích của module
+Chuẩn hóa quy trình nhập liệu: Template giúp định nghĩa sẵn cấu trúc dữ liệu (các trường, định dạng, quy tắc) để người dùng không phải nhập thủ công mỗi lần.
+Tăng tính nhất quán: Đảm bảo mọi ticket/biểu mẫu được tạo ra theo cùng một chuẩn, tránh sai lệch thông tin.
+Tiết kiệm thời gian: Người dùng có thể chọn template phù hợp thay vì tạo mới từ đầu.
+Hỗ trợ đa dạng nghiệp vụ: Mỗi phòng ban hoặc loại yêu cầu có thể có template riêng (ví dụ: “Ticket sự cố kỹ thuật”, “Ticket yêu cầu hỗ trợ CSKH”).
+🔎 Phân tích chức năng dưới góc nhìn BA
+Người dùng mục tiêu
+Quản trị hệ thống (admin) → tạo, chỉnh sửa, xóa template.
+Nhân viên vận hành/CSKH → sử dụng template để tạo ticket nhanh chóng.
+Nhu cầu nghiệp vụ
+Doanh nghiệp có nhiều loại yêu cầu khác nhau, mỗi loại cần thông tin khác nhau.
+Nếu không có template, nhân viên phải nhập tay hoặc nhớ các trường cần thiết → dễ sai sót.
+Cần một cơ chế quản lý tập trung để cập nhật khi quy trình thay đổi.
+Chức năng chính của module
+Tạo mới template: định nghĩa tên, mô tả, các trường dữ liệu (text, số, ngày, dropdown…).
+Quản lý danh sách template: xem, tìm kiếm, phân loại, kích hoạt/vô hiệu hóa.
+Chỉnh sửa template: thêm/bớt trường, thay đổi quy tắc nhập liệu.
+Phân quyền sử dụng: ai được phép tạo/áp dụng template nào.
+Áp dụng template: khi tạo ticket, người dùng chọn template để hệ thống tự sinh form.
+Lợi ích
+Giảm lỗi nhập liệu, tăng tốc độ xử lý.
+Dễ dàng mở rộng khi có quy trình mới.
+Đảm bảo dữ liệu đầu vào chuẩn hóa, phục vụ báo cáo và phân tích.
+Tăng khả năng kiểm soát và quản trị hệ thống.
+
+Quyền sửa (Edit Permission)
+Cho phép người dùng chỉnh sửa nội dung template (thêm/bớt trường, thay đổi cấu trúc, cập nhật mô tả).
+Đối tượng: thường dành cho Admin hoặc người quản lý nghiệp vụ.
+Mục đích: đảm bảo template luôn phù hợp với quy trình, nhưng tránh việc ai cũng có thể thay đổi gây mất kiểm soát.
+Quyền duyệt (Approval Permission)
+Cho phép người dùng xác nhận và phê duyệt template trước khi được áp dụng chính thức.
+Đối tượng: Quản lý cấp cao hoặc người chịu trách nhiệm quy trình.
+Mục đích: tạo cơ chế kiểm soát, tránh việc template chưa đạt chuẩn đã được đưa vào sử dụng.
+Quyền duyệt gia hạn (Extension Approval Permission)
+Cho phép phê duyệt việc gia hạn thời gian sử dụng template (ví dụ: template chỉ có hiệu lực trong một giai đoạn, cần gia hạn thêm).
+Đối tượng: Admin hoặc quản lý có quyền quyết định vòng đời template.
+Mục đích: đảm bảo template không bị dùng quá hạn hoặc ngoài phạm vi cho phép, đồng thời có cơ chế kiểm soát vòng đời.
+📊 Ý nghĩa nghiệp vụ
+Phân tách vai trò rõ ràng: Người tạo/sửa không đồng thời là người duyệt → giảm rủi ro sai sót.
+Đảm bảo tính kiểm soát: Mọi thay đổi đều phải qua bước phê duyệt, tránh việc template bị chỉnh sửa tùy tiện.
+Quản lý vòng đời template: Có thể thiết lập thời gian hiệu lực, gia hạn khi cần, giúp hệ thống luôn cập nhật theo quy trình thực tế.
+Tuân thủ quy định nội bộ: Đặc biệt quan trọng trong các doanh nghiệp lớn, nơi dữ liệu và quy trình phải được kiểm soát chặt chẽ.
+
+Quản lý luồng xử lý
+quy định cách một ticket được xử lý từ khi phát sinh đến khi kết thúc.
+
+Chuẩn hóa quy trình xử lý ticket: Đảm bảo mọi ticket đều đi qua các bước xử lý nhất định (ví dụ: Tiếp nhận → Phân loại → Xử lý → Duyệt → Đóng).
+Tăng tính minh bạch: Người dùng và quản trị có thể theo dõi trạng thái ticket ở từng bước.
+Tối ưu SLA (Service Level Agreement): Gắn thời gian xử lý cho từng bước để đảm bảo cam kết dịch vụ.
+Phân quyền rõ ràng: Mỗi bước có thể gắn với nhóm/phòng ban khác nhau, tránh chồng chéo trách nhiệm.
+⚙️ Các chức năng chính
+Thiết lập các bước xử lý (workflow steps)
+Định nghĩa các trạng thái ticket (ví dụ: “Chờ tiếp nhận”, “Đang xử lý”, “Chờ duyệt”, “Hoàn tất”).
+Quy định điều kiện chuyển bước (ví dụ: chỉ khi có đầy đủ thông tin mới chuyển sang bước xử lý).
+Gán SLA cho từng bước
+Mỗi bước có thời gian xử lý tối đa.
+Hệ thống cảnh báo khi vượt SLA.
+Phân quyền theo bước
+Ai được phép xử lý, ai được phép duyệt, ai được phép gia hạn.
+Đảm bảo kiểm soát và trách nhiệm rõ ràng.
+Theo dõi tiến trình
+Hiển thị trạng thái hiện tại của ticket.
+Ghi nhận lịch sử xử lý để phục vụ báo cáo.
+⏱ Tổng SLA là gì?
+SLA (Service Level Agreement): Cam kết về thời gian xử lý ticket.
+Tổng SLA: Là tổng thời gian cam kết xử lý toàn bộ ticket từ khi tiếp nhận đến khi hoàn tất.
+Được tính bằng tổng thời gian SLA của từng bước trong luồng xử lý.
+Ví dụ:
+Tiếp nhận: 2h
+Phân loại: 1h
+Xử lý: 4h
+Duyệt: 2h → Tổng SLA = 9h
+Ý nghĩa:
+Giúp doanh nghiệp đo lường hiệu quả dịch vụ.
+Là cơ sở để đánh giá mức độ tuân thủ cam kết với khách hàng.
+Hỗ trợ báo cáo KPI cho từng bộ phận.
+
+📊 Ý nghĩa của Select box Giá trị trong luồng xử lý Ticket
+Select box Giá trị thường là trường cho phép người dùng chọn một giá trị định sẵn trong danh sách (dropdown).
+Mục đích: 
+Chuẩn hóa dữ liệu nhập: tránh việc nhập tự do gây sai lệch.
+Phân loại ticket: mỗi giá trị có thể gắn với một nhánh xử lý khác nhau (ví dụ: “Khiếu nại”, “Yêu cầu hỗ trợ”, “Phản ánh dịch vụ”).
+Kích hoạt logic xử lý: hệ thống có thể dựa vào giá trị được chọn để áp dụng SLA, phân quyền, hoặc chuyển ticket sang đúng luồng.
+Ý nghĩa nghiệp vụ: giúp đảm bảo tính nhất quán, dễ báo cáo, và tự động hóa quy trình.
+
+🔎 So sánh Thiết lập SLA với Thiết lập luồng + SLA
+Thiết lập SLA (đơn lẻ)
+Chỉ định nghĩa thời gian cam kết xử lý cho một ticket hoặc một bước.
+Không gắn với quy trình chi tiết, chỉ là “deadline” cho xử lý.
+Ví dụ: Ticket phải được xử lý trong vòng 48h.
+Thiết lập luồng + SLA
+Vừa định nghĩa quy trình xử lý (workflow) gồm nhiều bước, vừa gắn SLA cho từng bước.
+Cho phép tính Tổng SLA = cộng dồn thời gian của tất cả bước.
+Ví dụ: 
+Bước 1: Tiếp nhận (2h)
+Bước 2: Xử lý (4h)
+Bước 3: Duyệt (2h)→ Tổng SLA = 8h.
+Ý nghĩa: kiểm soát chi tiết hơn, giúp quản lý SLA theo từng giai đoạn thay vì chỉ tổng thể.
+
+📌 Kết luận
+Select box Giá trị: là công cụ để chuẩn hóa và phân loại ticket, đảm bảo dữ liệu nhất quán và kích hoạt đúng luồng xử lý.
+Thiết lập SLA: chỉ đặt thời gian xử lý tổng thể.
+Thiết lập luồng + SLA: vừa có quy trình chi tiết, vừa kiểm soát SLA ở từng bước → linh hoạt và chính xác hơn trong quản trị dịch vụ.
+👉 Bạn có muốn mình minh họa bằng sơ đồ so sánh trực quan giữa “SLA đơn lẻ” và “Luồng + SLA” để dễ hình dung sự khác biệt không?
+
+Thiết lập email
+Quản lý ticket
+🔎 Ai là người được phép chọn “Theo luồng thiết lập mặc định / Không theo luồng thiết lập sẵn”?
+Trong module CRM Ticket, quyền chọn này không dành cho tất cả người dùng, mà phụ thuộc vào phân quyền hệ thống. Dưới góc nhìn BA, có thể phân tích như sau:
+
+👥 Nhóm người dùng liên quan
+Người tạo ticket (End-user/CSKH/nhân viên vận hành)
+Thông thường chỉ được phép chọn luồng mặc định để đảm bảo ticket đi theo quy trình chuẩn.
+Mục tiêu: tránh sai lệch, đảm bảo dữ liệu nhất quán.
+Quản trị viên (Admin) hoặc Người quản lý nghiệp vụ
+Có quyền chọn Không theo luồng thiết lập sẵn.
+Đây là quyền đặc biệt để xử lý ngoại lệ hoặc tình huống đặc thù (ví dụ: ticket khẩn cấp, không cần qua đủ bước duyệt).
+Họ cũng có thể chỉnh sửa hoặc tạo luồng mới.
+Người duyệt (Approver)
+Trong một số hệ thống, người duyệt có thể quyết định ticket có đi theo luồng chuẩn hay được xử lý ngoại lệ.
+Điều này thường gắn với quyền “Quyền duyệt” hoặc “Quyền duyệt gia hạn”.
+
+📌 Ý nghĩa nghiệp vụ
+Phân quyền rõ ràng: Không phải ai cũng được phép bỏ qua luồng mặc định.
+Kiểm soát ngoại lệ: Chỉ những người có thẩm quyền mới được xử lý ticket ngoài quy trình chuẩn.
+Đảm bảo SLA: Nếu chọn “Không theo luồng sẵn”, SLA phải được thiết lập thủ công để vẫn đảm bảo cam kết dịch vụ.
+Minh bạch trách nhiệm: Hệ thống ghi nhận ai đã chọn, để phục vụ báo cáo và kiểm soát.
+
+👉 Tóm lại: Người tạo ticket thông thường chỉ chọn luồng mặc định. Quyền chọn “Không theo luồng thiết lập sẵn” thường dành cho Admin hoặc quản lý có thẩm quyền, nhằm xử lý các trường hợp đặc biệt ngoài quy trình chuẩn.
+Bạn có muốn mình mô tả thêm luồng phân quyền chi tiết (ai được chọn, ai được duyệt, ai được giám sát) để thấy rõ cơ chế kiểm soát trong CRM Ticket không?
+
+Trong màn hình CRM Ticket, phần “Xem luồng xử lý chi tiết” được thiết kế như một bản đồ tiến trình để bạn nắm rõ toàn bộ hành trình xử lý của một ticket. Các tính năng chính có vai trò như sau:
+
+📑 Danh sách mức xử lý
+Ý nghĩa: Hiển thị toàn bộ các bước xử lý đã được định nghĩa trong quy trình.
+Thông tin thường có: 
+Thứ tự bước (STT)
+Nội dung công việc cần thực hiện
+Đơn vị/Phòng ban chịu trách nhiệm
+Người xử lý cụ thể
+SLA (thời gian cam kết)
+Thời gian thực tế xử lý
+Trạng thái (Tạo mới, Đang xử lý, Hoàn thành…)
+Giá trị: Giúp kiểm soát tiến độ, so sánh giữa SLA và thực tế, phát hiện điểm nghẽn.
+
+🏢 Đơn vị phối hợp
+Ý nghĩa: Liệt kê các phòng ban/đơn vị khác tham gia hỗ trợ xử lý ticket.
+Vai trò: 
+Minh bạch trách nhiệm giữa nhiều bên.
+Đảm bảo ticket phức tạp được giải quyết đúng chuyên môn.
+Giá trị: Giúp quản lý dễ dàng theo dõi ai đang cùng tham gia, tránh bỏ sót.
+
+💬 Ý kiến trao đổi
+Ý nghĩa: Ghi nhận toàn bộ trao đổi nội bộ hoặc với khách hàng liên quan đến ticket.
+Nội dung thường có: 
+Phản hồi của các bên
+Đề xuất phương án xử lý
+Cập nhật tình hình tiến độ
+Giá trị: Tạo thành nhật ký thảo luận, giúp tra cứu lại dễ dàng và minh bạch.
+
+📜 Lịch sử tác động
+Ý nghĩa: Nhật ký ghi lại mọi hành động trên ticket.
+Thông tin thường có: 
+Ai đã tạo, chỉnh sửa, chuyển trạng thái
+Thời điểm thực hiện
+Nội dung thay đổi
+Giá trị: Cho phép kiểm soát, truy vết khi cần kiểm tra lại quá trình xử lý.
+
+👉 Có thể hình dung bốn phần này như một chuỗi liên kết:
+Danh sách mức xử lý là khung quy trình.
+Đơn vị phối hợp là các bên tham gia.
+Ý kiến trao đổi là kênh thông tin xuyên suốt.
+Lịch sử tác động là nhật ký để kiểm chứng.
+Bạn có muốn tôi dựng một sơ đồ luồng trực quan (flowchart) mô tả mối quan hệ giữa 4 phần này để dễ hình dung hơn không?
+
+Đúng rồi, bạn quan sát rất chính xác. Module Quản lý Task trong CRM thường không chỉ phục vụ cho việc chăm sóc khách hàng, mà thực chất là một công cụ quản lý công việc nội bộ gắn liền với các ticket.
+🎯 Chức năng chính của module Quản lý Task
+Phân công công việc: Cho phép tạo task từ ticket hoặc độc lập, gán cho cá nhân/phòng ban cụ thể.
+Theo dõi tiến độ: Mỗi task có trạng thái (mới, đang xử lý, hoàn thành), thời hạn (deadline), và SLA để kiểm soát tiến độ.
+Quản lý phối hợp: Task có thể liên kết với nhiều đơn vị phối hợp, đảm bảo các bộ phận cùng tham gia xử lý.
+Trao đổi & cập nhật: Tích hợp phần “Ý kiến trao đổi” để ghi nhận thảo luận, phản hồi, hoặc cập nhật tình hình.
+Lịch sử tác động: Lưu lại toàn bộ thao tác trên task (tạo, chỉnh sửa, chuyển trạng thái…), giúp truy vết khi cần kiểm tra.
+Liên kết với Ticket CRM: Task thường được sinh ra từ ticket, nhưng bản chất là quản lý công việc để giải quyết yêu cầu khách hàng.
+📌 Nhận xét
+Về mặt chức năng, Quản lý Task giống một module quản lý công việc (task management) hơn là CRM thuần túy.
+Tuy nhiên, trong bối cảnh CRM, nó đóng vai trò cầu nối: từ phản ánh của khách hàng (ticket) → chuyển thành công việc cụ thể (task) → theo dõi xử lý đến khi hoàn tất.
+Nhờ vậy, CRM không chỉ dừng ở việc ghi nhận thông tin khách hàng, mà còn đảm bảo hành động xử lý nội bộ được quản lý chặt chẽ.
+👉 Có thể hình dung: Ticket = yêu cầu của khách hàng, còn Task = công việc nội bộ để giải quyết yêu cầu đó.
+Bạn có muốn tôi so sánh nhanh giữa Task Management trong CRM và các công cụ quản lý công việc độc lập (như Trello, Jira, Asana) để thấy sự khác biệt rõ hơn không?

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "01-knowledge-rag",
+    "title": "01 / Hệ tri thức và RAG có phân quyền",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\01-knowledge-rag.drawio",
+    "nodes": 12,
+    "edges": 11
+  },
+  {
+    "name": "02-agent-workflow",
+    "title": "02 / AI Copilot: tri thức, công cụ và workflow",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\02-agent-workflow.drawio",
+    "nodes": 12,
+    "edges": 12
+  },
+  {
+    "name": "03-ai-training-feedback",
+    "title": "03 / Dữ liệu → training → đánh giá → cải tiến",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\03-ai-training-feedback.drawio",
+    "nodes": 12,
+    "edges": 11
+  },
+  {
+    "name": "04-smart-safe-vision",
+    "title": "04 / Smart Safe: AI Camera và sự cố IoT",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\04-smart-safe-vision.drawio",
+    "nodes": 12,
+    "edges": 10
+  },
+  {
+    "name": "05-document-ai-rpa",
+    "title": "05 / Document AI → review → RPA",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\05-document-ai-rpa.drawio",
+    "nodes": 12,
+    "edges": 12
+  },
+  {
+    "name": "06-smart-factory-azure",
+    "title": "06 / Smart Factory + Machine Learning trên Azure",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\06-smart-factory-azure.drawio",
+    "nodes": 16,
+    "edges": 14
+  },
+  {
+    "name": "07-ai-data-hub",
+    "title": "07 / AI Data Hub: governance và MLOps",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\07-ai-data-hub.drawio",
+    "nodes": 12,
+    "edges": 11
+  },
+  {
+    "name": "08-vinuni-robot-platform",
+    "title": "08 / Đội robot an ninh VinUni: kiến trúc tham chiếu",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\08-vinuni-robot-platform.drawio",
+    "nodes": 16,
+    "edges": 15
+  },
+  {
+    "name": "09-vinuni-mission-flow",
+    "title": "09 / Event → mission → evidence → người xác minh",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\09-vinuni-mission-flow.drawio",
+    "nodes": 12,
+    "edges": 11
+  },
+  {
+    "name": "10-robot-evaluation-release",
+    "title": "10 / Data factory và cổng phát hành robot AI",
+    "path": "C:\\Users\\nguye\\OneDrive\\Desktop\\Phỏng vấn VinDynamics\\Sơ đồ kiến trúc\\10-robot-evaluation-release.drawio",
+    "nodes": 12,
+    "edges": 11
+  }
+]

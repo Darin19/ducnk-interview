@@ -1,0 +1,13 @@
+https://vindynamics.net/vi/career/senior-business-analyst-001114.html
+
+- Cổng một cửa đầu tư quốc gia (Hệ tri thức & Trợ lý AI hỏi đáp)
+- CSDL về xử lý vi phạm hành chính (AI Copilot hướng dẫn người dùng thao tác từng bước, ở từng luồng cụ thể, hỏi đáp về cách xử lý từng công việc theo thẩm quyền, căn cứ pháp lý...)
+
+- Smart Safe => Camera AI
+- HRAI => AI cho human resource
+- Tori AI của TechcomBank => JD_TechcomBank.pdf (BA + QC)
+- mChat 
+- RPA & OCR (có kết hợp dùng VLM)
+- Omnichannel CDP & CXP; CRM (AI? - chỉ cần 1 usecase)
+- AI Data Hub (AI?)
+- Samsung Smart Factory (2 usecases áp dụng Machine Learning)

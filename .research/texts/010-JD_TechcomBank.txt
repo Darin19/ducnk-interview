@@ -1,0 +1,71 @@
+
+--- PAGE 1 ---
+	
+TCB Internal Document 
+Business	Analyst	&	QA	
+Job	Description	·	Hanoi,	Vietnam	·	Full-time	
+	
+Job	Purpose	
+• The	job	holder	is	responsible	for	executing	the	build-test-verify	cycle	of	the	company's	AI	assistant	
+platform,	with	emphasis	on	iterative	configuration,	optimization,	and	quality	assurance	across	
+multiple	business	domains.	
+• The	job	holder	works	within	a	value	chain	of	Research	→	Requirement	→	Build	→	UAT	→	Production	
+Verification,	primarily	owning	the	Build	and	Test	phases	while	supporting	Requirement	refinement.	
+• The	job	holder	combines	business	analysis	skills	with	hands-on	testing	discipline,	ensuring	AI	
+features	are	configured	optimally	through	repeated	iteration,	validated	thoroughly	before	release,	
+and	verified	in	production	to	maintain	quality	standards.	
+Key	Accountabilities	(1)	
+Build	—	Document	Processing,	Configuration	&	Optimization	
+• Manage	the	end-to-end	document	lifecycle:	collection,	processing,	quality	assurance,	and	ingestion	
+into	the	AI	platform.	
+• Execute	iterative	configuration	and	optimization	cycles	—	systematically	testing,	measuring,	and	
+refining	until	quality	targets	are	met.	
+• Maintain	golden	test	sets	and	track	quality	scores	across	iterations	to	ensure	measurable	
+improvement	and	prevent	regression.	
+• Document	configuration	decisions	and	lessons	learned	as	reusable	institutional	knowledge.	
+• Collaborate	with	the	engineering	team	to	troubleshoot	issues	and	escalate	problems	that	require	
+technical	intervention.	
+Key	Accountabilities	(2)	
+Test	UAT	&	Production	Verification	
+• Design	and	execute	comprehensive	test	plans	covering	functional	flows,	edge	cases,	and	real-world	
+user	scenarios.	
+• Perform	end-to-end	user	acceptance	testing	with	structured	documentation	of	results,	defects,	and	
+severity	classification.	
+• Validate	AI	outputs	against	business	rules	and	domain	accuracy	standards.	
+• Conduct	regression	testing	and	production	verification	to	ensure	no	degradation	after	changes	or	
+deployments.	
+• Track	and	report	quality	metrics	over	time,	flagging	trends,	regressions,	and	anomalies	for	action.	
+
+--- PAGE 2 ---
+	
+TCB Internal Document 
+Key	Accountabilities	(3)	
+Requirement	Support	&	Knowledge	Base	Management	
+• Refine	and	validate	requirements	by	identifying	gaps,	ambiguities,	and	edge	cases	through	hands-on	
+testing	experience.	
+• Continuously	surface	pain	points	and	improvement	opportunities	discovered	during	testing	cycles.	
+• Maintain	and	curate	knowledge	base	content	across	multiple	business	domains,	ensuring	accuracy	
+and	readiness	for	AI	consumption.	
+• Translate	requirements	and	acceptance	criteria	into	structured	test	cases	and	validation	checklists.	
+Key	Relationships	
+Relationship	 Details	
+Internal	Stakeholders	 AI	Engineering	team,	Data	Science,	Business	 domain	experts,	and	relevant	departments	
+External	Stakeholders	 Insurance	agents	(end	users),	partners	providing	 professional	services	
+	
+Success	Profile	—	Qualifications	and	Experiences	
+Qualifications	
+• Bachelor's	degree	in	a	technical	or	business	management	discipline	(Computer	Science,	Information	
+Technology,	Business	Administration,	or	related	field)	
+Work	Experience	
+• At	least	2	years	of	relevant	experience	in	software	testing/QA,	business	analysis,	or	product	
+operations;	QA/tester	background	is	strongly	preferred	
+• Extensive	experience	in	manual	testing	—	designing	test	plans,	executing	test	scenarios,	
+documenting	defects,	and	tracking	quality	metrics	
+• Experience	in	iterative	configuration	and	optimization	of	software	products	—	comfortable	with	
+repetitive	build-test-evaluate-adjust	cycles	
+• Experience	in	Agile	Product	Development	with	understanding	of	Agile	principles	and	Scrum	
+methodologies	
+• Strong	attention	to	detail	and	methodical	discipline	—	able	to	execute	repetitive	tasks	consistently	
+without	losing	focus	
+• Strong	written	communication	—	able	to	produce	clear	documentation	and	structured	observations	
+• English	proficiency	requirements	are	pursuant	to	company	policy	

@@ -1,0 +1,60 @@
+
+--- PAGE 1 ---
+DanhTV1 - Giá trị làm lợi phần mềm
+Tính giá trị làm lợi khi ứng dụng phần mềm chat đa kênh
+Tôi sẽ tính theo hướng “giá trị làm lợi” để đưa vào báo cáo/đề xuất: gồm tiết kiệm chi phí vận hành, tăng
+doanh thu nhờ không bỏ lỡ khách, tăng năng suất CSKH và giảm rủi ro sai sót.
+Có thể tính giá trị làm lợi khi ứng dụng phần mềm chat đa kênh theo công thức tổng quát:
+Giá trị làm lợi/năm = Lợi nhuận tăng thêm + Chi phí tiết kiệm được + Chi phí/rủi ro tránh
+được - Chi phí đầu tư/vận hành phần mềm
+1. Các nhóm giá trị làm lợi chính
+Nhóm làm lợi Cách tính
+Tăng doanh thu do không bỏ lỡ
+khách hàng
+Số hội thoại/năm × tỷ lệ chuyển đổi tăng thêm × giá trị đơn hàng TB ×
+biên lợi nhuận
+Tiết kiệm nhân sự CSKH/bán hàng Số giờ xử lý tiết kiệm × chi phí nhân sự/giờ
+Giảm thời gian xử lý hội thoại Số hội thoại × số phút tiết kiệm/hội thoại × chi phí nhân sự/phút
+Tự động hóa trả lời câu hỏi lặp lại Số hội thoại chatbot/auto-reply xử lý × chi phí xử lý thủ công/hội thoại
+Giảm thất thoát dữ liệu khách hàng Số lead giữ lại × tỷ lệ mua hàng × lợi nhuận/đơn
+Giảm sai sót, khiếu nại, trễ phản hồi Ước tính chi phí phát sinh trước đây × tỷ lệ giảm sau triển khai
+2. Ví dụ tính minh họa
+Giả định hệ thống chat đa kênh gom các kênh như Facebook, Zalo, Website, App, Hotline, sàn TMĐT về
+một nền tảng xử lý tập trung.
+Chỉ tiêu giả định Giá trị
+Số hội thoại khách hàng/tháng 50.000
+Số hội thoại/năm 600.000
+Giá trị đơn hàng trung bình 1.500.000 đ
+Biên lợi nhuận gộp ước tính 8%
+Tỷ lệ chuyển đổi tăng thêm nhờ phản hồi nhanh hơn 0,5%
+Thời gian tiết kiệm mỗi hội thoại 1,5 phút
+Chi phí nhân sự CSKH bình quân 60.000 đ/giờ
+Chi phí phần mềm/năm 300.000.000 đ
+A. Lợi nhuận tăng thêm từ doanh thu
+Số đơn hàng tăng thêm:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/2
+
+--- PAGE 2 ---
+600.000 × 0,5% = 3.000 đơn/năm
+Doanh thu tăng thêm:
+3.000 × 1.500.000 = 4.500.000.000 đ/năm
+Lợi nhuận gộp tăng thêm:
+4.500.000.000 × 8% = 360.000.000 đ/năm
+B. Tiết kiệm chi phí nhân sự xử lý chat
+Tổng thời gian tiết kiệm:
+600.000 × 1,5 phút = 900.000 phút = 15.000 giờ/năm
+Chi phí nhân sự tiết kiệm:
+15.000 × 60.000 = 900.000.000 đ/năm
+C. Giá trị làm lợi trước chi phí
+360.000.000 + 900.000.000 = 1.260.000.000 đ/năm
+D. Giá trị làm lợi ròng sau khi trừ chi phí phần mềm
+1.260.000.000 - 300.000.000 = 960.000.000 đ/năm
+3. Kết luận đưa vào báo cáo
+Việc ứng dụng phần mềm chat đa kênh giúp tập trung toàn bộ tương tác khách hàng trên một nền tảng,
+giảm tình trạng bỏ sót tin nhắn, tăng tốc độ phản hồi, nâng cao tỷ lệ chuyển đổi và tối ưu năng suất
+nhân sự CSKH/bán hàng. Với giả định quy mô khoảng 600.000 hội thoại/năm, giá trị làm lợi ước tính có
+thể đạt khoảng 1,26 tỷ đồng/năm, sau khi trừ chi phí phần mềm còn khoảng 960 triệu đồng/năm.
+Ngoài lợi ích định lượng, hệ thống còn tạo ra các giá trị gián tiếp như: chuẩn hóa quy trình chăm sóc
+khách hàng, lưu trữ lịch sử trao đổi tập trung, hỗ trợ đánh giá chất lượng nhân viên, phân tích nhu cầu
+khách hàng và tạo nền tảng tích hợp CRM/CDP, chatbot AI, automation trong giai đoạn tiếp theo.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/2

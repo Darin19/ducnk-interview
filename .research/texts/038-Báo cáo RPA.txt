@@ -1,0 +1,195 @@
+Tiềm năng của RPA tại Viettel Commerce
+
+RPA là gì
+RPA (Robotic Process Automation) là công nghệ dùng bot phần mềm để thực hiện các thao tác lặp lại giống người dùng trên hệ thống (mở ứng dụng, đăng nhập, điền form, copy-paste, tải/lưu file...).RPA phù hợp với quy trình dựa trên luật, giúp giảm nhập liệu thủ công và tăng tốc xử lý.
+
+OCR là gì
+OCR (Optical Character Recognition) là công nghệ nhận dạng ký tự từ ảnh/scan/PDF để chuyển thành dữ liệu số.Khi kết hợp IDP (Intelligent Document Processing), OCR có thể phân loại chứng từ và trích xuất thông tin (trường, bảng), phục vụ kiểm tra/đối soát và tự động nhập hệ thống.
+
+👉 Lợi ích chung khi áp dụng RPA + OCR
+• Tiết kiệm thời gian làm việc: giảm thao tác nhập liệu, copy-paste, tra cứu lặp lại.
+• Tối ưu nhân lực: bot xử lý phần việc lặp lại, nhân sự tập trung vào nghiệp vụ và ngoại lệ.
+• Rút ngắn thời gian quy trình (cycle time): tạo hồ sơ nhanh hơn, giảm vòng sửa và chờ phê duyệt.
+• Giảm sai sót và tăng tuân thủ: kiểm tra chéo theo rule, lưu log/audit trail rõ ràng.
+• Tiết kiệm chi phí vận hành: giảm OT, giảm chi phí do sai sót/chậm trễ (phí phát sinh, sửa hồ sơ).
+• Minh bạch dữ liệu & báo cáo: dữ liệu chuẩn hoá, cập nhật realtime (Google Sheet/dashboard).
+
+
+
+1) Trung tâm Xuất nhập khẩu 
+UC1: OCR bộ chứng từ xuất nhập khẩu & RPA Tự động lập form & hồ sơ khai báo hải quan
+🎯 Mục tiêu: từ bộ chứng từ (Invoice/PL/BL/C/O…) → tự động tạo draft tờ khai gần như đầy đủ, nhân viên chỉ review + bấm submit.
+OCR thực thi các bước:
+Nhận file từ email/folder → phân loại chứng từ → trích xuất trường: người bán/mua, invoice no/date, mô tả hàng, số lượng, trị giá, gross/net, incoterms…
+Chuẩn hoá định dạng (ngày, tiền tệ, UOM), gộp line-items.
+RPA thực thi các bước:
+Mapping sang form khai (theo chuẩn DN) → điền tự động trên phần mềm/hệ thống khai → lưu bản nháp.
+Tạo checklist thiếu chứng từ/trường bắt buộc và báo lại.
+Validate nhanh
+“Confidence gating”: trường nào độ tin cậy thấp → highlight để người dùng sửa.
+Rule kiểm tra chéo: total = sum(line), weight hợp lý, incoterms trong danh sách…
+Lợi ích
+Giảm mạnh thời gian nhập liệu và lỗi gõ tay.
+Chuẩn hoá dữ liệu tờ khai ngay từ đầu → giảm sửa/huỷ tờ khai.
+Bối cảnh hệ thống khai VN thường gắn với VNACCS/VCIS; quy trình khai điện tử có các bước tạo tờ khai/nhập thông tin/gửi/nhận phản hồi… nên “draft rồi submit” là mô hình rất hợp. 
+
+UC2 – Đẩy dữ liệu sang Google Sheet (bảng theo dõi lô hàng / tờ khai / chứng từ)
+🎯 Mục tiêu: mọi dữ liệu trích xuất & trạng thái bot được đồng bộ sang Google Sheet để các nhóm cùng theo dõi.
+OCR thực thi các bước
+Không đổi nhiều: dùng output chuẩn hoá (JSON/CSV).
+RPA thực thi các bước
+Gọi Google Sheets API để append/update dòng theo khóa (Shipment/BL/Invoice/Declaration No).
+Append dòng mới
+Update khi có trạng thái mới
+Tổng quan Sheets API (read/write/format)
+Validate nhanh
+Cột “Needs review” + link mở màn hình validation / link chứng từ gốc.
+Lợi ích
+Không cần người “copy–paste” thủ công; dữ liệu đồng nhất, realtime cho báo cáo.
+
+UC3 – Tra cứu HS code “được cập nhật trên web hải quan” + so sánh HS trong file vs web
+🎯 Mục tiêu: giảm rủi ro khai sai HS (dẫn tới sai thuế/kiểm tra sau thông quan).
+OCR thực thi các bước
+Trích HS code (nếu có) và mô tả hàng từ Invoice/PL/Contract.
+Chuẩn hoá HS 8 số/10 số, loại bỏ ký tự lạ.
+RPA thực thi các bước
+Tự động tra cứu biểu thuế/HS trên các cổng tra cứu của Hải quan (tùy nguồn DN cho phép dùng). Ví dụ một trang tra cứu biểu thuế–mã HS trên cổng hải quan địa phương.
+So khớp:
+HS trong chứng từ vs HS tra cứu theo mô tả
+Thuế suất/ghi chú/chú giải (nếu lấy được)
+Validate nhanh
+Nếu mismatch → hiện “gợi ý HS” + top 3 kết quả + lý do (match theo keyword mô tả).
+Bắt buộc người dùng chọn/confirm HS trước khi bot điền tờ khai.
+Lợi ích
+Giảm lỗi HS → giảm vòng sửa tờ khai, giảm rủi ro truy thu/phạt.
+
+UC4 – “Quét biểu thuế XNK (PDF/Word)” → tạo danh mục tra cứu nội bộ + so sánh/tổng hợp danh sách
+🎯 Mục tiêu: khi có tài liệu biểu thuế/điều chỉnh (PDF scan), hệ thống tự tạo bảng tra cứu nội bộ (HS–thuế–ghi chú) để đối soát.
+OCR thực thi các bước:
+OCR PDF/scan biểu thuế → trích bảng (HS, mô tả, thuế suất, điều kiện…).
+Chuẩn hoá cấu trúc theo HS level (Chương/Nhóm/Phân nhóm).
+RPA thực thi các bước: 
+Đưa vào DB/Sheet nội bộ, versioning theo “ngày hiệu lực”.
+Tự chạy job so sánh “version mới vs version cũ” → xuất danh sách HS thay đổi.
+Validate nhanh
+Spot-check theo sampling: các dòng OCR confidence thấp bắt buộc review.
+Lợi ích
+Giảm thời gian “đọc biểu thuế & gõ lại”, dễ làm báo cáo thay đổi thuế.
+
+UC5 – Đối soát chứng từ trước khai báo (Contract – Invoice – PL – BL – tờ khai)
+🎯 Mục tiêu: phát hiện lệch qty/value/weight/incoterms sớm, trước khi truyền tờ khai.
+OCR thực thi các bước:
+Trích dữ liệu chuẩn hoá từ mỗi chứng từ.
+RPA thực thi các bước:
+Chạy engine đối soát rule-based:
+Invoice total = sum lines
+Invoice qty vs PL qty
+BL container vs chứng từ…
+Xuất “bảng chênh lệch” + tạo task cho người xử lý.
+Validate nhanh
+Màn hình 1 trang: hiển thị 4 chứng từ cạnh nhau + highlight lệch.
+Lợi ích
+Giảm back-and-forth giữa XNK–kho–kế toán; giảm lỗi khai.
+
+UC6 – Tự động tạo hồ sơ lưu trữ chứng từ & đặt tên file chuẩn (audit-ready)
+OCR nhận dạng loại chứng từ + số Invoice/BL → RPA gom theo lô, rename, tạo folder, checklist thiếu.
+Lợi ích: giảm thất lạc, giảm thời gian kiểm toán/nội kiểm.
+
+UC7 - Theo dõi trạng thái lô hàng & lịch tàu
+
+
+
+
+
+
+
+
+
+
+
+2) Khối Cơ Quan - Phòng Pháp chế Đầu tư 
+UC7 – OCR hợp đồng → nhập dữ liệu HĐ + mốc thanh toán
+OCR thực thi các bước:
+Trích: số HĐ, đối tác, giá trị, hiệu lực, điều khoản thanh toán, phụ lục, SLA/penalty (tuỳ scope).
+Với “mốc thanh toán” thường khó → trích nháp + bắt buộc review.
+RPA thực thi các bước:
+Tạo record HĐ trên hệ QLHĐ, upload file, tạo milestones, phân quyền.
+Validate nhanh
+UI review 1 trang: highlight các trường rủi ro (giá trị, hiệu lực, điều khoản phạt, thanh toán).
+Lợi ích
+Giảm thời gian nhập liệu hợp đồng, giảm sai sót khi tạo mốc thanh toán.
+
+UC8 – Đối soát nghiệm thu, hóa đơn, thanh toán thực tế ↔ kế hoạch hợp đồng
+OCR thực thi các bước:
+Trích giao dịch từ chứng từ thanh toán/sao kê (nếu chưa có dữ liệu số từ kế toán).
+RPA thực thi các bước:
+Match theo mã HĐ / đối tác / số tiền / cửa sổ ngày → cập nhật trạng thái: paid/partial/late/unmatched.
+Tự nhắc việc khi “sắp đến hạn” hoặc “quá hạn”.
+Validate nhanh
+Danh sách “unmatched” để kế toán/PCĐT gán đúng hợp đồng.
+Lợi ích
+Giảm bỏ sót công nợ, giảm đối soát thủ công cuối kỳ.
+
+Một số Usecase khác cho Phòng Pháp chế và Đầu tư
+🎯 OCR & tiếp nhận hồ sơ đề xuất đầu tư / mua sắm
+🎯 OCR & tổng hợp hồ sơ chào giá / hồ sơ thầu mua sắm
+🎯 Theo dõi tiến độ thực hiện gói mua sắm / dự án đầu tư
+🎯 Theo dõi vòng đời ký số/ký tay & nhắc việc tự động
+RPA theo dõi trạng thái ký (đã gửi/đã ký/đang chờ) → nhắc qua email/chat → cập nhật dashboard.
+Lợi ích: giảm “kẹt” ở bước ký, rút ngắn cycle time.
+🎯 Trích xuất & kiểm tra checklist tuân thủ (điều khoản bắt buộc)
+OCR/IDP dò có/không các điều khoản chuẩn (bảo mật, phạt vi phạm, nghiệm thu, tranh chấp…).
+RPA tạo báo cáo “thiếu điều khoản” trước khi trình ký.
+Lợi ích: giảm rủi ro pháp lý do thiếu clause.
+
+
+3) Trung tâm phân phối
+UC9 – OCR chứng từ kho (phiếu nhập/xuất, biên bản giao nhận) → cập nhật lên hệ thống/WMS/Sheet
+OCR thực thi các bước:
+Trích số phiếu, ngày, mã hàng, số lượng, serial/batch (nếu có), người giao/nhận.
+RPA thực thi các bước:
+Nhập vào WMS/ERP (hoặc đẩy Google Sheet), tạo biên nhận, lưu chứng từ.
+Validate nhanh
+Các dòng serial/batch OCR thấp → yêu cầu scan lại hoặc nhập tay.
+Lợi ích
+Giảm nhập liệu kho, giảm sai lệch tồn, tăng tốc nhận hàng/xuất hàng.
+
+
+
+UC10 – Đối soát PO/ASN/Invoice với thực nhập (3-way match)
+OCR thực thi các bước:
+Trích line-items từ Invoice/PO/ASN.
+RPA thực thi các bước:
+So sánh với GRN (goods receipt) → phát hiện thiếu/dư/thừa, sai giá, sai SKU → tạo case xử lý.
+Validate nhanh
+Màn hình lệch theo mức độ ưu tiên (giá trị lớn, lệch nhiều).
+Lợi ích
+Giảm thất thoát, giảm tranh chấp NCC, chốt công nợ nhanh.
+
+UC11  – Tự động xử lý yêu cầu đổi trả/bảo hành (RMA) từ giấy tờ/ảnh chụp
+OCR thực thi các bước:
+OCR phiếu bảo hành/biên bản, trích serial/IMEI, lý do, tình trạng.
+RPA thực thi các bước: 
+Tạo ticket RMA, cập nhật kho, điều phối vận chuyển nội bộ.
+Validate nhanh
+Serial/IMEI yêu cầu xác nhận 2 lớp (OCR + đối chiếu DB).
+Lợi ích
+Rút ngắn thời gian xử lý đổi trả, giảm lỗi sai serial, tăng trải nghiệm nội bộ/khách hàng.
+
+✔ Bảng tổng hợp Usecases:
+Trung tâm Xuất nhập Khẩu
+(1) Auto draft tờ khai + submit
+(2) Tạo bảng theo dõi lô hàng Google Sheet
+(3) HS tra cứu + mismatch alert
+(4) OCR biểu thuế → version compare
+(5) Đối soát chứng từ.
+(6) Tạo hồ sơ lưu trữ chứng từ tự động
+Khối Cơ Quan (P. PCĐT)
+(7) Nhập dữ liệu hợp đồng mốc thanh toán tự động
+(8) Đối soát thanh toàn thực tế với kế hoạch
++ Theo dõi vòng đời ký số/ký tay & nhắc việc tự động
++ Trích xuất & kiểm tra checklist tuân thủ (điều khoản bắt buộc)
+Trung tâm Phân phối
+(9) Nhập chứng từ kho tự động lên WMS, ERP
+(10) Đối soát PO/Invoice/ASN với thực nhập
+(11) Tự động xử lý yêu cầu đổi trả, bảo hành (RMA)

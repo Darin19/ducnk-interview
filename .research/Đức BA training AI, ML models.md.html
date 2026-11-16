@@ -1,0 +1,958 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><style>body{font:17px/1.65 Arial;color:#1f2937;max-width:1180px;margin:50px auto;padding:0 32px}h1{font-size:36px}h2{margin-top:56px;color:#123156}h3{margin-top:32px}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid #d1d5db;padding:10px;text-align:left;vertical-align:top}th{background:#eff6ff}img{max-width:100%;height:auto}pre{background:#f1f5f9;padding:20px;overflow:auto}blockquote{border-left:4px solid #3b82f6;padding:12px 22px;background:#f8fafc}a{color:#155eab}code{font-size:14px}</style><h1>Đức BA training AI, ML models</h1>
+<p>Tài liệu chuẩn bị phỏng vấn Senior Business Analyst tại VinDynamics · 16/11/2026.</p>
+<h2>Mục lục</h2>
+<ul>
+<li><a href="#1-c%C3%A1ch-s%E1%BB%AD-d%E1%BB%A5ng-v%C3%A0-m%E1%BB%A9c-%C4%91%E1%BB%99-x%C3%A1c-nh%E1%BA%ADn">1. Cách sử dụng và mức độ xác nhận</a></li>
+<li><a href="#2-training-ai-ngh%C4%A9a-l%C3%A0-g%C3%AC-trong-vai-tr%C3%B2-ba--qc">2. “Training AI” nghĩa là gì trong vai trò BA + QC?</a></li>
+<li><a href="#3-h%E1%BB%87-tri-th%E1%BB%A9c-v%C3%A0-ai-agent-chatbot-ki%E1%BA%BFn-tr%C3%BAc-tham-chi%E1%BA%BFu-d%C3%B9ng-chung">3. Hệ tri thức và AI Agent chatbot: kiến trúc tham chiếu dùng chung</a></li>
+<li><a href="#4-c%E1%BB%95ng-m%E1%BB%99t-c%E1%BB%ADa-%C4%91%E1%BA%A7u-t%C6%B0-qu%E1%BB%91c-gia">4. Cổng một cửa đầu tư quốc gia</a></li>
+<li><a href="#5-csdl-qu%E1%BB%91c-gia-v%E1%BB%81-x%E1%BB%AD-l%C3%BD-vi-ph%E1%BA%A1m-h%C3%A0nh-ch%C3%ADnh">5. CSDL quốc gia về xử lý vi phạm hành chính</a></li>
+<li><a href="#6-smart-safe-ai-camera-k%E1%BA%BFt-h%E1%BB%A3p-iot">6. Smart Safe: AI Camera kết hợp IoT</a></li>
+<li><a href="#7-hrai-one-ml-tr%C3%AAn-d%E1%BB%AF-li%E1%BB%87u-nh%C3%A2n-s%E1%BB%B1-v%C3%A0-llm-di%E1%BB%85n-gi%E1%BA%A3i">7. HRAI One: ML trên dữ liệu nhân sự và LLM diễn giải</a></li>
+<li><a href="#8-tori-ai-c%E1%BB%A7a-techcom-life--b%C3%A0i-m%C3%B4-ph%E1%BB%8Fng-ba--qc">8. Tori AI của Techcom Life — bài mô phỏng BA + QC</a></li>
+<li><a href="#9-mchat-conversational-ai-v%C3%A0-%C4%91i%E1%BB%81u-ph%E1%BB%91i-h%E1%BB%99i-tho%E1%BA%A1i">9. mChat: Conversational AI và điều phối hội thoại</a></li>
+<li><a href="#10-rpa--ocr-k%E1%BA%BFt-h%E1%BB%A3p-vlm">10. RPA &amp; OCR kết hợp VLM</a></li>
+<li><a href="#11-omnichannel-cdpcxp-v%C3%A0-crm--m%E1%BB%99t-use-case-ai">11. Omnichannel CDP/CXP và CRM — một use case AI</a></li>
+<li><a href="#12-samsung-ai-data-hub-qu%E1%BA%A3n-tr%E1%BB%8B-v%C3%B2ng-%C4%91%E1%BB%9Di-ai">12. Samsung AI Data Hub: quản trị vòng đời AI</a></li>
+<li><a href="#13-samsung-smart-factory--hai-use-case-machine-learning-tr%C3%AAn-azure">13. Samsung Smart Factory — hai use case Machine Learning trên Azure</a></li>
+<li><a href="#14-%C4%91%E1%BB%91i-chi%E1%BA%BFu-jd-vindynamics-v%C3%A0-chu%E1%BA%A9n-b%E1%BB%8B-b%E1%BA%A3o-v%E1%BB%87-kinh-nghi%E1%BB%87m">14. Đối chiếu JD VinDynamics và chuẩn bị bảo vệ kinh nghiệm</a></li>
+</ul>
+<h2>1. Cách sử dụng và mức độ xác nhận</h2>
+<p>Mục tiêu là trình bày Đức như một <strong>Technical BA kiêm QC tham gia xây dựng sản phẩm AI</strong>, có khả năng chuyển nghiệp vụ thành dữ liệu, hợp đồng tích hợp, bộ đánh giá và điều kiện phát hành. Tài liệu không lấy việc sử dụng Codex/Claude thành thạo làm bằng chứng thay thế kinh nghiệm làm sản phẩm AI.</p>
+<p>Ba nhãn được dùng xuyên suốt:</p>
+<ul>
+<li><strong>[HS] Hồ sơ:</strong> nội dung được CV hoặc tài liệu dự án mô tả; đây là kinh nghiệm tự khai trong hồ sơ, không phải kiểm chứng độc lập về triển khai production.</li>
+<li><strong>[TK] Thiết kế đề xuất:</strong> cách triển khai cụ thể được xây dựng để giải thích kiến thức và mở rộng use case. Tên công nghệ trong phần này không có nghĩa công ty cũ đã dùng công nghệ đó.</li>
+<li><strong>[MP] Mô phỏng:</strong> tình huống luyện phỏng vấn. Riêng <strong>Tori AI là dự án tham khảo, Đức xác nhận chưa tham gia</strong>; phần ngôi “tôi” ở mục 8 là bài đóng vai, không phải lịch sử làm việc.</li>
+</ul>
+<p>Các ngưỡng, số lượng test và cấu hình huấn luyện mang nhãn [TK]/[MP] là mục tiêu hoặc ví dụ để thảo luận với Tech Lead, không phải kết quả đã đạt. Không có benchmark nào được chạy để tạo tài liệu này.</p>
+<p>Một số PDF HRAI/OCR và tài liệu trong thư mục ChatGPT là nội dung hỏi đáp hoặc giáo trình. Ví dụ <em>1. Giới thiệu HRAI.pdf</em> mở đầu bằng giả định về Oracle, Python và Qwen; <em>AI Document Understanding End-To-End.docx</em> mô tả khóa học. Chúng hữu ích để thiết kế giải pháp nhưng không xác nhận Đức đã vận hành các stack đó.</p>
+<h3>Câu giới thiệu 90 giây có thể dùng từ hồ sơ</h3>
+<blockquote>
+<p>Tôi tham gia AI từ góc độ sản phẩm, dữ liệu và chất lượng. Với HRAI, mChat, OCR và hệ tri thức, phần việc của tôi gồm làm rõ use case, quy tắc nghiệp vụ, dữ liệu đầu vào, đầu ra cần kiểm chứng, chuẩn bị dữ liệu và đánh giá kết quả qua nhiều vòng cải tiến. Với Samsung AI Data Hub, tôi đi sâu vào vòng đời dataset–training job–model–evaluation–deployment, phân quyền, phê duyệt và truy vết phiên bản. Với Smart Safe và Smart Factory, tôi có nền tảng tích hợp thiết bị, trạng thái, cảnh báo, dữ liệu vận hành và xử lý ngoại lệ. Vì vậy, khi làm sản phẩm robot, tôi có thể nối yêu cầu khách hàng với hành vi hệ thống, dữ liệu và tiêu chí nghiệm thu; phần thuật toán chuyên sâu tôi phối hợp với AI/Robotics Engineer.</p>
+</blockquote>
+<p>Nguồn cho phạm vi trên: <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Kim%20%C4%90%E1%BB%A9c%20CV%20full.pdf">CV đầy đủ, trang 2–5 và 7</a>. Chi tiết cá nhân cần chuẩn bị thêm để bảo vệ câu trả lời: một requirement, một bộ test, một defect có trace, một báo cáo so sánh phiên bản; chỉ dùng tài liệu được phép chia sẻ và đã ẩn dữ liệu nội bộ.</p>
+<h3>Bản đồ 10 dự án</h3>
+<table>
+<thead>
+<tr>
+<th>Dự án</th>
+<th>Căn cứ hồ sơ</th>
+<th>Nội dung AI cần trình bày</th>
+<th>Phần được bổ sung trong tài liệu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cổng một cửa đầu tư quốc gia</td>
+<td>CV ghi rõ Hệ tri thức &amp; Trợ lý AI; data governance</td>
+<td>RAG có nguồn, hiệu lực và phân quyền; hỏi đáp và tra cứu hồ sơ</td>
+<td>Stack cụ thể, retrieval/evaluation, agent tools</td>
+</tr>
+<tr>
+<td>CSDL xử lý vi phạm hành chính</td>
+<td>CV xác nhận dự án; danh sách đầu vào nêu Copilot</td>
+<td>Hướng dẫn theo màn hình, trạng thái, thẩm quyền</td>
+<td>Agent có kiểm soát, workflow và rule engine</td>
+</tr>
+<tr>
+<td>Smart Safe</td>
+<td>IoT an ninh, cảnh báo, thiết bị; tài liệu nêu AI Camera</td>
+<td>Nhận diện xâm nhập và xác minh sự cố</td>
+<td>Detector/tracker, dataset camera, edge inference</td>
+</tr>
+<tr>
+<td>HRAI One</td>
+<td>CV xác nhận HR AI và AI Training &amp; Evaluation ở cấp nhóm sản phẩm</td>
+<td>Dự báo rủi ro và diễn giải có bằng chứng</td>
+<td>Phân tách ML/LLM, feedback thành gold data, fine-tune</td>
+</tr>
+<tr>
+<td>Tori AI</td>
+<td>JD BA &amp; QA và tài liệu tham khảo; chưa tham gia</td>
+<td>Document ingestion, build–test–verify</td>
+<td>Toàn bộ câu chuyện cá nhân là mô phỏng</td>
+</tr>
+<tr>
+<td>mChat</td>
+<td>Omnichannel, hội thoại, sáng kiến AI/NLP</td>
+<td>Intent, insight, gợi ý trả lời, handover</td>
+<td>Orchestration, dữ liệu train, chống kết quả lỗi thời</td>
+</tr>
+<tr>
+<td>RPA &amp; OCR</td>
+<td>CV, báo cáo RPA, danh mục use case</td>
+<td>Document AI, OCR-first/VLM fallback</td>
+<td>Model và confidence gate, fine-tune, retry an toàn</td>
+</tr>
+<tr>
+<td>Omnichannel CDP/CXP &amp; CRM</td>
+<td>CV xác nhận Customer 360, phân khúc, hành trình</td>
+<td>Một use case: Next Best Action</td>
+<td>ML propensity, decision policy, A/B test</td>
+</tr>
+<tr>
+<td>Samsung AI Data Hub</td>
+<td>CV trang 4–5, feature description, BA làm gì</td>
+<td>Quản trị vòng đời AI, không cần tự là một AI model</td>
+<td>Stack MLOps cụ thể và contract dataset/job/deploy</td>
+</tr>
+<tr>
+<td>Samsung Smart Factory</td>
+<td>Equipment, WMS, QMS, tích hợp ERP</td>
+<td>Hai use case: bảo trì dự đoán; phát hiện lỗi ngoại quan</td>
+<td>Azure architecture, ML pipeline, fleet extension</td>
+</tr>
+</tbody></table>
+<h2>2. “Training AI” nghĩa là gì trong vai trò BA + QC?</h2>
+<h3>2.1. Phân biệt sáu loại công việc</h3>
+<table>
+<thead>
+<tr>
+<th>Loại</th>
+<th>Có thay trọng số model?</th>
+<th>BA/QC trực tiếp đóng góp</th>
+<th>Bằng chứng nên có</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Knowledge ingestion/RAG</td>
+<td>Không</td>
+<td>Chuẩn hóa nguồn, chia đoạn, metadata, quyền, bộ câu hỏi</td>
+<td>Manifest tài liệu, chunk QA, retrieval report</td>
+</tr>
+<tr>
+<td>Prompt/configuration tuning</td>
+<td>Không</td>
+<td>Rubric, JSON schema, prompt version, top-k, timeout</td>
+<td>Experiment log; so sánh cùng benchmark</td>
+</tr>
+<tr>
+<td>Train ML từ dữ liệu doanh nghiệp</td>
+<td>Có</td>
+<td>Định nghĩa nhãn, feature và thời điểm; đánh giá lỗi</td>
+<td>Dataset manifest, label guide, experiment run</td>
+</tr>
+<tr>
+<td>Fine-tune pretrained model</td>
+<td>Có, toàn bộ hoặc adapter</td>
+<td>Curate mẫu đúng/sai, phân tách dữ liệu, kiểm tra candidate</td>
+<td>Base model + adapter + config + evaluation</td>
+</tr>
+<tr>
+<td>Feedback/review</td>
+<td>Chưa tự động</td>
+<td>Chấm trường sai, sửa gold, giải quyết bất đồng</td>
+<td>Feedback có evidence; phiên bản gold label</td>
+</tr>
+<tr>
+<td>Agent/workflow configuration</td>
+<td>Không nhất thiết</td>
+<td>Tool contract, quyền, trạng thái, retry, human review</td>
+<td>Sequence, state machine, API test, audit</td>
+</tr>
+</tbody></table>
+<p>Nạp PDF vào vector database không phải fine-tune. Chấm PASS/FAIL chưa phải tạo dữ liệu supervised training. Dùng model mã nguồn mở không đồng nghĩa tự huấn luyện foundation model từ đầu. “Xây từ đầu” phù hợp ở đây là xây <strong>sản phẩm, dữ liệu, quy trình và tích hợp</strong>; ML dạng bảng có thể train từ đầu, còn LLM/VLM thường tận dụng pretrained weights.</p>
+<h3>2.2. Chu trình dữ liệu–training–evaluation đề xuất</h3>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/03-ai-training-feedback.drawio.png" alt="Vòng đời dữ liệu, đánh giá và cải tiến AI"></p>
+<ol>
+<li><strong>Đặt bài toán:</strong> actor, quyết định cần hỗ trợ, lỗi nào gây thiệt hại, quy trình hiện tại, quyền của AI. BA viết problem statement và output contract; PO xác định giá trị; Tech Lead kiểm tra khả thi.</li>
+<li><strong>Tạo data contract:</strong> schema, đơn vị đo, nguồn, thời điểm quan sát, khóa định danh, null/unknown, retention và quyền sử dụng. Dùng SQL/DataGrip, Python/pandas, Excel, dbdiagram.io.</li>
+<li><strong>Tạo label guideline:</strong> ví dụ đúng/sai, trường hợp mơ hồ, multi-label, evidence span, nguồn nhãn, người phê duyệt. Dùng Label Studio cho text/tabular review; CVAT cho ảnh/video nếu triển khai phần vision.</li>
+<li><strong>Tách dữ liệu trước khi biến đổi:</strong> theo nhân viên, khách hàng, hồ sơ, camera, lot hoặc episode tùy domain; thêm tách theo thời gian. Dedupe trước split; fitting scaler/imputer chỉ trên train. Validation để chọn cấu hình; test giữ kín để đánh giá cuối.</li>
+<li><strong>Lập baseline:</strong> rule-based hoặc logistic regression cho tabular; pretrained OCR/detector; prompt + RAG cho LLM. Không dùng fine-tune khi lỗi thực ra do thiếu dữ liệu hoặc retrieval sai.</li>
+<li><strong>Train/fine-tune cùng engineer:</strong> BA quản lý taxonomy/scope, QC xác nhận dữ liệu và run; engineer chịu trách nhiệm code, optimizer, GPU, checkpoint. BA có thể chạy notebook/job đã được bàn giao nếu thực tế đã làm; không mặc định đã tự viết trainer.</li>
+<li><strong>Đánh giá riêng từng lớp:</strong> dữ liệu, model, ứng dụng và vận hành. Không che lỗi tool/permission bằng điểm câu trả lời cao. Báo cáo tổng thể và từng nhóm khó.</li>
+<li><strong>Phát hành có kiểm soát:</strong> shadow trước, sau đó canary khi phù hợp; người có thẩm quyền duyệt. Theo dõi model/prompt/index/ruleset version. Có điều kiện rollback về bộ phiên bản tương thích.</li>
+<li><strong>Feedback:</strong> giữ input snapshot, prediction, model version; QA sửa trường sai; chuyên gia phân xử; mới đưa vào dataset vòng sau. Không dùng test set làm nguồn sửa model rồi vẫn gọi đó là test độc lập.</li>
+</ol>
+<p>Stack [TK]: Python/pandas + Great Expectations kiểm tra dữ liệu; DVC và object storage lưu snapshot; Airflow điều phối batch; PyTorch/Transformers/PEFT/TRL hoặc XGBoost train; MLflow tracking/registry; FastAPI serving; Docker đóng gói; Prometheus/Grafana và OpenTelemetry quan sát vận hành. Không cần lắp tất cả công cụ ngay ở pilot.</p>
+<p>LoRA cập nhật các ma trận adapter nhỏ thay vì cập nhật toàn bộ trọng số; MLflow cung cấp version/alias và liên kết experiment. Đây là năng lực của công cụ, không phải bằng chứng đã dùng ở công ty cũ. <a href="https://huggingface.co/docs/peft/main/en/conceptual_guides/lora">PEFT LoRA</a>, <a href="https://mlflow.org/docs/latest/ml/model-registry/">MLflow Registry</a>.</p>
+<h3>2.3. Một gói dữ liệu huấn luyện phải bàn giao được</h3>
+<pre><code class="language-json">{
+  &quot;dataset_version&quot;: &quot;hr-risk-v3&quot;,
+  &quot;purpose&quot;: &quot;attrition_risk_90d&quot;,
+  &quot;observation_cutoff&quot;: &quot;2026-06-30T23:59:59+07:00&quot;,
+  &quot;label_window_days&quot;: 90,
+  &quot;split_strategy&quot;: &quot;employee_group_and_time&quot;,
+  &quot;schema_version&quot;: &quot;hr-feature-v2&quot;,
+  &quot;source_manifest&quot;: &quot;sha256:example-only&quot;,
+  &quot;pii_policy&quot;: &quot;pseudonymized-restricted&quot;,
+  &quot;label_guideline_version&quot;: &quot;guideline-v4&quot;,
+  &quot;review_status&quot;: &quot;approved-for-experiment&quot;
+}
+</code></pre>
+<p>Đây là ví dụ contract, không phải manifest thật. Với mỗi sample cần có <code>sample_id</code>, <code>source_ref</code>, <code>input_snapshot_id</code>, <code>label</code>, <code>label_source</code>, <code>reviewer</code>, <code>reviewed_at</code>, <code>split</code>. Thiếu ground truth tương lai thì chưa được gọi là nhãn nghỉ việc thực tế; nhận xét chuyên gia chỉ là một loại nhãn khác, phải ghi riêng.</p>
+<h3>2.4. Bộ chỉ số và cách chấm</h3>
+<table>
+<thead>
+<tr>
+<th>Lớp</th>
+<th>Chỉ số</th>
+<th>Cách tránh kết luận sai</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Retrieval</td>
+<td>Recall@k, MRR/nDCG, ACL leakage</td>
+<td>Chấm trên nguồn gold; trường hợp không có đáp án cần tập riêng</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>Correctness, evidence support, citation validity, refusal correctness, JSON validity</td>
+<td>Chuyên gia chấm rubric; LLM-as-judge chỉ hỗ trợ, hiệu chỉnh với người</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>Precision, recall, macro-F1, PR-AUC, confusion matrix</td>
+<td>Lớp hiếm không đánh giá chỉ bằng accuracy; chọn threshold trên validation</td>
+</tr>
+<tr>
+<td>Risk scoring</td>
+<td>Calibration/Brier, precision@capacity, recall theo nhóm</td>
+<td>Điểm 0,8 không mặc nhiên là 80% nếu chưa calibration</td>
+</tr>
+<tr>
+<td>OCR/KIE</td>
+<td>CER/WER, field exact match/F1, table row match</td>
+<td>Chấm riêng tiền, ngày, mã; đo cả tỷ lệ cần review</td>
+</tr>
+<tr>
+<td>Vision</td>
+<td>mAP, event precision/recall, false alarms/camera-hour</td>
+<td>Frame-level đẹp chưa chứng minh event-level tốt; tách site/time</td>
+</tr>
+<tr>
+<td>Hệ thống</td>
+<td>p50/p95/p99, timeout/error rate, throughput, cost/task</td>
+<td>Ghi tải, phần cứng, độ dài input, warm/cold start và phiên bản</td>
+</tr>
+<tr>
+<td>Nghiệp vụ</td>
+<td>Thời gian xử lý, sửa tay, tỷ lệ giải quyết, conversion</td>
+<td>Có baseline và nhóm so sánh; không tự tạo số cải thiện</td>
+</tr>
+</tbody></table>
+<h2>3. Hệ tri thức và AI Agent chatbot: kiến trúc tham chiếu dùng chung</h2>
+<h3>3.1. Chọn một stack cụ thể để giải thích xuyên suốt [TK]</h3>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/01-knowledge-rag.drawio.png" alt="Kiến trúc hệ tri thức và RAG có phân quyền"></p>
+<table>
+<thead>
+<tr>
+<th>Thành phần</th>
+<th>Lựa chọn cụ thể</th>
+<th>Trách nhiệm và trade-off</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web/chat</td>
+<td>React, TypeScript, SSE</td>
+<td>Hiện nguồn, trạng thái, xác nhận tool; SSE cho stream một chiều</td>
+</tr>
+<tr>
+<td>Identity/API</td>
+<td>Keycloak OIDC, NGINX, FastAPI/Pydantic</td>
+<td>Xác thực; tenant/role/scope lấy từ token đã kiểm tra, không tin giá trị model tự điền</td>
+</tr>
+<tr>
+<td>Kho gốc</td>
+<td>MinIO S3-compatible; PostgreSQL metadata</td>
+<td>Giữ bản gốc, hash, version, owner; quyền tải file kiểm tra ở backend</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Apache Tika cho text; PaddleOCR/PP-Structure cho scan/layout; Airflow</td>
+<td>Extract → normalize → review → chunk → index; retry theo document version</td>
+</tr>
+<tr>
+<td>Retrieval</td>
+<td>OpenSearch BM25 + Qdrant dense vector</td>
+<td>Tìm exact term như mã văn bản cùng tìm ngữ nghĩa; thêm vận hành hai index</td>
+</tr>
+<tr>
+<td>Embedding/rerank</td>
+<td>BAAI/bge-m3; BAAI/bge-reranker-v2-m3</td>
+<td>Baseline multilingual để benchmark tiếng Việt; không mặc định tốt nhất</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>Qwen2.5-7B-Instruct qua vLLM</td>
+<td>Baseline tự host để kiểm soát dữ liệu; chọn model/hardware sau benchmark</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>LangGraph; PostgreSQL checkpointer</td>
+<td>State graph có bước deterministic, pause/resume, tool result và human approval</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Camunda 8 cho BPMN và tác vụ con người</td>
+<td>Workflow nghiệp vụ dài hạn; không dùng thay agent reasoning hoặc motor control</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td>Open Policy Agent, service-side RBAC/ABAC</td>
+<td>Kiểm tra actor/action/resource/context, tách khỏi prompt</td>
+</tr>
+<tr>
+<td>Quan sát</td>
+<td>OpenTelemetry + Grafana/Loki; Langfuse nếu cần LLM trace</td>
+<td>Theo <code>trace_id</code>; mask dữ liệu nhạy cảm; kiểm soát nơi lưu trace</td>
+</tr>
+</tbody></table>
+<p>Đây là <strong>một thiết kế tự host</strong>, không đồng thời bắt buộc thêm mọi dịch vụ AWS/Azure. Ở Tori sẽ trình bày phương án managed AWS tương đương. Embedding/reranker và model được chọn làm baseline cụ thể từ <a href="https://github.com/FlagOpen/FlagEmbedding">FlagEmbedding</a> và <a href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct">model card Qwen</a>. LangGraph hỗ trợ orchestration có trạng thái; quyền truy cập vẫn phải do ứng dụng thực thi. <a href="https://docs.langchain.com/oss/python/langgraph/overview">Tài liệu LangGraph</a>.</p>
+<h3>3.2. Ingestion không chỉ là upload PDF</h3>
+<ol>
+<li><strong>Inventory:</strong> phân loại luật/quy trình/FAQ/hướng dẫn thao tác; owner xác nhận tài liệu chính thức. Lưu <code>document_id</code>, <code>version</code>, <code>effective_from/to</code>, <code>jurisdiction</code>, <code>audience</code>, <code>classification</code>, <code>source_url</code>, <code>checksum</code>.</li>
+<li><strong>Extract:</strong> phân biệt PDF có text với scan; xử lý trang xoay, bảng, phụ lục và chữ ký. Giữ page/bounding box để mở đúng vùng bằng chứng. Không suy ra text bị mờ bằng cách để model đoán.</li>
+<li><strong>Normalize:</strong> loại header/footer lặp, giữ heading path và liên kết bảng; không xóa đơn vị, số điều, phủ định, ngoại lệ. Kiểm tra bản OCR với nguồn gốc theo mẫu và các trường rủi ro cao.</li>
+<li><strong>Chunk:</strong> cắt theo điều/khoản/tiểu mục; baseline 400–800 token, overlap 50–100 chỉ là khởi điểm. Bảng lớn tách theo nhóm dòng kèm header. Lưu quan hệ parent–child để kéo lại đủ ngữ cảnh.</li>
+<li><strong>Index:</strong> embedding theo version; BM25 và vector cùng metadata filter. Chỉ công bố index snapshot khi ingestion và QA hoàn tất; rollback bằng alias/version đã duyệt.</li>
+<li><strong>Cập nhật/hủy hiệu lực:</strong> tombstone bản cũ, xử lý cache, index, file download; không để nguồn bị thu hồi vẫn xuất hiện trong câu trả lời cũ dưới quyền người dùng mới.</li>
+</ol>
+<h3>3.3. Luồng truy vấn online</h3>
+<p><code>User → OIDC/API → resolve tenant/role/time → intent → retrieve → rerank → context builder → LLM → schema/evidence checks → answer/tool proposal → audit</code>.</p>
+<p>Retrieval baseline: lấy 20 ứng viên BM25 và 20 vector sau lọc quyền/hiệu lực, hợp nhất bằng Reciprocal Rank Fusion, rerank còn khoảng 5–8 đoạn. Các số này là cấu hình thử nghiệm. Query về “hiện hành” dùng ngày yêu cầu; query về hồ sơ quá khứ phải làm rõ mốc áp dụng, không tự áp luật mới.</p>
+<p>Output gồm câu trả lời, nguồn, ngày hiệu lực, thông tin còn thiếu, giới hạn và hành động kế tiếp. Khi các nguồn mâu thuẫn, hệ thống chỉ rõ mâu thuẫn và chuyển chuyên gia; không chọn đại nguồn có similarity cao hơn. Điểm similarity không phải xác suất câu trả lời đúng.</p>
+<h3>3.4. Khi nào cần Knowledge Graph/GraphRAG?</h3>
+<p>RAG thông thường đủ cho hỏi đáp một hoặc vài nguồn. Với câu hỏi nối <code>thủ tục → điều kiện → cơ quan → thẩm quyền → tài liệu → điều khoản</code>, có thể thêm <strong>Neo4j</strong> lưu quan hệ có <code>source_ref</code>, thời gian hiệu lực và provenance. LLM chỉ đề xuất entity/relation; chuyên gia duyệt quan hệ quan trọng. Graph retrieval bổ sung context rồi vẫn trích nguồn. Không biến graph thành nơi tự suy diễn thẩm quyền không có căn cứ.</p>
+<h3>3.5. Agent chatbot: dùng công cụ nhưng không vượt quyền</h3>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/02-agent-workflow.drawio.png" alt="Agent Copilot kết hợp quyền, workflow và xác nhận"></p>
+<p>Các tools mẫu: <code>search_knowledge</code>, <code>get_case_status</code>, <code>get_allowed_actions</code>, <code>validate_draft</code>, <code>create_draft</code>, <code>submit_after_confirmation</code>. Tool đọc có thể tự thực hiện trong phạm vi quyền; tool thay đổi dữ liệu phải qua policy, preview và xác nhận theo quy tắc nghiệp vụ. Backend kiểm tra lại quyền và state version tại thời điểm commit.</p>
+<p>State graph: <code>AUTHENTICATE → UNDERSTAND → RETRIEVE/READ_TOOL → VALIDATE → ANSWER</code> hoặc <code>PROPOSE_ACTION → HUMAN_CONFIRM → RECHECK → EXECUTE → VERIFY</code>. <code>NEED_CLARIFICATION</code>, <code>NO_EVIDENCE</code>, <code>TOOL_TIMEOUT</code>, <code>DENIED</code> là trạng thái chính thức. Retry có giới hạn; side effect dùng idempotency key, không gửi lại mù quáng sau timeout.</p>
+<p>Memory: context hội thoại ngắn hạn theo session; long-term memory chỉ lưu dữ kiện được phép, có nguồn/TTL. Trạng thái hồ sơ, tồn kho, pin robot phải đọc từ hệ thống nguồn, không dùng “ký ức” của chatbot làm sự thật. Cache phải phân vùng theo tenant/quyền/index version; câu trả lời nhạy cảm không dùng semantic cache chung.</p>
+<p>Prompt injection từ PDF, website hoặc tin nhắn được coi là dữ liệu không tin cậy. Không để nội dung nguồn thêm tool, đổi quyền hoặc chỉ thị tiết lộ dữ liệu. QC kiểm thử cả retrieval leak, tool injection, output HTML nguy hiểm và truy vấn chéo tenant.</p>
+<h2>4. Cổng một cửa đầu tư quốc gia</h2>
+<h3>Căn cứ và phạm vi</h3>
+<p><strong>[HS]</strong> CV trang 2–3 nêu ba module: Trục tích hợp &amp; Quản trị dữ liệu; Hệ tri thức &amp; Trợ lý AI; Quản lý đầu tư nước ngoài. CV cũng mô tả đặc tả nghiệp vụ/API/dữ liệu và AI evaluation ở cấp nhóm dự án. <strong>[TK]</strong> Stack và quy trình chi tiết dưới đây cụ thể hóa module, chưa được xác nhận là production stack.</p>
+<h3>Use case</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Người dùng và mục tiêu</th>
+<th>Input → output</th>
+<th>Ngoại lệ quan trọng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>INV-AI-01</td>
+<td>Nhà đầu tư hỏi điều kiện/thành phần hồ sơ</td>
+<td>Câu hỏi + loại thủ tục + địa bàn + mốc thời gian → checklist có nguồn</td>
+<td>Thiếu địa bàn/loại hình; nguồn hết hiệu lực; câu hỏi ngoài phạm vi</td>
+</tr>
+<tr>
+<td>INV-AI-02</td>
+<td>Cán bộ tra cứu quy trình xử lý</td>
+<td>Role + hồ sơ + bước hiện tại → các bước được phép và căn cứ</td>
+<td>Không có quyền; hồ sơ thay đổi đồng thời; khác thẩm quyền</td>
+</tr>
+<tr>
+<td>INV-AI-03</td>
+<td>Người nộp kiểm tra bộ hồ sơ</td>
+<td>File → extracted fields → danh sách thiếu/mâu thuẫn</td>
+<td>File mờ; bản scan thiếu trang; model không đủ bằng chứng</td>
+</tr>
+<tr>
+<td>INV-AI-04</td>
+<td>Tra cứu trạng thái</td>
+<td>Mã hồ sơ qua API được phân quyền → trạng thái và việc tiếp theo</td>
+<td>Không tìm thấy; không thuộc người dùng; downstream timeout</td>
+</tr>
+</tbody></table>
+<h3>Kiến trúc và dữ liệu</h3>
+<p>Dùng kiến trúc mục 3. Kho tri thức quản lý văn bản/quy trình; hệ thống hồ sơ giữ trạng thái và dữ liệu giao dịch. Hai miền kết nối qua API, không trộn hồ sơ cá nhân vào index công khai. Camunda quản lý luồng tiếp nhận–bổ sung–thẩm định–phê duyệt theo cấu hình đã duyệt; OPA kiểm tra phạm vi khai thác. LLM có thể diễn giải checklist nhưng <strong>không tự ban hành kết luận pháp lý hoặc phê duyệt hồ sơ</strong>.</p>
+<p>Entity đề xuất: <code>Procedure</code>, <code>ProcedureVersion</code>, <code>Authority</code>, <code>DocumentVersion</code>, <code>RequirementItem</code>, <code>Application</code>, <code>ApplicationStep</code>, <code>KnowledgeChunk</code>, <code>AnswerCitation</code>. Quan hệ và hiệu lực giúp BA đặc tả được trường hợp một hồ sơ cũ cần xem hướng dẫn áp dụng tại thời điểm cũ. Rule pháp lý cụ thể phải do đầu mối chuyên môn xác nhận; tài liệu này không cung cấp tư vấn pháp luật.</p>
+<h3>Công việc BA/QC và công cụ</h3>
+<table>
+<thead>
+<tr>
+<th>Công việc</th>
+<th>Cách làm chi tiết</th>
+<th>Công cụ và đầu ra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Discovery</td>
+<td>Workshop với nhà đầu tư, cán bộ tiếp nhận, chuyên viên, quản trị dữ liệu; phân biệt câu hỏi hướng dẫn và quyết định nghiệp vụ</td>
+<td>Confluence, Jira; actor/use-case map, assumption log</td>
+</tr>
+<tr>
+<td>Chuẩn hóa tri thức</td>
+<td>Lập inventory nguồn, owner, điều/khoản, phiên bản, địa bàn, ACL; định nghĩa quy trình cập nhật và thu hồi</td>
+<td>Excel/SQL; knowledge manifest, data dictionary</td>
+</tr>
+<tr>
+<td>Đặc tả hệ thống</td>
+<td>Sequence query/RAG/tool; API hồ sơ và errors; trạng thái của câu trả lời, citation và fallback</td>
+<td>draw.io, OpenAPI, Postman; SRS, API mapping</td>
+</tr>
+<tr>
+<td>Build dữ liệu</td>
+<td>Kiểm tra OCR, chunk, heading, metadata; tạo câu hỏi paraphrase, câu không có đáp án, câu khác mốc hiệu lực</td>
+<td>Python/pandas, SQL, review UI; gold Q&amp;A có nguồn</td>
+</tr>
+<tr>
+<td>Đánh giá</td>
+<td>Tách lỗi tìm nguồn/sai nguồn/diễn giải sai/tool sai; kiểm tra citation đến đúng trang</td>
+<td>Evaluation sheet, pytest nếu tự động hóa; error taxonomy</td>
+</tr>
+<tr>
+<td>UAT và release</td>
+<td>Chạy người dùng theo role, chặn truy vấn chéo hồ sơ, kiểm tra thu hồi tài liệu và regression</td>
+<td>Jira defect, Postman/Newman; sign-off và RTM</td>
+</tr>
+</tbody></table>
+<p><strong>Một test có giá trị:</strong> Given cán bộ chỉ được xem tỉnh A, When hỏi hồ sơ tỉnh B bằng mã chính xác, Then backend từ chối và chatbot không tiết lộ cả tên nhà đầu tư, snippet, URL tải file hay trạng thái hồ sơ. Không chỉ kiểm tra “bot nói không có quyền”.</p>
+<p><strong>Training/fine-tune:</strong> ưu tiên sửa ingestion/retrieval và prompt. Chỉ fine-tune khi benchmark cho thấy lỗi ổn định ở phân loại intent, format hoặc hành vi trả lời; SFT không thay thế cơ chế cập nhật văn bản có hiệu lực. BA xây Q&amp;A gold và tool-call sample; engineer train adapter; QC so candidate và baseline trên cùng test độc lập.</p>
+<p><strong>Cách kể có căn cứ:</strong> “Ở cổng một cửa, tôi tham gia hệ tri thức và trợ lý AI gắn với nghiệp vụ và data governance. Tôi tập trung biến câu hỏi người dùng thành use case có nguồn, phạm vi quyền và tiêu chí nghiệm thu. Khi giải thích giải pháp, tôi có thể phân rã rõ kho tri thức, retrieval, agent và API hồ sơ.” Tên model chỉ bổ sung khi xác nhận thực tế.</p>
+<h2>5. CSDL quốc gia về xử lý vi phạm hành chính</h2>
+<h3>Căn cứ và use case</h3>
+<p><strong>[HS]</strong> CV trang 2 xác nhận dự án; danh sách đầu vào của Đức nêu Copilot hướng dẫn thao tác, thẩm quyền và căn cứ. <strong>[TK]</strong> Các chi tiết triển khai sau là thiết kế mở rộng.</p>
+<ul>
+<li><strong>VPHC-AI-01:</strong> hướng dẫn ngay trên màn hình: cán bộ ở bước kiểm tra biên bản được thấy checklist đúng role, trạng thái và phiên bản quy trình.</li>
+<li><strong>VPHC-AI-02:</strong> hỏi “tôi được làm gì tiếp theo?”; Copilot gọi API <code>allowed-actions</code>, giải thích điều kiện chưa đạt và liên kết tới nguồn.</li>
+<li><strong>VPHC-AI-03:</strong> tạo bản nháp nội dung từ dữ kiện đã được xác nhận; đối chiếu thiếu trường, thời hạn và tài liệu kèm theo, chờ người chịu trách nhiệm duyệt.</li>
+<li><strong>VPHC-AI-04:</strong> hỏi căn cứ liên quan; trả đoạn trích và mốc hiệu lực, nêu khi cần chuyên gia pháp chế, không tự tính mức xử phạt theo suy đoán LLM.</li>
+</ul>
+<h3>Kiến trúc cụ thể</h3>
+<p>React Copilot nhận <code>screen_id</code>, <code>case_id</code>, <code>workflow_instance_id</code>, <code>state_version</code>; backend xác minh chúng. FastAPI + LangGraph điều phối; RAG mục 3 tìm hướng dẫn; Camunda 8 chạy workflow; DMN/rule service chứa bảng quyết định đã được nghiệp vụ duyệt; PostgreSQL lưu hồ sơ, OPA/RBAC/ABAC kiểm tra thẩm quyền. <code>allowed-actions</code> do nghiệp vụ backend trả, không do model tự phát minh.</p>
+<p><code>get_case_context → get_allowed_actions → retrieve_authoritative_guidance → explain_next_step → validate_draft → user_review → commit</code>.</p>
+<p>Đề xuất optimistic concurrency: gửi <code>expected_state_version</code>; nếu hồ sơ đã chuyển bước thì trả conflict, tải lại context, không áp hướng dẫn cũ. Idempotency key bảo vệ tạo nháp/gửi yêu cầu. Outbox đảm bảo event audit và cập nhật hồ sơ nhất quán khi có queue; không tuyên bố exactly-once toàn hệ thống.</p>
+<h3>BA/QC thực hiện thế nào?</h3>
+<ol>
+<li><strong>BPMN và decision table:</strong> BA lập từng bước, người chịu trách nhiệm, input/output, điều kiện chuyển, SLA, nhánh bổ sung/chuyển lại/thu hồi. Công cụ: Camunda Modeler, draw.io, Confluence. Đầu ra: workflow version, authority matrix, exception catalog.</li>
+<li><strong>Context contract:</strong> BA định nghĩa thông tin được gửi sang AI; field nào phải mask, field nào bắt buộc đọc lại API; tool quyền đọc/ghi. Công cụ: OpenAPI, Postman, SQL/DataGrip.</li>
+<li><strong>Tập gold theo trạng thái:</strong> QC lấy cùng câu hỏi tại nhiều role/state để chứng minh kết quả khác nhau đúng quy định; có câu hỏi thiếu dữ kiện và nguồn mâu thuẫn. Công cụ: Excel/JSONL, Python và review UI.</li>
+<li><strong>Kiểm thử đồng thời:</strong> một người chuyển hồ sơ trong khi người khác đang xem gợi ý; gửi lại request; mạng mất sau commit; ACK trễ; quyền bị thu hồi giữa lượt chat. Công cụ: Postman/Newman, browser network log, truy vấn audit.</li>
+<li><strong>Phân tích lỗi:</strong> lỗi do business rule, version workflow, stale context, retrieval hay model; ticket phải chứa <code>trace_id</code>, case đã ẩn danh, expected/actual, version và mức độ ảnh hưởng.</li>
+</ol>
+<p><strong>AC mẫu:</strong> Given bản nháp ở version 12 và người dùng còn quyền, When xác nhận nhưng hồ sơ đã sang version 13, Then không ghi thay đổi; trả <code>STATE_CONFLICT</code>; hiển thị bước hiện tại; ghi audit mà không lặp side effect.</p>
+<p><strong>Kế thừa sang robot:</strong> hồ sơ đang xử lý tương ứng mission instance; thẩm quyền tương ứng quyền điều động/teleoperation; <code>allowed-actions</code> tương ứng skill khả dụng; đổi quy trình tương ứng policy pack có version. Robot còn thêm trạng thái vật lý và an toàn, không thể hoàn tác như dữ liệu hồ sơ.</p>
+<h2>6. Smart Safe: AI Camera kết hợp IoT</h2>
+<h3>Căn cứ và use case</h3>
+<p><strong>[HS]</strong> CV xác nhận SaaS IoT an ninh/cháy nổ, device/incident/connectivity. Tài liệu phỏng vấn mô tả gateway, cảm biến, camera, cấu hình, cảnh báo, điều khiển và UAT. <strong>[TK]</strong> Không có bằng chứng xác định detector hoặc framework camera; phần train vision dưới đây là mở rộng.</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Cách hoạt động</th>
+<th>Người ra quyết định</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SS-AI-01: xâm nhập ngoài giờ</td>
+<td>Phát hiện người, theo dõi track đi vào polygon trong lịch giám sát</td>
+<td>Rule engine phát cảnh báo; bảo vệ xác minh</td>
+</tr>
+<tr>
+<td>SS-AI-02: xác minh báo động đa cảm biến</td>
+<td>Kết hợp door/PIR và clip camera gần thời điểm sự kiện</td>
+<td>Con người kết luận sự cố; AI hỗ trợ ưu tiên</td>
+</tr>
+<tr>
+<td>SS-AI-03: nhận diện khói/lửa hỗ trợ</td>
+<td>Model chuyên biệt + sensor signal, chuyển kiểm tra</td>
+<td>Không thay hệ thống báo cháy được thiết kế/chứng nhận riêng</td>
+</tr>
+</tbody></table>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/04-smart-safe-vision.drawio.png" alt="Smart Safe: vision tại edge và xử lý sự cố"></p>
+<h3>Kiến trúc [TK]</h3>
+<p>Camera RTSP qua GStreamer → NVIDIA Jetson Orin/industrial PC → <strong>YOLOX</strong> detector, <strong>ByteTrack</strong> tracker, polygon/time-window rules → MQTT TLS qua EMQX → Spring Boot event service → RabbitMQ xử lý bất đồng bộ → PostgreSQL incident/device, TimescaleDB telemetry, MinIO clip → React dashboard và SMS/email. Chọn phần cứng sau đo FPS, nhiệt độ, điện và số camera; không mặc định một Jetson đủ mọi tải.</p>
+<p>ONNX Runtime/TensorRT tối ưu inference sau khi kiểm tra accuracy giữa bản FP32/FP16/INT8. ONVIF dùng discovery/config khi camera hỗ trợ; RTSP vận chuyển video, MQTT gửi metadata sự kiện, không đưa video thô vào broker. Camera có AI sẵn có thể gửi sự kiện qua adapter thay vì triển khai model riêng. Detector và tracker tham chiếu từ <a href="https://github.com/Megvii-BaseDetection/YOLOX">YOLOX</a> và <a href="https://github.com/FoundationVision/ByteTrack">ByteTrack</a>; cần kiểm tra riêng license của code, weights và dữ liệu trước khi chọn.</p>
+<p>Event contract: <code>event_id</code>, <code>site_id</code>, <code>device_id</code>, <code>observed_at</code>, <code>received_at</code>, <code>event_type</code>, <code>track_id</code>, <code>zone_version</code>, <code>model_version</code>, <code>confidence</code>, <code>clip_ref</code>, <code>sequence_no</code>. Dedupe theo event ID; xử lý event-time và out-of-order; heartbeat độc lập với alarm. Camera mất kết nối không được diễn giải là “không có xâm nhập”.</p>
+<h3>Training và QC vision [TK]</h3>
+<p>Thu video đủ ban ngày/đêm, mưa, chói sáng, phản xạ, bóng người, người che khuất, vật nuôi, thay góc camera. CVAT gán bounding box và track, ghi occlusion/lighting; chia train/test theo camera/site và ngày, tránh lấy hai frame liền nhau vào hai tập. Hard negatives gồm poster người, bóng đổ, màn hình TV. Train detector với PyTorch; tracker và rule được đánh giá riêng trước đánh giá toàn event.</p>
+<p>Đo event precision/recall, false alarms trên mỗi camera-hour, thời gian từ trigger đến dashboard; báo cáo theo từng điều kiện. Đừng chỉ nêu mAP. QC test cảnh báo lặp, recovery đến trước acknowledge, inactive device, lệnh timeout, gateway reboot và replay sau offline.</p>
+<h3>Việc Đức trình bày</h3>
+<p><strong>Có căn cứ ở lớp BA/IoT:</strong> khảo sát thiết bị và đơn vị vận hành; chuẩn hóa site/device/alert; mô hình trạng thái; mapping payload, command/ACK; role/site scope; kịch bản UAT và xử lý ngoại lệ. Công cụ hồ sơ có nêu ở cấp kỹ năng: Jira, Confluence, draw.io, Figma, SQL, Postman.</p>
+<p><strong>Khi mở rộng sang AI Camera:</strong> tôi định nghĩa “xâm nhập” bằng zone, thời gian, dwell và ngoại lệ; lập bộ video nghiệm thu, rubric event, false-positive taxonomy; phối hợp engineer chỉnh model/threshold/rules; kiểm tra clip bằng chứng và trải nghiệm xác minh. CVAT, MLflow, MQTTX, Grafana là công cụ đề xuất, không mặc định đã dùng.</p>
+<p><strong>Câu kể:</strong> “Điểm mạnh của tôi ở Smart Safe là nối tín hiệu thiết bị với hành động vận hành. Một tín hiệu không chỉ cần hiển thị; nó phải đúng site, đúng loại, đúng thời điểm, không lặp và có vòng đời xử lý. Tôi mang cách phân tích đó sang AI Camera và robot.”</p>
+<h2>7. HRAI One: ML trên dữ liệu nhân sự và LLM diễn giải</h2>
+<h3>Căn cứ và use case</h3>
+<p><strong>[HS]</strong> CV mô tả HR AI, risk prediction, talent development; phần đóng góp chung có chuẩn bị/làm sạch/gán nhãn/đánh giá dữ liệu. Các tài liệu HRAI đào sâu feature catalog, snapshot và feedback nhưng nhiều chi tiết là phương án hỏi đáp.</p>
+<ul>
+<li><strong>HR-AI-01:</strong> xếp ưu tiên xem xét nguy cơ nghỉ việc trong cửa sổ thời gian, có giải thích bằng feature đã quan sát.</li>
+<li><strong>HR-AI-02:</strong> phát hiện xu hướng giảm hiệu suất hoặc quá tải để quản lý kiểm tra, không coi đây là chẩn đoán sức khỏe.</li>
+<li><strong>HR-AI-03:</strong> tổng hợp nhận xét và đề xuất chủ đề đào tạo từ KPI/kỹ năng/nhận xét có nguồn; không tự ra quyết định tuyển dụng, kỷ luật hoặc thăng tiến.</li>
+</ul>
+<h3>Kiến trúc [TK]</h3>
+<p>Oracle/SQL Server HR source → Airflow → Python/pandas features → PostgreSQL feature snapshot → <strong>XGBoost</strong> risk classifier → calibrated score + evidence → <strong>Qwen2.5-7B-Instruct</strong> sinh diễn giải theo JSON schema → review UI → feedback/gold tables → dataset builder → MLflow candidate registry. Nội dung chính sách HR có thể lấy qua RAG; số liệu KPI phải dùng calculation service, không để LLM tự tính.</p>
+<p>Tách <code>Feature Catalog</code> (định nghĩa) khỏi <code>Employee Feature Value</code> (giá trị tại thời điểm) và <code>Input Snapshot</code> (bộ dữ liệu thực sự đưa vào model). Ví dụ <code>KPI_TREND_3M</code> ghi rõ kỳ, công thức, source; <code>MANAGER_SENTIMENT</code> có nguồn văn bản, extractor version và độ tin cậy. Missing không mặc định bằng 0; dữ liệu synthetic chỉ dùng test hoặc nghiên cứu có đánh dấu, không biến thành kết quả nhân sự thật.</p>
+<h3>Công việc thực tế cần mô tả và công cụ</h3>
+<table>
+<thead>
+<tr>
+<th>Bước</th>
+<th>BA/QC làm gì</th>
+<th>Đầu ra/công cụ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Định nghĩa bài toán</td>
+<td>Chốt label, horizon, thời điểm dự đoán; phân biệt nhãn chuyên gia với kết quả tương lai</td>
+<td>Label specification, Confluence</td>
+</tr>
+<tr>
+<td>Chuẩn hóa dữ liệu</td>
+<td>Join nguồn bằng khóa hợp lệ; xác định lịch sử, timestamp, missing, dữ liệu trùng</td>
+<td>SQL/DataGrip, pandas; reconciliation report</td>
+</tr>
+<tr>
+<td>Thiết kế feature</td>
+<td>KPI trend, workload, tenure, training history; ghi provenance và chống leakage</td>
+<td>Feature catalog, dbdiagram.io; không dùng trường “ngày nghỉ việc” đã biết sau cutoff</td>
+</tr>
+<tr>
+<td>Tạo test có chủ đích</td>
+<td>Nhân viên mới thiếu lịch sử; KPI giảm nhưng khối lượng tăng; dữ liệu quản lý mâu thuẫn</td>
+<td>CSV/JSONL, Python, SQL seed trong DB test</td>
+</tr>
+<tr>
+<td>Đánh giá đầu ra</td>
+<td>Đúng label, đúng score interpretation, evidence và lời khuyên; kiểm tra nhóm dữ liệu ít mẫu</td>
+<td>Rubric, confusion matrix, golden set</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>PASS/PARTIAL/FAIL ở cấp trường; bắt buộc sửa nhãn và chỉ nguồn cho phần sai</td>
+<td>Review UI; <code>AI_FEEDBACK</code>, adjudication log</td>
+</tr>
+<tr>
+<td>Kiểm tra sau phát hành</td>
+<td>Trace prediction → snapshot → model; so drift, missing rate, chất lượng theo kỳ</td>
+<td>SQL, MLflow/Grafana đề xuất; defect triage</td>
+</tr>
+</tbody></table>
+<p><strong>Test data không ghi vào production:</strong> seed có <code>test_run_id</code>, khóa giả, transaction và cleanup theo ID; không dùng số định danh thật. Kiểm thử negative ở quyền truy cập HR và export cũng quan trọng như output AI.</p>
+<h3>Feedback chuyển thành training như thế nào?</h3>
+<p>Một phản hồi “50% đúng” không tạo nhãn mới. QC phải chỉ rõ <code>wrong_fields</code>, <code>corrected_label</code>, <code>corrected_text</code>, <code>evidence_refs</code>, <code>error_category</code>; reviewer thứ hai xử lý bất đồng. Với outcome nghỉ việc, chờ cửa sổ quan sát đủ dài và xử lý mẫu chưa biết kết quả; không gán “không nghỉ” chỉ vì chưa có dữ liệu.</p>
+<ul>
+<li>XGBoost học feature và label đã phê duyệt; cân bằng lớp bằng class/sample weights được kiểm tra, không tăng tỷ trọng vô hạn cho lỗi hiếm.</li>
+<li>LLM SFT học diễn giải tốt từ input + evidence + corrected response, với <strong>Transformers + TRL SFTTrainer + PEFT LoRA</strong>. Baseline config minh họa: rank 16, alpha 32, dropout 0,05, learning rate 1e-4, 1–3 epoch; engineer điều chỉnh theo model/GPU/loss và validation. Không coi cấu hình này là tối ưu sẵn.</li>
+<li>DPO chỉ cân nhắc khi có cặp chosen/rejected nhất quán cho cùng input và evidence; không suy ra cặp preference từ một nút dislike đơn lẻ.</li>
+</ul>
+<p>Đánh giá ML bằng PR-AUC, precision theo số ca HR có thể xem xét, calibration và subgroup error; LLM bằng groundedness, factual consistency, ngôn ngữ không quy kết. Giữ con người quyết định và có cơ chế sửa dữ liệu nguồn.</p>
+<p><strong>Câu kể có thể bảo vệ:</strong> “Tôi tham gia ở khâu định nghĩa dữ liệu, label, test scenario, golden set và đánh giá AI. Tôi phân biệt lỗi dữ liệu, feature, model và diễn giải để đưa feedback có thể hành động được cho engineer. Tôi không coi chấm output là đã tự huấn luyện foundation model.”</p>
+<h2>8. Tori AI của Techcom Life — bài mô phỏng BA + QC</h2>
+<p><strong>[MP] Đức xác nhận Tori chỉ là dự án tham khảo.</strong> Đoạn ngôi “tôi” dưới đây là bài luyện nhập vai. Không dùng mục này như một dự án đã làm trong CV hoặc kể tên công ty như nơi đã trực tiếp triển khai.</p>
+<p>Techcom Life công bố Tori là trợ lý hỗ trợ tư vấn viên theo thời gian thực, bên cạnh nền tảng iProtek. Nguồn công khai này không xác nhận phần việc cá nhân của Đức hoặc toàn bộ stack nội bộ. <a href="https://www.techcomlife.com/tin-tuc/techcom-life-doat-cu-dup-giai-thuong-tai-insurance-asia-awards-2026-tiep-noi-chuoi-ghi-nhan-khu-vuc-trong-nam-dau-hoat-dong-86/">Công bố của Techcom Life</a>.</p>
+<h3>Use case mô phỏng bám sát JD BA &amp; QA</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Tình huống</th>
+<th>Đầu ra cần nghiệm thu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TORI-01</td>
+<td>Tư vấn viên hỏi quyền lợi/loại trừ của một sản phẩm và phiên bản hợp đồng</td>
+<td>Trả đúng nguồn, điều kiện, ngoại lệ, câu hỏi cần làm rõ</td>
+</tr>
+<tr>
+<td>TORI-02</td>
+<td>So sánh hai phương án phục vụ chuẩn bị tư vấn</td>
+<td>Bảng có nguồn; không hứa quyền lợi ngoài tài liệu</td>
+</tr>
+<tr>
+<td>TORI-03</td>
+<td>Hỏi quy trình bổ sung hồ sơ hoặc bước xử lý</td>
+<td>Checklist và bước tiếp theo, không tự quyết định underwriting/claim</td>
+</tr>
+<tr>
+<td>TORI-04</td>
+<td>Kiểm tra chất lượng nội dung tư vấn</td>
+<td>Chỉ ra câu thiếu căn cứ hoặc khác điều khoản; chuyên gia duyệt</td>
+</tr>
+</tbody></table>
+<h3>Phương án AWS cụ thể [TK], chưa xác minh là stack nội bộ</h3>
+<p>S3 giữ policy wording/SOP/version → Step Functions điều phối ingestion → Textract cho loại tài liệu/ngôn ngữ được hỗ trợ, <strong>PaddleOCR tự host làm phương án với scan tiếng Việt sau benchmark</strong> → QA nội dung → Amazon Bedrock Knowledge Bases + Titan Text Embeddings V2 + OpenSearch Serverless vector → backend trên ECS/Fargate gọi Bedrock Converse với foundation model đang được cấp quyền tại region → policy/tool validator → UI iProtek giả định qua API được cấp phép.</p>
+<p>Không mặc định Textract OCR tiếng Việt tốt hoặc có hỗ trợ mọi loại bảng. Danh sách ngôn ngữ tại thời điểm tra cứu không liệt kê tiếng Việt, vì vậy thiết kế phải có parser/OCR phù hợp cho corpus tiếng Việt; chọn embedding multilingual thay Titan nếu benchmark cho thấy không phù hợp. Không chốt tên model Claude hay version thực tế của Tori khi chưa có bằng chứng. <a href="https://docs.aws.amazon.com/textract/latest/dg/limits-document.html">Giới hạn Textract</a>, <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html">Bedrock Knowledge Bases</a>.</p>
+<p>DynamoDB lưu session/config manifest; PostgreSQL có thể dùng cho dữ liệu evaluation quan hệ; CloudWatch/OpenTelemetry ghi trace đã mask; IAM/KMS/Secrets Manager quản lý quyền và khóa. SageMaker <strong>chỉ là nhánh tùy chọn</strong> cho train/fine-tune model mở hoặc pipeline ML riêng, không mặc định mỗi lần gọi Bedrock là đang train trên SageMaker. Kiro nằm ở chu trình phát triển/spec/code, không phải model trả lời khách hàng. <a href="https://kiro.dev/docs/ide/">Kiro IDE</a>.</p>
+<h3>Mẫu kể ngôi “tôi” để luyện — toàn bộ là mô phỏng</h3>
+<blockquote>
+<p>Trong tình huống này, tôi phụ trách Build và Test của trợ lý AI. Tôi nhận bộ tài liệu từ nghiệp vụ, kiểm tra phiên bản và hiệu lực, chuẩn hóa nội dung để ingest, rồi duy trì golden test set theo từng domain. Mỗi vòng tôi thay đổi có kiểm soát một cấu hình như chunking, retrieval hoặc prompt, chạy lại benchmark và phân tích lỗi. Trước UAT, tôi kiểm tra cả câu trả lời đúng nghiệp vụ, trích dẫn, ngoại lệ, quyền dữ liệu và luồng sử dụng thực tế. Sau release, tôi xác minh chất lượng trên production bằng bộ kiểm tra được duyệt và dữ liệu được phép, rồi chuyển lỗi và điểm thiếu yêu cầu vào backlog.</p>
+</blockquote>
+<h3>Một vòng làm việc chi tiết [MP]</h3>
+<ol>
+<li><strong>Nhận tài liệu:</strong> inventory và hash; SME duyệt nguồn. Tôi dùng Excel, S3 console/API và checklist để phát hiện bản trùng, bản thiếu trang, điều khoản cũ.</li>
+<li><strong>Kiểm tra ingestion:</strong> so text OCR và bảng quyền lợi với PDF; xác nhận <code>product_version</code>, <code>effective_date</code>, <code>audience</code>, <code>page_ref</code>. Tôi dùng review UI, SQL và Python để kiểm tra độ đầy đủ.</li>
+<li><strong>Thiết kế golden set:</strong> khoảng 200 câu khởi điểm gồm câu thường gặp, nhiều điều kiện, thiếu thông tin, không có đáp án và tình huống gây nhầm giữa sản phẩm. Con số là ví dụ, tăng theo coverage và độ rủi ro, không phải thành tích.</li>
+<li><strong>Build:</strong> cấu hình prompt, metadata filter, chunk size/top-k trong môi trường test; engineer xử lý phần cần sửa code. Lưu <code>config_version</code>, corpus snapshot, model ID, region, latency và cost.</li>
+<li><strong>Test:</strong> Python/boto3 gọi API được cấp; Postman kiểm tra contract; rubric chấm correctness, nguồn, loại trừ, fallback, wording. Không lấy fluency làm chất lượng nghiệp vụ.</li>
+<li><strong>Triage:</strong> ví dụ câu trả lời bỏ qua loại trừ do bảng bị cắt → sửa ingestion/chunk; không vội fine-tune. Jira ticket ghi query, expected answer, source, trace, config trước/sau và nhóm ảnh hưởng.</li>
+<li><strong>UAT/production verification:</strong> SME/tư vấn viên duyệt; QA regression; release owner quyết định; tôi kiểm tra smoke/read-only, thu feedback đã mask và theo dõi score theo version.</li>
+</ol>
+<h3>Ví dụ acceptance criteria</h3>
+<p>Given câu hỏi thiếu phiên bản sản phẩm và quyền lợi thay đổi giữa các phiên bản, When tư vấn viên yêu cầu con số quyền lợi, Then Tori hỏi lại hoặc trình bày rõ phạm vi từng phiên bản; không đưa một con số duy nhất như kết luận chắc chắn. Khi không tìm được nguồn, output phải nêu chưa đủ căn cứ và cách chuyển chuyên gia.</p>
+<p>Các đầu việc bám trực tiếp <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Tori%20AI/JD_TechcomBank.pdf">JD_TechcomBank.pdf, trang 1–2</a>: document lifecycle, iterative configuration, golden set, UAT, regression, production verification và refinement. JD không chứng minh có yêu cầu bắt buộc train model từ đầu.</p>
+<h2>9. mChat: Conversational AI và điều phối hội thoại</h2>
+<h3>Căn cứ, use case và phạm vi</h3>
+<p><strong>[HS]</strong> CV xác nhận nền tảng đa kênh và AI hỗ trợ insight/recommendation. SRS và khảo sát thể hiện inbox, conversation, assignment, label, note, SLA và automation. Bản đăng ký sáng kiến AI là <strong>giải pháp đề xuất</strong>, không chứng minh mọi tính năng đã production.</p>
+<ul>
+<li><strong>MCHAT-AI-01:</strong> phân loại intent, nhu cầu, sản phẩm, mức quan tâm và blocker từ chuỗi tin nhắn; trả JSON có evidence span.</li>
+<li><strong>MCHAT-AI-02:</strong> tóm tắt để agent tiếp nhận, gợi ý câu hỏi tiếp theo/câu trả lời dựa trên KB và thông tin sản phẩm từ ERP.</li>
+<li><strong>MCHAT-AI-03:</strong> đề xuất route tới nhóm phù hợp; low-confidence hoặc tranh chấp chuyển người. Rule routing quyết định cuối, không để LLM tự thay đổi quyền.</li>
+</ul>
+<h3>Kiến trúc [TK]</h3>
+<p>Facebook/Zalo OA/website webhook → channel adapter validate signature → PostgreSQL conversation/message → RabbitMQ theo conversation → LangGraph context builder → Qwen2.5-7B-Instruct/intent classifier → Pydantic output validator → insight DB → SSE tới agent UI. Redis giữ cache ngắn hạn và trạng thái queue; ERP API cung cấp giá/tồn kho hiện tại. Có RAG cho chính sách đổi trả và bảo hành.</p>
+<p>Định danh <code>channel_message_id</code> để dedupe; giữ thứ tự theo conversation; AI run lưu <code>conversation_version</code> và <code>last_message_id</code>. Nếu tin mới đến trước khi output xong, kết quả cũ không được ghi đè insight mới. Tách trạng thái hội thoại khỏi trạng thái phân công; kiểm soát quyền theo team/inbox. Chatbot sang người phải mang context, không tiếp tục gửi câu trả lời song song ngoài quy tắc.</p>
+<h3>BA + QC làm gì?</h3>
+<table>
+<thead>
+<tr>
+<th>Đầu việc</th>
+<th>Chi tiết riêng cho mChat</th>
+<th>Công cụ/đầu ra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Taxonomy</td>
+<td>Primary/secondary intent; UNKNOWN; nhu cầu khác sản phẩm; phân biệt “không mua” với “chưa quyết định”</td>
+<td>Label guide, decision table; Excel/Confluence</td>
+</tr>
+<tr>
+<td>Conversation dataset</td>
+<td>Anonymize, cắt theo phiên, giữ multi-turn; split theo khách hàng/cuộc hội thoại</td>
+<td>SQL/pandas, Label Studio đề xuất</td>
+</tr>
+<tr>
+<td>Rule routing</td>
+<td>Agent skill, workload, SLA, giờ làm việc, team scope và override</td>
+<td>BPMN/state diagram, Jira stories</td>
+</tr>
+<tr>
+<td>AI output contract</td>
+<td>Enum/score/evidence/summary/next_action; score không được coi là xác suất đã calibration</td>
+<td>JSON schema, Swagger/Postman</td>
+</tr>
+<tr>
+<td>Integration test</td>
+<td>Duplicate webhook, out-of-order, token kênh hết hạn, reconnect, queue chậm, handover</td>
+<td>Postman/Newman, log/SQL, k6 nếu kiểm tra tải</td>
+</tr>
+<tr>
+<td>AI test</td>
+<td>Tiếng lóng, không dấu, đổi nhu cầu, nhiều sản phẩm, mỉa mai, phủ định, prompt injection</td>
+<td>Golden conversations; field F1 và groundedness</td>
+</tr>
+</tbody></table>
+<p>Fine-tune [TK]: train classifier PhoBERT/XLM-R khi có taxonomy ổn định và dataset đủ tốt; hoặc SFT LoRA cho extraction/format với input hội thoại và output gold. Tóm tắt đánh giá việc bỏ sót/đảo nghĩa, không chỉ ROUGE. RAG lấy chính sách; tool lấy giá tồn; fine-tune không giữ dữ liệu giao dịch cập nhật.</p>
+<p><strong>AC:</strong> khi khách đổi từ “mua” sang “hủy”, summary/next action phải căn cứ phiên bản hội thoại mới; output run cũ vẫn được giữ phục vụ audit nhưng không trở thành recommendation hiện hành.</p>
+<p><strong>Cách kể:</strong> “Tôi nhìn mChat như hệ thống điều phối công việc có trạng thái, người chịu trách nhiệm và SLA. Lớp AI chuyển hội thoại thành dữ liệu có cấu trúc để hỗ trợ agent; chất lượng phải đo bằng độ đúng của insight và hành động tiếp theo, không chỉ bằng câu trả lời trôi chảy.”</p>
+<h2>10. RPA &amp; OCR kết hợp VLM</h2>
+<h3>Use case có căn cứ</h3>
+<p><strong>[HS]</strong> CV và danh mục RPA nêu chứng từ XNK/hải quan/logistics, mua sắm và hợp đồng. Chọn ba luồng để kể sâu: (1) invoice–packing list–bill of lading → dữ liệu chuẩn; (2) đối soát contract–invoice–packing list → bảng chênh lệch; (3) hợp đồng → bản nháp và mốc thanh toán trong QLHĐ. RPA tra cứu lịch tàu là automation, không cần gán AI nếu không có bài toán nhận thức.</p>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/05-document-ai-rpa.drawio.png" alt="Document AI và RPA có human review"></p>
+<h3>Kiến trúc cụ thể [TK]</h3>
+<p>Upload/API/email connector → quarantine/ClamAV → MinIO raw → RabbitMQ job → OpenCV deskew/quality check → PaddleOCR + PP-Structure nhận chữ/bảng → extraction service → <strong>Qwen2.5-VL-7B-Instruct</strong> cho layout khó hoặc vùng cần xác minh → Pydantic schema + business validation → human review → <strong>UiPath</strong> robot hoặc API adapter → ERP/QLHĐ → audit/reconciliation. Không gửi cả file lại qua VLM nếu chỉ cần đọc một vùng, trừ khi cần ngữ cảnh trang.</p>
+<p>OCR đọc ký tự; layout engine xác định vị trí/quan hệ; KIE ánh xạ thành trường; VLM hiểu ảnh và yêu cầu; RPA thực thi thao tác. <strong>VLM không làm output thành chân lý</strong>. Mỗi field quan trọng giữ page/bounding box, raw text, normalized value, extractor/model version và review status. Các công nghệ tham khảo: <a href="https://www.paddleocr.ai/main/en/index.html">PaddleOCR</a>, <a href="https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct">Qwen2.5-VL model card</a>.</p>
+<p>Với tiền tệ: parse theo locale và currency; kiểm tra tổng dòng, thuế, tổng chứng từ, rounding được nghiệp vụ duyệt. Số hợp đồng, mã hàng và ngày không dùng fuzzy matching tùy tiện. Gợi ý mã HS là hỗ trợ chuyên gia, không tự kê khai từ suy đoán model.</p>
+<h3>Training và nhiệm vụ BA/QC</h3>
+<ol>
+<li><strong>Field dictionary:</strong> BA chốt field bắt buộc, định dạng, đơn vị, decimal, nhiều trang, nhiều line item, quan hệ giữa chứng từ. Công cụ: Excel, SQL, OpenAPI; bàn giao mapping tới ERP/QLHĐ.</li>
+<li><strong>Label dữ liệu:</strong> tạo ground truth cho field/table/bounding box bằng Label Studio/CVAT; hai người review trường tiền/mã. Split theo nhà cung cấp/template và thời gian, có test template chưa từng gặp.</li>
+<li><strong>Baseline và fine-tune:</strong> đo PaddleOCR sẵn có; chỉ fine-tune recognizer khi lỗi ký tự có hệ thống. Cân nhắc LayoutLMv3 cho KIE nếu nhãn layout đủ tốt; LoRA VLM là nhánh riêng, không mặc định cần cả hai. BA/QC chọn coverage và adjudicate label; engineer train.</li>
+<li><strong>Quality gate theo trường:</strong> confidence do model tự nói không đủ; combine OCR confidence, format/rule checks và calibrated validator. Critical fields có xung đột phải review dù điểm chung cao.</li>
+<li><strong>RPA contract:</strong> checkpoint từng bước; API ưu tiên khi có; UI selector ổn định khi buộc dùng UI; credential qua vault; file đính kèm hash. BA đặc tả retry, timeout, human takeover.</li>
+<li><strong>Nghiệm thu:</strong> đo field exact match, table row alignment, tỷ lệ hồ sơ tự xử lý đúng, review rate, turnaround và duplicate posting. SQL đối soát số bản ghi/giá trị giữa extraction, review, ERP.</li>
+</ol>
+<p><strong>AC quan trọng:</strong> robot đã tạo hợp đồng nhưng mất mạng trước khi nhận kết quả → retry phải tra <code>external_reference/idempotency_key</code>; không tạo hợp đồng thứ hai. Nếu ứng dụng đích không hỗ trợ idempotency, cần sổ giao dịch và bước reconciliation trước retry.</p>
+<p><strong>Cách kể:</strong> “Tôi phân tích từ chứng từ đến dữ liệu đích và kiểm soát chỗ sai số có thể lan truyền. OCR/VLM là một công đoạn; đầu ra chỉ đủ điều kiện cho RPA khi qua schema, business rules và review cần thiết.”</p>
+<h2>11. Omnichannel CDP/CXP và CRM — một use case AI</h2>
+<h3>Next Best Action cho chăm sóc khách hàng [TK]</h3>
+<p><strong>[HS]</strong> CV mô tả Customer 360, segmentation, journey, marketing và CRM. <strong>[TK]</strong> Use case cụ thể là gợi ý <strong>một hành động chăm sóc phù hợp</strong> trong tập hành động được phép: gửi hướng dẫn sử dụng, mời mua phụ kiện, nhắc dịch vụ hoặc không liên hệ. Không thêm chatbot/forecasting thành các use case riêng trong mục này.</p>
+<p><strong>Input:</strong> lịch sử mua đã hợp nhất, tương tác kênh có consent, sản phẩm đang sở hữu, ticket đang mở, tồn kho và frequency cap. <strong>Output:</strong> <code>action_id</code>, <code>channel</code>, <code>eligible</code>, <code>score</code>, <code>reason_codes</code>, <code>expires_at</code>; CXP chạy journey; nhân viên CRM thấy lý do và có thể bỏ qua.</p>
+<h3>Kiến trúc và ML</h3>
+<p>Web/app/POS/CRM events → Kafka → CDP identity resolution và consent store → PostgreSQL/Data Lake → dbt feature pipeline → XGBoost propensity scoring → rule-based eligibility/ranking → CXP journey → mChat/email/SMS adapter → outcome về CDP. Model ước tính khả năng đáp ứng theo hành động; bộ policy loại hành động không được phép trước khi quyết định. Score propensity không phải causal uplift; muốn chứng minh tác động cần thí nghiệm.</p>
+<p>Identity resolution bắt đầu bằng định danh deterministic đã xác thực; không tự merge hai khách chỉ vì giống tên. Features lấy trước thời điểm ra quyết định, tránh dùng phản hồi chiến dịch sau đó. Holdout theo customer và thời gian; sample negatives có định nghĩa; loại kết quả chưa đủ observation window.</p>
+<h3>Công việc BA/QC</h3>
+<p>BA chốt business objective, action catalog, consent, suppression rule, attribution window, Customer 360 source-of-truth và tiêu chí doanh thu/lợi nhuận. Viết field mapping bằng SQL/dbt specification; vẽ journey bằng BPMN/draw.io; đặt backlog Jira và acceptance theo action.</p>
+<p>QC tạo customer fixtures: opt-out, vừa mua, đang khiếu nại, trùng định danh, hết hàng, vượt cap, khách không lịch sử. Postman kiểm tra decision API; SQL đối soát audience trước/sau; dashboard Power BI kiểm tra phân phối score và kết quả. Model tốt nhưng gửi nhầm người hoặc vi phạm opt-out vẫn là lỗi chặn release.</p>
+<p><strong>Thí nghiệm:</strong> randomize theo customer đủ điều kiện, baseline rule-based vs ML policy; đo incremental conversion/profit, opt-out và complaint. Tính cỡ mẫu/độ dài theo baseline thực tế; không kết luận chỉ vì một tuần có doanh thu cao. Offline dùng PR-AUC/lift@k, online mới đánh giá tác động kinh doanh.</p>
+<p><strong>Kế thừa VinDynamics:</strong> phân quyền tenant/site, gói dịch vụ, hành trình khách hàng, ticket/SLA và adoption telemetry giúp thương mại hóa robot; không đưa danh tính người đi qua camera vào CDP marketing.</p>
+<h2>12. Samsung AI Data Hub: quản trị vòng đời AI</h2>
+<h3>Căn cứ và use case</h3>
+<p><strong>[HS]</strong> Đây là dự án có căn cứ rõ nhất về workflow đào tạo và governance: CV trang 4–5 mô tả metadata, ownership, sensitivity, version, approval, training configuration, evaluation, promotion/rollback và lineage. <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/AI%20Hub/AI%20Hub%20%E2%80%93%20System%20Feature%20Description.pdf">Feature description</a> và <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/AI%20Hub/BA%20l%C3%A0m%20g%C3%AC.docx">BA làm gì</a> bổ sung chi tiết.</p>
+<p>AI Data Hub không nhất thiết tự có model dự đoán. Nó là <strong>nền tảng để các đội xây và quản lý AI</strong>. Ba use case chính: đăng ký/chia sẻ dataset; yêu cầu training và theo dõi run; đánh giá–phê duyệt–deploy model có truy vết. Không cần bịa thêm AI chatbot để gọi đây là dự án AI.</p>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/07-ai-data-hub.drawio.png" alt="AI Data Hub: governance và MLOps"></p>
+<h3>Kiến trúc đề xuất để giải thích implementation [TK]</h3>
+<p>React catalog → Spring Boot asset/workflow API → PostgreSQL metadata + MinIO artifacts → Camunda approval → Kubernetes Job/Argo Workflows chạy trainer → MLflow experiment/registry → evaluation runner → approval service → KServe deployment adapter → monitoring. Keycloak/OPA quản lý role/data scope. Tất cả tên công nghệ này là phương án minh họa; hồ sơ không xác nhận Samsung dùng stack này.</p>
+<p>Tách trạng thái các entity: Dataset <code>Draft→Approved→Published→Deprecated</code>; TrainingJob <code>Queued→Running→Succeeded/Failed/Cancelled</code>; ModelVersion <code>Registered→Validated/Rejected</code>; Deployment <code>Pending→Active→RolledBack</code>. “Model đang Running” là diễn đạt mơ hồ nếu thực ra training job đang chạy. Runtime registry hiện đại dùng version/alias; business workflow có thể vẫn gọi môi trường staging/production.</p>
+<h3>BA/QC và artifacts cụ thể</h3>
+<table>
+<thead>
+<tr>
+<th>Đầu việc</th>
+<th>Quy tắc cần chốt</th>
+<th>Deliverable/công cụ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dataset/model templates</td>
+<td>Required/optional field theo modality; owner/license/sensitivity/intended use</td>
+<td>Data dictionary, JSON schema, Figma</td>
+</tr>
+<tr>
+<td>Permission</td>
+<td>Function + data scope + lifecycle; download/deploy khác quyền view</td>
+<td>Permission matrix, negative cases; Postman/SQL</td>
+</tr>
+<tr>
+<td>Approval</td>
+<td>Conditional/parallel routing, approver động, delegate, reject/resubmit</td>
+<td>BPMN, decision tables; Camunda Modeler</td>
+</tr>
+<tr>
+<td>Training contract</td>
+<td>Dataset/model version bất biến, code commit, image digest, seed, hyperparameters, resource quota</td>
+<td>OpenAPI, run manifest, SRS</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td>Benchmark version, metric slice, threshold, reviewer; không sửa kết quả cũ</td>
+<td>Evaluation report, RTM, QC checklist</td>
+</tr>
+<tr>
+<td>Promotion/rollback</td>
+<td>Chỉ deploy artifact đã qua gate; compatibility và người duyệt</td>
+<td>Release manifest, rollback scenario</td>
+</tr>
+<tr>
+<td>Audit/lineage</td>
+<td>Dataset source → version → run → model → evaluation → deployment</td>
+<td>ERD/lineage diagram, SQL reconciliation</td>
+</tr>
+</tbody></table>
+<p><strong>Test khó:</strong> một dataset bị thu hồi quyền sau khi job đã queued. Hệ thống cần policy rõ: chặn job chưa chạy; job đang chạy xử lý theo quyết định được duyệt, artifact sinh ra không tự được publish. Không chỉ ẩn dataset khỏi catalog rồi coi là xong.</p>
+<p><strong>Test race:</strong> hai người approve cùng request; owner sửa config trong khi chờ duyệt; callback job gửi lặp; GPU hết tài nguyên; train fail giữa chừng; model đạt metric tổng nhưng fail tập ngoại lệ. QC kiểm tra trạng thái, audit, resource cleanup và kết quả hiển thị.</p>
+<p><strong>Cách kể:</strong> “Ở AI Hub, tôi chuẩn hóa quan hệ giữa dataset, model, training job, evaluation và deployment. Tôi thiết kế người nào được làm gì ở từng trạng thái, điều gì cần phê duyệt, và làm sao truy ngược một model production đến dữ liệu và kết quả đánh giá. Đó là kinh nghiệm MLOps ở góc độ BA hệ thống và governance.”</p>
+<h2>13. Samsung Smart Factory — hai use case Machine Learning trên Azure</h2>
+<h3>Căn cứ và phạm vi mở rộng</h3>
+<p><strong>[HS]</strong> CV trang 4–5 có equipment hierarchy, monitoring/log/alarm, maintenance/OEE, WMS, QMS và ERP mapping. <strong>[TK]</strong> Azure, hai ML use case và AMR/fleet bên dưới là giải pháp bổ sung theo yêu cầu; chưa có bằng chứng Đức đã triển khai Azure hay fleet robot tại Samsung. Kinh nghiệm fleet tracking được CV nhắc trực tiếp ở <strong>V-Tracking</strong>, có thể dùng làm bằng chứng bổ trợ nhưng không tráo thành Smart Factory.</p>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/06-smart-factory-azure.drawio.png" alt="Smart Factory trên Microsoft Azure"></p>
+<h3>13.1. Kiến trúc Microsoft Cloud cụ thể [TK]</h3>
+<table>
+<thead>
+<tr>
+<th>Lớp</th>
+<th>Công nghệ</th>
+<th>Thiết kế và trách nhiệm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Máy/OT</td>
+<td>PLC, sensor, OPC UA server; adapter Modbus khi cần</td>
+<td>Chuẩn hóa tag, timestamp, unit, machine ID; inventory trước khi chọn connector</td>
+</tr>
+<tr>
+<td>Edge</td>
+<td>Industrial PC chạy .NET/Python OPC UA client, Docker; SQLite buffer</td>
+<td>Làm sạch, aggregate, inference cục bộ; tách mạng OT; không đưa vòng điều khiển máy lên cloud</td>
+</tr>
+<tr>
+<td>Device identity</td>
+<td>Azure IoT Hub Standard, Device Provisioning Service, X.509</td>
+<td>Onboarding, credentials theo thiết bị; revoke/rotate certificate</td>
+</tr>
+<tr>
+<td>State/config</td>
+<td>IoT Hub device twins</td>
+<td>Desired config và reported applied version; ACK không đồng nghĩa đã đạt trạng thái mong muốn</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>IoT Hub routing → Event Hubs → Stream Analytics</td>
+<td>Xử lý stream, event-time/window, lateness, dedupe nghiệp vụ</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>ADLS Gen2 raw/curated; Azure Data Explorer telemetry; Azure SQL nghiệp vụ</td>
+<td>Raw bất biến; time-series truy vấn nhanh; transactional master/work order</td>
+</tr>
+<tr>
+<td>ML</td>
+<td>Azure ML pipelines, compute, registry, managed endpoints; MLflow</td>
+<td>Train/evaluate/register; batch scoring hoặc online theo nhu cầu</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>ASP.NET Core trên Azure Container Apps; API Management; Service Bus</td>
+<td>Equipment/maintenance/QMS API; hàng đợi công việc và DLQ</td>
+</tr>
+<tr>
+<td>Observability/security</td>
+<td>Azure Monitor, Application Insights, Log Analytics; Entra ID, Key Vault, private endpoints</td>
+<td>Theo dõi pipeline/device/model; phân quyền OT/IT/site và audit</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>Azure DevOps, Azure Container Registry</td>
+<td>CI/CD image/config/model manifest; rollout theo site và rollback</td>
+</tr>
+<tr>
+<td>Reporting</td>
+<td>Power BI</td>
+<td>OEE, downtime, alarm, chất lượng, bảo trì và hiệu quả ML</td>
+</tr>
+</tbody></table>
+<p>IoT Hub device twins có desired/reported properties phục vụ đồng bộ cấu hình; chúng không phải bản mô phỏng 3D của nhà máy. Azure ML hỗ trợ pipeline/registry/lineage trong MLOps. <a href="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Device twins</a>, <a href="https://learn.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment?view=azureml-api-2">Azure ML MLOps</a>.</p>
+<p>Thiết kế này chủ động dùng gateway container để tránh gắn toàn bộ giải pháp vào một runtime edge chưa kiểm tra vòng đời hỗ trợ. Khi lựa chọn Azure IoT Operations hoặc IoT Edge cần xác minh license, phần cứng, hỗ trợ và roadmap tại thời điểm triển khai. ADLS, ADX, SQL có thể giảm bớt ở pilot; đây là phân lớp theo nhu cầu, không bắt buộc mua đủ mọi dịch vụ.</p>
+<h3>13.2. Use case ML số 1: bảo trì dự đoán</h3>
+<p><strong>Bài toán:</strong> dự đoán nguy cơ lỗi máy trong 7 ngày để lên lịch kiểm tra. Input gồm vibration RMS/kurtosis, nhiệt độ, dòng điện, operating hours, alarm history, load và maintenance history. Output <code>failure_risk</code>, <code>time_horizon</code>, <code>reason_codes</code>, <code>recommended_inspection</code>, <code>valid_until</code>; chưa đủ nhãn lỗi thì dùng anomaly detection và gọi đúng tên.</p>
+<p>Pipeline: sensor → edge aggregation → IoT Hub/Event Hubs → ADX/ADLS → feature windows → Azure ML train <strong>XGBoost</strong> supervised nếu nhãn đủ; <strong>IsolationForest</strong> làm baseline phát hiện bất thường khi thiếu nhãn → endpoint/batch prediction → maintenance API → work order chờ kỹ thuật viên xác nhận. Không tự dừng máy chỉ vì score ML cao; interlock vận hành là hệ riêng.</p>
+<p><strong>BA:</strong> định nghĩa failure event, downtime planned/unplanned, cửa sổ dự báo, lead time hữu ích, năng lực đội bảo trì; làm mapping mã lỗi từ PLC sang taxonomy nghiệp vụ; phân biệt “đã bảo trì” với “đã hỏng”. Công cụ: SQL, Excel, draw.io, Jira, Power BI; đầu ra feature dictionary, label guide và maintenance workflow.</p>
+<p><strong>QC/dữ liệu:</strong> chia tập theo máy và thời gian; tránh leakage từ repair code sau sự cố; kiểm tra đơn vị °C/°F, timestamp lệch, sensor bị kẹt một giá trị, missing và overload. Đo precision/recall event, cảnh báo giả/machine-day, lead time và tỷ lệ phát hiện trước hỏng; báo cáo từng machine family. Nếu đổi loại máy phải kiểm tra domain shift, không dùng threshold cũ mặc định.</p>
+<p><strong>Training contribution:</strong> BA/QC curate lịch sử lỗi, liên kết sensor snapshot với incident/work order, adjudicate label với bảo trì; engineer chạy train; QC so baseline và candidate trên holdout theo thời gian, rồi shadow trước khi dùng để tạo đề xuất.</p>
+<h3>13.3. Use case ML số 2: phát hiện lỗi ngoại quan trên dây chuyền</h3>
+<p><strong>Bài toán:</strong> phát hiện thiếu linh kiện, trầy xước hoặc sai lắp ráp theo SKU/công đoạn. Input ảnh camera công nghiệp + <code>lot_id</code>, <code>serial_no</code>, <code>station_id</code>, <code>recipe_version</code>; output defect class, bounding box/mask, confidence, evidence image và disposition đề xuất.</p>
+<p>Pipeline: camera trigger → edge preprocess → <strong>YOLOX</strong> detection cho lỗi có đủ nhãn; <strong>PatchCore trong anomalib</strong> là phương án khi chủ yếu có mẫu tốt → ONNX Runtime/TensorRT inference → QMS API → người kiểm tra xác nhận rework/scrap/release → dữ liệu label đưa về ADLS/Azure ML. Recipe version và lighting setup phải đi cùng model compatibility; không phát hành một model cho mọi SKU chỉ vì cùng camera. Tham khảo thư viện <a href="https://github.com/open-edge-platform/anomalib">anomalib</a> để khảo sát phương án anomaly detection; cần benchmark trên lỗi nhỏ và độ phân giải ảnh thực tế.</p>
+<p><strong>BA:</strong> định nghĩa defect taxonomy, mức độ, sampling policy, traceability lot–machine–material, quyền override và thời hạn re-inspection. <strong>QC:</strong> gán nhãn CVAT, dùng holdout theo lot/ca/SKU; đo false accept (lỗi lọt) và false reject (hàng tốt bị loại), latency so với takt time, ảnh thiếu/trigger lệch và lỗi ánh sáng. Python/OpenCV, SQL/ADX, CVAT, Azure ML/MLflow, Postman là bộ công cụ đề xuất.</p>
+<p>Test khi serial scan thất bại phải đưa sản phẩm vào trạng thái chờ xử lý/luồng được phê duyệt, không gán ảnh sang sản phẩm kế tiếp. Test mất mạng: lưu local queue cùng ID/hash; đồng bộ lại không tạo duplicate inspection. Test camera hỏng: health fault phải phân biệt với “không phát hiện lỗi”.</p>
+<h3>13.4. Device health, cấu hình, logging và release</h3>
+<p>Health gồm connectivity, sensor freshness, data quality, CPU/GPU temperature, storage, clock skew và model runtime; online chưa chắc healthy. Heartbeat và observed telemetry tách riêng. Monitor tuổi dữ liệu theo event time; buffer giới hạn dung lượng/retention; ưu tiên alarm, kiểm soát replay và backpressure.</p>
+<p>Configuration có <code>config_version</code>, desired/reported, actor và approved_at; deployment manifest liên kết firmware, adapter, model, feature schema và recipe. Edge chỉ nhận artifact ký/hash đúng và tương thích; rollout một máy test → một line → một site; rollback cả model và preprocessing khi cần. Thông số tần suất/timeout do measurement và vận hành chốt, không lấy số giả làm cam kết.</p>
+<h3>13.5. Fleet management kế thừa được gì?</h3>
+<p>Từ equipment hierarchy suy ra <code>site–zone–robot–component</code>; availability/maintenance chuyển thành ready/degraded/out-of-service; work order/SLA chuyển thành mission/incident; lot traceability chuyển thành mission evidence chain. Nếu thêm AMR, dùng fleet adapter/Open-RMF để nghiên cứu điều phối tuyến và chia sẻ tài nguyên; đây là <strong>mở rộng</strong>, không thuộc hai use case ML trên và không chứng minh kinh nghiệm humanoid locomotion.</p>
+<p><strong>Cách kể:</strong> “Tôi đã làm equipment, monitoring, maintenance, quality và ERP integration trong Smart Factory. Nếu mở rộng lên Azure và ML, tôi có thể thiết kế data contract từ sensor tới feature, làm rõ nhãn lỗi và quy trình nhận cảnh báo, rồi nghiệm thu cả model lẫn end-to-end. Đây cũng là nền tảng để tiếp cận device health và fleet operations.”</p>
+<h2>14. Đối chiếu JD VinDynamics và chuẩn bị bảo vệ kinh nghiệm</h2>
+<p>JD đặt trọng tâm vào yêu cầu rõ ràng, tích hợp, phối hợp phát triển, truy vết, UAT/field feedback và phân định trách nhiệm. Bảng dưới là mapping riêng từ hồ sơ và phương án chuẩn bị, không phải trích nguyên văn JD. <a href="https://vindynamics.net/vi/career/senior-business-analyst-001114.html">JD Senior Business Analyst</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Năng lực cần thể hiện</th>
+<th>Ví dụ mạnh nhất</th>
+<th>Artifact nên đem kể</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Discovery, AS-IS/TO-BE, constraint</td>
+<td>Smart Safe, một cửa, Smart Factory</td>
+<td>Workshop note, use-case map, assumption log</td>
+</tr>
+<tr>
+<td>User story/FR/NFR/AC</td>
+<td>HRAI, mChat, Copilot</td>
+<td>Một story có Gherkin và ngoại lệ đo được</td>
+</tr>
+<tr>
+<td>API, data flow, state, fallback</td>
+<td>Smart Safe, VPHC, OCR</td>
+<td>Sequence + payload + state transition + error table</td>
+</tr>
+<tr>
+<td>AI evaluation</td>
+<td>HRAI, OCR, một cửa</td>
+<td>Gold schema, rubric, confusion/error analysis</td>
+</tr>
+<tr>
+<td>Agile daily collaboration</td>
+<td>CV Viettel/Samsung</td>
+<td>Story refinement, clarification log, demo acceptance</td>
+</tr>
+<tr>
+<td>Change/traceability/baseline</td>
+<td>AI Hub, chính phủ</td>
+<td>Requirement → story → test → result → release</td>
+</tr>
+<tr>
+<td>UAT/production verification</td>
+<td>Smart Safe, OCR, AI products trong CV</td>
+<td>UAT report, defect triage, re-validation</td>
+</tr>
+<tr>
+<td>Cross-functional ownership</td>
+<td>Lead BA, PO trong CV</td>
+<td>RACI, trade-off và quyết định được ghi lại</td>
+</tr>
+<tr>
+<td>SQL/logs/Jira/Confluence/English</td>
+<td>CV skills; làm việc HQ Korea</td>
+<td>Một query, một trace và lời giải thích tiếng Anh</td>
+</tr>
+<tr>
+<td>Robotics/ROS2/HRI/robot safety</td>
+<td>Kiến thức và case ở file thứ hai</td>
+<td>Nêu rõ phần đang chuyển đổi ngành; không tự nhận đã vận hành humanoid</td>
+</tr>
+<tr>
+<td>Edge/cloud/config/release</td>
+<td>Smart Safe/Factory; Azure đề xuất</td>
+<td>Online ≠ healthy, desired ≠ applied, rollback manifest</td>
+</tr>
+</tbody></table>
+<p><strong>Điểm cần nói chính xác về số năm:</strong> CV tự mô tả 5 năm kinh nghiệm và có vai trò BA từ 02/2023; theo mốc 16/11/2026, riêng giai đoạn ghi chức danh BA từ 02/2023 chưa tròn 4 năm. Giai đoạn 2020–2023 là developer. Nếu muốn chứng minh yêu cầu 4+ năm BA/Technical BA/System Analyst, cần chỉ ra công việc phân tích hệ thống thực tế trong giai đoạn developer; không đổi tên chức danh hoặc cộng năm không giải thích. Điều kiện 2+ năm tích hợp nên bảo vệ bằng dự án và thời gian cụ thể.</p>
+<h3>Các câu hỏi dễ bị hỏi sâu</h3>
+<ol>
+<li><strong>Anh tự train gì?</strong> Trả theo model/task đã thực làm; nếu chỉ dữ liệu/QA thì nêu đúng phạm vi, artifact và phối hợp engineer. Với model chưa xác nhận, dùng “phương án tôi đề xuất là…”.</li>
+<li><strong>Tại sao RAG chứ không fine-tune?</strong> Tri thức cần cập nhật, provenance, hiệu lực và ACL phù hợp retrieval; fine-tune phục vụ hành vi/format/task khi có dữ liệu và bằng chứng cần thiết.</li>
+<li><strong>Model đúng 95% nghĩa là gì?</strong> Hỏi metric, unit, dataset/split, thời gian, lớp hiếm, confidence interval và cost of error. Không dùng một tỷ lệ không định nghĩa.</li>
+<li><strong>PASS có tự thành training sample?</strong> Không; cần gold review, nguồn, dedupe, quyền sử dụng và split; tránh model tự củng cố sai sót.</li>
+<li><strong>Tại sao AI trả đúng nhưng test vẫn fail?</strong> Có thể sai quyền, stale state, tool ghi trùng, citation sai hoặc latency ngoài yêu cầu.</li>
+<li><strong>Model production bị lỗi thì rollback gì?</strong> Model/adapter, prompt, preprocessing, index, policy và API compatibility theo manifest; không chỉ đổi file weights.</li>
+<li><strong>Anh làm khác AI Engineer thế nào?</strong> Tôi sở hữu requirement/data semantics/evaluation và bằng chứng chất lượng; engineer sở hữu implementation/thuật toán/hạ tầng chuyên sâu; Tech Lead chốt HOW.</li>
+<li><strong>Tori anh đã làm thật chưa?</strong> Chưa; đây là case nghiên cứu bám JD để hệ thống hóa cách làm BA/QC. Không sử dụng bản nhập vai như lịch sử công tác.</li>
+</ol>
+<h3>Danh mục nguồn nội bộ để truy ngược</h3>
+<table>
+<thead>
+<tr>
+<th>Mã</th>
+<th>Nguồn</th>
+<th>Cách dùng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S01</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Kim%20%C4%90%E1%BB%A9c%20CV%20full.pdf">CV full</a> và <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Kim%20%C4%90%E1%BB%A9c%20CV%20r%C3%BAt%20g%E1%BB%8Dn.pdf">CV rút gọn</a></td>
+<td>Vai trò, thời gian, phạm vi và kỹ năng tự khai</td>
+</tr>
+<tr>
+<td>S02</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C3%B3%20AI%20t%C3%B4i%20%C4%91%C3%A3%20tham%20gia.txt">Danh sách 10 dự án</a></td>
+<td>Phạm vi bắt buộc của tài liệu</td>
+</tr>
+<tr>
+<td>S03</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Tori%20AI/JD_TechcomBank.pdf">JD BA &amp; QA</a></td>
+<td>Trách nhiệm công việc tham khảo; không phải bằng chứng đã tham gia</td>
+</tr>
+<tr>
+<td>S04</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Tori%20AI/0.%20Usecases%20TCLife.pdf">Use cases TCLife</a></td>
+<td>Nguồn nghiên cứu; đã phân biệt công bố và suy luận</td>
+</tr>
+<tr>
+<td>S05</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/Ph%E1%BB%8Fng%20v%E1%BA%A5n/2.%20Lu%E1%BB%93ng%20Training%20AI%20HRAI.pdf">Luồng Training HRAI</a>, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/Ph%E1%BB%8Fng%20v%E1%BA%A5n/C%C3%A1ch%20l%C3%A0m%20BA-QA%20HRAI.pdf">Cách làm BA-QA</a></td>
+<td>Tham khảo feature, snapshot, feedback; không coi giả định stack là thực tế</td>
+</tr>
+<tr>
+<td>S06</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/AI%20Hub/AI%20Hub%20%E2%80%93%20System%20Feature%20Description.pdf">AI Hub feature description</a></td>
+<td>Lifecycle, governance, training/evaluation workflow</td>
+</tr>
+<tr>
+<td>S07</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/Projects%20VCM/mChat/VSS%20mChat%20SRS.docx">mChat SRS</a>, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/Projects%20VCM/mChat/mChat_D%C6%B0%C6%A1ng%20%C4%91%C4%83ng%20k%C3%BD%20s%C3%A1ng%20ki%E1%BA%BFn%20%C3%BD%20t%C6%B0%E1%BB%9Fng.docx">sáng kiến</a></td>
+<td>Tách nền tảng hiện hữu với phần AI đề xuất</td>
+</tr>
+<tr>
+<td>S08</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/Projects%20VCM/RPA%20usecases.docx">RPA use cases</a></td>
+<td>Nghiệp vụ chứng từ, logistics, hợp đồng</td>
+</tr>
+<tr>
+<td>S09</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/C%C3%A1c%20d%E1%BB%B1%20%C3%A1n%20c%C5%A9/D%E1%BB%B1%20%C3%A1n%20v%C3%A0%20t%C3%ADnh%20n%C4%83ng/Danh_muc_tinh_nang_va_7_cong_viec_BA_Viettel_Samsung.docx">Tổng hợp tính năng và BA</a></td>
+<td>Nguồn tổng hợp phụ; đối chiếu với CV và tài liệu gốc</td>
+</tr>
+<tr>
+<td>S10</td>
+<td><a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/ChatGPT/Ki%E1%BA%BFn%20tr%C3%BAc%20d%E1%BB%B1%20%C3%A1n%20RPA%20OCR.md">Kiến trúc RPA OCR tham khảo</a></td>
+<td>Thiết kế bổ sung, không chứng nhận triển khai</td>
+</tr>
+</tbody></table>
+<p>Xem tiếp <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/%C4%90%E1%BB%A9c%20PO%20l%C3%A0m%20d%E1%BB%B1%20%C3%A1n%20VinDynamics.md">Đức PO làm dự án VinDynamics</a> để chuyển các năng lực trên sang case đội robot an ninh VinUni.</p>
+</html>

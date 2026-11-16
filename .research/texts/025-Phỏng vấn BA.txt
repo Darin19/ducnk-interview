@@ -1,0 +1,79 @@
+HRAI
+Giới thiệu hệ thống
+Liệt kê các trường dữ liệu, tần suất đồng bộ, trường nào có thể phân tích => insight
+Làm việc với stakeholders để ra danh sách Tín hiệu nhân sự (feature programmming)
+Tham gia thiết kế Database dựa trên API đồng bộ + Chuẩn hóa dữ liệu + Viết logic để Dev thực hiện ETL chuẩn hóa và chuyển đổi dữ liệu
+Thiết kế UI/UX
+Thiết kế luồng AI (Roberta + XGboost + Qwen3.5 9B) 
+Dán nhãn, chấm điểm trọng số cho từng trường - tín hiệu
+Tạo bộ dữ liệu Training => JSON => Unsloth; Pairwise (pandas, allpairspy); ChatGPT sinh kịch bản suy luận (1500-2000 testcase)
+Tạo bộ dữ liệu kiểm thử (validate) => Insert vào DB bằng SQL/csv
+Không có luồng kiểm soát dù đã đề xuất với sếp
+Vận hành luồng Airflow
+2 bước:
+1. Insert dữ liệu nhân sự với các feature
+2. Insert dữ liệu nhân sự thô (python)
+
+mChat
+Tái cấu trúc các module hiện có: rà soát chức năng, luồng xử lý và phản hồi người dùng; sau đó gom/tách chức năng, chuẩn hóa trạng thái hội thoại, phân quyền, nhãn, SLA và business rules.
+Bổ sung chức năng vận hành: phân tích và thiết kế luồng tự động phân bổ hội thoại theo kênh, nhóm, kỹ năng và trạng thái Agent; cấu hình tin nhắn tự động và kịch bản phản hồi bình luận livestream.
+Thiết kế chức năng Chiến dịch: xây dựng cơ chế chủ động hiển thị tin nhắn trên Website theo URL, thời gian khách ở lại trang, lịch chạy và giờ làm việc nhằm tăng tương tác và chuyển đổi.
+Xây dựng toàn bộ chức năng AI mới: xác định đầu vào, đầu ra, tiêu chuẩn và logic để AI phân tích ý định, nhu cầu, cảm xúc, mức độ quan tâm, chất lượng lead, tóm tắt hội thoại và gợi ý hành động cho Agent.
+Thực hiện API và data mapping: ánh xạ dữ liệu hội thoại, khách hàng và sản phẩm từ mChat/ERP sang AI; định nghĩa request, response, trường lưu Database, cách hiển thị UI và xử lý lỗi, timeout, retry.
+Chuẩn bị dữ liệu và training AI: truy vấn, làm sạch, phân loại và dán nhãn hội thoại; xây dựng bộ dữ liệu training, test và các trường hợp đặc biệt để cải thiện khả năng nhận diện của AI.
+Kiểm thử và đánh giá AI: tạo testcase, so sánh kết quả AI với kết quả kỳ vọng, chấm Pass/Fail, phân tích lỗi và phản hồi để điều chỉnh dữ liệu, prompt, business rules hoặc model.
+Làm việc với stakeholders: phối hợp với Sales, CSKH, Marketing, vận hành và đội AI để thống nhất taxonomy, tiêu chuẩn phân loại, ngưỡng confidence và tiêu chí nghiệm thu.
+Rule phân bổ hội thoại: theo kênh, nhóm/phòng ban, nhãn/thuộc tính khách hàng, loại yêu cầu, mức ưu tiên/SLA, kỹ năng và tải xử lý của Agent.
+Cơ chế phân quyền: theo vai trò QTV–GSV–TVV, kết hợp phạm vi kênh, nhóm và dữ liệu hội thoại được phép xem/xử lý.
+
+Dự án RPA & OCR ứng dụng AI
+Dự án tự động hóa xử lý chứng từ cho các nghiệp vụ xuất nhập khẩu, logistics, quản lý hợp đồng và mua sắm. OCR/IDP nhận dạng, phân loại và bóc tách dữ liệu từ Invoice, Packing List, Bill of Lading, hợp đồng, báo giá; RPA kiểm tra dữ liệu, điền vào hệ thống nghiệp vụ, đối soát chứng từ và sinh cảnh báo sai lệch.
+
+Vai trò Business Analyst
++ Khảo sát quy trình với các phòng nghiệp vụ, xác định bước nào dùng OCR, bước nào dùng RPA và bước nào cần người kiểm tra.
++ Định nghĩa trường dữ liệu cần bóc tách; ví dụ hợp đồng gồm số hợp đồng, đối tác, thời hạn, giá trị và các mốc thanh toán.
++ Mapping dữ liệu OCR sang form hệ thống; ví dụ đưa thông tin hợp đồng vào QLHĐ hoặc dữ liệu Invoice/PL vào hồ sơ khai báo.
++ Viết business rule kiểm tra; ví dụ tổng Invoice phải bằng tổng các dòng, số lượng Invoice phải khớp Packing List, trường confidence thấp phải chuyển sang màn hình review.
++ Thiết kế workflow, mockup màn hình kiểm tra kết quả, highlight dữ liệu sai và xử lý ngoại lệ.
++ Xây dựng testcase từ chứng từ thực tế, kiểm thử độ chính xác OCR, luồng bot RPA, đối soát dữ liệu và phối hợp người dùng UAT trước khi triển khai.
+
+Dự án 1: OCR quét các hợp đồng, trích xuất thông tin, điền vào hệ thống quản lý hợp đồng qua API
++ Số hợp đồng + Ngày ký hợp đồng + Loại hợp đồng + Thông tin Bên A => Tên đơn vị, mã số thuế, địa chỉ, người đại diện. + Thông tin Bên B => Tên đối tác, mã số thuế, địa chỉ, người đại diện. + Nội dung hoặc phạm vi hợp đồng => Hàng hóa, dịch vụ, công việc cần cung cấp. + Giá trị hợp đồng => Giá trị trước thuế, thuế VAT và tổng giá trị thanh toán. + Thời hạn thực hiện hợp đồng => Ngày hiệu lực, ngày hết hạn, thời gian giao hàng hoặc triển khai. + Điều khoản thanh toán => Hình thức thanh toán, số tài khoản, tiến độ và thời hạn thanh toán. + Thông tin ký kết và phê duyệt => Người đại diện, chức vụ, chữ ký, con dấu và thông tin ủy quyền nếu có.
+
+UC1 - Tạo hồ sơ khai báo hải quan.
+Đầu vào: Invoice, Packing list, Bill of Lading (B/L), C/O, Hợp đồng (PDF/scan/ảnh).
+Đầu ra:
++ Bản nháp tờ khai hải quan
++ Dữ liệu theo dõi tập trung và báo cáo Google Sheet
+Mục tiêu: Từ bộ chứng từ, tạo draft tờ khai gần đầy đủ, nhân viên chủ yếu review nhấn gửi. Chuẩn hóa dữ liệu đầu vào cho toàn bộ quy trình XNK.
+OCR thực thi:
+• Nhận file từ email/thư mục rồi phân loại chứng từ.
+• Trích xuất trường chính: người bán/mua, số invoice, mô tả hàng, số lượng, trị giá, gross/net, điều kiện giao hàng, HS code… 
+• Chuẩn hóa định dạng dữ liệu
+• Gộp line-item.
+RPA thực thi:
+• Mapping dữ liệu, tự điền form trên hệ thống khai báo, lưu bản nháp. 
+• Tạo checklist thiếu chứng từ/thiếu trường bắt buộc.
+• Validate nhanh: Kiểm tra độ chính xác dữ liệu trước khi nộp tờ khai (rule kiểm tra chéo, highlight trường và ảnh scan hỗ trợ đối chiếu nhanh…)
+
+UC2 - Đối soát chứng từ trước khai báo hải quan.
+Đầu vào: Hợp đồng, Invoice, Packing List, (có thể gồm tờ khai nháp). 
+Đầu ra: Bảng chênh lệch và danh sách ticket xử lý. 
+Mục tiêu: Phát hiện lệch số lượng/trị giá/mô tả/điều kiện giao hàng trước khi truyền tờ khai.
+OCR thực thi:
+Trích các trường cần so khớp từ từng chứng từ: tên hàng, số lượng, trị giá, điều kiện giao hàng, HS (nếu có).
+RPA thực thi:
+• Tự so sánh giữa chứng từ (Invoice ↔ PL ↔ Hợp đồng ↔ tờ khai nháp).
+• Sinh “cảnh báo lệch” theo mức độ (lệch lớn ưu tiên trước).
+• Validate nhanh: Màn hình 1 trang hiển thị các chứng từ cạnh nhau, highlight chỗ lệch.
+
+UC4 - Tra cứu HS code mới nhất và so khớp với dữ liệu nội bộ
+Đầu vào: Mô tả hàng, mã hàng nội bộ, HS code đang dùng và nguồn tra cứu (web tổng cục hải quan…).
+Đầu ra: HS code gợi ý/khớp, cảnh báo sai khác, danh sách mặt hàng cần xác nhận.
+Mục tiêu: Giảm rủi ro khai sai HS dẫn đến sai thuế/sai chính sách.
+OCR thực thi:
+• Trích HS code từ Invoice, PL, Hợp đồng; chuẩn hóa HS code.
+• Trích mô tả hàng, mã hàng.
+RPA thực thi:
+• Tự tra cứu HS theo mô tả hàng trên nguồn được cấu hình (web/biểu thuế/DB nội bộ), sau đó so khớp với HS đang dùng trong dữ liệu nội bộ/chứng từ. 
+• Validate nhanh: Nếu phát hiện không khớp, hệ thống hiển thị top gợi ý HS code + lý do gợi ý (dựa trên từ khóa/mô tả), đồng thời đánh dấu “Cần kiểm tra” và yêu cầu người dùng xác nhận/chọn trước khi dùng để điền tờ khai.

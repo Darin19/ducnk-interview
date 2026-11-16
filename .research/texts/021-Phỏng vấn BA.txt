@@ -1,0 +1,79 @@
+Intro 
+Good morning. My name is Nguyen Kim Duc. I’m 28 years old, and I graduated from the Posts and Telecommunications Institute of Technology, or PTIT, with an Engineer’s degree in Information Technology.
+Currently, I am working as a Business Analyst and UI/UX Designer at Viettel Commerce. I have around 7 years of experience in the technology industry, including nearly 4 years as a Business Analyst.
+I started my career as a web developer at Viettel Business Solutions. After that, I worked on banking systems at JITS and FPT, which helped me build a strong technical foundation in software development, APIs, databases, and system architecture.
+At the beginning of 2023, I officially transitioned into a full-time Business Analyst role at Samsung R&D Vietnam. After passing several rounds of programming and algorithm assessments, I was selected by the Head of the Solution Center to become a BA because of my logical thinking, time-management skills, and ability to handle multiple tasks effectively.
+Since then, I have led and contributed to many projects across different domains, including AI and machine learning platforms, Smart Factory, IoT monitoring, banking, ERP, e-commerce and omnichannel systems, logistics, HR and payroll, and RPA and OCR.
+I would describe myself as a well-rounded/versatile/full-stack Business Analyst. I can participate throughout the entire product lifecycle, from initial idea, requirement analysis, and UI/UX design to development support, testing, deployment, and large-scale rollout.
+My key strengths are UI/UX design, systems thinking, and strong technical understanding. My next goal is to grow further as a Senior Business Analyst and contribute to complex enterprise and AI-driven products.
+
+AI Hub
+I would like to start with the AI Hub project, one of the most important projects I worked on at Samsung R&D Vietnam.
+AI Hub was developed based on requirements from Samsung Headquarters in Korea. I was fortunate to be trusted as the Lead Business Analyst for this project. In simple terms, AI Hub was an internal AI asset lifecycle management platform and also part of the broader Samsung AI Platform ecosystem.
+The main purpose of AI Hub was to help AI teams manage datasets, AI models, training workflows, evaluation results, and related documents in a secure, standardized, and reusable way. Without this platform, datasets and models could be scattered across different teams, making it difficult to track ownership, version history, data usage, and compliance. This was especially important because using unauthorized, sensitive, copyrighted, or legally restricted datasets for AI training could create serious risks, including privacy violations, intellectual property disputes, regulatory issues, and even lawsuits.
+To solve these problems, AI Hub was built with several core modules: Dataset Management, Data Source Management, Approval Workflow Management, Dataset and Model Lifecycle Status, and Permission and Access Control. Besides these core modules, the system also included Model Registry, Dataset Catalog and Search, Training Job Management, Evaluation and Benchmarking, Notification Templates, Audit Trail, and Dashboard Reporting.
+With Dataset Management, each dataset had a standard Dataset Card. It stored key information such as owner, sponsor, department, data type, schema, sensitivity level, usage scope, version, labels, and related models. The system also supported dataset templates, so different types of data, such as tabular data, image data, text data, or log data, could follow the same registration standard.
+Data Source Management helped control where the data came from. The source could be an internal database, API, file storage, data warehouse, external vendor, or purchased data package. Some sensitive actions, such as uploading new files, changing source connections, downloading raw data, or deleting source data, had to go through approval.
+Approval Workflow Management was used to control important actions, such as asset purchase requests, dataset or model registration, sharing requests, edit or delete requests, data source approval, training job approval, and model deployment approval. The workflow supported multi-level approval, parallel approval, conditional routing, automatic approver assignment, comments, rejection, change requests, SLA tracking, and notifications.
+Dataset and Model Lifecycle Status helped the system control the status of each asset, such as Draft, Under Review, Approved, Published, In Use, Deprecated, Archived, Staging, and Production. These statuses were important because they decided what users could do at each stage.
+Permission and Access Control helped control who could view, edit, use, share, download, approve, or deploy AI assets. The permission logic was based on role, department, owner, sensitivity level, asset status, and usage scope.
+Other modules also supported the full AI lifecycle. Model Registry helped manage model information, model versions, and related datasets. Dataset Catalog and Search helped users find reusable datasets. Training Job Management helped users request and track training jobs. Evaluation and Benchmarking helped compare model performance. Audit Trail helped track who created, edited, deleted, shared, downloaded, or approved an asset. Dashboard Reporting helped managers monitor datasets, models, approvals, and governance status.
+Besides the system features, as the Lead Business Analyst, my main responsibilities included:
+Working with Korean experts, PM, developers, testers, and internal stakeholders to collect and clarify requirements.
+Analyzing business problems and proposing practical solutions, instead of only writing down user requests.
+Defining the feature list, priority, scope, and product roadmap.
+Writing BRD, SRS, FRD, user stories, acceptance criteria, business rules, and exception flows.
+Drawing business and system diagrams, such as process flows, data flows, activity diagrams, ERD, and lifecycle status flows.
+Designing wireframes, mockups, and screen flows for dataset, model, data source, approval, permission, catalog, dashboard, and asset detail pages.
+Mapping APIs from Swagger documents to each screen and feature, including request, response, fields, rules, error cases, and missing gaps.
+Designing Dataset Templates and Model Templates, including required fields, optional fields, data types, validation rules, and field dependencies.
+Designing the permission matrix based on role, department, owner, sponsor, contributor, sensitivity level, usage scope, and asset status.
+Designing reusable approval workflows for purchase requests, dataset/model registration, sharing, edit/delete, data source approval, training job approval, and model deployment approval.
+Designing dataset and model lifecycle statuses and defining which actions were allowed at each status.
+Analyzing Data Source Management, including source type, uploaded files, API/database connections, and actions such as view, edit, upload, update, download, and delete.
+Designing Dataset Catalog and Search logic, including search, filter, sorting, tags, bookmarks, recently viewed assets, access requests, and visibility rules.
+Analyzing Training Job, Evaluation, and Model Deployment flows, including dataset version selection, training parameters, job monitoring, model artifacts, evaluation metrics, and promotion to staging or production.
+Designing audit trail, notification, and dashboard requirements to support tracking, reporting, and governance.
+Defining data governance rules for metadata, ownership, sensitivity level, usage scope, lineage, retention, sharing, download, and audit control.
+Defining traceability rules between Dataset, Model, Training Job, Evaluation, and Deployment.
+Defining risk control rules for sensitive actions, such as downloading raw data, changing data sources, deleting assets, sharing restricted datasets, or deploying models to production.
+In this project, I worked closely with Korean experts who had strong expertise in Data Governance, Master Data Management, and AI platform operations. Every three to four months, they came to Vietnam for about one week to present key requirements and discuss the future direction of the platform. During those sessions, we clarified business needs, discussed solution options, finalized the scope, and aligned on the development roadmap.
+After each onsite working session, I continued to work with them remotely. Usually, the PM and I had one or two meetings with the Korean team every week to update progress, clarify open questions, confirm business rules, and handle requirement changes. Most of the detailed requirement confirmation was done through chat and Confluence documents, so that every decision, scope change, and business rule could be tracked clearly.
+For me, AI Hub was a very valuable project because it was not just a normal internal system. It was a platform-level product involving AI lifecycle management, data governance, model governance, permission control, approval workflow, and cross-department collaboration. It helped me understand how a large technology corporation manages AI assets in a secure, scalable, traceable, and compliant way.
+
+Các dự án chọn lọc tiếp theo+ Smart Safe+ HRAI+ mChat+ CDP (đang nghiên cứu)+ Smart Factory
+SMART SAFE
+Smart Safe is a safety and security monitoring platform using IoT technology for fire, explosion, and intrusion detection. The system integrates IoT devices, sensors (such as Gateway/Fire/Smoke/Door/PIR Motion/Glass Break), AI cameras, Google Maps, and real-time monitoring dashboards to help users detect incidents early, locate affected areas quickly, and respond in a timely manner. It supports real-time IoT monitoring of device status, connectivity, alerts, and abnormal conditions to ensure system reliability and operational safety. The system also monitors device status such as connection status, battery level, and device malfunctions in real time, and allows users to control IoT devices remotely to keep the system stable and safe. The platform also provides instant mass notification and alert mechanisms, allowing warnings to be sent to multiple users or responsible units at once. In addition, it includes flexible function-level and data-level permission management, enabling different user groups to access appropriate features, IoT device data, and monitoring scopes based on their roles and responsibilities.
+The project also manages buildings where IoT devices are installed. It has been deployed to around 400 Viettel Store locations nationwide, with more than 5,000 devices installed. It helps reduce the need for on-site security guards, lower fire and intrusion risks, and is estimated to bring about VND 30 billion in value per year.
+
+Trong dự án này, tôi là BA duy nhất và kiêm cùng lúc 3 vị trí BA, UI/UX Designer, Tester. Những việc tôi từng làm bao gồm:
+1. Khảo sát nhu cầu & xác định phạm vi
+Trao đổi với stakeholders để hiểu nhu cầu lắp đặt, giám sát cháy nổ, đột nhập, luồng cảnh báo và cách giám sát viên xử lý cảnh báo khi có hệ thống giám sát. Từ đó viết và chốt URD.
+Cùng PM xây dựng roadmap phát triển, phạm vi sản phẩm, danh sách phân hệ và chức năng.
+2. Phân tích nghiệp vụ & viết SRS
+Viết SRS, mô tả chi tiết tính năng, nghiệp vụ, luồng xử lý , làm cơ sở thống nhất cho development, testing và nghiệm thu.
+Thiết kế master data và các module quản lý: tòa nhà, siêu thị, thiết bị và cảnh báo, người dùng. Xác định các loại thiết bị, các loại cảnh báo.
+Xác định các nhóm người dùng và phạm vi quyền hạn => Thiết kế cơ chế phân quyền chức năng và phân quyền dữ liệu linh hoạt.
+Tạo Data Flow, Business Process Diagram, Activity Diagram, State Diagram.
+Với mỗi chức năng, tôi cung cấp giao diện minh họa và mô tả chi tiết pre-condition, post-condition, user flow, acceptance criteria và exception flow.
+Liệt kê chi tiết các trường thông tin trên từng màn hình, bao gồm ý nghĩa, ràng buộc và validate rule.
+Với từng tính năng, tôi xác định rõ business rules và logic xử lý, đặc biệt là cách hệ thống nhận bản tin từ thiết bị, tạo cảnh báo mới, tự đóng cảnh báo, cập nhật trạng thái thiết bị và thay đổi trạng thái cảnh báo theo thao tác của user.
+Thiết kế luồng phê duyệt đa cấp.
+Thiết kế các màn hình cấu hình tùy chỉnh, như luồng gửi SMS, template Email/SMS, giờ giám sát của cảm biến và cấu hình hiển thị trên bản đồ…
+Công cụ tôi sử dụng cho các tác vụ trên là: Confluence, Excel, Draw.io, Camunda, ChatGPT, Smartsheet, Github, IntelliJ Datagrip,…
+3. Thiết kế UI/UX
+Thiết kế UI/UX mockups bằng Figma và Visily, làm đầu vào cho Frontend Developer dựng giao diện.
+4. Thiết kế tích hợp, dữ liệu & kỹ thuật
+Thiết kế API trao đổi dữ liệu giữa IoT Gateway và Cloud server.
+Chuẩn hóa bản tin IoT, mã lệnh điều khiển thiết bị và tần suất gửi bản tin, quét thiết bị.
+Xác định và document các API tích hợp với ERP để đồng bộ dữ liệu User, Store, Position/Role, đồng thời tích hợp với Camera, Google Maps, hệ thống gửi SMS và Email.
+Vẽ ERD và hỗ trợ backend dev thiết kế database, xác định key, relationship và dữ liệu mapping giữa các bảng để phục vụ hiển thị trên màn hình.
+Tư vấn kiến trúc Microservices, kết hợp Redis và RabbitMQ để tối ưu hiệu năng, xử lý bất đồng bộ và đảm bảo khả năng mở rộng khi số lượng thiết bị tăng lớn. 
+Công cụ tôi sử dụng cho các tác vụ trên là: Postman, Swagger, dbdiagram.io
+5. Kiểm thử & nghiệm thu
+Dựa trên tài liệu SRS, tạo 300-400 UAT testcases và phân loại theo từng module với sự hỗ trợ của ChatGPT.
+Kiểm thử chức năng xuyên suốt quá trình phát triển và vận hành, áp dụng đa dạng phương thức kiểm thử như Functional, UAT, Regression, Integration, API, UI, Smoke và Performance Testing. Đồng thời, xây dựng chiến lược kiểm thử và chuyển đổi luồng chức năng trong SRS thành test scenarios, test cases và test data chi tiết.
+Đặc biệt, tôi luôn tập trung kiểm tra để đảm bảo các cảnh báo cháy nổ, đột nhập được hiển thị tức thời, đúng loại cảnh báo, đúng trạng thái và đúng logic xử lý.
+6. Triển khai & vận hành
+Viết tài liệu hướng dẫn sử dụng và đào tạo người dùng.
+Hoàn thành nghiệm thu và bàn giao. Hỗ trợ triển khai thực tế và vận hành sau go-live.

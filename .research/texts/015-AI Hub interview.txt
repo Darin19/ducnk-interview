@@ -1,0 +1,16 @@
+I would like to start with the AI Hub project, one of the most important projects I worked on at Samsung R&D Vietnam. AI Hub was developed based on requirements from Samsung Headquarters in Korea. I was trusted as the Lead Business Analyst and joined the full software development process for about eight months, from early idea to handover and pilot deployment.
+In simple terms, AI Hub was an internal AI asset lifecycle management platform and part of the Samsung AI Platform ecosystem. It helped AI teams manage datasets, models, training workflows, evaluation results, and documents in a secure and reusable way. Before AI Hub, datasets and models were stored separately, so ownership, version, usage, and approval status were hard to track. This created risks in traceability, quality control, compliance, privacy, and legal issues.
+AI Hub had core modules such as Dataset Management, Data Source Management, Approval Workflow, Lifecycle Status, Permission and Access Control, Model Registry, Dataset Catalog and Search, Training Job Management, Evaluation and Benchmarking, Audit Trail, and Dashboard Reporting.
+Dataset Management used a standard Dataset Card to store metadata such as owner, data type, schema, sensitivity level, usage scope, version, labels, and related models. Data Source Management controlled data origins. Sensitive actions like upload, download, source change, or delete had to go through approval. Lifecycle and permission rules controlled what users could do at each stage.
+As the Lead Business Analyst, my main responsibilities included:
+Working with Korean experts, PM, developers, testers, and stakeholders to collect and clarify requirements.
+Turning vague requirements into clear solutions and defining scope, priority, and roadmap.
+Writing BRD/SRS/FRD, user stories, acceptance criteria, business rules, and exception flows.
+Drawing process flows, data flows, ERD, lifecycle flows, wireframes, and screen flows.
+Mapping APIs from Swagger documents and designing templates, permission matrix, approval workflows, lifecycle statuses, audit trail, dashboard, governance, traceability, and risk control rules.
+Designing Dataset Templates and Model Templates, including required fields, data types, validation rules, and field dependencies.
+Designing the permission matrix based on role, department, owner, sensitivity level, usage scope, and asset status.
+Designing reusable approval workflows for dataset/model registration, sharing, edit/delete requests, data source approval, training job approval, and model deployment approval.
+Designing dataset and model lifecycle statuses and defining which actions were allowed at each status.
+I worked closely with Korean experts in Data Governance, Master Data Management, and AI platform operations. Every three months, they came to Vietnam for one week to present key requirements. After that, the PM and I had weekly remote meetings with them to update progress, clarify issues, and confirm business rules through chat and Confluence.
+For me, AI Hub was a valuable platform-level product. It helped me understand how a large technology company manages AI assets in a secure, scalable, traceable, and compliant way.

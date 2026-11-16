@@ -1,0 +1,2366 @@
+
+--- PAGE 1 ---
+1/68
+CV - Chi tiết dự án CV
+Đây là CV của tôi, những có những vùng kiến thức của tôi 
+ít, không sẵn sàng cho phỏng vấn, hãy nói rõ hơn những 
+mảng sau - trong ngữ cảnh projects trong CV. Nói về định 
+nghĩa, ứng dụng, ví dụ
+1. Banking với các nền tàng Backbase, Temenos
+Đồng thời dịch các công việc liên quan banking tôi từng 
+làm sang tiếng việt
+2. ERP tại Viettel
+Làm đối soát kế toán (vụ việc, tờ trình, khoản mục, nguồn 
+Đây là CV của tôi, những có những vùng kiến thức của tôi 
+ít, không sẵn sàng cho phỏng vấn, hãy nói rõ hơn những 
+mảng sau - trong ngữ cảnh projects trong CV. Nói về định 
+nghĩa, ứng dụng, ví dụ
+1. Banking với các nền tàng Backbase, Temenos
+Đồng thời dịch các công việc liên quan banking tôi từng 
+làm sang tiếng việt
+2. ERP tại Viettel
+Làm đối soát kế toán (vụ việc, tờ trình, khoản mục, nguồn 
+Trong CV hiện tại, bạn đã nêu Banking với Backbase/Temenos, dự án Mobile Banking và
+các hệ thống ngân hàng back-office; đồng thời liệt kê ERP Odoo tại Viettel Commerce và
+hai phân hệ Warehouse Management, Quality Management thuộc Samsung Smart
+Factory. Tuy nhiên, phần mô tả chưa thể hiện rõ chiều sâu nghiệp vụ, nên người phỏng
+vấn rất dễ hỏi tiếp. 
+Một nguyên tắc quan trọng: không biến kiến thức nền tảng thành kinh nghiệm trực tiếp.
+Ví dụ, nếu bạn chỉ tích hợp hệ thống với Temenos mà không trực tiếp cấu hình core
+banking, hãy nói “worked with/integrated with Temenos-based core banking”, không nói
+“implemented Temenos Core Banking”.
+1. Banking: Backbase, Temenos và các nghiệp vụ bạn từng
+làm
+1.1. Bức tranh tổng thể của một hệ thống ngân hàng số
+Có thể hình dung kiến trúc ngân hàng theo bốn lớp:
+Lớp Vai trò Ví dụ
+Kênh giao tiếp Giao diện cho khách hàng và
+nhân viên
+Mobile Banking, Internet
+Banking, Back-office
+Nguyen-Kim-Duc-TopCV.…
+PDF
+
+--- PAGE 2 ---
+2/68
+Lớp Vai trò Ví dụ
+Digital Banking
+Platform
+Quản lý hành trình số, màn
+hình, workflow, trải nghiệm
+Backbase
+Integration/Middlewa
+re
+Kết nối API, orchestration,
+routing, security
+API Gateway, ESB, microservices
+Core Banking Quản lý khách hàng, tài
+khoản, số dư, sản phẩm, bút
+toán
+Temenos
+Trong một kiến trúc thường gặp:
+Mobile/Web → Backbase → API/Middleware → Temenos Core Banking →
+Payment/Switch/GL
+Đây là mô hình phổ biến, nhưng không phải mọi ngân hàng đều triển khai giống nhau.
+1.2. Backbase là gì?
+Backbase là nền tảng Digital Banking tập trung vào lớp tương tác và hành trình số của
+khách hàng.
+Backbase thường hỗ trợ:
+Internet Banking và Mobile Banking.
+Customer onboarding.
+Quản lý tài khoản, thẻ và sản phẩm hiển thị trên kênh số.
+Chuyển tiền, thanh toán, yêu cầu dịch vụ.
+Workflow và hành trình người dùng.
+Dashboard cho khách hàng và nhân viên ngân hàng.
+Tích hợp với core banking, CRM, payment gateway, eKYC.
+Quản lý quyền của khách hàng cá nhân và doanh nghiệp.
+Backbase không nhất thiết là hệ thống giữ sổ cái và số dư gốc. Nó thường lấy dữ liệu tài
+khoản, số dư, giao dịch từ core banking.
+Ví dụ chuyển tiền
+1. Khách hàng nhập tài khoản nhận và số tiền trên Mobile Banking.
+2. Backbase quản lý màn hình, hành trình và validate ban đầu.
+
+--- PAGE 3 ---
+3/68
+3. Middleware gọi API sang core banking.
+4. Temenos kiểm tra tài khoản, số dư, trạng thái tài khoản, hạn mức.
+5. Hệ thống payment xử lý giao dịch.
+6. Core banking ghi nhận bút toán.
+7. Kết quả được trả về Backbase.
+8. Mobile Banking hiển thị thành công hoặc thất bại và gửi thông báo.
+BA thường làm gì trong dự án Backbase?
+Phân tích customer journey và screen flow.
+Đặc tả API request/response.
+Xác định business rules về hạn mức, phí, OTP, trạng thái giao dịch.
+Mô tả exception flow: hết hạn OTP, thiếu số dư, tài khoản bị khóa, timeout.
+Thiết kế quyền xem và quyền giao dịch.
+Chuẩn bị UAT cho luồng end-to-end.
+1.3. Temenos là gì?
+Temenos là hệ sinh thái ngân hàng, nổi bật với core banking dùng để quản lý:
+Hồ sơ khách hàng/CIF.
+Tài khoản thanh toán và tiết kiệm.
+Số dư khả dụng, số dư kế toán.
+Tiền gửi, khoản vay và sản phẩm ngân hàng.
+Giao dịch debit/credit.
+Lãi suất, phí và hạn mức.
+Bút toán kế toán và transaction posting.
+Ngày nghiệp vụ, xử lý cuối ngày.
+Thông tin phục vụ đối soát và báo cáo tài chính.
+Trong phỏng vấn, bạn có thể phân biệt:
+1.4. Các khái niệm Banking trong dự án JITS của bạn
+CV của bạn có các phạm vi: Approval Engine, Bulk Payments & Reconciliation, Fees &
+Limits Configuration, Client Onboarding & eKYC, Transactions/FX và Payments Operations
+Backbase chủ yếu giải quyết trải nghiệm và hành trình ngân hàng số; Temenos Core
+Banking xử lý dữ liệu nghiệp vụ lõi như khách hàng, tài khoản, số dư, sản phẩm và bút
+toán giao dịch.
+
+--- PAGE 4 ---
+4/68
+Dashboard. 
+Approval Engine – Công cụ phê duyệt
+Approval Engine quản lý các cấp xét duyệt giao dịch hoặc hồ sơ.
+Mô hình phổ biến là Maker–Checker:
+Maker tạo giao dịch.
+Checker kiểm tra và phê duyệt.
+Approver cấp cao phê duyệt nếu vượt hạn mức.
+Hệ thống mới cho phép giao dịch được thực hiện sau khi đủ số cấp duyệt.
+Ví dụ:
+Giao dịch dưới 100 triệu: một cấp duyệt.
+Từ 100 triệu đến 1 tỷ: hai cấp duyệt.
+Trên 1 tỷ: cần trưởng đơn vị hoặc treasury phê duyệt.
+Người tạo không được tự phê duyệt giao dịch của mình.
+BA cần làm rõ:
+Điều kiện nào xác định số cấp duyệt?
+Phê duyệt theo số tiền, loại giao dịch, đơn vị hay nhóm khách hàng?
+Nếu một người từ chối thì giao dịch trở về Maker hay bị hủy?
+Có cho phép ủy quyền phê duyệt không?
+Có lưu audit log đầy đủ không?
+Bulk Payments – Thanh toán hàng loạt
+Bulk Payment cho phép doanh nghiệp gửi nhiều lệnh thanh toán trong một lần, thường
+qua file Excel, CSV hoặc API.
+Ví dụ doanh nghiệp trả lương cho 10.000 nhân viên:
+1. Upload file thanh toán.
+2. Kiểm tra format và số tài khoản.
+3. Phát hiện dòng trùng hoặc dữ liệu thiếu.
+4. Tính tổng số tiền.
+5. Kiểm tra số dư và hạn mức.
+6. Chuyển file qua Approval Engine.
+7. Thực hiện theo batch.
+8. Trả kết quả từng dòng: thành công, thất bại, chờ xử lý.
+
+--- PAGE 5 ---
+5/68
+Các trạng thái thường gặp:
+Draft → Validating → Pending Approval → Processing → Partially Successful → 
+Completed/Failed
+Reconciliation – Đối soát giao dịch
+Đối soát là việc so sánh dữ liệu từ nhiều nguồn để xác nhận giao dịch đã được xử lý chính
+xác.
+Có thể đối soát giữa:
+File thanh toán ban đầu.
+Hệ thống payment.
+Core banking.
+General Ledger.
+Ngân hàng đối tác hoặc payment gateway.
+Các tiêu chí so khớp:
+Transaction ID.
+Reference number.
+Số tài khoản.
+Số tiền và loại tiền.
+Ngày giao dịch.
+Trạng thái.
+Phí.
+Batch ID.
+Các ngoại lệ thường gặp:
+Có giao dịch ở hệ thống nguồn nhưng không có trong core.
+Core đã trừ tiền nhưng hệ thống payment báo thất bại.
+Lệch số tiền hoặc phí.
+Duplicate transaction.
+Giao dịch treo hoặc timeout.
+Một batch có cả dòng thành công và thất bại.
+Fees & Limits Configuration – Cấu hình phí và hạn mức
+Hệ thống cho phép cấu hình:
+
+--- PAGE 6 ---
+6/68
+Phí cố định.
+Phí theo tỷ lệ phần trăm.
+Phí tối thiểu/tối đa.
+Phí theo loại giao dịch.
+Phí theo phân khúc khách hàng.
+Hạn mức mỗi giao dịch.
+Hạn mức theo ngày/tháng.
+Hạn mức theo kênh.
+Hạn mức theo vai trò doanh nghiệp.
+Ví dụ:
+Chuyển nội bộ: miễn phí.
+Chuyển nhanh liên ngân hàng: 0,02%, tối thiểu 10.000 đồng.
+Khách hàng VIP: miễn phí.
+Hạn mức Mobile Banking: 500 triệu/ngày.
+Doanh nghiệp: phụ thuộc Approval Matrix.
+Điểm quan trọng là cấu hình phải có:
+Ngày hiệu lực.
+Version.
+Người phê duyệt thay đổi.
+Audit trail.
+Không làm ảnh hưởng hồi tố đến giao dịch cũ.
+Client Onboarding & eKYC – Mở mới khách hàng và định danh điện tử
+Luồng thường gồm:
+1. Khách hàng nhập thông tin.
+2. Chụp CCCD/hộ chiếu.
+3. OCR trích xuất dữ liệu.
+4. Face matching và liveness detection.
+5. Kiểm tra blacklist/sanction/AML.
+6. Kiểm tra trùng khách hàng.
+7. Tạo CIF.
+8. Mở tài khoản.
+9. Thiết lập phương thức xác thực.
+10. Thông báo kết quả.
+Các ngoại lệ:
+
+--- PAGE 7 ---
+7/68
+Ảnh giấy tờ mờ.
+Giấy tờ hết hạn.
+Thông tin OCR không khớp.
+Face matching dưới ngưỡng.
+Khách hàng đã tồn tại.
+Hồ sơ cần manual review.
+Transactions/FX – Giao dịch và ngoại hối
+FX liên quan đến việc chuyển đổi tiền tệ.
+Dữ liệu quan trọng gồm:
+Currency pair: USD/VND.
+Buy rate, sell rate.
+Base currency và quote currency.
+Exchange amount.
+Exchange rate.
+Fee.
+Value date.
+Rate expiry time.
+Ví dụ khách hàng chuyển 1.000 USD:
+Hệ thống lấy tỷ giá bán hoặc mua phù hợp.
+Khóa tỷ giá trong một khoảng thời gian.
+Tính số tiền quy đổi.
+Kiểm tra tài khoản ngoại tệ và hạn mức.
+Ghi nhận hai vế của giao dịch.
+Payments Operations Dashboard – Dashboard vận hành thanh toán
+Dashboard phục vụ nhân viên vận hành, không phải chỉ dành cho khách hàng.
+Có thể hiển thị:
+Số lượng và giá trị giao dịch theo ngày.
+Thành công/thất bại/đang xử lý.
+Giao dịch timeout.
+Giao dịch cần đối soát.
+
+--- PAGE 8 ---
+8/68
+Batch bị lỗi.
+Giao dịch theo kênh, sản phẩm, loại tiền.
+Top error code.
+SLA xử lý.
+Giao dịch cần manual intervention.
+Trong CV, bạn đã nêu việc tối ưu dashboard giao dịch từ 2,4 giây xuống 0,7 giây và báo
+cáo đối soát từ 90 giây xuống 28 giây. 
+1.5. Bản dịch công việc Banking trong CV
+FPT Software – Lập trình viên Android
+Dự án: Nền tảng Mobile Banking cho một khách hàng fintech tại Singapore, được
+Standard Chartered hậu thuẫn.
+Phạm vi chức năng:
+Quản lý tài khoản.
+Chuyển tiền.
+Thanh toán hóa đơn và nạp tiền.
+Quản lý thẻ và dịch vụ ngân hàng.
+Xác thực bảo mật.
+Thông báo giao dịch theo thời gian thực.
+Đóng góp chính:
+Phát triển các tính năng Mobile Banking trên Android.
+Tích hợp API giữa ứng dụng và hệ thống ngân hàng.
+Triển khai các luồng giao dịch an toàn.
+Tối ưu độ ổn định của ứng dụng.
+Tham gia kiểm thử, sửa lỗi và hỗ trợ phát hành phiên bản.
+Just-In-Time-Solutions – Web Developer & Business Analyst
+Dự án:
+SHWE Bank: hệ thống back-office cho ngân hàng bán lẻ và ngân hàng doanh nghiệp.
+Kasikorn DigiBank: hệ thống dành cho khách hàng cuối và nhân viên back-office của
+ngân hàng bán lẻ.
+Phạm vi nghiệp vụ:
+
+--- PAGE 9 ---
+9/68
+Công cụ phê duyệt giao dịch.
+Thanh toán hàng loạt và đối soát.
+Cấu hình phí và hạn mức.
+Mở mới khách hàng và định danh điện tử eKYC.
+Giao dịch và ngoại hối.
+Dashboard vận hành thanh toán.
+Đóng góp chính:
+Phát triển tính năng mới trên nhiều phân hệ ngân hàng.
+Xây dựng các module back-office có khả năng tái sử dụng.
+Áp dụng feature flag để bật/tắt chức năng theo cấu hình.
+Kiểm soát hiển thị chức năng theo vai trò người dùng.
+Hoàn thiện mô hình phân quyền RBAC, ABAC, policy và phạm vi dữ liệu.
+Bổ sung audit trail nhằm phục vụ kiểm tra, truy vết và tuân thủ.
+Xây dựng, tối ưu SQL Stored Procedure, materialized view và dữ liệu tổng hợp trước.
+Tối ưu backend cho các luồng ngân hàng có lưu lượng lớn bằng query-plan tuning,
+thread pool, batch processing, xử lý song song, hàng đợi bất đồng bộ và streaming.
+Tối ưu dashboard giao dịch, báo cáo đối soát và chức năng xuất lịch sử.
+Giảm tải CPU database, bộ nhớ, lock wait và transaction posting timeout.
+1.6. Cách trả lời khi được hỏi Backbase và Temenos
+2. ERP tại Viettel: đối soát kế toán và kết chuyển
+CV hiện mới liệt kê ERP Odoo trong nhóm dự án Viettel Commerce nhưng chưa mô tả cụ
+thể phân hệ tài chính.  Vì vậy, phần dưới là khung nghiệp vụ để bạn dùng cho những nội
+dung bạn thực sự đã tham gia hoặc nắm được.
+2.1. Các khái niệm quan trọng
+Tôi đã tham gia các dự án Mobile Banking, Digital Banking và back-office banking, bao
+gồm quản lý tài khoản, chuyển tiền, bulk payment, approval engine, reconciliation, phí,
+hạn mức, eKYC và dashboard vận hành. Về kiến trúc, tôi hiểu Backbase thường nằm ở
+lớp digital engagement, quản lý giao diện và customer journey, còn Temenos xử lý các
+nghiệp vụ core như khách hàng, tài khoản, số dư và transaction posting. Công việc của
+tôi tập trung vào phân tích luồng nghiệp vụ, phát triển chức năng, tích hợp API, phân
+quyền, audit trail, đối soát và tối ưu hiệu năng. Tôi không chỉ xem giao diện mà còn đi
+sâu vào dữ liệu, trạng thái giao dịch, exception flow và xử lý backend.
+
+--- PAGE 10 ---
+10/68
+Vụ việc
+“Vụ việc” không phải thuật ngữ chuẩn chung của mọi hệ thống Odoo. Trong ERP nội bộ,
+nó thường là một đối tượng tập hợp và theo dõi chi phí/doanh thu.
+Có thể tương đương:
+Project.
+Cost object.
+Analytic account.
+Case.
+Hợp đồng.
+Gói thầu.
+Hoạt động kinh doanh cụ thể.
+Ví dụ:
+Vụ việc: “Nâng cấp phần mềm QLHĐ năm 2026”.
+Tất cả tờ trình, hợp đồng, hóa đơn, nghiệm thu và thanh toán liên quan đều gắn với
+vụ việc này.
+Hệ thống có thể tổng hợp tổng dự toán, đã cam kết, đã chi và còn lại theo vụ việc.
+Tờ trình
+Tờ trình là hồ sơ xin phê duyệt một chủ trương hoặc khoản chi.
+Một tờ trình có thể chứa:
+Đơn vị đề xuất.
+Nội dung đề xuất.
+Vụ việc liên quan.
+Khoản mục chi phí.
+Nguồn kinh phí.
+Giá trị dự kiến.
+Nhà cung cấp dự kiến.
+Căn cứ pháp lý.
+File đính kèm.
+Luồng phê duyệt.
+Tờ trình thường nằm trước hợp đồng, PO, hóa đơn hoặc đề nghị thanh toán.
+
+--- PAGE 11 ---
+11/68
+Khoản mục
+“Khoản mục” có thể mang nhiều nghĩa:
+1. Tài khoản kế toán: 642, 627, 241…
+2. Loại chi phí quản trị: chi phí phần mềm, marketing, vận chuyển.
+3. Budget line: dòng ngân sách.
+4. Analytic dimension: chiều phân tích quản trị.
+Khi phỏng vấn, cần hỏi rõ:
+Hai khái niệm này không hoàn toàn giống nhau.
+Nguồn kinh phí
+Nguồn kinh phí cho biết khoản chi được lấy từ đâu.
+Ví dụ:
+Ngân sách sản xuất kinh doanh.
+Ngân sách đầu tư.
+Ngân sách chuyển đổi số.
+Nguồn vốn tự có.
+Nguồn vay.
+Ngân sách của đơn vị.
+Nguồn kinh phí được cấp từ tập đoàn.
+Nguồn kinh phí là một chiều kiểm soát ngân sách. Hai khoản chi có cùng tài khoản kế
+toán nhưng khác nguồn kinh phí vẫn phải theo dõi riêng.
+2.2. Đối soát kế toán là gì?
+Đối soát là việc so sánh dữ liệu giữa các hồ sơ và hệ thống để bảo đảm:
+Đúng đối tượng.
+Đúng số tiền.
+Đúng kỳ.
+Đúng khoản mục.
+Đúng nguồn kinh phí.
+Đúng trạng thái phê duyệt.
+Không trùng hoặc thiếu chứng từ.
+Khoản mục đang nói đến tài khoản hạch toán hay khoản mục ngân sách nội bộ?
+
+--- PAGE 12 ---
+12/68
+Trong bài toán của bạn, có thể đối soát theo chuỗi:
+Tờ trình → Hợp đồng/PO → Nghiệm thu → Hóa đơn → Đề nghị thanh toán → Giao dịch
+ngân hàng → Bút toán kế toán
+Các chiều đối soát
+Mã vụ việc.
+Số tờ trình.
+Số hợp đồng.
+Nhà cung cấp.
+Khoản mục.
+Nguồn kinh phí.
+Đơn vị sử dụng ngân sách.
+Giá trị được duyệt.
+Giá trị hợp đồng.
+Giá trị nghiệm thu.
+Giá trị hóa đơn.
+Giá trị đã thanh toán.
+Số tiền còn lại.
+Các lỗi cần phát hiện
+Hóa đơn vượt giá trị nghiệm thu.
+Thanh toán vượt giá trị hợp đồng.
+Dùng sai nguồn kinh phí.
+Hạch toán sai khoản mục.
+Một hóa đơn được thanh toán hai lần.
+Tờ trình chưa được duyệt nhưng đã phát sinh thanh toán.
+Vụ việc đã đóng nhưng vẫn ghi nhận chi phí.
+Thiếu chứng từ nghiệm thu.
+Tổng các đợt thanh toán không bằng số tiền đã trả.
+2.3. Ví dụ end-to-end
+Giả sử có:
+Vụ việc: Nâng cấp ERP năm 2026.
+Tờ trình được duyệt: 500 triệu.
+Khoản mục: Chi phí dịch vụ phần mềm.
+Nguồn kinh phí: Ngân sách CNTT năm 2026.
+
+--- PAGE 13 ---
+13/68
+Giá trị hợp đồng: 480 triệu chưa VAT.
+Nghiệm thu đợt 1: 240 triệu.
+Hóa đơn đợt 1: 240 triệu + VAT.
+Thanh toán thực tế: đúng số tiền hóa đơn.
+Luồng hệ thống:
+1. Người dùng tạo tờ trình.
+2. Hệ thống kiểm tra ngân sách còn lại.
+3. Sau phê duyệt, hệ thống giữ hoặc cam kết 500 triệu ngân sách.
+4. Hợp đồng được lập và liên kết với tờ trình.
+5. Biên bản nghiệm thu đợt 1 được ghi nhận.
+6. Kế toán nhập hóa đơn nhà cung cấp.
+7. Hệ thống đối soát hóa đơn với hợp đồng và nghiệm thu.
+8. Tạo đề nghị thanh toán.
+9. Sau khi ngân hàng chuyển tiền, giao dịch được đối soát với hóa đơn.
+10. Hệ thống cập nhật đã chi, còn phải trả và ngân sách còn lại.
+2.4. Bút toán minh họa
+Ví dụ mua dịch vụ phục vụ hoạt động:
+Khi ghi nhận hóa đơn:
+Nợ chi phí: 110 triệu.
+Nợ thuế GTGT được khấu trừ: 11 triệu.
+Có phải trả nhà cung cấp: 121 triệu.
+Khi thanh toán:
+Nợ phải trả nhà cung cấp: 121 triệu.
+Có tiền gửi ngân hàng: 121 triệu.
+Số hiệu tài khoản cụ thể có thể là:
+Nợ 642/627/241 tùy bản chất khoản chi.
+Nợ 1331.
+Có 331.
+Thanh toán: Nợ 331/Có 112.
+Nếu là đầu tư hình thành tài sản, chi phí có thể được tập hợp vào 241, sau đó ghi tăng tài
+sản 211 thay vì đưa ngay vào chi phí.
+
+--- PAGE 14 ---
+14/68
+2.5. Kết chuyển là gì?
+Kết chuyển là thao tác chuyển số phát sinh từ một tài khoản hoặc đối tượng tập hợp sang
+tài khoản/đối tượng đích vào cuối kỳ.
+Có hai lớp cần phân biệt.
+Kết chuyển kế toán tài chính
+Cuối kỳ thường có các bước:
+Kết chuyển doanh thu sang tài khoản xác định kết quả.
+Kết chuyển chi phí sang tài khoản xác định kết quả.
+Xác định lãi hoặc lỗ.
+Chuyển kết quả sang lợi nhuận chưa phân phối.
+Ví dụ khái quát:
+Doanh thu: Nợ 511/Có 911.
+Chi phí: Nợ 911/Có 632, 641, 642.
+Lãi: Nợ 911/Có 421.
+Lỗ: Nợ 421/Có 911.
+Kết chuyển quản trị/ngân sách
+Trong ERP nội bộ còn có thể có:
+Kết chuyển chi phí từ đơn vị tạm ghi nhận sang đơn vị chịu phí.
+Phân bổ chi phí chung cho các vụ việc.
+Chuyển chi phí từ dự án dở dang sang tài sản.
+Chuyển ngân sách chưa sử dụng sang kỳ sau.
+Đóng vụ việc và chốt số liệu.
+Chuyển số cam kết sang số thực chi.
+Đây thường là phần custom theo quy định doanh nghiệp.
+2.6. Odoo có thể tham gia các bước nào?
+Các module hoặc khái niệm liên quan:
+Accounting/Invoicing.
+Purchase.
+Expenses.
+Approvals.
+Vendor Bill.
+Payment.
+
+--- PAGE 15 ---
+15/68
+Bank Statement.
+Journal và Journal Entry.
+Analytic Account.
+Budget hoặc custom budget module.
+Project/Contract/custom “vụ việc”.
+Reconciliation.
+Các thuật ngữ “vụ việc”, “tờ trình”, “nguồn kinh phí” nhiều khả năng là custom business
+objects hoặc custom dimensions, không phải tên chức năng mặc định của Odoo.
+2.7. Cách trả lời phỏng vấn về ERP Viettel
+3. Hệ thống quản lý kho tại Samsung
+CV mô tả module kho gồm material master, nhập/xuất, vị trí kho, theo dõi tồn, lot/batch
+traceability, stock movement, WIP, bán thành phẩm và thành phẩm. 
+3.1. WMS là gì?
+Warehouse Management System – WMS là hệ thống quản lý hoạt động vận hành trong
+kho ở mức chi tiết.
+ERP thường biết:
+Công ty có bao nhiêu tồn kho.
+Giá trị hàng tồn.
+Chứng từ mua và bán.
+WMS đi sâu hơn:
+Hàng đang nằm ở kho nào.
+Trong ERP tại Viettel, tôi tiếp cận bài toán theo chuỗi từ đề xuất chi đến hạch toán và
+thanh toán. Tờ trình là hồ sơ xin phê duyệt; vụ việc là đối tượng tập hợp chi phí hoặc
+theo dõi một dự án/hợp đồng; khoản mục xác định loại chi phí hoặc dòng ngân sách;
+nguồn kinh phí xác định nguồn tiền sử dụng. Khi phát sinh hóa đơn và thanh toán, hệ
+thống phải đối soát giữa tờ trình, hợp đồng, nghiệm thu, hóa đơn, đề nghị thanh toán
+và giao dịch thực tế. Cuối kỳ, kế toán thực hiện kết chuyển hoặc phân bổ số liệu để
+chốt chi phí, doanh thu, công nợ và kết quả kinh doanh. Vai trò BA của tôi là làm rõ các
+chiều dữ liệu, rule kiểm soát vượt ngân sách, trạng thái phê duyệt, công thức tổng hợp
+và các trường hợp sai lệch.
+
+--- PAGE 16 ---
+16/68
+Zone, rack, shelf, bin nào.
+Thuộc batch/lot nào.
+Đang available, reserved, quality hold hay blocked.
+Nhân viên nào đã nhận, chuyển hoặc xuất hàng.
+Hàng sẽ được cấp cho dây chuyền nào.
+3.2. Các khái niệm trong CV
+Material Master Data
+Dữ liệu chuẩn của nguyên vật liệu:
+Mã vật tư.
+Tên vật tư.
+Loại vật tư.
+Đơn vị tính.
+Quy cách đóng gói.
+Nhà cung cấp.
+Thời hạn sử dụng.
+Có quản lý lot/serial hay không.
+Điều kiện bảo quản.
+Min/max stock.
+Lead time.
+Sai material master có thể dẫn tới sai tồn kho, sai đơn vị tính hoặc cấp nhầm vật tư.
+Warehouse Location
+Cấu trúc vị trí thường gồm:
+Warehouse → Zone → Aisle → Rack → Shelf → Bin
+Ví dụ:
+WH01 → Raw Material Zone → A03 → Rack 05 → Shelf 02 → Bin B12
+Hệ thống phải biết chính xác material và lot nào đang nằm ở vị trí nào.
+Inbound
+
+--- PAGE 17 ---
+17/68
+Luồng nhập kho:
+1. Nhận thông báo giao hàng.
+2. Xe đến cổng.
+3. Kiểm đếm.
+4. Scan barcode.
+5. Đối chiếu PO/ASN.
+6. Tạo goods receipt.
+7. Chuyển kiểm tra chất lượng.
+8. Putaway vào vị trí.
+9. Cập nhật tồn kho.
+Ngoại lệ:
+Giao thừa hoặc thiếu.
+Sai mã vật tư.
+Sai lot.
+Hàng hỏng.
+Chưa có PO.
+Không tìm được vị trí chứa phù hợp.
+Outbound
+Luồng xuất kho:
+1. Nhận yêu cầu cấp vật tư hoặc giao hàng.
+2. Allocate/reserve tồn kho.
+3. Tạo picking list.
+4. Nhân viên lấy hàng.
+5. Scan xác nhận material, lot và số lượng.
+6. Packing/staging.
+7. Goods issue.
+8. Cập nhật tồn kho.
+Trong nhà máy Samsung, outbound có thể là:
+Xuất nguyên vật liệu cho dây chuyền.
+Chuyển bán thành phẩm sang công đoạn tiếp theo.
+Xuất thành phẩm giao khách hàng.
+Lot/Batch Traceability
+
+--- PAGE 18 ---
+18/68
+Lot/batch là nhóm sản phẩm hoặc nguyên liệu được sản xuất/nhập trong cùng một đợt.
+Traceability cho phép truy vết:
+Lot nguyên liệu nào đã được dùng.
+Đã cấp cho production order nào.
+Đi qua máy hoặc công đoạn nào.
+Tạo ra lot thành phẩm nào.
+Đã xuất cho khách hàng nào.
+Ví dụ một lot linh kiện bị lỗi:
+Hệ thống tìm tất cả production order đã dùng lot đó.
+Xác định thành phẩm bị ảnh hưởng.
+Block hàng chưa xuất.
+Xác định khách hàng đã nhận hàng để thu hồi nếu cần.
+WIP, Semi-finished Goods, Finished Goods
+WIP: sản phẩm đang trong quá trình sản xuất.
+Semi-finished goods: bán thành phẩm đã hoàn thành một số công đoạn.
+Finished goods: thành phẩm đã hoàn tất và sẵn sàng nhập kho hoặc giao hàng.
+Ví dụ:
+Nguyên liệu → bo mạch đã lắp ráp → module hoàn chỉnh → thành phẩm đóng gói.
+Mỗi bước có thể phát sinh movement và thay đổi trạng thái kho.
+3.3. Các trạng thái tồn kho quan trọng
+Available: có thể sử dụng.
+Reserved: đã giữ cho một yêu cầu.
+Quality Inspection: đang chờ kiểm tra.
+Quality Hold: tạm giữ do nghi ngờ chất lượng.
+Blocked: không được phép dùng.
+Damaged: hàng hỏng.
+In Transit: đang chuyển kho.
+WIP: đang trong sản xuất.
+Một rule quan trọng:
+
+--- PAGE 19 ---
+19/68
+3.4. Ví dụ luồng kho trong Smart Factory
+Nhà cung cấp giao 10.000 linh kiện:
+1. Kho scan mã PO và mã vật tư.
+2. Hệ thống tạo inbound receipt.
+3. 10.000 linh kiện chuyển sang trạng thái Quality Inspection.
+4. QMS lấy mẫu kiểm tra.
+5. Nếu đạt, QMS gửi kết quả release.
+6. WMS chuyển tồn sang Available.
+7. Putaway vào bin phù hợp.
+8. Khi có production order, hệ thống reserve 2.000 linh kiện.
+9. Nhân viên picking theo FIFO/FEFO.
+10. Sau khi cấp cho dây chuyền, tồn kho giảm và WIP tăng.
+3.5. Business rule BA cần nắm
+Không cho phép tồn kho âm.
+Không xuất hàng chưa kiểm tra chất lượng.
+Scan sai lot phải cảnh báo.
+Không được trộn các lot nếu sản phẩm yêu cầu truy xuất riêng.
+Vị trí phải đủ capacity.
+Material hết hạn không được cấp sản xuất.
+Ưu tiên FIFO hoặc FEFO.
+Một stock movement phải có nguồn, đích, material, lot, số lượng, thời gian và người
+thực hiện.
+Hủy giao dịch phải tạo reversal, không xóa lịch sử.
+Điều chuyển kho cần trạng thái in-transit và xác nhận hai đầu.
+3.6. KPI kho
+Inventory accuracy.
+Stock turnover.
+Stock aging.
+Stockout rate.
+Hàng Quality Hold hoặc Blocked không được allocate cho production order.
+
+--- PAGE 20 ---
+20/68
+Picking accuracy.
+Dock-to-stock time.
+Putaway time.
+Order fulfillment time.
+Warehouse utilization.
+Tỷ lệ chênh lệch kiểm kê.
+Tỷ lệ vật tư hết hạn.
+3.7. Cách trả lời phỏng vấn
+4. Hệ thống quản lý chất lượng sản phẩm tại Samsung
+CV nêu module Quality Management có inspection workflow, defect classification, quality
+result tracking, SPC/control chart, non-conformance handling và quality dashboard. 
+4.1. QMS là gì?
+Quality Management System – QMS quản lý toàn bộ quy trình bảo đảm và kiểm soát chất
+lượng.
+QMS không chỉ lưu kết quả “đạt/không đạt”, mà còn trả lời:
+Kiểm tra cái gì?
+Tiêu chuẩn nào?
+Lấy mẫu bao nhiêu?
+Ai kiểm tra?
+Thiết bị đo nào?
+Kết quả từng đặc tính?
+Lỗi thuộc loại nào?
+Lot nào bị ảnh hưởng?
+Phải rework, scrap hay trả nhà cung cấp?
+Module Warehouse Management trong Samsung Smart Factory quản lý material
+master, nhập xuất kho, vị trí lưu trữ, tồn kho và truy xuất lot/batch. Luồng điển hình là
+nguyên vật liệu được nhập, chuyển qua kiểm tra chất lượng, putaway vào vị trí, reserve
+và cấp cho production order; sau sản xuất, hệ thống tiếp tục quản lý WIP, bán thành
+phẩm và thành phẩm. Khi phân tích yêu cầu, tôi tập trung vào stock status, movement,
+traceability, rule FIFO/FEFO, exception flow và việc tích hợp giữa WMS, QMS và hệ
+thống sản xuất.
+
+--- PAGE 21 ---
+21/68
+Nguyên nhân gốc và hành động khắc phục là gì?
+4.2. Các loại kiểm tra chất lượng
+IQC – Incoming Quality Control
+Kiểm tra nguyên vật liệu đầu vào từ nhà cung cấp.
+Ví dụ:
+Kích thước linh kiện.
+Màu sắc.
+Điện áp.
+Độ bền.
+Sai số kỹ thuật.
+Ngoại quan.
+Nếu không đạt, lot có thể bị block hoặc trả nhà cung cấp.
+IPQC – In-Process Quality Control
+Kiểm tra trong quá trình sản xuất.
+Mục tiêu là phát hiện lỗi sớm trước khi tạo thành phẩm.
+Ví dụ:
+Kiểm tra nhiệt độ máy.
+Độ chính xác lắp ráp.
+Sai lệch kích thước.
+Tỷ lệ lỗi theo công đoạn.
+FQC/OQC – Final/Outgoing Quality Control
+Kiểm tra thành phẩm trước khi nhập kho hoặc xuất cho khách hàng.
+4.3. Master data của QMS
+Material/product.
+Inspection type.
+Inspection characteristic.
+Specification.
+
+--- PAGE 22 ---
+22/68
+Lower Specification Limit.
+Upper Specification Limit.
+Sampling plan.
+Defect code.
+Defect category.
+Severity.
+Inspection method.
+Measurement equipment.
+Disposition action.
+Supplier quality rule.
+Ví dụ đặc tính kiểm tra:
+Đặc tính Chuẩn
+Chiều dài 9,95–10,05 mm
+Điện áp 4,8–5,2 V
+Ngoại quan Không xước
+Tỷ lệ lỗi mẫu Không quá 1%
+4.4. Inspection Workflow
+Luồng điển hình:
+1. WMS ghi nhận lot hàng mới.
+2. QMS tự tạo inspection lot.
+3. Hệ thống xác định sampling plan.
+4. Nhân viên lấy mẫu.
+5. Ghi nhận kết quả đo.
+6. Hệ thống so sánh kết quả với specification.
+7. Xác định pass/fail.
+8. Người có thẩm quyền thực hiện disposition.
+9. QMS gửi trạng thái release/block cho WMS.
+10. Nếu không đạt, tạo Non-Conformance Record.
+4.5. Defect Classification
+
+--- PAGE 23 ---
+23/68
+Lỗi thường được phân loại theo:
+Loại lỗi.
+Vị trí lỗi.
+Công đoạn phát sinh.
+Máy móc.
+Supplier.
+Material lot.
+Mức độ nghiêm trọng.
+Theo severity:
+Critical: có thể gây mất an toàn hoặc sản phẩm không sử dụng được.
+Major: ảnh hưởng rõ đến chức năng.
+Minor: ảnh hưởng nhỏ hoặc ngoại quan.
+Việc chuẩn hóa defect code giúp phân tích Pareto và xác định nhóm lỗi lớn nhất.
+4.6. Non-Conformance Handling
+Non-conformance là trường hợp sản phẩm hoặc quy trình không đáp ứng tiêu chuẩn.
+Các phương án xử lý:
+Accept/use as-is: chấp nhận có điều kiện.
+Rework: sửa lại.
+Repair: sửa chữa.
+Scrap: loại bỏ.
+Return to supplier: trả nhà cung cấp.
+Sort/re-inspection: phân loại hoặc kiểm tra lại.
+Deviation approval: phê duyệt ngoại lệ.
+Luồng thường gồm:
+Detected → Recorded → Containment → Root Cause Analysis → Corrective Action → 
+Verification → Closed
+Không nên chỉ sửa sản phẩm lỗi; hệ thống còn phải quản lý nguyên nhân và hành động
+ngăn tái diễn.
+4.7. SPC và Control Chart
+
+--- PAGE 24 ---
+24/68
+Statistical Process Control – SPC dùng dữ liệu thống kê để theo dõi quá trình sản xuất có
+ổn định hay không.
+Control chart thường có:
+Center Line.
+Upper Control Limit.
+Lower Control Limit.
+Các điểm dữ liệu theo thời gian.
+Cần phân biệt:
+Specification limit: giới hạn khách hàng hoặc thiết kế chấp nhận.
+Control limit: giới hạn thống kê của quá trình.
+Một điểm vẫn nằm trong specification có thể cho thấy quá trình đang mất kiểm soát nếu
+xuất hiện xu hướng bất thường.
+Các dấu hiệu cảnh báo:
+Một điểm vượt control limit.
+Nhiều điểm liên tiếp nằm cùng một phía.
+Xu hướng tăng hoặc giảm kéo dài.
+Dữ liệu dao động bất thường.
+Process mean bị dịch chuyển.
+Khi đó hệ thống có thể:
+Cảnh báo.
+Dừng máy hoặc dừng line.
+Yêu cầu kiểm tra.
+Block lot.
+Tạo NCR.
+4.8. Ví dụ QMS tích hợp WMS
+Một lot 5.000 linh kiện được nhập:
+1. WMS tạo goods receipt và đưa tồn kho vào Quality Inspection.
+2. QMS tạo inspection lot với sample 125 sản phẩm.
+3. Nhân viên ghi nhận 4 lỗi major và 8 lỗi minor.
+4. Hệ thống so sánh với acceptance criteria.
+5. Lot bị đánh giá không đạt.
+6. QMS tạo NCR.
+
+--- PAGE 25 ---
+25/68
+7. Toàn bộ lot bị chuyển sang Quality Hold.
+8. Bộ phận chất lượng quyết định phân loại 100%.
+9. Sau phân loại, 4.850 sản phẩm được release, 150 sản phẩm bị trả nhà cung cấp.
+10. QMS cập nhật supplier quality score và WMS cập nhật tồn kho khả dụng.
+4.9. KPI chất lượng
+Defect rate.
+PPM/DPPM.
+First Pass Yield.
+Final Yield.
+Scrap rate.
+Rework rate.
+Supplier defect rate.
+Customer return rate.
+Cost of Poor Quality.
+Số NCR mở/quá hạn.
+Thời gian đóng CAPA.
+Cp/Cpk.
+Tỷ lệ lot pass/fail.
+4.10. Cách trả lời phỏng vấn
+Bốn nhóm kiến thức cần học ưu tiên trước phỏng vấn
+1. Banking: Maker–Checker, transaction lifecycle, posting, settlement, reconciliation;
+phân biệt Backbase và Temenos.
+Quality Management Module quản lý chất lượng từ nguyên liệu đầu vào, trong quá
+trình sản xuất đến thành phẩm. Hệ thống tạo inspection lot, áp dụng sampling plan và
+specification, ghi nhận kết quả đo, phân loại defect và đưa ra quyết định release, hold,
+rework, scrap hoặc return supplier. SPC và control chart được dùng để phát hiện xu
+hướng bất thường của quá trình trước khi tỷ lệ lỗi tăng cao. Module này tích hợp chặt
+với WMS: hàng chưa đạt chất lượng sẽ ở trạng thái inspection hoặc blocked và không
+được cấp cho sản xuất. Vai trò BA của tôi là làm rõ inspection workflow, business rules,
+defect master, status transition, exception flow, KPI và yêu cầu dashboard.
+
+--- PAGE 26 ---
+26/68
+2. ERP kế toán: Journal entry, công nợ, hóa đơn, thanh toán, analytic account, budget
+control; hiểu rõ vụ việc–tờ trình–khoản mục–nguồn kinh phí–kết chuyển.
+3. WMS: Inbound, putaway, inventory status, picking, outbound, lot traceability, WIP và
+stock movement.
+4. QMS: IQC/IPQC/OQC, inspection lot, sampling plan, defect classification, NCR, CAPA,
+SPC và quality hold/release.
+CRM thì có làm
+- quản lý các trường dữ liệu
+- quản lý template
+- quản lý luồng xử lý 
+- quản lý ticket (mỗi ticket là một luồng xử lý)
+- quản lý task (gắn với ticket)
+- phân quyền dữ liệu, phân quyền chức năng
+1. hãy nói rõ chi tiết từng module 
+CRM thì có làm
+- quản lý các trường dữ liệu
+- quản lý template
+- quản lý luồng xử lý 
+- quản lý ticket (mỗi ticket là một luồng xử lý)
+- quản lý task (gắn với ticket)
+- phân quyền dữ liệu, phân quyền chức năng
+1. hãy nói rõ chi tiết từng module 
+Dựa trên phạm vi bạn mô tả, hệ thống này không chỉ là CRM quản lý khách hàng và bán
+hàng truyền thống. Nó gần với một CRM kết hợp BPM/Workflow và Case Management,
+trong đó:
+Trường dữ liệu định nghĩa hệ thống lưu những gì.
+Template định nghĩa dữ liệu và giao diện được trình bày thế nào.
+Luồng xử lý định nghĩa công việc phải đi qua các bước nào.
+Ticket là một hồ sơ/vụ việc cụ thể đang chạy theo luồng.
+Task là từng đầu việc cần hoàn thành trong ticket.
+Phân quyền quyết định ai được xem dữ liệu và được thực hiện hành động nào.
+Cách mô tả này cũng phù hợp với kinh nghiệm trong CV của bạn: Viettel Commerce CRM
+được đặt cùng hệ thống mChat/Omnichannel; tài liệu vận hành còn ghi nhận các nhu cầu
+tối ưu phân bổ hội thoại, tích hợp đầu số tổng đài và khai thác dữ liệu CRM.  
+1. Chi tiết từng module
+1.1. Module quản lý trường dữ liệu
+Bản chất
+
+--- PAGE 27 ---
+27/68
+Đây là module quản lý metadata, tức “dữ liệu mô tả cấu trúc dữ liệu”. Người quản trị
+không chỉ nhập dữ liệu khách hàng mà còn có thể cấu hình:
+Hệ thống có những đối tượng nào.
+Mỗi đối tượng có những trường nào.
+Kiểu dữ liệu của từng trường.
+Quan hệ giữa các đối tượng.
+Trường nào bắt buộc, trường nào chỉ đọc.
+Trường nào được hiển thị theo điều kiện.
+Ai được xem hoặc sửa từng trường.
+Trong Cogover, khái niệm tương ứng là Object Manager. Một object chứa nhiều record và
+field; hệ thống cho phép tạo standard object, custom object và junction object để biểu
+diễn quan hệ nhiều-nhiều. Ví dụ Contact có thể có các trường tên, số điện thoại, email, địa
+chỉ và công ty. 
+Các đối tượng CRM thường có
+Đối tượng Ví dụ dữ liệu
+Customer/Account Khách hàng cá nhân
+hoặc doanh nghiệp
+Contact Người liên hệ thuộc
+khách hàng
+Ticket Yêu cầu, khiếu nại, sự cố
+Task Đầu việc xử lý ticket
+Product/Service Sản phẩm, dịch vụ liên
+quan
+Contract Hợp đồng của khách
+hàng
+Conversation Hội thoại từ chat, call
+center, email
+Attachment File, hình ảnh, biên bản
+Department/User Đơn vị và nhân viên xử
+lý
+Cogover +1
+
+--- PAGE 28 ---
+28/68
+Cấu hình của một trường
+Một trường dữ liệu nên có các thuộc tính:
+Tên hiển thị: “Mức độ ưu tiên”.
+Tên kỹ thuật: priority .
+Kiểu dữ liệu: text, number, date, datetime, boolean, dropdown, file, lookup.
+Giá trị mặc định.
+Bắt buộc hay không.
+Có duy nhất hay không.
+Cho phép tìm kiếm, lọc, sắp xếp.
+Công thức tính.
+Validation rule.
+Quyền xem và quyền sửa.
+Điều kiện hiển thị.
+Nguồn dữ liệu: người dùng nhập, API đồng bộ, hệ thống tự sinh.
+Lịch sử thay đổi.
+Ví dụ với Ticket
+Ticket “Khiếu nại giao hàng chậm” có thể gồm:
+Mã ticket.
+Khách hàng.
+Số điện thoại.
+Đơn hàng liên quan.
+Kênh tiếp nhận.
+Nhóm yêu cầu.
+Sản phẩm.
+Mức độ ảnh hưởng.
+Mức độ khẩn cấp.
+Priority.
+Đơn vị xử lý.
+Người phụ trách.
+SLA phản hồi.
+SLA hoàn thành.
+Nguyên nhân.
+Giải pháp.
+Kết quả xử lý.
+CSAT.
+Một rule tốt là:
+
+--- PAGE 29 ---
+29/68
+Công việc BA trong module này
+Bạn có thể nói rằng mình:
+Thu thập và chuẩn hóa danh sách field.
+Xác định data type, validation và business rule.
+Thiết kế data dictionary.
+Xác định quan hệ giữa Customer–Ticket–Task–Conversation.
+Phân biệt master data và transactional data.
+Thiết kế mapping dữ liệu với tổng đài, mChat, ERP hoặc hệ thống đơn hàng.
+Xử lý trường hợp dữ liệu trùng, thiếu, sai định dạng.
+Xác định quyền ở cấp record và cấp field.
+1.2. Module quản lý template
+“Template” cần được tách rõ vì trong CRM có ít nhất năm loại khác nhau.
+A. Form/Layout Template
+Quy định màn hình tạo hoặc xem ticket hiển thị những field nào.
+Ví dụ:
+Template khiếu nại giao hàng.
+Template bảo hành.
+Template hỗ trợ kỹ thuật.
+Template yêu cầu báo giá.
+Các template khác nhau có thể dùng chung object Ticket nhưng hiển thị field khác nhau.
+Cogover có Layout Builder cho phép kéo-thả row, column, section, group và field; một
+object có thể có nhiều layout, đồng thời layout có thể được gán theo user, phòng ban, vị
+trí hoặc role. 
+B. Ticket Template
+Là mẫu tạo sẵn cho một loại ticket, bao gồm:
+Nhóm yêu cầu.
+Priority mặc định.
+Workflow áp dụng.
+Khi loại ticket là “Khiếu nại đơn hàng”, trường mã đơn hàng bắt buộc. Khi loại ticket là
+“Yêu cầu tư vấn”, trường mã đơn hàng không bắt buộc.
+Cogover
+
+--- PAGE 30 ---
+30/68
+SLA.
+Đơn vị tiếp nhận.
+Danh sách task mặc định.
+Checklist bắt buộc.
+Biểu mẫu cần đính kèm.
+Ví dụ khi chọn “Bảo hành điện thoại”, hệ thống tự tạo các task:
+1. Kiểm tra thông tin bảo hành.
+2. Tiếp nhận sản phẩm.
+3. Kiểm tra kỹ thuật.
+4. Phê duyệt phương án.
+5. Trả kết quả cho khách hàng.
+C. Email/SMS/Chat Template
+Mẫu thông báo gửi khách hàng:
+Xác nhận đã tiếp nhận yêu cầu.
+Thông báo đang xử lý.
+Yêu cầu bổ sung thông tin.
+Thông báo quá hạn dự kiến.
+Thông báo hoàn thành.
+Khảo sát CSAT.
+Template có thể dùng biến:
+D. Document Template
+Dùng sinh:
+Biên bản tiếp nhận.
+Phiếu bảo hành.
+Báo cáo xử lý.
+Phiếu xác nhận.
+Công văn phản hồi.
+Báo giá hoặc hợp đồng.
+Cogover công bố hỗ trợ email template, document template, task list và reminder. 
+E. Workflow Template
+Xin chào {{customer_name}},
+Yêu cầu {{ticket_code}} của Quý khách đã được tiếp nhận.
+Thời gian dự kiến hoàn thành: {{due_date}}.
+Cogover
+
+--- PAGE 31 ---
+31/68
+Mẫu quy trình chuẩn cho từng loại nghiệp vụ.
+Ví dụ:
+Quy trình khiếu nại.
+Quy trình đổi trả.
+Quy trình bảo hành.
+Quy trình xử lý sự cố.
+Quy trình phê duyệt giảm giá.
+Các chức năng quản trị template cần có
+Tạo, sửa, sao chép.
+Preview trước khi áp dụng.
+Quản lý version.
+Ngày hiệu lực và ngày hết hiệu lực.
+Phân loại theo nghiệp vụ.
+Gán template theo đơn vị hoặc sản phẩm.
+Hỗ trợ nhiều ngôn ngữ.
+Phê duyệt template trước khi publish.
+Không làm thay đổi dữ liệu của ticket cũ khi template được sửa.
+1.3. Module quản lý luồng xử lý
+Bản chất
+Luồng xử lý là định nghĩa quy trình, chưa phải một hồ sơ thực tế.
+Ví dụ workflow khiếu nại:
+Trong Cogover, Process Builder hỗ trợ task do con người hoặc hệ thống thực hiện,
+gateway XOR/OR/AND, biến, resource, form, điều kiện và phân quyền theo bước.
+Tiếp nhận
+→ Phân loại
+→ Xác minh
+→ Chuyển đơn vị xử lý
+→ Đề xuất phương án
+→ Phê duyệt
+→ Phản hồi khách hàng
+→ Đóng ticket
+Cogover +1
+
+--- PAGE 32 ---
+32/68
+Thành phần của workflow
+Trạng thái
+Ví dụ:
+New.
+Assigned.
+In Progress.
+Pending Customer.
+Pending Approval.
+Resolved.
+Closed.
+Reopened.
+Cancelled.
+Transition
+Là hành động chuyển trạng thái:
+Tiếp nhận.
+Phân công.
+Yêu cầu bổ sung.
+Gửi phê duyệt.
+Phê duyệt.
+Từ chối.
+Hoàn thành.
+Mở lại.
+Mỗi transition cần có:
+Ai được thực hiện.
+Điều kiện cho phép.
+Field bắt buộc.
+Task phải hoàn thành.
+Hành động tự động sau khi chuyển.
+Notification.
+Audit log.
+Gateway
+XOR: chỉ chọn một nhánh.
+OR: có thể chọn một hoặc nhiều nhánh.
+AND: chạy nhiều nhánh song song.
+Ví dụ:
+
+--- PAGE 33 ---
+33/68
+Nếu số tiền bồi thường dưới 5 triệu → trưởng nhóm phê duyệt.
+Nếu từ 5–50 triệu → trưởng phòng phê duyệt.
+Nếu trên 50 triệu → trưởng phòng và tài chính phê duyệt song song.
+User Task
+Công việc do người dùng thực hiện:
+Gọi xác minh khách hàng.
+Kiểm tra chứng từ.
+Kiểm tra sản phẩm.
+Phê duyệt phương án.
+System Task
+Công việc tự động:
+Gửi email.
+Gọi API.
+Cập nhật record.
+Tạo task.
+Đồng bộ ERP.
+Gửi thông báo.
+Tính SLA.
+Phân công tự động.
+Exception Flow
+Cần thiết kế các trường hợp:
+Khách hàng không cung cấp đủ thông tin.
+Sai đơn vị xử lý.
+Người xử lý nghỉ phép.
+Phê duyệt bị từ chối.
+API hệ thống khác lỗi.
+Ticket quá SLA.
+Ticket đã đóng nhưng khách hàng khiếu nại lại.
+1.4. Module quản lý Ticket
+Ticket là gì?
+Ticket là một vụ việc cụ thể cần được theo dõi từ lúc tiếp nhận đến khi có kết quả cuối
+cùng.
+
+--- PAGE 34 ---
+34/68
+Ticket không chỉ là “một dòng dữ liệu”. Nó đồng thời là:
+Hồ sơ nghiệp vụ.
+Đầu mối tập hợp dữ liệu.
+Một instance của workflow.
+Nơi quản lý giao tiếp với khách hàng.
+Nơi tập hợp task.
+Đối tượng tính SLA.
+Đối tượng báo cáo và audit.
+Cogover có Customer Support Ticketing System và Knowledge Base trong nhóm chức
+năng Customer Support. 
+Cấu trúc ticket
+Một ticket nên có:
+1. Thông tin nhận diện
+Mã ticket.
+Loại ticket.
+Nguồn tiếp nhận.
+Thời gian tạo.
+2. Thông tin khách hàng
+Customer.
+Contact.
+Số điện thoại.
+Email.
+Phân khúc khách hàng.
+3. Thông tin nghiệp vụ
+Sản phẩm/dịch vụ.
+Đơn hàng/hợp đồng.
+Nội dung yêu cầu.
+Nhóm vấn đề.
+Mức độ ảnh hưởng.
+4. Thông tin xử lý
+Queue.
+Đơn vị xử lý.
+Assignee.
+Status.
+Priority.
+Workflow version.
+Cogover
+
+--- PAGE 35 ---
+35/68
+5. Thông tin SLA
+First-response deadline.
+Resolution deadline.
+Thời gian còn lại.
+Trạng thái breach.
+6. Thông tin kết quả
+Root cause.
+Resolution.
+Closing reason.
+CSAT.
+Ngày đóng.
+Ticket và workflow
+Một thiết kế tốt nên là:
+Điểm rất quan trọng:
+Ticket lifecycle ví dụ
+Khách hàng phản ánh không nhận được hàng:
+1. Ticket được tạo từ mChat.
+2. Hệ thống nhận diện customer theo số điện thoại.
+3. Tự liên kết đơn hàng gần nhất.
+4. Phân loại “Giao hàng chậm”.
+5. Priority được tính từ impact và urgency.
+6. Ticket vào queue Logistics.
+7. Tự tạo task kiểm tra trạng thái giao hàng.
+8. Nếu quá hai giờ chưa xử lý, cảnh báo trưởng nhóm.
+Ticket Type
+    ↓
+Workflow Template
+    ↓
+Workflow Version
+    ↓
+Ticket/Process Instance
+    ↓
+Tasks và Events
+Khi một ticket bắt đầu chạy, nó phải gắn với một phiên bản workflow cụ thể. Nếu quản
+trị viên sửa workflow sau đó, các ticket đang chạy không nên bị thay đổi luồng một
+cách ngoài ý muốn.
+
+--- PAGE 36 ---
+36/68
+9. Nhân viên cập nhật nguyên nhân.
+10. Hệ thống gửi thông báo cho khách hàng.
+11. Sau khi khách xác nhận, ticket được đóng.
+12. Hệ thống gửi khảo sát CSAT.
+1.5. Module quản lý Task
+Task khác Ticket như thế nào?
+Ticket Task
+Đại diện cho một vụ
+việc/yêu cầu
+Đại diện cho một hành động
+Có thể tồn tại nhiều
+ngày
+Thường nhỏ và có phạm vi rõ
+Có SLA nghiệp vụ Có deadline thực hiện
+Có nhiều đơn vị tham
+gia
+Thường có một người/nhóm
+chịu trách nhiệm
+Có nhiều task Thuộc ticket hoặc quy trình
+Ví dụ:
+Ticket: Khách hàng yêu cầu đổi sản phẩm.
+Tasks:
+Kiểm tra điều kiện đổi trả.
+Kiểm tra lịch sử đơn hàng.
+Kiểm tra tình trạng sản phẩm.
+Phê duyệt đổi hàng.
+Tạo lệnh xuất sản phẩm mới.
+Thu hồi sản phẩm cũ.
+Gọi xác nhận với khách hàng.
+Dữ liệu task
+Task code.
+Ticket liên quan.
+
+--- PAGE 37 ---
+37/68
+Task type.
+Assignee.
+Department.
+Start date.
+Due date.
+Priority.
+Status.
+Checklist.
+Input.
+Expected output.
+Actual result.
+File bằng chứng.
+Estimated effort.
+Actual effort.
+Dependency.
+Các loại task
+Manual task.
+Approval task.
+Review task.
+Checklist task.
+Automated task.
+Integration task.
+Notification task.
+Cogover coi task là đơn vị công việc trong workflow và phân biệt manual task với
+automated task như gửi email, gọi HTTP request hoặc gửi thông báo. 
+Business rule nên có
+Không được hoàn thành task nếu thiếu output bắt buộc.
+Task sau chỉ bắt đầu khi task trước hoàn thành.
+Một số task có thể chạy song song.
+Nếu task bị từ chối, ticket quay lại bước trước.
+Ticket chỉ được đóng khi toàn bộ mandatory task hoàn thành.
+Task quá hạn phải tự động escalation.
+Khi assignee nghỉ phép, task phải được chuyển hoặc ủy quyền.
+1.6. Module phân quyền dữ liệu và phân quyền chức năng
+Cogover
+
+--- PAGE 38 ---
+38/68
+Hai loại này cần tách hoàn toàn.
+Phân quyền chức năng
+Quy định người dùng được làm gì.
+Ví dụ:
+Xem module Ticket.
+Tạo ticket.
+Sửa ticket.
+Xóa ticket.
+Assign/reassign.
+Chuyển trạng thái.
+Phê duyệt.
+Đóng/mở lại.
+Export dữ liệu.
+Xem báo cáo.
+Cấu hình field.
+Cấu hình workflow.
+Quản lý template.
+Quản lý user/role.
+Phân quyền dữ liệu
+Quy định người dùng được thao tác trên dữ liệu nào.
+Các phạm vi phổ biến:
+Chỉ dữ liệu do mình tạo.
+Dữ liệu được giao cho mình.
+Dữ liệu của nhóm.
+Dữ liệu của phòng ban.
+Dữ liệu của đơn vị trực thuộc.
+Dữ liệu theo khu vực.
+Dữ liệu theo sản phẩm.
+Toàn hệ thống.
+Phân quyền cấp record
+Ví dụ nhân viên chỉ được xem ticket của đơn vị mình; trưởng phòng được xem toàn bộ
+ticket của phòng.
+
+--- PAGE 39 ---
+39/68
+Phân quyền cấp field
+Ví dụ:
+Field Nhân viên CSKH Trưởng phòng Tài chính
+Số điện thoại Xem Xem Ẩn
+Nội dung khiếu nại Xem/sửa Xem/sửa Xem
+Mức bồi thường Ẩn Xem Xem/sửa
+Ghi chú nội bộ Xem/sửa Xem/sửa Ẩn
+Phân quyền theo bước workflow
+Người dùng có thể được xem ticket nhưng không được thực hiện mọi transition.
+Ví dụ:
+CSKH được tiếp nhận và xác minh.
+Logistics được cập nhật kết quả giao hàng.
+Trưởng phòng được phê duyệt bồi thường.
+Chỉ quản trị viên được reopen ticket đã đóng.
+Cogover công bố hỗ trợ role/function permission và phân quyền chi tiết tới user, record,
+field; Process còn hỗ trợ quyền tới từng bước xử lý. 
+2. Kết hợp phân tích CRM Cogover
+2.1. Kiến trúc Cogover
+Cogover mô tả nền tảng theo ba lớp:
+1. Object Manager: quản lý dữ liệu có cấu trúc.
+2. Core Business Logic: quản lý workflow, nghiệp vụ và tự động hóa task.
+3. Application: các ứng dụng hoàn chỉnh như CRM, Service, Customer 360 và Process.
+Các module bạn làm có thể ánh xạ như sau:
+Phạm vi của bạn Thành phần Cogover
+Quản lý trường dữ
+liệu
+Object Manager, custom object,
+field configuration
+Cogover +1
+Cogover
+
+--- PAGE 40 ---
+40/68
+Phạm vi của bạn Thành phần Cogover
+Quản lý template Layout Builder,
+email/document/workflow
+template
+Quản lý luồng xử lý Cogover Process/Process Builder
+Quản lý ticket Service CRM, Ticket Object,
+Process Instance
+Quản lý task User Task, Automated Task
+Phân quyền Role, function, record, field và
+step permission
+2.2. Cogover khác CRM truyền thống ở đâu?
+CRM truyền thống thường tập trung vào:
+Còn Cogover có thiên hướng metadata-driven và workflow-driven:
+Vì vậy, dựa trên phạm vi bạn mô tả, bạn có thể diễn giải:
+Cogover chính thức nhấn mạnh khả năng tùy chỉnh data structure, interface và workflow;
+Process Builder hỗ trợ automation, SLA, task và kết nối hệ thống khác qua API/webhook.
+2.3. Điểm mạnh
+Lead → Opportunity → Quote → Contract → Sale
+Object/Data
+→ Layout
+→ Workflow
+→ Process Instance
+→ Task
+→ Automation
+Tôi tham gia một nền tảng CRM Low-code/No-code, trong đó nghiệp vụ không bị
+hard-code hoàn toàn. Người quản trị có thể cấu hình object và trường dữ liệu, xây
+dựng template màn hình, thiết kế workflow, quản lý ticket như từng process instance,
+tự sinh task và thiết lập phân quyền theo chức năng, record, field và bước xử lý.
+Cogover +2
+
+--- PAGE 41 ---
+41/68
+Thêm nghiệp vụ mới nhanh mà không phải code toàn bộ.
+Một object Ticket có thể phục vụ nhiều loại yêu cầu.
+Quy trình có thể thay đổi theo từng đơn vị.
+Tách dữ liệu, giao diện và workflow.
+Dễ tạo prototype và triển khai theo giai đoạn.
+Hỗ trợ liên phòng ban.
+Có thể gắn automation, SLA và API.
+Có thể mở rộng từ CRM sang Service Management hoặc quản trị nội bộ.
+2.4. Rủi ro cần kiểm soát
+Đây là nhận định kiến trúc từ mô hình Low-code của Cogover:
+Tạo quá nhiều field trùng nghĩa.
+Mỗi đơn vị tự tạo object dẫn đến phân mảnh dữ liệu.
+Workflow có nhánh cụt hoặc vòng lặp.
+Sửa workflow làm ảnh hưởng ticket đang chạy.
+Nhiều layout nhưng không có quy tắc ưu tiên rõ.
+Quyền record/field cấu hình sai gây lộ dữ liệu.
+Report khó tổng hợp do dữ liệu không chuẩn hóa.
+Automation bị chạy lặp.
+Tích hợp API thiếu idempotency tạo ticket trùng.
+Số lượng ticket/task lớn có thể gây vấn đề hiệu năng.
+Do đó, ngoài cấu hình chức năng, cần có:
+Data dictionary.
+Naming convention.
+Workflow versioning.
+Template governance.
+Permission matrix.
+Audit log.
+Change approval.
+Sandbox/UAT trước khi publish.
+3. Có thể cải thiện module Ticket như thế nào?
+3.1. Chuẩn hóa mô hình Ticket Type
+Không nên để tất cả ticket dùng một form và một workflow.
+Có thể cấu hình:
+
+--- PAGE 42 ---
+42/68
+Ticket Type Form Workflow SLA Đơn vị
+Tư vấn sản phẩm Tư vấn Sales support 30 phút Kinh doanh
+Khiếu nại giao hàng Logistics Complaint 4 giờ Logistics
+Bảo hành Warranty Warranty 3 ngày Kỹ thuật
+Lỗi thanh toán Payment Incident 2 giờ Tài chính/CNTT
+Yêu cầu hợp đồng Contract Approval 2 ngày Pháp chế
+Mỗi loại tự động chọn:
+Dynamic field.
+Template.
+Workflow.
+SLA.
+Queue.
+Checklist.
+Quyền dữ liệu.
+3.2. Cải thiện tiếp nhận ticket đa kênh
+Ticket có thể được tự động tạo từ:
+mChat.
+Facebook/Zalo.
+Website form.
+Email.
+Call center.
+App.
+POS/cửa hàng.
+API từ ERP, OMS hoặc hệ thống giao hàng.
+Khi tạo ticket, hệ thống nên:
+Nhận diện khách hàng theo số điện thoại/email.
+Liên kết conversation.
+Tìm đơn hàng/hợp đồng liên quan.
+Chống tạo ticket trùng.
+Lưu kênh và chiến dịch nguồn.
+
+--- PAGE 43 ---
+43/68
+Lưu recording hoặc transcript cuộc gọi.
+Đính kèm ảnh và file.
+Tự phân loại sơ bộ.
+Điều này phù hợp với bối cảnh CRM–mChat–tổng đài trong dự án Viettel Commerce của
+bạn.  
+3.3. Xây dựng Assignment Engine
+Thay vì nhân viên tự chọn người xử lý, có thể tự động phân công theo:
+Loại ticket.
+Sản phẩm.
+Địa bàn.
+Phòng ban.
+Skill của nhân viên.
+Ca làm việc.
+Khối lượng ticket hiện tại.
+Priority.
+Nhóm khách hàng.
+VIP/non-VIP.
+Round-robin.
+Least-loaded.
+Người từng xử lý khách hàng đó.
+Ví dụ:
+Cần thêm:
+Manual override.
+Lý do reassign.
+Transfer count.
+Chống chuyển ticket lòng vòng.
+Nếu issue_type = Payment Error
+AND payment_method = Bank Transfer
+→ Queue Finance Reconciliation
+Nếu customer_segment = VIP
+→ VIP Support Queue
+Nếu location = Hanoi
+→ Hanoi Operation Team
+
+--- PAGE 44 ---
+44/68
+Auto-reassign khi nhân viên vắng mặt.
+Escalation cho ticket chưa được nhận.
+3.4. Xây dựng SLA Engine hoàn chỉnh
+Không nên chỉ có một deadline chung.
+Một ticket có thể có:
+SLA tiếp nhận.
+SLA phản hồi đầu tiên.
+SLA phân công.
+SLA xử lý.
+SLA chờ phê duyệt.
+SLA giải quyết hoàn toàn.
+SLA nên phụ thuộc:
+Ticket type.
+Priority.
+Customer segment.
+Sản phẩm/dịch vụ.
+Kênh.
+Hợp đồng.
+Khung giờ làm việc.
+Cần có pause rule:
+Chờ khách hàng bổ sung thông tin.
+Chờ bên thứ ba.
+Ngày nghỉ.
+Chờ linh kiện.
+Chờ phê duyệt ngoài phạm vi nhóm xử lý.
+Các tính năng:
+Countdown.
+Cảnh báo trước hạn.
+Escalation nhiều cấp.
+Auto-reassign.
+Ghi nhận breach reason.
+Dashboard SLA.
+SLA history.
+
+--- PAGE 45 ---
+45/68
+Phân biệt response SLA và resolution SLA.
+3.5. Cải thiện orchestration giữa Ticket và Task
+Khi ticket chuyển trạng thái, hệ thống tự động:
+Tạo task.
+Giao người xử lý.
+Gán deadline.
+Tạo checklist.
+Gửi notification.
+Chờ task hoàn thành.
+Tổng hợp kết quả task về ticket.
+Ví dụ ticket khiếu nại thanh toán tự tạo:
+1. Task đối soát giao dịch.
+2. Task kiểm tra ERP.
+3. Task kiểm tra ngân hàng.
+4. Task đề xuất phương án hoàn tiền.
+5. Task phê duyệt.
+6. Task thông báo khách hàng.
+Các rule quan trọng:
+Mandatory task chưa hoàn thành thì không được đóng ticket.
+Task song song phải hoàn thành đủ trước khi qua gateway.
+Task bị reject phải quay lại đúng bước.
+Kết quả task phải tự cập nhật các field liên quan trên ticket.
+Task quá hạn ảnh hưởng đến SLA của ticket.
+3.6. Hoàn thiện state machine
+Không nên để người dùng tùy ý chọn mọi status.
+Ví dụ:
+New → Assigned → In Progress
+In Progress → Pending Customer
+In Progress → Pending Approval
+Pending Customer → In Progress
+Pending Approval → Approved/Rejected
+
+--- PAGE 46 ---
+46/68
+Cần kiểm soát:
+Transition hợp lệ.
+Vai trò được chuyển.
+Field bắt buộc theo trạng thái.
+Điều kiện task.
+Lý do từ chối.
+Lý do hủy.
+Reopen policy.
+Rollback.
+Audit log.
+Ví dụ:
+3.7. Bổ sung ticket cha–con và liên kết ticket
+Các tình huống cần hỗ trợ:
+Parent–Child Ticket
+Một sự cố lớn tạo nhiều ticket con theo khu vực hoặc đơn vị.
+Ví dụ:
+Parent: Hệ thống thanh toán lỗi toàn quốc.
+Child: Hà Nội.
+Child: Đà Nẵng.
+Child: TP.HCM.
+Duplicate Ticket
+Nhiều khách hàng báo cùng một sự cố. Có thể liên kết với master incident thay vì xử lý
+riêng hoàn toàn.
+Related Ticket
+Liên kết:
+Incident.
+Approved → Resolved
+Resolved → Closed/Reopened
+Chỉ được chuyển sang Resolved khi Resolution và Root Cause đã được nhập, mọi
+mandatory task hoàn thành và không còn phê duyệt đang chờ.
+
+--- PAGE 47 ---
+47/68
+Problem.
+Change request.
+Complaint.
+Order issue.
+Refund request.
+Merge/Split
+Gộp hai ticket trùng.
+Tách một ticket có nhiều vấn đề thành nhiều ticket riêng.
+3.8. Cải thiện giao tiếp và cộng tác
+Một ticket nên có timeline thống nhất gồm:
+Trạng thái.
+Ghi chú nội bộ.
+Phản hồi khách hàng.
+Email.
+Chat.
+Call log.
+Task.
+File.
+Phê duyệt.
+Lịch sử phân công.
+Nên phân biệt:
+Internal note: khách hàng không thấy.
+Public reply: gửi cho khách hàng.
+System event: hệ thống tự ghi.
+Audit event: không được sửa/xóa.
+Có thể thêm:
+@mention.
+Watcher/follower.
+Canned response.
+Gửi email trực tiếp trong ticket.
+Customer portal.
+Khách hàng bổ sung file.
+Xác nhận kết quả xử lý.
+
+--- PAGE 48 ---
+48/68
+3.9. Bổ sung Knowledge Base
+Khi nhân viên xử lý ticket, hệ thống gợi ý:
+Câu trả lời mẫu.
+Hướng dẫn nghiệp vụ.
+Các ticket tương tự.
+Known error.
+Phương án xử lý trước đây.
+Chính sách đổi trả/bảo hành.
+Sau khi đóng ticket, có thể:
+Chuyển resolution thành bài viết KB.
+Đánh giá bài viết có hữu ích không.
+Thống kê bài viết được dùng nhiều nhất.
+Phát hiện nội dung hết hiệu lực.
+3.10. Ứng dụng AI
+AI có thể hỗ trợ:
+Use case Kết quả
+Phân loại ticket Xác định topic/issue
+type
+Gán priority Dựa trên nội dung,
+sentiment, customer
+Tóm tắt Tóm tắt conversation dài
+Trích xuất dữ liệu Lấy mã đơn, sản phẩm,
+số tiền
+Gợi ý người xử lý Dựa trên skill và lịch sử
+Gợi ý câu trả lời Draft response
+Gợi ý knowledge Bài viết liên quan
+Phát hiện trùng Nhóm ticket cùng sự cố
+
+--- PAGE 49 ---
+49/68
+Use case Kết quả
+Dự đoán SLA breach Cảnh báo ticket có nguy
+cơ quá hạn
+Root cause
+suggestion
+Gợi ý nguyên nhân từ
+lịch sử
+Next-best action Đề xuất bước xử lý tiếp
+theo
+AI chỉ nên đóng vai trò đề xuất đối với các hành động nhạy cảm như:
+Bồi thường.
+Hoàn tiền.
+Từ chối khiếu nại.
+Đóng ticket.
+Phê duyệt tài chính.
+Cogover công bố hỗ trợ AI cho gợi ý, nhắc việc, tìm kiếm, hỗ trợ quyết định và có thể tích
+hợp các nền tảng AI khác qua API. 
+3.11. Dashboard và KPI
+Các KPI quan trọng:
+Ticket volume.
+Backlog.
+Backlog aging.
+First Response Time.
+Average Handling Time.
+Resolution Time.
+MTTR.
+First Contact Resolution.
+SLA Compliance.
+Reopen Rate.
+Transfer Rate.
+Escalation Rate.
+Ticket per agent.
+Task completion rate.
+CSAT.
+Cogover +1
+
+--- PAGE 50 ---
+50/68
+Root cause distribution.
+Ticket theo kênh, sản phẩm, địa bàn.
+Top vấn đề phát sinh.
+Tỷ lệ ticket tự động xử lý.
+Cần tránh KPI gây hành vi sai. Ví dụ chỉ đo số ticket đóng có thể khiến nhân viên đóng
+sớm. Nên kết hợp:
+3.12. Tối ưu UI/UX
+Có thể cải thiện bằng:
+Unified Agent Workspace.
+Danh sách dạng table, Kanban và queue.
+Saved filter.
+Quick filter theo SLA.
+Bulk assign.
+Bulk transition.
+Quick edit.
+Timeline rõ ràng.
+Sticky action bar.
+Dynamic form.
+Ẩn field không liên quan.
+Cảnh báo field thiếu.
+Preview customer 360 bên cạnh ticket.
+Hiển thị task và SLA ngay trên header.
+Chế độ focus cho agent.
+Responsive/mobile.
+Màn hình ticket lý tưởng có thể chia:
+Số lượng xử lý
++ SLA
++ Reopen Rate
++ CSAT
++ Chất lượng dữ liệu
+Bên trái: Customer 360, đơn hàng, lịch sử
+Ở giữa: Nội dung ticket, conversation, timeline
+Bên phải: Status, SLA, assignee, task, action
+
+--- PAGE 51 ---
+51/68
+3.13. Tích hợp hệ thống
+Ticket có thể liên kết với:
+mChat/Omnichannel.
+Tổng đài.
+CRM Customer 360.
+OMS/đơn hàng.
+WMS/tồn kho.
+TMS/giao hàng.
+ERP/Odoo/SAP.
+Payment gateway.
+Email/SMS/Zalo.
+Hệ thống bảo hành.
+QLHĐ.
+RPA/OCR.
+Ví dụ khiếu nại giao hàng:
+3.14. Tối ưu kỹ thuật và hiệu năng
+Với lượng ticket lớn, có thể cải thiện:
+Index theo status, assignee, queue, created date, SLA deadline.
+Full-text search nội dung ticket.
+Phân trang server-side.
+Async notification.
+Async assignment engine.
+Event-driven workflow.
+Cache master data.
+Archive ticket cũ.
+Tách attachment storage.
+Read replica cho báo cáo.
+Batch escalation.
+Idempotency khi tạo ticket qua API.
+CRM lấy Customer
+→ OMS lấy Order
+→ TMS lấy trạng thái giao
+→ Ticket tạo task cho Logistics
+→ Kết quả cập nhật CRM
+→ mChat gửi phản hồi khách hàng
+
+--- PAGE 52 ---
+52/68
+Chống tạo task trùng khi workflow retry.
+Audit log append-only.
+Monitoring queue lag và workflow failure.
+Dashboard sử dụng dữ liệu pre-aggregation.
+4. Roadmap cải thiện Ticket hợp lý
+Giai đoạn 1 – Chuẩn hóa nền tảng
+Chuẩn hóa Ticket Type.
+Dynamic field.
+State machine.
+Workflow version.
+Assignment.
+SLA.
+Permission.
+Audit log.
+Mandatory field/task.
+Giai đoạn 2 – Tối ưu vận hành
+Omnichannel intake.
+Auto-routing.
+Task orchestration.
+Parent/child/merge/split.
+Agent workspace.
+Dashboard.
+Knowledge Base.
+Customer portal.
+Tích hợp OMS/ERP/tổng đài.
+Giai đoạn 3 – AI và tự động hóa
+AI classification.
+AI summary.
+Suggested response.
+Suggested solution.
+Duplicate detection.
+SLA prediction.
+Root cause analytics.
+Workflow mining và process optimization.
+
+--- PAGE 53 ---
+53/68
+Cách trình bày kinh nghiệm này trong phỏng vấn
+CRM tôi tham gia không chỉ quản lý customer profile mà còn là một nền tảng quản lý
+quy trình và yêu cầu dịch vụ. Hệ thống cho phép cấu hình object và trường dữ liệu,
+thiết kế form/template, xây dựng workflow, quản lý ticket như từng process instance,
+tự tạo task và thiết lập phân quyền tới chức năng, dữ liệu và từng bước xử lý. Khi cải
+thiện module Ticket, tôi tập trung vào chuẩn hóa ticket type, dynamic form,
+assignment engine, SLA, state machine, task orchestration, audit trail, omnichannel
+integration và dashboard. Ở mức nâng cao, tôi có thể bổ sung AI để phân loại, tóm tắt,
+gợi ý phản hồi và dự đoán nguy cơ quá SLA.
+Sources
+Sources
+Mội vài ứng dụng của Kafka, RabitMQ trong các dự án 
+trong CV. Tôi nhớ RabitMQ được áp dụng trong phần 
+mềm quản lý hợp đồng, ko biết áp dụng ntn?
+Trong tài liệu hiện có, Kafka và RabbitMQ được liệt kê trong nhóm kỹ năng Message
+Queue/Event Streaming, nhưng chưa ghi rõ từng công nghệ được dùng ở dự án nào. CV
+cũng mô tả bạn từng làm luồng bất đồng bộ và streaming trong Banking, pipeline thời
+gian thực ở IoT, cùng các hệ thống Smart Safe, mChat, RPA/OCR, WMS/QMS và quản lý
+hợp đồng. Vì vậy, dưới đây cần hiểu là cách ánh xạ kỹ thuật hợp lý với các dự án, không
+nên khẳng định là kiến trúc thực tế nếu bạn chưa kiểm tra lại source code hoặc tài liệu
+thiết kế.  
+1. Phân biệt nhanh Kafka và RabbitMQ
+Tiêu chí RabbitMQ Kafka
+Bản chất chính Message broker, hàng đợi
+công việc
+Event streaming platform, nhật
+ký sự kiện phân tán
+Phù hợp với Giao việc cho worker,
+workflow bất đồng bộ
+Dòng sự kiện lớn, realtime
+analytics, tích hợp nhiều hệ
+thống
+Dữ liệu sau khi xử lý Thường được xóa khỏi
+queue sau khi ACK
+Được lưu theo thời gian
+retention
+Đọc lại dữ liệu Không phải thế mạnh chính Có thể replay từ offset cũ
+
+--- PAGE 54 ---
+54/68
+Tiêu chí RabbitMQ Kafka
+Mô hình phổ biến Một message được một
+consumer trong queue xử lý
+Nhiều consumer group cùng đọc
+một event
+Routing Exchange, routing key, queue Topic, partition, consumer group
+Use case Email, OCR job, tạo báo cáo,
+gọi API nền
+IoT telemetry, clickstream,
+transaction events
+Khối lượng Vừa đến cao Rất cao, liên tục
+Ưu tiên Điều phối và bảo đảm hoàn
+thành công việc
+Truyền, lưu và xử lý luồng sự kiện
+Có thể nhớ ngắn gọn:
+RabbitMQ: “Có một công việc cần ai đó xử lý.”
+Kafka: “Có một sự kiện vừa xảy ra, các hệ thống quan tâm có thể cùng nhận.”
+Ví dụ:
+Hãy gửi email nhắc hợp đồng sắp hết hạn  → RabbitMQ.
+Hợp đồng vừa được ký  → có thể là Kafka event hoặc RabbitMQ event tùy kiến trúc.
+Thiết bị IoT gửi trạng thái mỗi giây  → Kafka phù hợp hơn.
+Hãy OCR file hợp đồng này  → RabbitMQ phù hợp hơn.
+2. RabbitMQ trong phần mềm quản lý hợp đồng
+Phần mềm quản lý hợp đồng của bạn có các nghiệp vụ như quản lý hợp đồng, phụ lục,
+tiến độ thực hiện, nghiệm thu, tạm ứng, thanh toán, cảnh báo, tích hợp VOffice và
+OCR/RPA. Đây là nhóm chức năng rất phù hợp để dùng RabbitMQ cho các tác vụ nền.  
+2.1. Kiến trúc tổng quát
+Người dùng thao tác trên QLHĐ
+        ↓
+QLHĐ cập nhật dữ liệu chính vào Database
+        ↓
+Phát message vào RabbitMQ
+        ↓
+Một hoặc nhiều worker xử lý nền
+
+--- PAGE 55 ---
+55/68
+Điểm quan trọng là:
+2.2. Tích hợp VOffice trình ký hợp đồng
+Đây là use case hợp lý nhất.
+Trường hợp không dùng RabbitMQ
+Nhược điểm:
+VOffice chậm thì giao diện QLHĐ bị chờ.
+VOffice timeout thì người dùng không biết yêu cầu đã được nhận hay chưa.
+Người dùng bấm nhiều lần có thể gửi trùng.
+Khó retry khi mạng hoặc VOffice lỗi.
+Tải lớn có thể làm nghẽn QLHĐ.
+Trường hợp dùng RabbitMQ
+Ví dụ message:
+        ↓
+VOffice / Email / SMS / OCR / ERP / Báo cáo
+RabbitMQ không nhất thiết trực tiếp quản lý trạng thái hợp đồng. Database vẫn là
+nguồn dữ liệu chính. RabbitMQ thường vận chuyển các yêu cầu xử lý bất đồng bộ giữa
+những thành phần của hệ thống.
+Người dùng bấm “Trình ký”
+→ Backend gọi VOffice ngay lập tức
+→ Chờ VOffice phản hồi
+→ Trả kết quả cho giao diện
+1. Người dùng bấm “Trình ký”
+2. QLHĐ lưu trạng thái: Chờ gửi VOffice
+3. QLHĐ đưa message vào queue voffice.submit
+4. Worker nhận message
+5. Worker gọi API VOffice
+6. Nếu thành công:
+   - Lưu mã hồ sơ VOffice
+   - Cập nhật trạng thái: Đang trình ký
+7. Nếu thất bại:
+   - Retry
+   - Quá số lần retry thì chuyển Dead Letter Queue
+   - Cảnh báo người vận hành
+
+--- PAGE 56 ---
+56/68
+RabbitMQ giúp:
+Không bắt người dùng chờ VOffice.
+Tự retry nếu API VOffice tạm thời lỗi.
+Điều tiết tốc độ gọi API.
+Không làm sập QLHĐ khi VOffice bị gián đoạn.
+Lưu vết quá trình gửi.
+Cho phép mở rộng nhiều worker khi khối lượng tăng.
+Tài liệu dự án của bạn cho thấy VOffice là một điểm tích hợp quan trọng trong quy trình
+trình ký hợp đồng. 
+2.3. Nhận kết quả ký từ VOffice
+Khi VOffice hoàn tất ký, có thể gửi callback về QLHĐ:
+Các consumer khác nhau có thể xử lý:
+Queue Công việc
+contract.update-
+status
+Cập nhật trạng thái hợp
+đồng
+contract.download-
+signed-file
+Tải và lưu file đã ký
+{
+  "eventId": "evt-20260605-001",
+  "contractId": 12581,
+  "contractCode": "VCM-2026-0015",
+  "action": "SUBMIT_FOR_SIGNATURE",
+  "documentUrl": "/contracts/12581/final.pdf",
+  "requestedBy": "005299",
+  "requestedAt": "2026-06-05T09:15:00Z"
+}
+VOffice callback
+→ Integration Service kiểm tra chữ ký/request
+→ Đưa message contract.signed vào RabbitMQ
+→ QLHĐ Worker cập nhật hợp đồng
+→ Tạo mốc thực hiện
+→ Gửi thông báo
+→ Lưu tài liệu đã ký
+JSON
+
+--- PAGE 57 ---
+57/68
+Queue Công việc
+contract.create-
+milestones
+Tạo các mốc nghiệm
+thu, thanh toán
+contract.notificati
+on
+Thông báo cho người
+phụ trách
+contract.audit Ghi nhật ký sự kiện
+Tùy thiết kế, có thể dùng một exchange kiểu topic :
+2.4. Cảnh báo mốc thực hiện hợp đồng
+Hệ thống của bạn có nhu cầu cảnh báo các mốc:
+Hợp đồng sắp hết hiệu lực.
+Bảo lãnh sắp hết hạn.
+Đến hạn giao hàng.
+Đến hạn nghiệm thu.
+Đến hạn thanh toán.
+Quá hạn thanh lý.
+Chậm thực hiện hợp đồng.
+Tài liệu dự án đã xác định riêng module cảnh báo động cho các mốc nghiệm thu, bảo lãnh,
+thanh toán, bảo hành và hết hiệu lực. 
+Luồng hợp lý:
+Exchange: contract.events
+Routing keys:
+contract.submitted
+contract.approved
+contract.signed
+contract.rejected
+contract.expired
+payment.due
+acceptance.completed
+Scheduler chạy định kỳ
+→ Quét các mốc sắp đến hạn
+→ Mỗi mốc tạo một message trong RabbitMQ
+
+--- PAGE 58 ---
+58/68
+Ví dụ:
+Lưu ý: RabbitMQ bản thân không nhất thiết là công cụ tính xem ngày nào đến hạn.
+Thường:
+Scheduler/Quartz/Spring Scheduler tìm dữ liệu đến hạn.
+RabbitMQ phân phối công việc gửi thông báo.
+Một số hệ thống cũng dùng delayed message hoặc TTL + Dead Letter Exchange, nhưng
+đây là lựa chọn triển khai chứ không phải mặc định.
+2.5. OCR hợp đồng và tự động nhập dữ liệu
+Đây cũng là use case rất điển hình của RabbitMQ.
+Tài liệu RPA/OCR của bạn mô tả việc nhận file hợp đồng, trích số hợp đồng, đối tác, giá trị,
+ngày hiệu lực và các mốc thanh toán; sau đó RPA nhập dữ liệu vào QLHĐ. 
+Luồng:
+Các queue có thể gồm:
+→ Notification Worker gửi Email/SMS/App Notification
+→ Ghi nhận trạng thái gửi
+{
+  "notificationType": "PAYMENT_DUE",
+  "contractId": 12581,
+  "milestoneId": 8201,
+  "dueDate": "2026-06-10",
+  "recipients": ["employee_01", "finance_manager"],
+  "channels": ["IN_APP", "EMAIL"]
+}
+Người dùng upload hợp đồng
+→ Lưu file
+→ Tạo OCR Job
+→ Đưa vào queue ocr.contract
+→ OCR Worker trích xuất dữ liệu
+→ Đưa kết quả vào queue ocr.validation
+→ Validation Worker kiểm tra
+→ QLHĐ tạo bản nháp hợp đồng
+→ Người dùng review và xác nhận
+JSON
+
+--- PAGE 59 ---
+59/68
+RabbitMQ giúp:
+OCR chạy nền vì có thể mất nhiều giây hoặc nhiều phút.
+Không làm request upload bị timeout.
+Có thể chạy nhiều OCR worker song song.
+Retry nếu OCR service lỗi.
+Đưa file lỗi sang Dead Letter Queue.
+Hiển thị trạng thái: Queued → Processing → Needs Review → Completed .
+2.6. Sinh PDF, biên bản và báo cáo
+Khi người dùng yêu cầu:
+Xuất hợp đồng PDF.
+Sinh tờ trình.
+Sinh phụ lục.
+Xuất báo cáo hàng nghìn hợp đồng.
+Đóng gói bộ hồ sơ thành ZIP.
+Không nên bắt web request chờ xử lý toàn bộ.
+Luồng:
+RabbitMQ phù hợp cho các công việc có trạng thái:
+2.7. Đồng bộ ERP/SAP hoặc hệ thống kế toán
+Ví dụ sau khi nghiệm thu được phê duyệt:
+ocr.contract.extract
+ocr.contract.validate
+ocr.contract.create-draft
+ocr.contract.failed
+Người dùng chọn “Xuất báo cáo”
+→ Tạo Export Job
+→ Đưa message vào report.export
+→ Worker xử lý file
+→ Lưu file lên storage
+→ Gửi thông báo có thể tải xuống
+WAITING → PROCESSING → COMPLETED/FAILED
+
+--- PAGE 60 ---
+60/68
+Hoặc sau khi ERP ghi nhận thanh toán:
+RabbitMQ có lợi khi ERP/SAP tạm thời không khả dụng. Message vẫn nằm trong queue và
+được xử lý lại sau.
+2.8. Tạo task theo workflow
+Khi hợp đồng chuyển trạng thái, có thể phát sinh nhiều task:
+Hệ thống có thể publish:
+Workflow Worker nhận event và tạo task.
+Tuy nhiên, cần thiết kế cẩn thận:
+Không tạo task trùng khi message bị retry.
+Phải kiểm tra eventId .
+Consumer phải có tính idempotent.
+Nghiệm thu hoàn tất
+→ QLHĐ publish message acceptance.approved
+→ Integration Worker tạo đề nghị thanh toán trên ERP
+→ ERP trả kết quả
+→ QLHĐ cập nhật mã chứng từ ERP
+ERP gửi payment.completed
+→ RabbitMQ
+→ QLHĐ cập nhật mốc thanh toán
+→ Gửi thông báo
+→ Cập nhật dashboard
+Hợp đồng đã ký
+→ Tạo task theo dõi bảo lãnh
+→ Tạo task chuẩn bị giao hàng
+→ Tạo task nghiệm thu
+→ Tạo task thanh toán
+{
+  "eventType": "CONTRACT_SIGNED",
+  "contractId": 12581,
+  "workflowVersion": 3
+}
+JSON
+
+--- PAGE 61 ---
+61/68
+Những task bắt buộc và trạng thái hợp đồng chính vẫn phải được đảm bảo nhất quán
+trong database.
+3. RabbitMQ cần xử lý lỗi như thế nào?
+Acknowledgement
+Worker chỉ ACK sau khi hoàn thành công việc.
+Nếu worker chết trước khi ACK, message có thể được giao lại.
+Retry
+Ví dụ:
+Lần 1: thử lại sau 30 giây.
+Lần 2: sau 5 phút.
+Lần 3: sau 30 phút.
+Sau ba lần: chuyển Dead Letter Queue.
+Dead Letter Queue
+Ví dụ:
+Người vận hành có thể kiểm tra:
+Message nào lỗi.
+Lỗi gì.
+Đã retry bao nhiêu lần.
+Có cho phép chạy lại không.
+Idempotency
+RabbitMQ thường cung cấp cơ chế giao nhận theo hướng at least once. Vì vậy, cùng một
+message có thể được consumer nhận lại.
+Nhận message
+→ Xử lý thành công
+→ ACK
+→ RabbitMQ xóa message
+voffice.submit.dlq
+ocr.contract.dlq
+notification.email.dlq
+erp.sync.dlq
+
+--- PAGE 62 ---
+62/68
+Ví dụ trước khi tạo task, consumer kiểm tra:
+Nếu đã xử lý thì không tạo task lần hai.
+Transactional Outbox
+Một lỗi nguy hiểm:
+Hoặc ngược lại.
+Giải pháp thường dùng:
+1. Cập nhật hợp đồng.
+2. Ghi event vào bảng OUTBOX_EVENT  trong cùng transaction.
+3. Outbox Publisher đọc bảng này.
+4. Publish message sang RabbitMQ.
+5. Đánh dấu event đã gửi.
+Như vậy giảm nguy cơ mất event.
+4. Kafka có thể được áp dụng ở đâu trong CV?
+4.1. Smart Safe và V-tracking
+Đây là use case Kafka rõ nhất.
+CV mô tả Smart Safe nhận trạng thái thiết bị, kết nối, cảnh báo và điều kiện bất thường
+theo thời gian thực; các dự án SafeOne/V-tracking cũng có pipeline dữ liệu realtime.  
+Luồng:
+eventId = evt-20260605-001 đã được xử lý chưa?
+Database cập nhật hợp đồng thành công
+nhưng publish RabbitMQ thất bại
+Sensor/Device
+→ IoT Gateway
+→ Kafka Topic
+→ Alert Engine
+→ Realtime Dashboard
+→ Time-series Database
+→ Analytics
+
+--- PAGE 63 ---
+63/68
+Ví dụ topic:
+Các consumer group:
+Consumer Chức năng
+Realtime Monitor Cập nhật dashboard
+Alert Engine Phát hiện cháy, mất kết
+nối
+Data Storage Ghi vào
+TimescaleDB/InfluxDB
+Analytics Phân tích lịch sử
+Notification Gửi cảnh báo
+Một event cháy có thể đồng thời được nhiều consumer xử lý mà không tranh giành nhau.
+4.2. Samsung Smart Factory
+Kafka phù hợp với:
+Dữ liệu máy móc theo thời gian thực.
+Alarm và equipment status.
+Production events.
+Stock movement.
+Quality inspection result.
+Defect event.
+WIP movement.
+CV mô tả các module equipment monitoring, warehouse movement, lot traceability và
+quality inspection. 
+Ví dụ:
+device.telemetry
+device.status
+device.alarm
+fire.detected
+intrusion.detected
+gps.location
+
+--- PAGE 64 ---
+64/68
+Khi một lot bị QMS đánh giá không đạt:
+Kafka phù hợp vì một sự kiện cần nhiều hệ thống cùng nhận và có thể cần replay khi xây
+lại dữ liệu.
+4.3. mChat và CRM Omnichannel
+mChat tiếp nhận hội thoại từ Facebook, Zalo, website chatbot, livestream và các kênh
+khác. 
+Kafka có thể dùng cho:
+Các consumer:
+Lưu lịch sử hội thoại.
+Realtime agent screen.
+AI phân tích intent/sentiment.
+CRM Customer 360.
+SLA engine.
+Reporting.
+Marketing/CDP.
+RabbitMQ lại phù hợp hơn cho các tác vụ:
+equipment.telemetry
+equipment.downtime
+inventory.moved
+production.completed
+quality.inspection.completed
+quality.defect.detected
+QMS publish quality.lot.rejected
+→ WMS chuyển lot sang Quality Hold
+→ Production ngừng cấp lot
+→ Dashboard cập nhật
+→ Supplier Quality ghi nhận lỗi
+conversation.received
+message.received
+message.sent
+conversation.assigned
+conversation.closed
+customer.intent.detected
+customer.sentiment.detected
+
+--- PAGE 65 ---
+65/68
+Gửi tin nhắn ra ngoài.
+Retry webhook thất bại.
+Phân bổ hội thoại.
+Tạo ticket.
+Chạy AI summary.
+Gửi notification cho agent.
+Có thể dùng cả hai:
+4.4. HRAI One
+Kafka có thể nhận sự kiện thay đổi từ:
+ERP.
+HRM.
+Chấm công.
+Payroll.
+Vi phạm kỷ luật.
+Giao dịch tài chính.
+Đánh giá hiệu suất.
+Ví dụ:
+AI pipeline có thể đọc các event để cập nhật feature và risk score gần thời gian thực.
+RabbitMQ phù hợp hơn cho:
+Tạo một AI inference job.
+Sinh báo cáo nhân viên.
+Gửi yêu cầu chấm điểm lại.
+Gửi cảnh báo cho cán bộ phụ trách.
+Chạy batch xử lý từng nhân viên.
+Kafka: lưu và phân phối dòng sự kiện hội thoại
+RabbitMQ: điều phối từng công việc cần xử lý
+employee.attendance.updated
+employee.performance.updated
+employee.discipline.created
+employee.salary.changed
+employee.resignation.requested
+
+--- PAGE 66 ---
+66/68
+4.5. Banking
+CV đã mô tả các luồng khối lượng lớn với async queue  và streaming , nhưng không chỉ
+rõ là Kafka hay RabbitMQ. 
+Kafka có thể được dùng cho:
+Transaction event stream.
+Payment status event.
+Reconciliation.
+Fraud detection.
+Realtime notification.
+Audit pipeline.
+Operations dashboard.
+Ví dụ:
+RabbitMQ có thể dùng cho:
+Thực hiện payment job.
+Gửi OTP hoặc notification.
+Export báo cáo.
+Chạy reconciliation batch.
+Gọi hệ thống downstream và retry.
+Không nên nói chắc rằng bạn đã dùng Kafka/RabbitMQ trong Banking nếu không kiểm tra
+được công nghệ thực tế. Có thể nói:
+5. So sánh ngay trong phần mềm quản lý hợp đồng
+Trường hợp nên dùng RabbitMQ
+Gửi hồ sơ sang VOffice.
+payment.initiated
+payment.approved
+payment.posted
+payment.failed
+payment.reversed
+Hệ thống có sử dụng cơ chế async queue và streaming cho các luồng giao dịch khối
+lượng lớn; về mặt kiến trúc, RabbitMQ phù hợp với điều phối job, còn Kafka phù hợp
+với transaction event streaming.
+
+--- PAGE 67 ---
+67/68
+Retry tích hợp ERP.
+OCR hợp đồng.
+Sinh báo cáo.
+Gửi email/SMS.
+Tạo task.
+Xử lý thông báo.
+Đồng bộ từng hồ sơ.
+Công việc cần worker hoàn thành.
+Trường hợp có thể dùng Kafka
+Muốn xây kiến trúc event-driven cho toàn doanh nghiệp.
+Sự kiện hợp đồng cần CRM, ERP, BI, Data Warehouse và hệ thống cảnh báo cùng sử
+dụng.
+Cần lưu lịch sử event dài hạn.
+Cần replay event.
+Khối lượng hợp đồng/sự kiện lớn.
+Muốn xây contract analytics hoặc audit pipeline.
+Ví dụ:
+Có thể được dùng bởi:
+ERP tạo thông tin cam kết chi.
+BI cập nhật dashboard.
+Notification gửi thông báo.
+Data Warehouse lưu sự kiện.
+Risk Engine đánh giá hợp đồng.
+QLHĐ tạo milestone.
+Nếu chỉ có một hoặc hai worker xử lý, RabbitMQ thường đơn giản hơn. Nếu nhiều hệ
+thống cùng nghe, cần retention và replay, Kafka hợp lý hơn.
+6. Cách trả lời phỏng vấn về RabbitMQ trong QLHĐ
+Bạn có thể nói:
+contract.signed
+Trong phần mềm quản lý hợp đồng, RabbitMQ có thể được sử dụng làm message
+broker cho các tác vụ bất đồng bộ như trình ký VOffice, OCR hợp đồng, gửi thông báo,
+sinh báo cáo và đồng bộ ERP. Ví dụ khi người dùng bấm trình ký, hệ thống lưu trạng
+
+--- PAGE 68 ---
+68/68
+Nếu hỏi Kafka:
+Cách an toàn nhất trong CV là giữ “Knowledge/experience with Kafka and RabbitMQ”,
+còn trong phỏng vấn chỉ gắn trực tiếp RabbitMQ với QLHĐ khi bạn xác nhận được từ
+code, file cấu hình hoặc kiến trúc hệ thống.
+thái chờ gửi và đưa một message vào queue; worker phía sau gọi API VOffice, cập nhật
+kết quả và tự retry nếu tích hợp tạm thời lỗi. Cách này giúp request của người dùng
+không phải chờ lâu, cô lập lỗi giữa các hệ thống, điều tiết tải và bảo đảm công việc
+không bị mất. Với message lỗi nhiều lần, hệ thống chuyển sang Dead Letter Queue để
+người vận hành xử lý. Consumer cũng phải thiết kế idempotent để tránh gửi hồ sơ
+hoặc tạo task trùng khi message được giao lại.
+Kafka phù hợp hơn với các hệ thống sinh lượng lớn sự kiện liên tục như IoT Smart Safe,
+V-tracking, Smart Factory hoặc Omnichannel Chat. Một event có thể đồng thời được
+dashboard, alert engine, AI, database và analytics xử lý; dữ liệu còn được giữ lại để
+replay. Trong khi đó RabbitMQ phù hợp hơn với mô hình job queue, nơi một worker
+cần nhận và hoàn thành một công việc cụ thể.

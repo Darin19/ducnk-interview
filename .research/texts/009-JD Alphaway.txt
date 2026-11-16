@@ -1,0 +1,426 @@
+
+--- PAGE 1 ---
+Tài liệu bạn gửi là 
+JD vị trí Business Analyst & QA
+JD vị trí Business Analyst & QA
+, không phải CV. Dưới đây là bản dịch đầy đủ và sát nghĩa.
+BUSINESS ANALYST & QA
+BUSINESS ANALYST & QA
+Địa điểm:
+Địa điểm:
+ Hà Nội, Việt Nam 
+Hình thức làm việc:
+Hình thức làm việc:
+ Toàn thời gian 
+Loại tài liệu:
+Loại tài liệu:
+ Tài liệu nội bộ TCB
+1. Mục đích công việc
+1. Mục đích công việc
+Người đảm nhiệm vị trí này chịu trách nhiệm thực hiện chu trình 
+xây dựng – kiểm thử – xác minh
+xây dựng – kiểm thử – xác minh
+ đối với nền tảng trợ lý AI của công ty. Trọng tâm công việc là
+liên tục cấu hình, tối ưu và đảm bảo chất lượng cho nền tảng trên nhiều lĩnh vực nghiệp vụ khác nhau.
+Vị trí này tham gia xuyên suốt chuỗi công việc:
+Nghiên cứu 
+Nghiên cứu 
+→
+ Xác định yêu cầu 
+ Xác định yêu cầu 
+→
+ Xây dựng 
+ Xây dựng 
+→
+ UAT 
+ UAT 
+→
+ Xác minh trên môi trường Production
+ Xác minh trên môi trường Production
+Trong đó, người đảm nhiệm sẽ chịu trách nhiệm chính ở hai giai đoạn:
+Build:
+Build:
+ cấu hình, xây dựng và tối ưu giải pháp.
+Test:
+Test:
+ kiểm thử, đánh giá chất lượng.
+Đồng thời, vị trí cũng hỗ trợ làm rõ và hoàn thiện yêu cầu nghiệp vụ.
+Công việc kết hợp giữa kỹ năng 
+Business Analysis
+Business Analysis
+ và tính kỷ luật trong hoạt động 
+kiểm thử phần mềm
+kiểm thử phần mềm
+. Mục tiêu là đảm bảo các tính năng AI:
+Được cấu hình một cách tối ưu thông qua nhiều vòng thử nghiệm và điều chỉnh.
+Được kiểm thử kỹ lưỡng trước khi phát hành.
+Được xác minh lại trên môi trường thực tế sau khi triển khai.
+Duy trì được các tiêu chuẩn chất lượng đã đặt ra.
+2. Trách nhiệm chính
+2. Trách nhiệm chính
+2.1. Xây dựng – Xử lý tài liệu, cấu hình và tối ưu hóa
+2.1. Xây dựng – Xử lý tài liệu, cấu hình và tối ưu hóa
+Quản lý toàn bộ vòng đời tài liệu
+Quản lý toàn bộ vòng đời tài liệu
+Quản lý quy trình tài liệu từ đầu đến cuối, bao gồm:
+Thu thập tài liệu.
+Xử lý và chuẩn hóa tài liệu.
+Kiểm tra chất lượng tài liệu.
+Đưa dữ liệu hoặc tài liệu vào nền tảng AI.
+Trong ngữ cảnh của hệ thống trợ lý AI, tài liệu có thể là:
+Quy trình nghiệp vụ.
+Chính sách, quy định.
+Tài liệu hướng dẫn.
+Bộ câu hỏi và câu trả lời.
+Tài liệu chuyên môn theo từng lĩnh vực.
+Nội dung dùng để xây dựng kho tri thức cho AI.
+Thực hiện các vòng cấu hình và tối ưu lặp lại
+Thực hiện các vòng cấu hình và tối ưu lặp lại
+Thực hiện quy trình:
+Cấu hình 
+Cấu hình 
+→
+ Kiểm thử 
+ Kiểm thử 
+→
+ Đo lường 
+ Đo lường 
+→
+ Đánh giá 
+ Đánh giá 
+→
+ Điều chỉnh 
+ Điều chỉnh 
+→
+ Kiểm thử lại
+ Kiểm thử lại
+Việc tối ưu phải được thực hiện có hệ thống cho đến khi đáp ứng các chỉ tiêu chất lượng đã đặt ra.
+Đây không phải công việc cấu hình một lần rồi kết thúc. Người đảm nhiệm phải liên tục:
+Thay đổi tham số hoặc cách cấu hình.
+Chạy lại bộ kiểm thử.
+So sánh kết quả giữa các phiên bản.
+Phân tích nguyên nhân kết quả chưa đạt.
+Điều chỉnh cho đến khi chất lượng ổn định.
+Quản lý bộ dữ liệu kiểm thử chuẩn
+Quản lý bộ dữ liệu kiểm thử chuẩn
+Xây dựng và duy trì các 
+golden test set
+golden test set
+ – bộ dữ liệu hoặc bộ câu hỏi kiểm thử chuẩn đã có kết quả kỳ vọng rõ ràng.
+Theo dõi điểm chất lượng qua từng vòng tối ưu.
+Đảm bảo các thay đổi mới thực sự cải thiện kết quả.
+Ngăn chặn hiện tượng 
+regression
+regression
+ – một thay đổi mới làm cho các chức năng hoặc kết quả trước đây đang tốt lại bị giảm chất lượng.
+Ví dụ, golden test set có thể gồm:
+Câu hỏi người dùng.
+Câu trả lời kỳ vọng.
+
+--- PAGE 2 ---
+Nguồn tài liệu tham chiếu.
+Tiêu chí chấm đúng/sai.
+Mức độ đầy đủ của câu trả lời.
+Mức độ chính xác theo nghiệp vụ.
+Các trường hợp AI không được phép trả lời sai.
+Ghi nhận kiến thức cấu hình
+Ghi nhận kiến thức cấu hình
+Ghi lại các quyết định cấu hình đã thực hiện.
+Ghi nhận lý do chọn phương án cấu hình.
+Tổng hợp những vấn đề đã gặp.
+Ghi lại bài học kinh nghiệm sau mỗi vòng thử nghiệm.
+Biến những kinh nghiệm đó thành tri thức có thể tái sử dụng trong nội bộ tổ chức.
+Mục đích là tránh việc kiến thức chỉ nằm ở một cá nhân và giúp những nhóm khác có thể áp dụng lại cho các lĩnh vực nghiệp vụ tương tự.
+Phối hợp với đội kỹ thuật
+Phối hợp với đội kỹ thuật
+Làm việc với đội Engineering để điều tra và xử lý lỗi.
+Cung cấp dữ liệu kiểm thử, bằng chứng lỗi và các bước tái hiện lỗi.
+Phân biệt lỗi do:
+Dữ liệu đầu vào.
+Nội dung tài liệu.
+Cấu hình.
+Logic của hệ thống.
+Mô hình AI.
+Hạ tầng hoặc tích hợp kỹ thuật.
+Chuyển hoặc báo cáo các vấn đề cần sự can thiệp sâu từ đội kỹ thuật.
+2.2. Kiểm thử UAT và xác minh trên Production
+2.2. Kiểm thử UAT và xác minh trên Production
+Thiết kế và thực hiện kế hoạch kiểm thử toàn diện
+Thiết kế và thực hiện kế hoạch kiểm thử toàn diện
+Xây dựng và thực thi test plan bao phủ:
+Các luồng chức năng chính.
+Các luồng nghiệp vụ từ đầu đến cuối.
+Các trường hợp ngoại lệ.
+Các tình huống biên.
+Các tình huống sử dụng thực tế của người dùng.
+Các trường hợp dữ liệu thiếu, sai hoặc không rõ ràng.
+Các tình huống AI trả lời không đúng ngữ cảnh.
+Kế hoạch kiểm thử không chỉ kiểm tra hệ thống “có chạy hay không”, mà phải đánh giá cả:
+Độ chính xác.
+Tính đầy đủ.
+Tính nhất quán.
+Mức độ phù hợp với nghiệp vụ.
+Khả năng xử lý câu hỏi không rõ nghĩa.
+Khả năng xử lý các tình huống thực tế.
+Thực hiện UAT end-to-end
+Thực hiện UAT end-to-end
+Thực hiện kiểm thử chấp nhận người dùng từ đầu đến cuối, đồng thời ghi chép có cấu trúc về:
+Kết quả kiểm thử.
+Trạng thái pass/fail.
+Các lỗi phát hiện.
+Mức độ nghiêm trọng của lỗi.
+Bằng chứng kiểm thử.
+Điều kiện đầu vào.
+Kết quả thực tế.
+Kết quả kỳ vọng.
+Các bước tái hiện lỗi.
+Các mức độ lỗi có thể được phân loại như:
+Critical – nghiêm trọng, không thể sử dụng.
+High – ảnh hưởng lớn đến nghiệp vụ.
+Medium – có ảnh hưởng nhưng có phương án xử lý tạm thời.
+Low – lỗi nhỏ, ít ảnh hưởng.
+Cosmetic – lỗi hiển thị hoặc trải nghiệm người dùng.
+Xác thực kết quả của AI
+Xác thực kết quả của AI
+
+--- PAGE 3 ---
+Kiểm tra đầu ra do AI tạo ra dựa trên:
+Quy tắc nghiệp vụ.
+Tiêu chuẩn độ chính xác của từng lĩnh vực.
+Tài liệu nguồn.
+Câu trả lời kỳ vọng.
+Các điều kiện tuân thủ.
+Các giới hạn mà AI không được phép vượt qua.
+Ví dụ, cần xác định:
+AI có trả lời đúng câu hỏi không.
+Câu trả lời có dựa trên đúng tài liệu không.
+Có bịa thông tin hay không.
+Có bỏ sót nội dung quan trọng không.
+Có trả lời trái với chính sách nghiệp vụ không.
+Có đưa ra thông tin không thuộc phạm vi được phép không.
+Có trích dẫn hoặc tham chiếu đúng nguồn không.
+Kiểm thử hồi quy và xác minh sau triển khai
+Kiểm thử hồi quy và xác minh sau triển khai
+Thực hiện regression testing sau mỗi lần thay đổi cấu hình hoặc triển khai phiên bản mới.
+Xác minh trực tiếp trên môi trường Production.
+Đảm bảo chất lượng hệ thống không bị suy giảm sau:
+Thay đổi dữ liệu.
+Cập nhật tài liệu.
+Thay đổi cấu hình.
+Cập nhật mô hình.
+Thay đổi logic.
+Triển khai phiên bản mới.
+Production Verification có thể bao gồm:
+Kiểm tra các chức năng quan trọng sau khi deploy.
+Kiểm tra dữ liệu đã được đồng bộ đầy đủ.
+Kiểm tra AI có truy xuất đúng kho tri thức.
+Kiểm tra các test case trọng yếu.
+Theo dõi phản hồi hoặc lỗi từ người dùng thật.
+So sánh kết quả Production với UAT.
+Theo dõi và báo cáo chỉ số chất lượng
+Theo dõi và báo cáo chỉ số chất lượng
+Theo dõi các chỉ số chất lượng theo thời gian, phát hiện và cảnh báo:
+Xu hướng chất lượng tăng hoặc giảm.
+Regression.
+Kết quả bất thường.
+Sự khác biệt giữa các lĩnh vực nghiệp vụ.
+Nhóm câu hỏi có tỷ lệ trả lời sai cao.
+Các lỗi tái diễn.
+Các trường hợp cần cải thiện ngay.
+Một số chỉ số có thể bao gồm:
+Tỷ lệ trả lời đúng.
+Tỷ lệ test case pass.
+Tỷ lệ câu trả lời đầy đủ.
+Tỷ lệ câu trả lời không có căn cứ.
+Tỷ lệ hallucination.
+Số lỗi theo mức độ nghiêm trọng.
+Tỷ lệ regression.
+Chất lượng theo từng phiên bản.
+Chất lượng theo từng domain nghiệp vụ.
+2.3. Hỗ trợ yêu cầu và quản lý kho tri thức
+2.3. Hỗ trợ yêu cầu và quản lý kho tri thức
+Làm rõ và xác thực yêu cầu
+Làm rõ và xác thực yêu cầu
+Hỗ trợ hoàn thiện yêu cầu bằng cách sử dụng kinh nghiệm kiểm thử thực tế để phát hiện:
+Yêu cầu còn thiếu.
+Yêu cầu chưa rõ ràng.
+Yêu cầu có nhiều cách hiểu.
+Logic nghiệp vụ mâu thuẫn.
+Các trường hợp ngoại lệ chưa được đề cập.
+Acceptance criteria chưa đủ để kiểm thử.
+Vị trí này không chỉ tiếp nhận yêu cầu từ phía nghiệp vụ mà còn dùng kết quả kiểm thử để phản biện và hoàn thiện yêu cầu.
+
+--- PAGE 4 ---
+Phát hiện điểm đau và cơ hội cải tiến
+Phát hiện điểm đau và cơ hội cải tiến
+Trong quá trình kiểm thử, liên tục phát hiện và đưa ra:
+Các vấn đề gây khó khăn cho người dùng.
+Điểm chưa hợp lý trong quy trình.
+Các bước xử lý dư thừa.
+Các nội dung AI thường xuyên trả lời sai.
+Các khu vực có thể tối ưu cấu hình.
+Các vấn đề về dữ liệu hoặc tài liệu nguồn.
+Cơ hội cải thiện trải nghiệm người dùng.
+Cơ hội tự động hóa hoặc chuẩn hóa quy trình.
+Quản lý và tuyển chọn nội dung kho tri thức
+Quản lý và tuyển chọn nội dung kho tri thức
+Duy trì và quản trị nội dung knowledge base trên nhiều lĩnh vực nghiệp vụ, bảo đảm:
+Nội dung chính xác.
+Nội dung được cập nhật.
+Không có tài liệu trùng lặp hoặc mâu thuẫn.
+Cấu trúc tài liệu phù hợp để AI có thể xử lý.
+Tài liệu có phiên bản và nguồn gốc rõ ràng.
+Nội dung đã sẵn sàng để đưa vào hệ thống AI.
+“Curate knowledge base” không chỉ đơn thuần là upload tài liệu, mà bao gồm:
+Lựa chọn tài liệu phù hợp.
+Loại bỏ nội dung lỗi thời.
+Chuẩn hóa cách trình bày.
+Chia nhỏ nội dung.
+Gắn metadata.
+Phân loại theo domain.
+Kiểm tra quyền truy cập.
+Kiểm tra độ chính xác trước khi ingestion.
+Chuyển đổi yêu cầu thành test case
+Chuyển đổi yêu cầu thành test case
+Chuyển các yêu cầu và tiêu chí nghiệm thu thành:
+Test case có cấu trúc.
+Test scenario.
+Checklist xác minh.
+Bộ dữ liệu đầu vào.
+Kết quả kỳ vọng.
+Điều kiện pass/fail.
+Bộ test hồi quy.
+Bộ test chuẩn cho từng domain.
+3. Các mối quan hệ công việc
+3. Các mối quan hệ công việc
+Các bên liên quan nội bộ
+Các bên liên quan nội bộ
+Vị trí này sẽ làm việc với:
+Đội AI Engineering.
+Đội Data Science.
+Các chuyên gia nghiệp vụ theo từng lĩnh vực.
+Các phòng ban có liên quan.
+Trong thực tế, người đảm nhiệm đóng vai trò kết nối giữa:
+Nghiệp vụ – Dữ liệu – AI – Kỹ thuật – Kiểm thử – Người dùng cuối
+Nghiệp vụ – Dữ liệu – AI – Kỹ thuật – Kiểm thử – Người dùng cuối
+Các bên liên quan bên ngoài
+Các bên liên quan bên ngoài
+Đại lý bảo hiểm – người dùng cuối của hệ thống.
+Các đối tác cung cấp dịch vụ chuyên môn.
+Điều này cho thấy nền tảng AI nhiều khả năng được triển khai để hỗ trợ nghiệp vụ bảo hiểm, trong đó đại lý bảo hiểm là nhóm người sử dụng trực tiếp.
+4. Yêu cầu về trình độ và kinh nghiệm
+4. Yêu cầu về trình độ và kinh nghiệm
+Trình độ học vấn
+Trình độ học vấn
+
+--- PAGE 5 ---
+Tốt nghiệp đại học thuộc một trong các lĩnh vực:
+Khoa học máy tính.
+Công nghệ thông tin.
+Quản trị kinh doanh.
+Hoặc ngành liên quan đến kỹ thuật và quản lý kinh doanh.
+Kinh nghiệm làm việc
+Kinh nghiệm làm việc
+Kinh nghiệm tối thiểu
+Kinh nghiệm tối thiểu
+Có ít nhất 
+2 năm kinh nghiệm liên quan
+2 năm kinh nghiệm liên quan
+ trong một hoặc nhiều lĩnh vực:
+Software Testing/QA.
+Business Analysis.
+Product Operations.
+Ứng viên có nền tảng QA hoặc Tester được ưu tiên mạnh.
+Kinh nghiệm kiểm thử thủ công
+Kinh nghiệm kiểm thử thủ công
+Cần có kinh nghiệm sâu về manual testing, bao gồm:
+Thiết kế test plan.
+Xây dựng test scenario và test case.
+Thực hiện kiểm thử.
+Ghi nhận và mô tả lỗi.
+Phân loại mức độ nghiêm trọng.
+Theo dõi quá trình sửa lỗi.
+Theo dõi và phân tích chỉ số chất lượng.
+Kinh nghiệm cấu hình và tối ưu sản phẩm
+Kinh nghiệm cấu hình và tối ưu sản phẩm
+Có kinh nghiệm thực hiện các vòng cấu hình và tối ưu lặp lại đối với sản phẩm phần mềm.
+Ứng viên cần cảm thấy thoải mái với chu trình lặp đi lặp lại:
+Xây dựng 
+Xây dựng 
+→
+ Kiểm thử 
+ Kiểm thử 
+→
+ Đánh giá 
+ Đánh giá 
+→
+ Điều chỉnh
+ Điều chỉnh
+Đây là yêu cầu quan trọng vì sản phẩm AI thường không thể đạt chất lượng tốt chỉ sau một lần cấu hình.
+Kinh nghiệm Agile
+Kinh nghiệm Agile
+Có kinh nghiệm phát triển sản phẩm theo Agile và hiểu:
+Các nguyên tắc Agile.
+Phương pháp Scrum.
+Sprint Planning.
+Backlog.
+User Story.
+Acceptance Criteria.
+Review.
+Retrospective.
+Phối hợp giữa Product, BA, Dev và QA.
+Khả năng chú ý đến chi tiết
+Khả năng chú ý đến chi tiết
+Có khả năng tập trung cao.
+Làm việc có phương pháp và kỷ luật.
+Có thể thực hiện các tác vụ lặp lại một cách nhất quán.
+Không mất tập trung hoặc bỏ qua lỗi nhỏ sau nhiều vòng kiểm thử.
+Đây là yêu cầu rất đặc trưng của vị trí, vì công việc có nhiều vòng kiểm thử, đánh giá và tối ưu tương tự nhau.
+Khả năng viết tài liệu
+Khả năng viết tài liệu
+Có kỹ năng giao tiếp bằng văn bản tốt, có thể tạo ra:
+Tài liệu rõ ràng.
+Báo cáo kiểm thử có cấu trúc.
+Mô tả lỗi dễ hiểu.
+Ghi nhận quan sát khách quan.
+Checklist xác minh.
+Báo cáo chất lượng.
+Tài liệu bài học kinh nghiệm.
+Tiếng Anh
+Tiếng Anh
+Yêu cầu năng lực tiếng Anh được áp dụng theo chính sách của công ty.
+
+--- PAGE 6 ---
+5. Bản chất thực tế của vị trí
+5. Bản chất thực tế của vị trí
+Tên vị trí là 
+Business Analyst & QA
+Business Analyst & QA
+, nhưng tỷ trọng công việc nghiêng khá rõ về:
+Manual QA.
+AI Quality Assurance.
+UAT.
+Quản lý test data.
+Quản trị knowledge base.
+Cấu hình và tối ưu AI.
+Production verification.
+BA trong vị trí này không tập trung nhiều vào:
+Lập roadmap sản phẩm.
+Quản lý backlog như Product Owner.
+Phân tích tài chính.
+Nghiên cứu thị trường.
+Thiết kế giải pháp nghiệp vụ quy mô lớn.
+Thay vào đó, BA chủ yếu làm:
+Làm rõ yêu cầu thông qua hoạt động kiểm thử.
+Phát hiện thiếu sót và trường hợp ngoại lệ.
+Chuyển acceptance criteria thành test case.
+Xác thực đầu ra AI theo nghiệp vụ.
+Quản lý nội dung đầu vào cho hệ thống AI.
+Đánh giá chất lượng qua nhiều vòng cấu hình.
+Có thể gọi bản chất của vị trí này là:
+AI Business Analyst / AI QA Analyst / AI Product Operations & Quality Analyst
+AI Business Analyst / AI QA Analyst / AI Product Operations & Quality Analyst
+Đây là vai trò kết hợp giữa 
+BA, Manual Tester, AI Evaluator và Knowledge Base Operator
+BA, Manual Tester, AI Evaluator và Knowledge Base Operator
+.

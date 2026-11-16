@@ -1,0 +1,1002 @@
+
+===== PAGE 1 =====
+Đúng. Không nên hiểu feature chỉ là “cột được tính ra từ dữ liệu số trong database”. Trong HRAI,
+feature cần được coi như một loại thông tin nhân sự có định nghĩa, giá trị, thời điểm hiệu lực và
+nguồn hình thành riêng.
+
+
+Cần tách rõ ba khái niệm:
+
+
+1. Feature tồn tại trong hệ thống: Ví dụ KPI_TREND, MANAGER_SENTIMENT, WORKLOAD_LEVEL.
+2. Nhân viên đang có feature nào và giá trị gì: Ví dụ nhân viên A có KPI_TREND = DECLINING.
+3. Feature nào được sử dụng trong một model hoặc một bộ training cụ thể: Có thể nhân viên có
+   50 feature nhưng model dự báo burnout chỉ dùng 12 feature.
+
+Thiết kế phù hợp nhất là mô hình Feature Catalog + Employee Feature Store + Dataset Snapshot.
+
+
+
+
+
+1. Feature được coi như thông tin nhân sự như
+thế nào?
+
+
+Ví dụ hồ sơ của một nhân viên không chỉ có:
+
+
+Mã nhân viên: E001
+Phòng ban: CNTT
+KPI tháng gần nhất: 78
+Mà còn có các thông tin suy diễn hoặc được gán:
+
+
+Xu hướng KPI: Giảm mạnh
+Mức độ biến động hiệu suất: Cao
+Cảm xúc trong nhận xét quản lý: Tiêu cực
+Khối lượng công việc: Quá tải
+Mức độ gắn kết: Giảm
+Thời gian chưa thăng tiến: Dài
+Rủi ro burnout: Có tín hiệu
+Các thông tin trên chính là employee features.
+
+
+Một feature có thể được tạo ra từ bốn nguồn:
+
+===== PAGE 2 =====
+ Loại feature         Ví dụ
+ Raw feature          Tuổi nghề, chức danh, KPI hiện tại
+ Derived feature      KPI giảm ba kỳ liên tiếp
+ Manual feature       Quản lý đánh dấu nhân viên có dấu hiệu mất động lực
+ Synthetic feature    Feature được gán cho nhân viên giả lập phục vụ training/test
+
+
+Vì vậy không nhất thiết mọi feature đều phải được tính trực tiếp từ các bảng nhân sự hiện tại.
+
+
+
+
+
+2. Kiến trúc dữ liệu nên chia thành ba tầng
+
+
+Tầng 1: Feature Catalog
+
+
+Đây là danh mục định nghĩa toàn bộ các feature mà HRAI có thể sử dụng.
+
+
+Ví dụ bảng:
+
+
+CREATE TABLE HR_FEATURE_CATALOG (
+    FEATURE_ID          NUMBER PRIMARY KEY,
+    FEATURE_CODE        VARCHAR2(100) UNIQUE NOT NULL,
+    FEATURE_NAME        VARCHAR2(255) NOT NULL,
+    FEATURE_GROUP       VARCHAR2(100),
+    DESCRIPTION         VARCHAR2(1000),
+
+    VALUE_TYPE          VARCHAR2(30),
+    ALLOWED_VALUES      CLOB,
+    DEFAULT_VALUE       VARCHAR2(255),
+
+    FEATURE_SOURCE_TYPE VARCHAR2(30),
+    CALCULATION_RULE    CLOB,
+
+    IS_TIME_DEPENDENT   NUMBER(1) DEFAULT 1,
+    IS_ACTIVE           NUMBER(1) DEFAULT 1,
+
+    FEATURE_VERSION     VARCHAR2(30),
+    EFFECTIVE_FROM      DATE,
+
+===== PAGE 3 =====
+    EFFECTIVE_TO        DATE,
+
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+Ví dụ dữ liệu:
+
+
+ FEATURE_CODE                   FEATURE_NAME               VALUE_TYPE      FEATURE_SOURCE_TYPE
+ KPI_TREND                      Xu hướng KPI               CATEGORY        DERIVED
+ MANAGER_SENTIMENT              Sắc thái nhận xét quản     CATEGORY        AI_DERIVED
+                                lý
+ WORKLOAD_LEVEL                 Mức tải công việc          CATEGORY        DERIVED
+ PROMOTION_STAGNATION           Dấu hiệu chậm thăng        BOOLEAN         DERIVED
+                                tiến
+ ENGAGEMENT_SIGNAL              Tín hiệu gắn kết           CATEGORY        MANUAL_OR_AI
+ CAREER_POTENTIAL               Tiềm năng phát triển       CATEGORY        AI_DERIVED
+
+
+Ví dụ ALLOWED_VALUES của KPI_TREND:
+
+
+[
+  "STRONG_INCREASE",
+  "SLIGHT_INCREASE",
+  "STABLE",
+  "SLIGHT_DECREASE",
+  "STRONG_DECREASE",
+  "UNKNOWN"
+]
+Feature Catalog giúp trả lời:
+
+
+    Hệ thống có những feature nào?
+    Feature thuộc nhóm hiệu suất, thái độ, nghề nghiệp hay rủi ro?
+    Feature có kiểu số, text, boolean hay category?
+    Feature được tính bằng rule nào?
+    Feature đang ở phiên bản nào?
+    Feature có những giá trị hợp lệ nào?
+
+
+
+
+3. Bảng gán feature cho từng nhân viên
+
+===== PAGE 4 =====
+Đây là bảng quan trọng nhất để trả lời:
+
+
+
+Feature này đang được dùng cho nhân viên nào?
+
+
+
+và:
+
+
+
+Nhân viên này có những feature nào?
+
+
+
+CREATE TABLE EMPLOYEE_FEATURE_VALUE (
+    EMPLOYEE_FEATURE_ID NUMBER PRIMARY KEY,
+    EMPLOYEE_CODE       VARCHAR2(50) NOT NULL,
+    FEATURE_ID          NUMBER NOT NULL,
+
+    VALUE_NUMBER        NUMBER,
+    VALUE_TEXT          VARCHAR2(2000),
+    VALUE_CATEGORY      VARCHAR2(255),
+    VALUE_BOOLEAN       NUMBER(1),
+    VALUE_JSON          CLOB,
+
+    FEATURE_STATUS      VARCHAR2(30),
+    CONFIDENCE_SCORE    NUMBER,
+
+    OBSERVED_AT         TIMESTAMP,
+    VALID_FROM          TIMESTAMP,
+    VALID_TO            TIMESTAMP,
+
+    SOURCE_TYPE         VARCHAR2(30),
+    SOURCE_REFERENCE    VARCHAR2(500),
+    CALCULATION_RUN_ID  VARCHAR2(100),
+
+    IS_SYNTHETIC        NUMBER(1) DEFAULT 0,
+    SCENARIO_ID         VARCHAR2(100),
+
+    FEATURE_VERSION     VARCHAR2(30),
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP,
+
+===== PAGE 5 =====
+    CONSTRAINT FK_EMPLOYEE_FEATURE
+        FOREIGN KEY (FEATURE_ID)
+        REFERENCES HR_FEATURE_CATALOG(FEATURE_ID)
+);
+Mỗi dòng có nghĩa:
+
+
+
+Tại một thời điểm nhất định, nhân viên X có feature Y với giá trị Z.
+
+
+
+Ví dụ:
+
+
+ EMPLOYEE_CODE        FEATURE_CODE                    VALUE_CATEGORY
+ E001                 KPI_TREND                       STRONG_DECREASE
+ E001                 MANAGER_SENTIMENT               NEGATIVE
+ E001                 WORKLOAD_LEVEL                  OVERLOAD
+ E001                 DISCIPLINE_LEVEL                NONE
+ E001                 PROMOTION_STAGNATION            HIGH
+ E001                 ENGAGEMENT_SIGNAL               DECLINING
+
+
+Như vậy nhân viên không còn được biểu diễn chỉ bằng một dòng chứa hàng chục cột cố định.
+Mỗi feature là một bản ghi thông tin nhân sự độc lập.
+
+
+
+
+
+4. Vì sao cần FEATURE_STATUS?
+
+
+Không nên dùng việc “không có dòng dữ liệu” để kết luận feature bị thiếu.
+
+
+Không có dòng có thể mang nhiều ý nghĩa:
+
+
+    Feature chưa được tính.
+    Không đủ dữ liệu.
+    Feature không áp dụng.
+    Feature thực sự không tồn tại.
+
+===== PAGE 6 =====
+    Pipeline bị lỗi.
+
+Nên có trạng thái rõ ràng:
+
+
+ FEATURE_STATUS               Ý nghĩa
+ PRESENT                      Có giá trị hợp lệ
+ MISSING                      Thiếu dữ liệu nguồn
+ UNKNOWN                      Có dữ liệu nhưng chưa thể kết luận
+ NOT_APPLICABLE               Không áp dụng cho nhân viên này
+ CALCULATION_ERROR            Lỗi tính toán
+ PENDING_REVIEW               Chờ nghiệp vụ xác nhận
+ MANUALLY_CONFIRMED           Đã được người dùng xác nhận
+
+
+Ví dụ nhân viên mới vào công ty chưa đủ ba kỳ KPI:
+
+
+FEATURE_CODE = KPI_TREND
+FEATURE_STATUS = MISSING
+VALUE_CATEGORY = UNKNOWN
+Điều này rất quan trọng khi training và test AI, vì AI cần phân biệt:
+
+
+    “Không có rủi ro”
+    với “Không đủ dữ liệu để đánh giá rủi ro”.
+
+
+
+
+5. Cách truy vấn nhân viên có những feature
+nào
+
+
+SELECT
+    EFV.EMPLOYEE_CODE,
+    FC.FEATURE_CODE,
+    FC.FEATURE_NAME,
+    FC.FEATURE_GROUP,
+    EFV.VALUE_NUMBER,
+    EFV.VALUE_CATEGORY,
+    EFV.VALUE_TEXT,
+
+===== PAGE 7 =====
+    EFV.FEATURE_STATUS,
+    EFV.CONFIDENCE_SCORE
+FROM EMPLOYEE_FEATURE_VALUE EFV
+JOIN HR_FEATURE_CATALOG FC
+    ON EFV.FEATURE_ID = FC.FEATURE_ID
+WHERE EFV.EMPLOYEE_CODE = 'E001'
+  AND (EFV.VALID_TO IS NULL OR EFV.VALID_TO > SYSTIMESTAMP);
+Kết quả có thể là:
+
+
+E001 | KPI_TREND            | STRONG_DECREASE
+E001 | MANAGER_SENTIMENT    | NEGATIVE
+E001 | WORKLOAD_LEVEL       | OVERLOAD
+E001 | PROMOTION_STAGNATION | HIGH
+E001 | ENGAGEMENT_SIGNAL    | DECLINING
+
+
+
+6. Cách truy vấn feature này đang được gán cho
+nhân viên nào
+
+
+Ví dụ tìm tất cả nhân viên có feature WORKLOAD_LEVEL = OVERLOAD:
+
+
+SELECT
+    EFV.EMPLOYEE_CODE,
+    EFV.VALUE_CATEGORY,
+    EFV.CONFIDENCE_SCORE,
+    EFV.OBSERVED_AT
+FROM EMPLOYEE_FEATURE_VALUE EFV
+JOIN HR_FEATURE_CATALOG FC
+    ON EFV.FEATURE_ID = FC.FEATURE_ID
+WHERE FC.FEATURE_CODE = 'WORKLOAD_LEVEL'
+  AND EFV.VALUE_CATEGORY = 'OVERLOAD'
+  AND EFV.FEATURE_STATUS = 'PRESENT';
+
+
+
+7. Phải tách “nhân viên có feature” và “model sử
+dụng feature”
+
+===== PAGE 8 =====
+Một nhân viên có thể có:
+
+
+50 employee features
+Nhưng model dự báo burnout chỉ sử dụng:
+
+
+KPI_TREND
+WORKLOAD_LEVEL
+OVERTIME_LEVEL
+MANAGER_SENTIMENT
+ENGAGEMENT_SIGNAL
+LEAVE_PATTERN
+Do đó cần bảng quản lý feature set.
+
+
+Bảng danh mục bộ feature
+
+
+CREATE TABLE MODEL_FEATURE_SET (
+    FEATURE_SET_ID      NUMBER PRIMARY KEY,
+    FEATURE_SET_CODE    VARCHAR2(100),
+    FEATURE_SET_NAME    VARCHAR2(255),
+    MODEL_CODE          VARCHAR2(100),
+    MODEL_VERSION       VARCHAR2(50),
+    PURPOSE             VARCHAR2(500),
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+Bảng feature thuộc bộ nào
+
+
+CREATE TABLE MODEL_FEATURE_SET_MEMBER (
+    FEATURE_SET_ID      NUMBER NOT NULL,
+    FEATURE_ID          NUMBER NOT NULL,
+    IS_REQUIRED         NUMBER(1) DEFAULT 0,
+    FEATURE_WEIGHT      NUMBER,
+    FEATURE_ORDER       NUMBER,
+    TRANSFORMATION_RULE CLOB,
+
+    PRIMARY KEY (FEATURE_SET_ID, FEATURE_ID)
+);
+Ví dụ:
+
+===== PAGE 9 =====
+Feature set cho burnout
+
+
+FEATURE_SET_CODE = FS_BURNOUT_V2
+ Feature                  Required  Weight
+ WORKLOAD_LEVEL           1         0.25
+ OVERTIME_LEVEL           1         0.20
+ KPI_TREND                1         0.15
+ MANAGER_SENTIMENT        0         0.15
+ ENGAGEMENT_SIGNAL        0         0.15
+ LEAVE_PATTERN            0         0.10
+
+
+Feature set cho high potential
+
+
+FEATURE_SET_CODE = FS_HIGH_POTENTIAL_V3
+ Feature                        Required
+ KPI_STABILITY                  1
+ PERFORMANCE_PERCENTILE         1
+ COMPETENCY_GAP                 1
+ LEARNING_SPEED                 0
+ MANAGER_SENTIMENT              0
+ CAREER_MOBILITY                0
+
+
+Như vậy có thể truy vết:
+
+
+   Nhân viên có feature gì.
+   Model nào sử dụng feature đó.
+   Feature đó được sử dụng trong phiên bản nào.
+   Trọng số hoặc logic chuyển đổi của feature là gì.
+
+
+
+
+8. Tạo training data phải xuất phát từ tổ hợp
+feature
+
+===== PAGE 10 =====
+Đúng logic nên là:
+
+
+Feature Catalog
+  Feature domains
+  Combination rules
+  Synthetic employee/persona
+  Employee-feature mapping
+  Expected labels
+  Training dataset
+Không phải:
+
+
+Sinh ngẫu nhiên một loạt số liệu
+  Hy vọng AI tự hiểu ra feature
+Ví dụ bộ feature gốc
+
+
+Giả sử có các feature:
+
+
+KPI_TREND:
+- INCREASE
+- STABLE
+- DECREASE
+
+MANAGER_SENTIMENT:
+- POSITIVE
+- NEUTRAL
+- NEGATIVE
+
+WORKLOAD_LEVEL:
+- NORMAL
+- HIGH
+- OVERLOAD
+
+PROMOTION_STAGNATION:
+- LOW
+- MEDIUM
+- HIGH
+Có thể tạo một persona:
+
+
+KPI_TREND = DECREASE
+MANAGER_SENTIMENT = NEGATIVE
+
+===== PAGE 11 =====
+WORKLOAD_LEVEL = OVERLOAD
+PROMOTION_STAGNATION = HIGH
+Persona này có thể được gán nhãn kỳ vọng:
+
+
+EMPLOYEE_CLASS = NEGATIVE_SIGNAL
+
+BURNOUT_RISK = HIGH
+RESIGNATION_RISK = MEDIUM
+HIGH_POTENTIAL = FALSE
+Sau đó mới sinh các dữ liệu chi tiết phù hợp với feature:
+
+
+KPI: 94   88   80   74
+Số giờ OT: 48   55   64
+Nhận xét quản lý: “Có dấu hiệu mệt mỏi, tiến độ gần đây giảm”
+Thời gian chưa thăng tiến: 42 tháng
+Ở đây:
+
+
+    Feature là tầng ý nghĩa nghiệp vụ.
+    Dữ liệu số là bằng chứng hiện thực hóa feature.
+    Training sample được kiểm soát từ feature trước, không bị phụ thuộc hoàn toàn vào dữ liệu
+    có sẵn.
+
+
+
+
+9. Tạo nhân viên giả lập cho training/test
+
+
+Nên có một bảng subject chung, không nhất thiết mọi training sample phải là nhân viên thật.
+
+
+CREATE TABLE AI_DATASET_SUBJECT (
+    SUBJECT_ID          VARCHAR2(100) PRIMARY KEY,
+    SUBJECT_TYPE        VARCHAR2(30),
+    EMPLOYEE_CODE       VARCHAR2(50),
+
+    IS_SYNTHETIC        NUMBER(1),
+    SCENARIO_ID         VARCHAR2(100),
+
+    DESCRIPTION         VARCHAR2(1000),
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+
+===== PAGE 12 =====
+SUBJECT_TYPE có thể là:
+
+
+REAL_EMPLOYEE
+ANONYMIZED_EMPLOYEE
+SYNTHETIC_EMPLOYEE
+EDGE_CASE_PERSONA
+Ví dụ:
+
+
+SUBJECT_ID = SYN_BURNOUT_001
+SUBJECT_TYPE = SYNTHETIC_EMPLOYEE
+IS_SYNTHETIC = 1
+SCENARIO_ID = SCN_OVERLOAD_KPI_DECLINE
+Sau đó gán feature:
+
+
+ SUBJECT_ID            FEATURE                   VALUE
+ SYN_BURNOUT_001       KPI_TREND                 STRONG_DECREASE
+ SYN_BURNOUT_001       WORKLOAD_LEVEL            OVERLOAD
+ SYN_BURNOUT_001       MANAGER_SENTIMENT         NEGATIVE
+ SYN_BURNOUT_001       DISCIPLINE_LEVEL          NONE
+
+
+Về logic, SUBJECT_ID có thể thay cho EMPLOYEE_CODE trong bảng feature. Hoặc xây một khóa
+SUBJECT_ID dùng chung cho cả nhân viên thật và nhân viên giả lập.
+
+
+
+
+
+10. Mô hình bảng feature tốt hơn cho cả nhân
+viên thật và giả lập
+
+
+Thay vì chỉ dùng EMPLOYEE_CODE, có thể thiết kế:
+
+
+CREATE TABLE SUBJECT_FEATURE_VALUE (
+    SUBJECT_FEATURE_ID  NUMBER PRIMARY KEY,
+    SUBJECT_ID          VARCHAR2(100) NOT NULL,
+    FEATURE_ID          NUMBER NOT NULL,
+
+    VALUE_NUMBER        NUMBER,
+
+===== PAGE 13 =====
+    VALUE_TEXT          VARCHAR2(2000),
+    VALUE_CATEGORY      VARCHAR2(255),
+    VALUE_BOOLEAN       NUMBER(1),
+    VALUE_JSON          CLOB,
+
+    FEATURE_STATUS      VARCHAR2(30),
+    CONFIDENCE_SCORE    NUMBER,
+
+    SOURCE_TYPE         VARCHAR2(30),
+    FEATURE_VERSION     VARCHAR2(30),
+
+    VALID_FROM          TIMESTAMP,
+    VALID_TO            TIMESTAMP,
+
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+Khi đó:
+
+
+    Nhân viên thật: SUBJECT_ID = EMP_E001
+    Nhân viên ẩn danh: SUBJECT_ID = ANON_0001
+    Nhân viên giả lập: SUBJECT_ID = SYN_0001
+
+Đây là mô hình linh hoạt hơn cho AI QA.
+
+
+
+
+
+11. Luồng sinh tổ hợp feature
+
+
+Bước 1: Định nghĩa miền giá trị
+
+
+feature_domains = {
+    "KPI_TREND": [
+        "STRONG_INCREASE",
+        "STABLE",
+        "STRONG_DECREASE"
+    ],
+    "MANAGER_SENTIMENT": [
+        "POSITIVE",
+        "NEUTRAL",
+        "NEGATIVE"
+
+===== PAGE 14 =====
+    ],
+    "WORKLOAD_LEVEL": [
+        "NORMAL",
+        "HIGH",
+        "OVERLOAD"
+    ],
+    "PROMOTION_STAGNATION": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+    ]
+}
+Bước 2: Sinh tổ hợp
+
+
+from itertools import product
+
+feature_codes = list(feature_domains.keys())
+feature_values = [feature_domains[x] for x in feature_codes]
+
+combinations = [
+    dict(zip(feature_codes, values))
+    for values in product(*feature_values)
+]
+Bước 3: Áp dụng constraint
+
+
+Không phải tổ hợp nào cũng hợp lý.
+
+
+Ví dụ rule:
+
+
+def is_valid_combination(features: dict) -> bool:
+    if (
+        features["KPI_TREND"] == "STRONG_INCREASE"
+        and features["MANAGER_SENTIMENT"] == "NEGATIVE"
+    ):
+        # Không loại bỏ hoàn toàn vì đây có thể là case mâu thuẫn,
+        # nhưng chuyển sang nhóm conflict test.
+        return True
+
+    return True
+Thực tế nên phân loại thành:
+
+===== PAGE 15 =====
+NORMAL_SCENARIO
+RISK_SCENARIO
+CONFLICT_SCENARIO
+MISSING_DATA_SCENARIO
+BOUNDARY_SCENARIO
+Bước 4: Tạo subject giả lập
+
+
+subject = {
+    "subject_id": "SYN_000001",
+    "subject_type": "SYNTHETIC_EMPLOYEE",
+    "scenario_id": "SCN_KPI_DOWN_OVERLOAD_NEGATIVE"
+}
+Bước 5: Insert từng feature
+
+
+feature_rows = [
+    {
+        "subject_id": "SYN_000001",
+        "feature_code": "KPI_TREND",
+        "value_category": "STRONG_DECREASE"
+    },
+    {
+        "subject_id": "SYN_000001",
+        "feature_code": "WORKLOAD_LEVEL",
+        "value_category": "OVERLOAD"
+    },
+    {
+        "subject_id": "SYN_000001",
+        "feature_code": "MANAGER_SENTIMENT",
+        "value_category": "NEGATIVE"
+    }
+]
+Bước 6: Sinh dữ liệu bằng chứng
+
+
+Từ feature:
+
+
+KPI_TREND = STRONG_DECREASE
+generator tạo:
+
+===== PAGE 16 =====
+{
+  "kpi_history": [95, 90, 82, 74]
+}
+Từ:
+
+
+WORKLOAD_LEVEL = OVERLOAD
+generator tạo:
+
+
+{
+  "monthly_task_count": 185,
+  "team_average_task_count": 102,
+  "overtime_hours": 61,
+  "overdue_task_ratio": 0.22
+}
+Từ:
+
+
+MANAGER_SENTIMENT = NEGATIVE
+generator có thể lấy template:
+
+
+"Tiến độ thực hiện công việc có dấu hiệu giảm,
+cần cải thiện khả năng phối hợp và duy trì động lực."
+Như vậy feature là nguồn điều khiển generator.
+
+
+
+
+
+12. Lưu cả feature và dữ liệu bằng chứng
+
+
+Nên tách:
+
+
+Bảng feature
+
+
+SUBJECT_FEATURE_VALUE
+Bảng dữ liệu nguồn giả lập
+
+
+SYNTHETIC_EMPLOYEE_DATA
+
+===== PAGE 17 =====
+Ví dụ:
+
+
+CREATE TABLE SYNTHETIC_EMPLOYEE_DATA (
+    SUBJECT_ID          VARCHAR2(100),
+    DATA_GROUP          VARCHAR2(100),
+    DATA_KEY            VARCHAR2(100),
+    DATA_VALUE          CLOB,
+    GENERATED_BY        VARCHAR2(100),
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+Dữ liệu:
+
+
+ SUBJECT_ID      DATA_GROUP      DATA_KEY                  DATA_VALUE
+ SYN_000001      KPI             KPI_HISTORY               [95,90,82,74]
+ SYN_000001      WORKLOAD        OVERTIME_HOURS            61
+ SYN_000001      WORKLOAD        TASK_COUNT                185
+ SYN_000001      COMMENT         MANAGER_COMMENT           Tiến độ gần đây giảm...
+
+
+Nhờ đó có thể truy vết:
+
+
+Raw/synthetic evidence
+  Employee feature
+  Model input
+  AI prediction
+
+
+
+13. Dataset dùng để training phải được “đóng
+băng”
+
+
+Feature của một nhân viên có thể thay đổi theo thời gian. Vì vậy không nên training trực tiếp từ
+bảng feature hiện hành.
+
+
+Cần tạo snapshot.
+
+
+Bảng dataset
+
+===== PAGE 18 =====
+CREATE TABLE AI_DATASET_VERSION (
+    DATASET_ID          NUMBER PRIMARY KEY,
+    DATASET_CODE        VARCHAR2(100),
+    DATASET_VERSION     VARCHAR2(50),
+    DATASET_TYPE        VARCHAR2(30),
+    FEATURE_SET_ID      NUMBER,
+    CREATED_AT          TIMESTAMP DEFAULT SYSTIMESTAMP
+);
+Bảng sample
+
+
+CREATE TABLE AI_DATASET_SAMPLE (
+    DATASET_SAMPLE_ID   NUMBER PRIMARY KEY,
+    DATASET_ID          NUMBER,
+    SUBJECT_ID          VARCHAR2(100),
+    AS_OF_DATE          DATE,
+    SAMPLE_GROUP        VARCHAR2(30)
+);
+SAMPLE_GROUP:
+
+
+TRAIN
+VALIDATION
+TEST
+GOLDEN_TEST
+Snapshot feature của sample
+
+
+CREATE TABLE AI_DATASET_SAMPLE_FEATURE (
+    DATASET_SAMPLE_ID   NUMBER,
+    FEATURE_ID          NUMBER,
+
+    VALUE_NUMBER        NUMBER,
+    VALUE_CATEGORY      VARCHAR2(255),
+    VALUE_TEXT          VARCHAR2(2000),
+    VALUE_BOOLEAN       NUMBER(1),
+
+    FEATURE_STATUS      VARCHAR2(30),
+    FEATURE_VERSION     VARCHAR2(30),
+
+    PRIMARY KEY (DATASET_SAMPLE_ID, FEATURE_ID)
+);
+Đây chính là bản cố định:
+
+===== PAGE 19 =====
+Dataset V3 đã sử dụng feature nào, giá trị gì của nhân viên nào, tại thời điểm nào.
+
+
+
+Nếu feature hiện hành sau này thay đổi thì dataset cũ vẫn không thay đổi.
+
+
+
+
+
+14. Lưu nhãn kỳ vọng riêng
+
+
+CREATE TABLE AI_DATASET_SAMPLE_LABEL (
+    DATASET_SAMPLE_ID   NUMBER,
+    LABEL_CODE          VARCHAR2(100),
+    LABEL_VALUE         VARCHAR2(255),
+    CONFIDENCE_SCORE    NUMBER,
+    LABEL_SOURCE        VARCHAR2(30),
+    VERIFIED_BY         VARCHAR2(100),
+    VERIFIED_AT         TIMESTAMP
+);
+Ví dụ:
+
+
+ SUBJECT_ID      LABEL_CODE              LABEL_VALUE
+ SYN_000001      EMPLOYEE_CLASS          NEGATIVE_SIGNAL
+ SYN_000001      BURNOUT_RISK            HIGH
+ SYN_000001      RESIGNATION_RISK        MEDIUM
+ SYN_000001      DISCIPLINE_RISK         LOW
+
+
+Feature là đầu vào. Label là kết quả kỳ vọng.
+
+
+Không nên trộn hai khái niệm này.
+
+
+
+
+
+15. Mô hình tổng thể
+
+===== PAGE 20 =====
+HR_FEATURE_CATALOG
+         
+          định nghĩa feature
+         
+SUBJECT_FEATURE_VALUE
+         
+          feature của nhân viên thật/giả lập
+         
+MODEL_FEATURE_SET
+         
+          chọn feature dùng cho từng model
+         
+AI_DATASET_SAMPLE_FEATURE
+         
+          snapshot feature theo dataset version
+         
+AI_DATASET_SAMPLE_LABEL
+         
+          ground truth / expected label
+         
+Training / Validation / AI Testing
+Đồng thời:
+
+
+Raw HR Data / Synthetic Evidence
+         
+         
+Feature Calculation / Feature Assignment
+         
+         
+SUBJECT_FEATURE_VALUE
+
+
+
+16. Mô hình Hybrid là phù hợp nhất
+
+
+Có hai cách lưu feature phổ biến.
+
+
+Wide table
+
+
+EMPLOYEE_CODE
+
+===== PAGE 21 =====
+KPI_TREND
+WORKLOAD_LEVEL
+MANAGER_SENTIMENT
+PROMOTION_STAGNATION
+...
+Ưu điểm:
+
+
+    Dễ query.
+    Dễ đưa vào model.
+    Hiệu năng tốt.
+
+Nhược điểm:
+
+
+    Mỗi khi thêm feature phải thay đổi schema.
+    Khó quản lý version.
+    Khó lưu nhiều giá trị lịch sử.
+    Không linh hoạt với test data.
+
+EAV/Feature Store
+
+
+SUBJECT_ID
+FEATURE_ID
+FEATURE_VALUE
+Ưu điểm:
+
+
+    Feature động.
+    Dễ gán feature cho từng nhân viên.
+    Dễ versioning.
+    Dễ tạo synthetic persona.
+    Dễ kiểm tra feature coverage.
+
+Nhược điểm:
+
+
+    Query phức tạp hơn.
+    Phải pivot trước khi training.
+
+Khuyến nghị:
+
+===== PAGE 22 =====
+Dùng EAV/Feature Store để quản trị feature; khi tạo training dataset thì pivot thành bảng wide
+hoặc JSON.
+
+
+
+Ví dụ:
+
+
+Feature Store:
+
+E001 | KPI_TREND         | DECREASE
+E001 | WORKLOAD_LEVEL    | OVERLOAD
+E001 | MANAGER_SENTIMENT | NEGATIVE
+Khi xuất training:
+
+
+EMPLOYEE_CODE | KPI_TREND | WORKLOAD_LEVEL | MANAGER_SENTIMENT
+E001          | DECREASE  | OVERLOAD       | NEGATIVE
+
+
+
+17. Cách mô tả công việc này trong CV/phỏng
+vấn
+
+
+Bạn có thể mô tả:
+
+
+
+Tôi thiết kế mô hình quản lý feature theo hướng feature store, trong đó mỗi feature được định
+nghĩa trong một feature catalog và được coi như một thuộc tính nhân sự có kiểu dữ liệu, miền giá
+trị, nguồn hình thành, thời điểm hiệu lực và phiên bản riêng. Các giá trị feature được gán theo
+từng nhân viên thông qua bảng liên kết employee–feature, nhờ đó hệ thống có thể truy xuất một
+nhân viên đang có những feature nào hoặc một feature đang xuất hiện ở những nhân viên nào.
+
+
+
+
+Đối với dữ liệu training và kiểm thử, tôi không sinh dữ liệu hoàn toàn từ các trường số liệu ngẫu
+nhiên. Tôi xuất phát từ các tổ hợp feature nghiệp vụ như xu hướng KPI, cảm xúc nhận xét quản lý,
+mức tải công việc, mức độ gắn kết và trạng thái phát triển nghề nghiệp. Từ mỗi tổ hợp feature, hệ
+thống tạo một synthetic employee persona, sau đó sinh các dữ liệu bằng chứng tương ứng như
+chuỗi KPI, số giờ làm thêm, lịch sử điều chuyển và nội dung nhận xét.
+
+===== PAGE 23 =====
+Tôi đồng thời quản lý feature set theo từng model version để phân biệt giữa các feature mà nhân
+viên có và các feature thực sự được sử dụng bởi từng bài toán AI. Khi tạo dataset, toàn bộ giá trị
+feature được snapshot theo subject, thời điểm và dataset version nhằm bảo đảm khả năng tái
+lập, truy vết và chống data leakage trong quá trình training, validation và regression testing.
+
+
+
+Bản này khớp rõ với yêu cầu JD về quản lý dữ liệu, cấu hình lặp, golden test set, đánh giá chất
+lượng và khả năng truy vết kết quả AI.

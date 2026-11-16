@@ -1,0 +1,93 @@
+<mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0" background="#ffffff" adaptiveColors="none">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="title" value="01 / Hệ tri thức và RAG có phân quyền" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=29;fontStyle=1;fontColor=#0f172a;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="10" width="1240" height="48" />
+    </mxCell>
+    <mxCell id="subtitle" value="Tài liệu có nguồn, phiên bản, hiệu lực và ACL; câu trả lời luôn gắn với bằng chứng." style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=16;fontColor=#475569;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="66" width="1240" height="42" />
+    </mxCell>
+    <mxCell id="lane0" value="A. Ingestion / xuất bản tri thức" style="swimlane;startSize=35;html=1;horizontal=1;rounded=1;arcSize=6;fontFamily=Arial;fontSize=17;fontStyle=1;align=left;spacingLeft=14;fillColor=#eff6ff;swimlaneFillColor=#ffffff;strokeColor=#2563eb;fontColor=#0f172a;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="130" width="1240" height="175" />
+    </mxCell>
+    <mxCell id="source" value="&lt;b&gt;Tài liệu được duyệt&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;PDF / SOP / FAQ&lt;br&gt;MinIO + metadata PostgreSQL&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane0">
+      <mxGeometry as="geometry" x="25" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="parse" value="&lt;b&gt;Extract &amp; normalize&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Tika / PaddleOCR&lt;br&gt;Giữ trang, bảng, heading&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane0">
+      <mxGeometry as="geometry" x="330" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="curate" value="&lt;b&gt;QA &amp; chia đoạn&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Owner duyệt • chunk version&lt;br&gt;Hiệu lực + tenant + quyền&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane0">
+      <mxGeometry as="geometry" x="635" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="index" value="&lt;b&gt;Hybrid index&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;OpenSearch BM25 + Qdrant&lt;br&gt;bge-m3 embeddings&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane0">
+      <mxGeometry as="geometry" x="940" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="lane1" value="B. Truy vấn / trả lời" style="swimlane;startSize=35;html=1;horizontal=1;rounded=1;arcSize=6;fontFamily=Arial;fontSize=17;fontStyle=1;align=left;spacingLeft=14;fillColor=#ecfdf5;swimlaneFillColor=#ffffff;strokeColor=#059669;fontColor=#0f172a;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="430.0" width="1240" height="175" />
+    </mxCell>
+    <mxCell id="user" value="&lt;b&gt;Web / Chat UI&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;React + SSE&lt;br&gt;Câu hỏi và ngữ cảnh&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane1">
+      <mxGeometry as="geometry" x="25" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="auth" value="&lt;b&gt;Identity &amp; context&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Keycloak + FastAPI&lt;br&gt;Role / site / mốc hiệu lực&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane1">
+      <mxGeometry as="geometry" x="330" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="retrieve" value="&lt;b&gt;Retrieve &amp; rerank&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;ACL filter → hybrid search&lt;br&gt;bge-reranker-v2-m3&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane1">
+      <mxGeometry as="geometry" x="635" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="answer" value="&lt;b&gt;LLM + kiểm tra&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Qwen / vLLM → schema&lt;br&gt;Nguồn • hỏi lại • fallback&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane1">
+      <mxGeometry as="geometry" x="940" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="lane2" value="C. Quản trị / chất lượng" style="swimlane;startSize=35;html=1;horizontal=1;rounded=1;arcSize=6;fontFamily=Arial;fontSize=17;fontStyle=1;align=left;spacingLeft=14;fillColor=#fff7ed;swimlaneFillColor=#ffffff;strokeColor=#ea580c;fontColor=#0f172a;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="730.0" width="1240" height="175" />
+    </mxCell>
+    <mxCell id="gold" value="&lt;b&gt;Golden questions&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Câu đúng / không đáp án&lt;br&gt;Role, thời gian, tình huống khó&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane2">
+      <mxGeometry as="geometry" x="25" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="eval" value="&lt;b&gt;Evaluation runner&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Retrieval + answer + leakage&lt;br&gt;SME review và regression&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane2">
+      <mxGeometry as="geometry" x="330" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="release" value="&lt;b&gt;Versioned release&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;Corpus / prompt / model&lt;br&gt;Approval và rollback&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane2">
+      <mxGeometry as="geometry" x="635" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="trace" value="&lt;b&gt;Audit &amp; monitoring&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:15px&quot;&gt;OpenTelemetry / Langfuse&lt;br&gt;Trace đã mask dữ liệu&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=18;fontColor=#0f172a;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=1.4;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="lane2">
+      <mxGeometry as="geometry" x="940" y="62" width="270" height="88" />
+    </mxCell>
+    <mxCell id="e0" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="source" target="parse" parent="lane0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e1" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="parse" target="curate" parent="lane0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e2" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="curate" target="index" parent="lane0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e3" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="user" target="auth" parent="lane1">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e4" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="auth" target="retrieve" parent="lane1">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e5" value="index" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;labelPlacement=auto;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="index" target="retrieve" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="e6" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="retrieve" target="answer" parent="lane1">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e7" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="gold" target="eval" parent="lane2">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e8" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="eval" target="release" parent="lane2">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e9" value="" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="release" target="trace" parent="lane2">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="e10" value="trace" style="endArrow=block;endFill=1;strokeWidth=1.6;strokeColor=#64748b;fontFamily=Arial;fontSize=13;fontColor=#334155;labelBackgroundColor=#ffffff;labelPlacement=auto;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="answer" target="trace" parent="1">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="footer" value="THIẾT KẾ THAM CHIẾU • BA / QC interview study • 16.11.2026 • Chi tiết, giả định và giới hạn trong hai tài liệu Markdown." style="text;html=1;align=left;fontFamily=Arial;fontSize=13;fontColor=#64748b;" vertex="1" parent="1">
+      <mxGeometry as="geometry" x="20" y="950.0" width="1240" height="36" />
+    </mxCell>
+  </root>
+</mxGraphModel>

@@ -1,0 +1,142 @@
+
+1. Requirement Discovery & Analysis
+Work with Product Owner, Market Development, and customers to understand business problems, use cases, operating conditions, and expected outcomes.
+Elicit, clarify, and document requirements; analyze current and target workflows;
+identify
+gaps, risks, and impact on robot behavior and system integration.
+Manage assumptions, dependencies, constraints, and known limitations.
+2. Requirement Specification for Development
+Write user stories, use cases, workflows, and functional/non-functional requirements with clear, measurable acceptance criteria.
+Specify API/system integration, data flows, state transitions, error handling, fallback behavior, and edge cases (e.g., network loss, sensor failure, incorrect AI response).
+Define evaluation criteria for AI features (e.g., accuracy, latency, behavior boundaries) together with Tech Leads.
+3. Day-to-day Collaboration with the Development Team
+Participate in backlog refinement, sprint planning, daily stand-ups, and sprint reviews; keep stories ready for development ahead of each sprint.
+Answer developers’ questions promptly and align requirement interpretation with Tech Leads and R&D.
+Review demos and builds against acceptance criteria and report deviations early.
+Support QC by reviewing test cases against requirements and clarifying expected behavior.
+4. Change Management & Traceability
+Manage requirement changes: assess impact on scope, timeline, and dependencies, and escalate to Product Owner/PMO for decision.
+Maintain requirement documentation and end-to-end traceability (requirement → story → test case → result).
+Keep one consistent requirement baseline shared across Development, QC, Deployment, and PMO.
+5. UAT, Deployment Support & Field Feedback
+Support UAT, onsite testing, commissioning, and customer acceptance when requirement or product expertise is needed.
+Analyze customer and field feedback; classify into defects, requirement gaps, AI limitations, and deployment issues; convert them into backlog items with clear acceptance criteria.
+Recommend priorities to the Product Owner and confirm re-validation after fixes.
+6. Cross-functional Collaboration
+Partner with Market Development on customer discovery; Market Development owns opportunity and customer relationship, Product Owner owns priority and release decisions, Senior BA owns requirement clarity and quality.
+Partner closely with Tech Leads and developers on feasibility and trade-offs; Tech Lead owns HOW (architecture and technical solution).
+Align QC, Deployment, Robot Operations, and PMO around the same requirement baseline.
+QUALIFICATIONS
+Relevant Education & Experience
+Bachelor’s degree or above in Computer Science, AI, Robotics, Mechatronics, Automation, Software Engineering, Information Systems, or related fields.
+4+ years of experience
+as a Business Analyst, Technical BA, or System Analyst, including 2+ years on systems with complex integration (hardware–software, IoT, AI, or cloud platforms).
+Proven experience working daily with developers in Agile/Scrum teams: backlog refinement, sprint planning, sprint review, and requirement clarification during the sprint.
+Ability to write clear user stories, use cases, workflows, functional and non-functional requirements, and measurable acceptance criteria (e.g., Given-When-Then).
+Skilled in process and system modeling (BPMN/UML,
+sequence
+and state diagrams) and in specifying API/integration, data flows, error handling, and edge cases.
+Hands-on with Jira, Confluence (or equivalent tools); able to read logs and write basic SQL. Good English: able to read and write technical documentation and communicate with international stakeholders.
+Preferred Qualifications
+Understanding of
+humanoid robotics, hardware–software integration, ROS/ROS2 concepts, AI Vision/VLM, LLM/Agentic AI, Conversational AI, or Human-Robot Interaction.
+Familiarity with edge/cloud architecture, logging, monitoring, configuration, or release management.
+Experience supporting UAT or deployment of robotics or AI systems in real-world
+environments, and
+defining evaluation criteria for AI features.
+Awareness of robot safety requirements and how to express them as non-functional requirements.
+Personality / Attitude
+Strong ownership of requirement quality; analytical, system thinking, and
+data-driven
+.
+Comfortable
+challenging
+unclear requirements and technical assumptions constructively; communicates clearly with both business and engineering.
+Customer-oriented, collaborative, and effective in a fast-paced technology environment.
+BENEFITS & COMPENSATIONS
+Attractive income, competitive and commensurate with individual capabilities.
+13th-month salary, gifts on public holidays and special occasions, and performance-based bonuses.
+Meal allowance, annual company trips, health insurance, and exclusive benefits within the Group’s ecosystem
+Clear career development opportunities aligned with the company’s growth, with access to training programs based on capability and job role.
+A dynamic and open working environment with diverse cultural and sports activities.
+Bạn có hứng thú với vị trí này
+Ứng tuyển ngay
+Vị trí liên quan
+Ứng tuyển Senior Business Analyst
+Họ và tên *
+Năm sinh *
+Email *
+Số điện thoại *
+Địa chỉ
+Kéo thả file vào đây hoặc
+Chọn tệp tin
+Định dạng hỗ trợ: PDF
+Dung lượng tối đa: 20MB
+0%
+Tôi đồng ý chia sẻ dữ liệu cho VinDynamics thu thập và sử dụng dữ liệu cá nhân của tôi theo
+Chính sách bảo mật .
+Nộp hồ sơ
+Nộp hồ sơ thành công
+Trao đổi với chuyên gia
+Để lại thông tin, chúng tôi sẽ liên hệ lại trong vòng 2 ngày làm việc.
+Liên hệ
+TechnoPark Tower, Vinhomes Ocean Park, Gia Lâm, Hà Nội
+[email protected]
+Theo dõi
+© VinDynamics 2025 - Bản quyền
+01
+Giải pháp Robot
+02
+Data Factory
+03
+Tuyển dụng
+04
+Tin tức
+Chính sách bảo mật
+Điều khoản sử dụng
+© VinDynamics 2025 - Bản quyền
+(function(){const l=document.documentElement.lang||'en',g=l.split('-')[0],s=['en','vi'];window.sdk_config={website:"vindynamics_net",currentLang:s.includes(g)?g:'en',tncList:[],tncDetail:[]}})();
+(function(){let b=[],c=[],a=!1,i=!1,p=[],o=Element.prototype.appendChild,r=Element.prototype.insertBefore,s=[];function d(n){return n.tagName==='SCRIPT'&&a&&b?.length&&n.src?(m=b.find(t=>t.source_url&&n.src.includes(t.source_url)))&&!c.some(k=>k.category==='necessary'&&k.title===m.title)?(s.push(n),n.type='text/plain',n.setAttribute('consent-data-blocked','true'),!0):!1:!1;var m}Element.prototype.appendChild=function(n,...g){return n.tagName==='SCRIPT'?i?d(n)?n:o.call(this,n,...g):(p.push({node:n,method:'appendChild',parent:this,args:g}),n):o.call(this,n,...g)};Element.prototype.insertBefore=function(n,...g){return n.tagName==='SCRIPT'?i?d(n)?n:r.call(this,n,...g):(p.push({node:n,method:'insertBefore',parent:this,args:g}),n):r.call(this,n,...g)};(async()=>{try{const n=await fetch('https://cp-api.v-app.vn/policy/v1/public/sdk/cookie-consents/vindynamics_net');if(n.ok){const g=await n.json();g?.data&&(b=g.data.block_list||[],a=g.data.auto_block||!1,c=g.data.cookies_list||[])}}catch{a=!1}i=!0;p.forEach(({node:n,method:g,parent:e,args:t})=>{d(n)||(g==='appendChild'?o.call(e,n,...t):r.call(e,n,...t))});p=[]})();window.updateCookieConsent=function(n){n&&(s.forEach(g=>{if(g.getAttribute('consent-data-blocked')==='true'){g.type='text/javascript';g.removeAttribute('consent-data-blocked');const e=document.createElement('script');g.src?e.src=g.src:e.textContent=g.textContent;g.parentNode.replaceChild(e,g)}}),s.length=0)};window.isConsentReady=()=>i})();
+Cảm ơn bạn đã gửi thông tin. Chúng tôi sẽ liên hệ lại sớm nhất.
+Gửi yêu cầu khác
+Liên hệ với chúng tôi
+Để lại thông tin, đội ngũ VinDynamics sẽ liên hệ lại trong vòng 2 ngày làm việc.
+Tên
+*
+Họ
+*
+Email công việc
+*
+Công ty
+*
+Nội dung
+Tôi đồng ý chia sẻ dữ liệu cho VinDynamics thu thập và sử dụng dữ liệu cá nhân của tôi theo
+Chính sách bảo mật
+Tiếp theo
+Chúng tôi đã nhận được thông tin của bạn.
+Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong 2 ngày làm việc.
+Chúng tôi muốn hiểu thêm về bạn.
+Quốc gia
+Vietnam
+United States
+Singapore
+Japan
+South Korea
+China
+Số điện thoại
+*
++84
+Sản phẩm quan tâm
+Chọn sản phẩm
+Gửi
+[{"field_keys":"firstname,first_name","label":"T\u00EAn","placeholder":"Trang"},{"field_keys":"lastname,last_name","label":"H\u1ECD","placeholder":"Nguy\u1EC5n"},{"field_keys":"fullname","label":"H\u1ECD v\u00E0 t\u00EAn","placeholder":"Nguy\u1EC5n V\u0103n A"},{"field_keys":"email,work_email","label":"Email","placeholder":"email@congty.com"},{"field_keys":"phone,phonenumber","label":"S\u1ED1 \u0111i\u1EC7n tho\u1EA1i","placeholder":"0987 654 321"},{"field_keys":"company","label":"C\u00F4ng ty","placeholder":"T\u00EAn c\u00F4ng ty"},{"field_keys":"message","label":"N\u1ED9i dung","placeholder":"N\u1ED9i dung b\u1EA1n mu\u1ED1n trao \u0111\u1ED5i..."},{"field_keys":"content","label":"N\u1ED9i dung c\u00E2u h\u1ECFi","placeholder":"N\u1ED9i dung c\u00E2u h\u1ECFi"},{"field_keys":"requirements","label":"M\u00F4 t\u1EA3 y\u00EAu c\u1EA7u c\u1EE7a b\u1EA1n","placeholder":"VD: b\u1ED9 d\u1EEF li\u1EC7u robot tay g\u1EAFp trong kho h\u00E0ng..."},{"field_keys":"additional_note","label":"Ghi ch\u00FA th\u00EAm","placeholder":"Th\u00F4ng tin b\u1ED5 sung (n\u1EBFu c\u00F3)..."},{"field_keys":"productid,product_interest,product_ids","label":"S\u1EA3n ph\u1EA9m quan t\u00E2m","placeholder":""},{"field_keys":"year_of_birth","label":"N\u0103m sinh","placeholder":"1998"},{"field_keys":"address","label":"\u0110\u1ECBa ch\u1EC9","placeholder":"S\u1ED1 nh\u00E0, \u0111\u01B0\u1EDDng, qu\u1EADn/huy\u1EC7n..."},{"field_keys":"introduce","label":"Gi\u1EDBi thi\u1EC7u b\u1EA3n th\u00E2n","placeholder":"Chia s\u1EBB \u0111\u00F4i n\u00E9t v\u1EC1 b\u1EA3n th\u00E2n b\u1EA1n..."},{"field_keys":"cv","label":"CV","placeholder":""},{"field_keys":"dataset_name","label":"B\u1ED9 d\u1EEF li\u1EC7u","placeholder":""}]
+{
+"validation_required": "Vui l\u00F2ng nh\u1EADp tr\u01B0\u1EDDng n\u00E0y",
+"validation_max_length": "V\u01B0\u1EE3t qu\u00E1 \u0111\u1ED9 d\u00E0i cho ph\u00E9p ({max} k\u00FD t\u1EF1)",
+"validation_min_length": "Vui l\u00F2ng nh\u1EADp t\u1ED1i thi\u1EC3u {min} k\u00FD t\u1EF1",
+"validation_invalid_email": "Email kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_invalid_phone": "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_invalid_generic": "Gi\u00E1 tr\u1ECB kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_consent_required": "Vui l\u00F2ng \u0111\u1ED3ng \u00FD v\u1EDBi ch\u00EDnh s\u00E1ch b\u1EA3o m\u1EADt."
+}
+

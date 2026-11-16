@@ -1,0 +1,838 @@
+
+--- PAGE 1 ---
+DanhTV1 - Ước lượng chi phí dự án
+FPT-VC-Đề xuất giải pháp QLHĐ Procuva-v2.pdf
+PDF
+Ước lượng giúp tôi dự án này làm hết bao nhiều tiền
+Theo ﬁle proposal này, không thấy có slide báo giá, nên mình chỉ ước lượng theo phạm vi chức năng
+trong tài liệu: quản lý thông tin/danh sách hợp đồng, sửa đổi/phụ lục, quản lý thực hiện hợp đồng, nhận
+hàng/nghiệm thu, tạm ứng, thanh toán, dashboard/báo cáo, phân quyền, danh mục, cảnh báo email,
+tích hợp VOﬃce và ERP/Kế toán. 
+Ước lượng nhanh
+Với phạm vi như proposal, nếu triển khai theo hướng mua/nâng cấp trên nền Procuva có sẵn của FPT,
+mình ước lượng:
+Khoảng 5 – 10 tỷ VNĐ chưa VAT
+Mức hợp lý để dự trù nội bộ: 6 – 8 tỷ VNĐ chưa VAT
+Nếu cộng VAT 10% và dự phòng phát sinh 10–15%, ngân sách nên để khoảng:
+7 – 10 tỷ VNĐ tổng ngân sách an toàn
+Tách chi phí ước lượng
+Hạng mục Ước lượng
+License/phí sử dụng nền tảng Procuva năm đầu 800 triệu – 2 tỷ
+Phân tích nghiệp vụ, thiết kế chi tiết, cấu hình quy trình 700 triệu – 1,5 tỷ
+Tùy chỉnh các phân hệ hợp đồng, sửa đổi, thực hiện, tạm ứng, thanh toán 2 – 4 tỷ
+Tích hợp VOﬃce, ERP/Kế toán, email, đồng bộ dữ liệu 1 – 2,5 tỷ
+Dashboard, báo cáo, cảnh báo, phân quyền, audit log 700 triệu – 1,5 tỷ
+Migration dữ liệu, kiểm thử, đào tạo, UAT, go-live 500 triệu – 1 tỷ
+Hạ tầng, bảo mật, vận hành năm đầu nếu on-prem/private cloud 500 triệu – 1,5 tỷ
+Nếu chia theo kịch bản
+Kịch bản tiết kiệm / MVP:
+Chỉ làm quản lý hợp đồng, danh mục, phân quyền, phê duyệt/ký qua VOﬃce, báo cáo cơ bản.
+→  Khoảng 3 – 5 tỷ VNĐ
+Kịch bản đúng như proposal:
+Có đầy đủ hợp đồng, phụ lục, nhận hàng/nghiệm thu, tạm ứng, thanh toán, dashboard, cảnh báo, tích
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/29
+
+--- PAGE 2 ---
+hợp VOﬃce và ERP.
+→  Khoảng 5 – 10 tỷ VNĐ
+Kịch bản làm rất sâu / custom nhiều:
+Luồng duyệt phức tạp, phân quyền động theo đơn vị, nhiều loại hợp đồng, nhiều báo cáo đặc thù,
+migration dữ liệu lớn, yêu cầu bảo mật cao.
+→  Khoảng 10 – 15 tỷ VNĐ
+Nếu tự xây mới hoàn toàn không dùng Procuva:
+→  Có thể lên 12 – 20 tỷ VNĐ, thời gian dài hơn và rủi ro cao hơn.
+Kết luận để bạn dùng khi trao đổi nội bộ
+Mình sẽ dự trù dự án này ở mức 6 – 8 tỷ chưa VAT là hợp lý nếu FPT triển khai trên sản phẩm Procuva có
+sẵn. Khi làm việc với vendor, nên để trần ngân sách khoảng 9 – 10 tỷ đã gồm VAT và dự phòng, nhưng
+mục tiêu đàm phán nên kéo về 5,5 – 7,5 tỷ chưa VAT cho phạm vi phase 1 đầy đủ nhưng kiểm soát chặt
+custom.
+Bỏ phần license, bỏ phần tích hợp: ERP/Kế toán, email, đồng bộ dữ liệu
+FPT báo giá là 2.8 tỷ, bóc tách chi tiết giúp tôi
+Dưới đây là cách bóc tách 2,8 tỷ theo hướng không tính license, không tính tích hợp ERP/Kế toán,
+email, đồng bộ dữ liệu. Mình tạm hiểu phạm vi vẫn bám theo proposal: quản trị thông tin hợp đồng,
+sửa đổi/phụ lục, thực hiện hợp đồng, nhận hàng/nghiệm thu, tạm ứng, thanh toán, dashboard/báo cáo,
+danh mục, phân quyền, quản trị hệ thống. Proposal có nêu các phân hệ chính này trong phạm vi
+Procuva. 
+Bóc tách đề xuất cho 2,8 tỷ
+Nhóm công việc Tỷ trọng Thành tiền
+1. Khảo sát, phân tích nghiệp vụ, đặc tả yêu cầu 10% 280 triệu
+2. Quản trị danh mục, cấu hình dữ liệu nền 8% 224 triệu
+3. Quản trị thông tin, danh sách hợp đồng 17% 476 triệu
+4. Quản lý sửa đổi hợp đồng/phụ lục 10% 280 triệu
+5. Quản lý thực hiện hợp đồng chung 11% 308 triệu
+6. Quản lý nhận hàng/nghiệm thu 10% 280 triệu
+7. Quản lý tạm ứng 7% 196 triệu
+8. Quản lý thanh toán 10% 280 triệu
+9. Dashboard & báo cáo 8% 224 triệu
+10. Quản trị hệ thống, người dùng, phân quyền, audit log 5% 140 triệu
+11. Kiểm thử, UAT, đào tạo, go-live, tài liệu bàn giao 4% 112 triệu
+Tổng 100% 2,8 tỷ
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/29
+
+--- PAGE 3 ---
+Bóc tách chi tiết hơn theo từng phần
+1. Khảo sát, phân tích nghiệp vụ, đặc tả yêu cầu — 280 triệu
+Bao gồm khảo sát hiện trạng, làm rõ quy trình quản lý hợp đồng, phụ lục, nghiệm thu, thanh toán;
+mapping quy trình hiện tại sang Procuva; lập tài liệu đặc tả yêu cầu, tài liệu thiết kế nghiệp vụ, ma trận
+phân quyền, danh sách báo cáo và luồng phê duyệt.
+Mức này hợp lý vì proposal mô tả nhiều nhóm nghiệp vụ khác nhau, không chỉ là một màn hình quản lý
+hợp đồng đơn giản.
+2. Quản trị danh mục, cấu hình dữ liệu nền — 224 triệu
+Bao gồm danh mục cơ quan/đơn vị, nhân sự, vai trò nghiệp vụ, hàng hóa dịch vụ, nhà thầu/NCC, quy
+trình, hạn mức, thẩm quyền phê duyệt, các trường thông tin nhà cung cấp như DKKD, địa chỉ, người đại
+diện, tài khoản ngân hàng.
+Phần này nên được tách riêng vì là nền dữ liệu dùng chung cho toàn bộ chuỗi hợp đồng – nghiệm thu –
+thanh toán.
+3. Quản trị thông tin, danh sách hợp đồng — 476 triệu
+Đây nên là phần lớn nhất. Bao gồm tạo mới, sửa, xóa, tra cứu, quản lý danh sách hợp đồng; các trường
+như số hợp đồng, loại hợp đồng, ngày ký, giá trị, ngày hiệu lực, ngày hết hiệu lực, đơn vị ký, đối tác, đơn
+vị thực hiện, hàng hóa/dịch vụ, bảo lãnh, thanh toán, thanh lý, nhân sự phụ trách, ghi chú, ﬁle đính kèm.
+Phần này chiếm tỷ trọng cao vì là lõi của hệ thống QLHĐ.
+4. Quản lý sửa đổi hợp đồng/phụ lục — 280 triệu
+Bao gồm tạo tờ trình sửa đổi hợp đồng, quản lý phụ lục, lý do sửa đổi, nội dung sửa đổi, căn cứ pháp lý,
+phân công thực hiện, ﬁle đính kèm, trạng thái phê duyệt, lịch sử thay đổi.
+Nếu có nhiều mẫu tờ trình/phụ lục khác nhau thì phần này có thể phát sinh thêm.
+5. Quản lý thực hiện hợp đồng chung — 308 triệu
+Bao gồm theo dõi tiến độ thực hiện hợp đồng, các mốc kiểm tra, bàn giao, nghiệm thu, bảo lãnh, thanh
+toán, bảo hành, thanh lý; cảnh báo trên giao diện phần mềm; theo dõi trạng thái từng hợp đồng.
+Lưu ý: theo yêu cầu của bạn, mình không tính gửi email tự động trong phần này. Chỉ tính cảnh
+báo/nhiệm vụ trên hệ thống.
+6. Quản lý nhận hàng/nghiệm thu — 280 triệu
+Bao gồm tạo yêu cầu nhận hàng/nghiệm thu, quản lý nhiều đợt nhận hàng, cập nhật thông tin kiểm tra
+chất lượng, ghi nhận hồ sơ nghiệm thu, theo dõi trạng thái duyệt.
+Đây là phần nghiệp vụ tương đối nặng vì liên quan đến chứng từ, nhiều trạng thái và có thể gắn với
+từng hợp đồng/phụ lục.
+7. Quản lý tạm ứng — 196 triệu
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/29
+
+--- PAGE 4 ---
+Bao gồm ghi nhận đề nghị tạm ứng từ NCC, kiểm tra điều kiện tạm ứng, bảo lãnh tạm ứng, giá trị tạm
+ứng, số đã thanh toán, số còn lại, cảnh báo hạn tất toán tạm ứng trên hệ thống.
+Phần này nhỏ hơn nhận hàng/thanh toán nhưng vẫn nên tách riêng vì liên quan đến kiểm soát tài chính.
+8. Quản lý thanh toán — 280 triệu
+Bao gồm tạo đề nghị thanh toán, quản lý nhiều đợt thanh toán, theo dõi tiến độ thanh toán, kiểm tra giá
+trị thanh toán không vượt giá trị hợp đồng, trạng thái duyệt đề nghị thanh toán.
+Lưu ý: phần này không bao gồm tích hợp ERP/Kế toán và không bao gồm đồng bộ thông tin thanh
+toán sang hệ thống khác.
+9. Dashboard & báo cáo — 224 triệu
+Bao gồm báo cáo danh sách hợp đồng, phụ lục, trạng thái hợp đồng, hợp đồng đã ký, khoản tạm ứng,
+tình hình nhận hàng, tình hình thực hiện hợp đồng, dashboard tổng quan.
+Mức 224 triệu là hợp lý nếu báo cáo ở mức chuẩn/parameter được, chưa phải BI phức tạp hoặc báo cáo
+quản trị đặc thù quá nhiều.
+10. Quản trị hệ thống, người dùng, phân quyền, audit log — 140 triệu
+Bao gồm user management, role/permission, RBAC, phân quyền theo chức năng/menu, audit log,
+activity log, cấu hình hệ thống cơ bản.
+Nếu FPT đã có sẵn nền Procuva thì phần này không nên tính quá cao, vì nhiều khả năng là cấu hình/tùy
+chỉnh chứ không build mới.
+11. Kiểm thử, UAT, đào tạo, go-live, tài liệu bàn giao — 112 triệu
+Bao gồm test nội bộ, hỗ trợ UAT, sửa lỗi sau UAT, đào tạo người dùng, tài liệu hướng dẫn, hỗ trợ go-live.
+Mức này hơi gọn; khi đàm phán nên yêu cầu FPT cam kết rõ số buổi đào tạo, số vòng UAT và thời gian hỗ
+trợ sau go-live.
+Nhận xét về báo giá 2,8 tỷ
+Với phạm vi đã bỏ license và bỏ ERP/Kế toán, email, đồng bộ dữ liệu, mức 2,8 tỷ là không cao nếu
+FPT triển khai trên nền Procuva có sẵn. Nó hợp lý trong trường hợp:
+1. Không build mới từ đầu.
+2. Chủ yếu cấu hình và customize theo nghiệp vụ Viettel Commerce.
+3. Số lượng báo cáo ở mức vừa phải.
+4. Không có tích hợp phức tạp với hệ thống ngoài.
+5. Không migration dữ liệu lịch sử quá lớn.
+6. Không yêu cầu mobile app riêng.
+7. Không yêu cầu AI/OCR/tìm kiếm thông minh nâng cao.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/29
+
+--- PAGE 5 ---
+Điểm cần hỏi lại FPT để tránh phát sinh
+Bạn nên yêu cầu FPT làm rõ 2,8 tỷ đã bao gồm hay chưa bao gồm các phần sau:
+Nội dung cần làm rõ Rủi ro nếu không chốt
+Có bao gồm tích hợp VOﬃce không? Dễ phát sinh vài trăm triệu
+Có migration dữ liệu hợp đồng cũ không? Có thể phát sinh lớn nếu dữ liệu nhiều
+Có bao nhiêu mẫu báo cáo/dashboard? Báo cáo là phần rất dễ đội scope
+Có bao nhiêu loại hợp đồng được cấu hình? Nhiều loại hợp đồng = nhiều rule
+Có bao nhiêu luồng phê duyệt? Luồng duyệt phức tạp sẽ tăng chi phí
+Có bao gồm bảo trì sau go-live không? Cần chốt SLA, thời gian hỗ trợ
+Có bao gồm hạ tầng triển khai không? Nếu on-prem/private cloud có thể phát sinh
+Có bao gồm bảo mật, pentest, ATTT không? Thường là khoản riêng
+Cách nói khi phản biện/đàm phán với FPT
+Có thể nói như sau:
+“Với phạm vi hiện tại, chúng tôi hiểu báo giá 2,8 tỷ là chi phí triển khai/tùy chỉnh nghiệp vụ trên nền
+Procuva có sẵn, không bao gồm license, không bao gồm tích hợp ERP/Kế toán, email và đồng bộ dữ liệu.
+Đề nghị FPT bóc tách lại theo từng nhóm phân hệ: quản trị hợp đồng, phụ lục, thực hiện hợp đồng, nhận
+hàng/nghiệm thu, tạm ứng, thanh toán, dashboard/báo cáo, phân quyền và UAT/go-live. Đồng thời làm
+rõ các hạng mục có khả năng phát sinh như VOﬃce, migration dữ liệu, số lượng báo cáo, số lượng luồng
+duyệt và hỗ trợ sau go-live.”
+Kết luận: 2,8 tỷ có thể chấp nhận được, nhưng nên ép FPT bóc tách và đóng scope thật kỹ. Mức đẹp để
+đàm phán là giữ 2,8 tỷ trọn gói triển khai, yêu cầu thêm bảo hành 12 tháng, ít nhất 2 vòng UAT, đào
+tạo key-user, và cam kết không phát sinh với các phân hệ đã liệt kê.
+Bóc tách chi tiết theo từng chức năng, dạng bảng biểu phân cấp cha con
+Dưới đây là bản bóc tách 2,8 tỷ theo từng chức năng, dạng cha – con. Mình bám theo phạm vi phân
+hệ trong proposal Procuva: quản lý thông tin hợp đồng, sửa đổi hợp đồng, thực hiện hợp đồng, nhận
+hàng/nghiệm thu, tạm ứng, thanh toán, dashboard/báo cáo, danh mục và phân quyền. 
+Giả định loại trừ: không tính license, không tính tích hợp ERP/Kế toán, không tính email tự động, không
+tính đồng bộ dữ liệu với hệ thống ngoài.
+Đơn vị: triệu VNĐ, chưa VAT
+Mã Cấp Chức năng / Hạng mục Nội dung bóc tách Chi phí
+1 Cha Khảo sát, phân tích nghiệp vụ, đặc tả yêu cầu Tổng nhóm 280
+1.1 Con Khởi động dự án, chốt phạm vi Kick-oﬀ, thống nhất phạm vi triển khai, danh sách đầu mối, kế hoạch triển khai 35
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/29
+
+--- PAGE 6 ---
+Mã Cấp Chức năng / Hạng mục Nội dung bóc tách Chi phí
+1.2 Con Khảo sát hiện trạng quản lý hợp đồng Khảo sát quy trình hiện tại, loại hợp đồng, biểu mẫu, vướng mắc nghiệp vụ 60
+1.3 Con Phân tích yêu cầu nghiệp vụ Làm rõ yêu cầu cho hợp đồng, phụ lục, nghiệm thu, tạm ứng, thanh toán 80
+1.4 Con Thiết kế luồng xử lý, trạng thái Thiết kế lifecycle hợp đồng, trạng thái hồ sơ, trạng thái duyệt, trạng thái thanh toán 65
+1.5 Con Đặc tả quyền và vai trò nghiệp vụ Ma trận vai trò, quyền thao tác, quyền xem dữ liệu theo đơn vị/người phụ trách 40
+2 Cha Quản trị danh mục, dữ liệu nền Tổng nhóm 224
+2.1 Con Danh mục đơn vị, phòng ban, nhân sự Cấu hình đơn vị ký HĐ, đơn vị thực hiện, đơn vị sử dụng, nhân sự phụ trách 50
+2.2 Con Danh mục hàng hóa/dịch vụ Nhóm HHDV, loại HHDV, thông tin phục vụ hợp đồng/nghiệm thu/thanh toán 35
+2.3 Con Danh mục nhà thầu, nhà cung cấp Thông tin NCC, mã số thuế, tài khoản ngân hàng, người đại diện, người liên hệ 45
+2.4 Con Danh mục quy trình, hạn mức, thẩm quyền Cấu hình quy trình nghiệp vụ, hạn mức, điều kiện kiểm soát, thẩm quyền xử lý 55
+2.5 Con Import/export, tìm kiếm danh mục Nhập liệu ban đầu bằng ﬁle, xuất danh sách, tìm kiếm/lọc dữ liệu nền 24
+2.6 Con Lịch sử giao dịch NCC cơ bản Ghi nhận/thống kê lịch sử làm việc với nhà thầu/NCC trên hệ thống 15
+3 Cha Quản trị thông tin, danh sách hợp đồng Tổng nhóm 476
+3.1 Con Danh sách hợp đồng Màn hình danh sách, tìm kiếm, lọc theo loại HĐ, trạng thái, đơn vị, NCC, thời gian 60
+3.2 Con Tạo mới/sửa/xóa hợp đồng Tạo HĐ bản nháp, chỉnh sửa, xóa, lưu, hoàn tất/approved hợp đồng 80
+3.3 Con Thông tin chung hợp đồng Số HĐ, loại HĐ, ngày ký, ngày hiệu lực, ngày hết hiệu lực, giá trị HĐ, đối tác 90
+3.4 Con Hạng mục hàng hóa/dịch vụ trong hợp đồng Quản lý danh sách HHDV, giá trị theo hạng mục, số lượng, đơn vị sử dụng 65
+3.5 Con Mốc thực hiện hợp đồng Mốc kiểm tra, nhận hàng, nghiệm thu, bảo lãnh, thanh toán, bảo hành, thanh lý 75
+3.6 Con Tệp đính kèm, ghi chú, người phụ trách Upload hồ sơ HĐ, ghi chú, nhân sự phụ trách, tài liệu liên quan 45
+3.7 Con Trạng thái, lịch sử, tra cứu tập trung Lịch sử cập nhật, trạng thái xử lý, truy vết thay đổi, tra cứu thông tin hợp đồng 61
+4 Cha Quản lý sửa đổi hợp đồng / phụ lục Tổng nhóm 280
+4.1 Con Tạo tờ trình sửa đổi hợp đồng Form nhập tờ trình sửa đổi, thông tin hợp đồng gốc, tên tờ trình, lý do sửa đổi 55
+4.2 Con Quản lý nội dung sửa đổi/phụ lục Căn cứ pháp lý, nội dung sửa đổi, phân công thực hiện, thông tin phụ lục 70
+4.3 Con Trạng thái xử lý sửa đổi Theo dõi trạng thái lập, trình, duyệt, ban hành, hoàn 55
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/29
+
+--- PAGE 7 ---
+Mã Cấp Chức năng / Hạng mục Nội dung bóc tách Chi phí
+tất sửa đổi
+4.4 Con Cập nhật dữ liệu hợp đồng sau sửa đổi Cập nhật giá trị, thời hạn, nội dung thay đổi vào hợp đồng liên quan 45
+4.5 Con Lịch sử điều chỉnh hợp đồng Danh sách các lần sửa đổi, phụ lục, so sánh thông tin trước/sau 35
+4.6 Con Tệp đính kèm sửa đổi/phụ lục Upload tờ trình, phụ lục, tài liệu pháp lý, tài liệu liên quan 20
+5 Cha Quản lý thực hiện hợp đồng chung Tổng nhóm 308
+5.1 Con Theo dõi tiến trình thực hiện HĐ Màn hình tổng hợp tiến độ từng hợp đồng theo các mốc thực hiện 55
+5.2 Con Cảnh báo trên hệ thống Cảnh báo trong phần mềm về mốc kiểm tra, nghiệm thu, bảo lãnh, thanh toán, bảo hành 60
+5.3 Con Quản lý bảo lãnh Thông tin bảo lãnh thực hiện HĐ, bảo lãnh tạm ứng, hiệu lực, giá trị, trạng thái 45
+5.4 Con Theo dõi bảo hành cơ bản Upload ﬁle theo dõi bảo hành, ghi nhận trạng thái bảo hành ở mức cơ bản 35
+5.5 Con Thanh lý/kết thúc hợp đồng Theo dõi điều kiện thanh lý, hồ sơ kết thúc, trạng thái hoàn tất HĐ 40
+5.6 Con Phân công và theo dõi công việc Giao người phụ trách, theo dõi việc cần xử lý, trạng thái công việc 45
+5.7 Con Nhật ký nghiệp vụ Ghi nhận lịch sử thao tác trong quá trình thực hiện hợp đồng 28
+6 Cha Quản lý nhận hàng / nghiệm thu Tổng nhóm 280
+6.1 Con Tạo yêu cầu nhận hàng/nghiệm thu Tạo phiếu/yêu cầu nhận hàng hoặc nghiệm thu theo hợp đồng 55
+6.2 Con Quản lý nhiều đợt nhận hàng Đợt 1, đợt 2, đợt cuối; theo dõi số lượng, giá trị, trạng thái từng đợt 55
+6.3 Con Ghi nhận kiểm tra chất lượng Cập nhật thông tin kiểm tra, kết quả nghiệm thu, ghi chú sai lệch nếu có 55
+6.4 Con Trạng thái duyệt nghiệm thu Theo dõi trạng thái tạo, chờ duyệt, đã duyệt, từ chối, hoàn tất 50
+6.5 Con Hồ sơ, chứng từ nghiệm thu Upload biên bản nghiệm thu, biên bản giao nhận, tài liệu liên quan 35
+6.6 Con Báo cáo nhận hàng/nghiệm thu Báo cáo tình hình nhận hàng, nghiệm thu theo HĐ, NCC, đơn vị, thời gian 30
+7 Cha Quản lý tạm ứng Tổng nhóm 196
+7.1 Con Ghi nhận đề nghị tạm ứng Tạo đề nghị tạm ứng từ NCC/đơn vị thực hiện theo hợp đồng 40
+7.2 Con Kiểm tra điều kiện tạm ứng Kiểm tra hiệu lực hợp đồng, bảo lãnh tạm ứng, điều kiện được tạm ứng 45
+7.3 Con Theo dõi số liệu tạm ứng Giá trị tạm ứng, số đã thanh toán, số còn lại, tỷ lệ so với hợp đồng 50
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/29
+
+--- PAGE 8 ---
+Mã Cấp Chức năng / Hạng mục Nội dung bóc tách Chi phí
+7.4 Con Cảnh báo hạn tất toán trên hệ thống Cảnh báo trong phần mềm khi đến hạn tất toán tạm ứng 35
+7.5 Con Báo cáo tạm ứng Danh sách khoản tạm ứng, trạng thái, quá hạn, còn phải tất toán 26
+8 Cha Quản lý thanh toán Tổng nhóm 280
+8.1 Con Tạo đề nghị thanh toán Tạo đề nghị thanh toán theo hợp đồng/phụ lục/đợt nghiệm thu 55
+8.2 Con Quản lý nhiều đợt thanh toán Đợt 1, đợt 2, đợt cuối; theo dõi giá trị từng đợt 55
+8.3 Con Kiểm tra giá trị thanh toán Kiểm tra tổng thanh toán không vượt giá trị hợp đồng/phụ lục 50
+8.4 Con Trạng thái đề nghị thanh toán Tạo mới, chờ xử lý, đã duyệt, từ chối, hoàn tất 45
+8.5 Con Hồ sơ chứng từ thanh toán Upload đề nghị thanh toán, nghiệm thu, hóa đơn, chứng từ liên quan 40
+8.6 Con Báo cáo tiến độ thanh toán Theo dõi tạm ứng, thanh toán từng đợt, quyết toán, còn phải thanh toán 35
+9 Cha Dashboard & báo cáo Tổng nhóm 224
+9.1 Con Dashboard tổng quan Tổng quan số lượng HĐ, giá trị HĐ, trạng thái, tiến độ, cảnh báo 45
+9.2 Con Báo cáo danh sách hợp đồng Lọc/xuất danh sách HĐ theo loại, đơn vị, NCC, thời gian, trạng thái 30
+9.3 Con Báo cáo phụ lục/sửa đổi HĐ Danh sách phụ lục, lịch sử sửa đổi, trạng thái tờ trình sửa đổi 25
+9.4 Con Báo cáo trạng thái/tiến độ HĐ Theo dõi tiến độ thực hiện, quá hạn, sắp hết hiệu lực, cần xử lý 35
+9.5 Con Báo cáo hợp đồng đã ký Danh sách HĐ đã hoàn tất/ký kết/approved theo kỳ báo cáo 20
+9.6 Con Báo cáo tạm ứng Tổng hợp khoản tạm ứng, quá hạn, còn phải tất toán 20
+9.7 Con Báo cáo nhận hàng/thực hiện HĐ Tình hình nhận hàng, nghiệm thu, thực hiện HĐ theo đơn vị/NCC 35
+9.8 Con Xuất Excel, bộ lọc, mẫu báo cáo Export báo cáo, ﬁlter, phân quyền xem báo cáo 14
+10 Cha Quản trị hệ thống, người dùng, phân quyền Tổng nhóm 140
+10.1 Con Quản lý người dùng Tạo/sửa/khóa tài khoản, gán đơn vị, gán vai trò 30
+10.2 Con Quản lý vai trò và nhóm quyền Role, permission, quyền theo chức năng/menu 35
+10.3 Con Phân quyền dữ liệu Phân quyền xem/xử lý theo đơn vị, vai trò, người phụ trách 30
+10.4 Con Audit log, activity log Nhật ký đăng nhập, nhật ký thao tác, truy vết xử lý 20
+10.5 Con Cấu hình hệ thống cơ bản Tham số hệ thống, cấu hình trạng thái, cấu hình mẫu hiển thị 15
+10.6 Con Cấu hình menu/giao diện cơ bản Sắp xếp menu, quyền hiển thị, một số tùy biến người dùng 10
+11 Cha Kiểm thử, UAT, đào tạo, go- live Tổng nhóm 112
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/29
+
+--- PAGE 9 ---
+Mã Cấp Chức năng / Hạng mục Nội dung bóc tách Chi phí
+11.1 Con Kiểm thử nội bộ Test chức năng, test luồng nghiệp vụ, test lỗi giao diện/dữ liệu 25
+11.2 Con Test case và sửa lỗi Chuẩn bị kịch bản kiểm thử, ghi nhận lỗi, sửa lỗi trước UAT 25
+11.3 Con Hỗ trợ UAT Hỗ trợ người dùng kiểm thử, giải đáp, hiệu chỉnh sau UAT 30
+11.4 Con Đào tạo và tài liệu Đào tạo key user, tài liệu hướng dẫn sử dụng, tài liệu vận hành cơ bản 20
+11.5 Con Go-live và hỗ trợ ban đầu Hỗ trợ đưa hệ thống vào sử dụng, xử lý lỗi sau go- live giai đoạn đầu 12
+Tổng cộng 2.800
+Bảng tổng hợp theo nhóm cha
+Nhóm cha Chi phí Tỷ trọng
+1. Khảo sát, phân tích nghiệp vụ, đặc tả yêu cầu 280 triệu 10%
+2. Quản trị danh mục, dữ liệu nền 224 triệu 8%
+3. Quản trị thông tin, danh sách hợp đồng 476 triệu 17%
+4. Quản lý sửa đổi hợp đồng/phụ lục 280 triệu 10%
+5. Quản lý thực hiện hợp đồng chung 308 triệu 11%
+6. Quản lý nhận hàng/nghiệm thu 280 triệu 10%
+7. Quản lý tạm ứng 196 triệu 7%
+8. Quản lý thanh toán 280 triệu 10%
+9. Dashboard & báo cáo 224 triệu 8%
+10. Quản trị hệ thống, người dùng, phân quyền 140 triệu 5%
+11. Kiểm thử, UAT, đào tạo, go-live 112 triệu 4%
+Tổng 2.800 triệu 100%
+Nhận xét nhanh
+Với mức 2,8 tỷ, phần nên soi kỹ nhất là nhóm 3, 5, 6, 8 và 9, vì đây là các phần dễ phát sinh nhất: hợp
+đồng, thực hiện hợp đồng, nghiệm thu, thanh toán và báo cáo.
+Khi làm việc với FPT, nên yêu cầu họ xác nhận rõ: mỗi dòng con trong bảng trên là có/không có trong
+phạm vi 2,8 tỷ, số lượng màn hình, số lượng báo cáo, số lượng luồng duyệt, số lượng mẫu biểu và số
+vòng UAT.
+Có bao gồm tích hợp VOﬃce
+Có migrate dữ liệu từ hệ thống QLHĐ cũ 
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/29
+
+--- PAGE 10 ---
+Bổ sung nỗ lực quản trị dự án, test, các yêu cầu phi chức năng
+Đã cập nhật lại bản bóc tách theo giả định mới:
+Tổng ngân sách: 2,8 tỷ VNĐ chưa VAT
+Có bao gồm: tích hợp VOﬃce, migrate dữ liệu từ hệ thống QLHĐ cũ, quản trị dự án, test, yêu cầu phi
+chức năng.
+Không bao gồm: license Procuva, tích hợp ERP/Kế toán, email tự động, đồng bộ dữ liệu thường xuyên
+với hệ thống ngoài.
+Proposal có nêu rõ phạm vi Procuva gồm quản lý hợp đồng, sửa đổi hợp đồng, thực hiện hợp đồng, tạm
+ứng, thanh toán, dashboard/báo cáo, quản trị hệ thống; đồng thời có nhắc tích hợp VOﬃce cho phê
+duyệt/ký kết hợp đồng và xử lý tờ trình sửa đổi hợp đồng. 
+1. Bảng tổng hợp cấp cha
+Đơn vị: triệu VNĐ, chưa VAT
+Mã Nhóm cha Chi phí Tỷ trọng
+1 Quản trị dự án, khảo sát, phân tích, thiết kế 400 14,3%
+2 Quản trị danh mục, dữ liệu nền 130 4,6%
+3 Quản trị thông tin, danh sách hợp đồng 300 10,7%
+4 Quản lý sửa đổi hợp đồng/phụ lục 160 5,7%
+5 Quản lý thực hiện hợp đồng chung 180 6,4%
+6 Quản lý nhận hàng/nghiệm thu 160 5,7%
+7 Quản lý tạm ứng 90 3,2%
+8 Quản lý thanh toán 130 4,6%
+9 Dashboard & báo cáo 160 5,7%
+10 Quản trị hệ thống, người dùng, phân quyền 110 3,9%
+11 Tích hợp VOﬃce 300 10,7%
+12 Migrate dữ liệu từ hệ thống QLHĐ cũ 220 7,9%
+13 Yêu cầu phi chức năng 210 7,5%
+14 Kiểm thử, UAT, nghiệm thu 270 9,6%
+15 Đào tạo, go-live, tài liệu bàn giao 180 6,4%
+Tổng 2.800 100%
+2. Bóc tách chi tiết dạng cha – con
+1. Quản trị dự án, khảo sát, phân tích, thiết kế — 400 triệu
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/29
+
+--- PAGE 11 ---
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+1.1 Quản trị dự án tổng thể Lập kế hoạch, điều phối nguồn lực, họp định kỳ, quản lý tiến độ, quản lý rủi ro, báo cáo trạng thái dự án 90
+1.2 Khởi động và chốt phạm vi Kick-oﬀ, thống nhất phạm vi, đầu mối, kế hoạch triển khai, nguyên tắc nghiệm thu 35
+1.3 Khảo sát hiện trạng QLHĐ Khảo sát hệ thống cũ, quy trình hiện tại, các loại hợp đồng, biểu mẫu, dữ liệu hiện hữu 55
+1.4 Phân tích nghiệp vụ chi tiết Làm rõ yêu cầu hợp đồng, phụ lục, nghiệm thu, tạm ứng, thanh toán, báo cáo 85
+1.5 Thiết kế quy trình và trạng thái Thiết kế lifecycle hợp đồng, trạng thái hồ sơ, trạng thái duyệt, trạng thái thanh toán, trạng thái nghiệm thu 65
+1.6 Thiết kế phân quyền nghiệp vụ Ma trận vai trò, quyền xem/sửa/duyệt, quyền theo đơn vị, người phụ trách, nhóm nghiệp vụ 45
+1.7 Quản lý thay đổi phạm vi Ghi nhận, đánh giá, phân loại yêu cầu thay đổi trong quá trình triển khai 25
+Tổng 400
+2. Quản trị danh mục, dữ liệu nền — 130 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+2.1 Danh mục đơn vị/phòng ban Đơn vị ký HĐ, đơn vị thực hiện, đơn vị sử dụng, phòng ban liên quan 25
+2.2 Danh mục nhân sự/vai trò nghiệp vụ Nhân sự phụ trách HĐ, người tạo, người kiểm tra, người theo dõi, người duyệt nghiệp vụ 25
+2.3 Danh mục hàng hóa/dịch vụ Nhóm HHDV, loại HHDV, thông tin phục vụ hợp đồng/nghiệm thu/thanh toán 20
+2.4 Danh mục nhà thầu/NCC Thông tin NCC, MST, địa chỉ, người đại diện, tài khoản ngân hàng, người liên hệ 25
+2.5 Danh mục quy trình/hạn mức/thẩm quyền Cấu hình điều kiện xử lý, hạn mức, thẩm quyền, nhóm quy trình nghiệp vụ 25
+2.6 Import/export danh mục Import dữ liệu nền ban đầu, xuất Excel, tìm kiếm/lọc danh mục 10
+Tổng 130
+3. Quản trị thông tin, danh sách hợp đồng — 300 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+3.1 Danh sách hợp đồng Màn hình danh sách, tìm kiếm, lọc theo loại HĐ, trạng thái, NCC, đơn vị, thời gian 35
+3.2 Tạo mới hợp đồng Tạo HĐ bản nháp, lưu thông tin, kiểm tra dữ liệu bắt buộc 45
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/29
+
+--- PAGE 12 ---
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+3.3 Sửa/xóa/hoàn tất hợp đồng Chỉnh sửa, xóa theo quyền, hoàn tất/approved hợp đồng 35
+3.4 Thông tin chung hợp đồng Số HĐ, loại HĐ, ngày ký, ngày hiệu lực, ngày hết hiệu lực, giá trị HĐ, đối tác 50
+3.5 Hạng mục hàng hóa/dịch vụ Danh sách HHDV, số lượng, đơn giá, giá trị, đơn vị sử dụng 40
+3.6 Mốc thực hiện hợp đồng Kiểm tra, nhận hàng, nghiệm thu, bảo lãnh, thanh toán, bảo hành, thanh lý 45
+3.7 Tệp đính kèm và ghi chú Upload hồ sơ HĐ, ghi chú, tài liệu liên quan 25
+3.8 Lịch sử thay đổi hợp đồng Lưu lịch sử cập nhật, người thao tác, thời điểm thao tác, nội dung thay đổi 25
+Tổng 300
+4. Quản lý sửa đổi hợp đồng/phụ lục — 160 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+4.1 Tạo tờ trình sửa đổi HĐ Form lập tờ trình sửa đổi, chọn hợp đồng gốc, lý do sửa đổi 30
+4.2 Quản lý nội dung sửa đổi Căn cứ pháp lý, nội dung sửa đổi, phân công thực hiện, ghi chú 35
+4.3 Quản lý phụ lục hợp đồng Tạo, lưu, tra cứu phụ lục; gắn phụ lục với hợp đồng gốc 30
+4.4 Cập nhật dữ liệu sau sửa đổi Cập nhật giá trị, thời hạn, mốc thực hiện hoặc nội dung liên quan sau khi sửa đổi 25
+4.5 Lịch sử sửa đổi/phụ lục Danh sách các lần sửa đổi, phụ lục, trạng thái từng lần sửa đổi 25
+4.6 Tệp đính kèm sửa đổi Upload tờ trình, phụ lục, tài liệu pháp lý liên quan 15
+Tổng 160
+5. Quản lý thực hiện hợp đồng chung — 180 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+5.1 Theo dõi tiến trình thực hiện HĐ Màn hình tổng hợp tiến độ từng hợp đồng theo các mốc 35
+5.2 Cảnh báo trên hệ thống Cảnh báo trong phần mềm về mốc nghiệm thu, bảo lãnh, thanh toán, bảo hành, hết hiệu lực 35
+5.3 Quản lý bảo lãnh Bảo lãnh thực hiện HĐ, bảo lãnh tạm ứng, giá trị, thời hạn, trạng thái 30
+5.4 Theo dõi bảo hành cơ bản Upload ﬁle/theo dõi thông tin bảo hành ở mức cơ bản 20
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/29
+
+--- PAGE 13 ---
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+5.5 Thanh lý/kết thúc hợp đồng Điều kiện thanh lý, hồ sơ kết thúc, trạng thái hoàn tất HĐ 25
+5.6 Phân công người phụ trách Người phụ trách HĐ, người theo dõi, trạng thái công việc cần xử lý 20
+5.7 Nhật ký nghiệp vụ Ghi nhận lịch sử thao tác trong quá trình thực hiện HĐ 15
+Tổng 180
+6. Quản lý nhận hàng/nghiệm thu — 160 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+6.1 Tạo yêu cầu nhận hàng/nghiệm thu Tạo phiếu/yêu cầu nhận hàng hoặc nghiệm thu theo hợp đồng 35
+6.2 Quản lý nhiều đợt nhận hàng Đợt 1, đợt 2, đợt cuối; theo dõi số lượng, giá trị, trạng thái 30
+6.3 Ghi nhận kiểm tra chất lượng Kết quả kiểm tra, ghi chú sai lệch, trạng thái đạt/không đạt 30
+6.4 Trạng thái duyệt nghiệm thu Tạo mới, chờ xử lý, đã duyệt, từ chối, hoàn tất 25
+6.5 Hồ sơ chứng từ nghiệm thu Upload biên bản nghiệm thu, giao nhận, tài liệu liên quan 20
+6.6 Tra cứu/báo cáo nghiệm thu cơ bản Tìm kiếm, lọc, xuất danh sách nghiệm thu 20
+Tổng 160
+7. Quản lý tạm ứng — 90 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+7.1 Ghi nhận đề nghị tạm ứng Tạo đề nghị tạm ứng theo hợp đồng/NCC 20
+7.2 Kiểm tra điều kiện tạm ứng Kiểm tra hiệu lực HĐ, bảo lãnh tạm ứng, hạn mức được tạm ứng 20
+7.3 Theo dõi số liệu tạm ứng Giá trị tạm ứng, đã thanh toán, còn lại, tỷ lệ so với HĐ 25
+7.4 Cảnh báo hạn tất toán trên hệ thống Cảnh báo trong phần mềm khi đến hạn tất toán tạm ứng 15
+7.5 Báo cáo tạm ứng cơ bản Danh sách khoản tạm ứng, quá hạn, còn phải tất toán 10
+Tổng 90
+8. Quản lý thanh toán — 130 triệu
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 13/29
+
+--- PAGE 14 ---
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+8.1 Tạo đề nghị thanh toán Tạo đề nghị thanh toán theo HĐ/phụ lục/đợt nghiệm thu 30
+8.2 Quản lý nhiều đợt thanh toán Đợt 1, đợt 2, đợt cuối; theo dõi giá trị từng đợt 25
+8.3 Kiểm tra giá trị thanh toán Kiểm soát tổng thanh toán không vượt giá trị hợp đồng/phụ lục 25
+8.4 Trạng thái đề nghị thanh toán Tạo mới, chờ xử lý, đã duyệt, từ chối, hoàn tất 20
+8.5 Hồ sơ chứng từ thanh toán Upload đề nghị thanh toán, nghiệm thu, hóa đơn, chứng từ liên quan 20
+8.6 Báo cáo tiến độ thanh toán cơ bản Theo dõi tạm ứng, thanh toán từng đợt, quyết toán, còn phải thanh toán 10
+Tổng 130
+9. Dashboard & báo cáo — 160 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+9.1 Dashboard tổng quan Tổng số HĐ, giá trị HĐ, trạng thái, tiến độ, cảnh báo 30
+9.2 Báo cáo danh sách hợp đồng Lọc/xuất danh sách HĐ theo loại, đơn vị, NCC, thời gian, trạng thái 25
+9.3 Báo cáo phụ lục/sửa đổi HĐ Danh sách phụ lục, lịch sử sửa đổi, trạng thái tờ trình 20
+9.4 Báo cáo tiến độ thực hiện HĐ Quá hạn, sắp hết hiệu lực, cần xử lý, theo đơn vị/NCC 25
+9.5 Báo cáo hợp đồng đã ký Danh sách HĐ đã hoàn tất/ký/approved theo kỳ báo cáo 15
+9.6 Báo cáo tạm ứng/thanh toán Tổng hợp tạm ứng, thanh toán, còn phải thanh toán 20
+9.7 Báo cáo nhận hàng/nghiệm thu Tình hình nhận hàng, nghiệm thu theo HĐ, NCC, đơn vị 15
+9.8 Xuất Excel/bộ lọc báo cáo Export, ﬁlter, phân quyền xem báo cáo 10
+Tổng 160
+10. Quản trị hệ thống, người dùng, phân quyền — 110 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+10.1 Quản lý người dùng Tạo/sửa/khóa tài khoản, gán đơn vị, gán vai trò 25
+10.2 Quản lý vai trò/nhóm quyền Role, permission, quyền theo chức năng/menu 25
+10.3 Phân quyền dữ liệu Phân quyền xem/xử lý theo đơn vị, vai trò, người phụ trách 25
+10.4 Audit log/activity log Nhật ký đăng nhập, nhật ký thao tác, truy vết xử lý 20
+10.5 Cấu hình hệ thống cơ bản Tham số hệ thống, trạng thái, cấu hình mẫu hiển thị 15
+Tổng 110
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 14/29
+
+--- PAGE 15 ---
+11. Tích hợp VOﬃce — 300 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+11.1 Khảo sát API/quy trình VOﬃce Làm rõ phương án kết nối, endpoint, tài khoản kỹ thuật, luồng dữ liệu 35
+11.2 Tích hợp trình ký hợp đồng Từ Procuva chuyển hồ sơ/tờ trình sang VOﬃce để phê duyệt/ký 55
+11.3 Tích hợp trình ký sửa đổi/phụ lục Chuyển tờ trình sửa đổi/phụ lục sang VOﬃce 45
+11.4 Nhận trạng thái phê duyệt từ VOﬃce Lấy trạng thái chờ duyệt/đã duyệt/từ chối/ban hành về Procuva 50
+11.5 Nhận ﬁle đã phê duyệt/ban hành Lấy ﬁle kết quả, ﬁle ký số hoặc tài liệu ban hành về lưu trong Procuva 45
+11.6 Mapping người ký/thành phần ký duyệt Đồng bộ hoặc ánh xạ người ký, vai trò ký, luồng ký theo từng loại hồ sơ 35
+11.7 Xử lý lỗi kết nối và retry cơ bản Ghi log lỗi, retry thủ công/cơ bản, thông báo lỗi trên hệ thống 20
+11.8 Test tích hợp VOﬃce Test liên thông các kịch bản trình ký, duyệt, từ chối, nhận kết quả 15
+Tổng 300
+12. Migrate dữ liệu từ hệ thống QLHĐ cũ — 220 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+12.1 Khảo sát dữ liệu hệ thống cũ Kiểm tra cấu trúc bảng, trường dữ liệu, dữ liệu hợp đồng, phụ lục, ﬁle đính kèm 30
+12.2 Mapping dữ liệu cũ – mới Mapping trường dữ liệu từ QLHĐ cũ sang Procuva 35
+12.3 Làm sạch/chuyển đổi dữ liệu Chuẩn hóa định dạng ngày, số tiền, mã đơn vị, mã NCC, trạng thái HĐ 35
+12.4 Import dữ liệu hợp đồng Import danh sách hợp đồng, thông tin chung, giá trị, thời hạn, trạng thái 45
+12.5 Import phụ lục/sửa đổi Import thông tin phụ lục, lịch sử sửa đổi nếu có dữ liệu nguồn 25
+12.6 Import dữ liệu tạm ứng/thanh toán/nghiệm thu Import dữ liệu nghiệp vụ liên quan ở mức có thể mapping 25
+12.7 Import ﬁle đính kèm Chuyển ﬁle hồ sơ hợp đồng/tài liệu liên quan nếu hệ thống cũ cho phép export 15
+12.8 Đối soát dữ liệu sau migrate Đối chiếu số lượng bản ghi, mẫu kiểm tra, xử lý lỗi sau migrate 10
+Tổng 220
+Điểm cần chốt rất kỹ với FPT: 220 triệu chỉ hợp lý nếu migrate ở mức có kiểm soát. Cần ghi rõ số lượng
+bản ghi, số lượng ﬁle đính kèm, dung lượng dữ liệu, số lần migrate thử và migrate chính thức.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 15/29
+
+--- PAGE 16 ---
+13. Yêu cầu phi chức năng — 210 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+13.1 Bảo mật và kiểm soát truy cập Cấu hình quyền, kiểm soát truy cập theo vai trò, đơn vị, người phụ trách 35
+13.2 Audit trail/truy vết Nhật ký thao tác, lịch sử thay đổi dữ liệu quan trọng, phục vụ kiểm tra sau này 25
+13.3 Hiệu năng cơ bản Tối ưu truy vấn danh sách, tìm kiếm, phân trang, báo cáo thông dụng 35
+13.4 Tính ổn định và xử lý lỗi Cơ chế ghi log lỗi, thông báo lỗi, kiểm soát lỗi tích hợp VOﬃce 30
+13.5 Sao lưu/khôi phục theo môi trường triển khai Yêu cầu backup/restore ở mức ứng dụng/cấu hình, phối hợp với hạ tầng 25
+13.6 Khả năng mở rộng cấu hình Cấu hình trạng thái, danh mục, tham số nghiệp vụ mà không sửa code nhiều 25
+13.7 Tài liệu kỹ thuật/vận hành Tài liệu cấu hình, tài liệu vận hành cơ bản, tài liệu xử lý sự cố thường gặp 20
+13.8 Tuân thủ giao diện và trải nghiệm người dùng Giao diện nhất quán, validate dữ liệu, thông báo lỗi dễ hiểu 15
+Tổng 210
+Lưu ý: Khoản này chưa nên hiểu là bao gồm pentest độc lập, chứng nhận ATTT, kiểm thử tải lớn hoặc
+HA/DR phức tạp. Nếu có các yêu cầu đó thì nên tách thành gói riêng.
+14. Kiểm thử, UAT, nghiệm thu — 270 triệu
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+14.1 Lập kế hoạch kiểm thử Kế hoạch test, phạm vi test, môi trường test, dữ liệu test 25
+14.2 Viết test case nghiệp vụ Test case cho HĐ, phụ lục, nghiệm thu, tạm ứng, thanh toán, báo cáo 40
+14.3 Test chức năng nội bộ SIT/function test trước khi bàn giao UAT 45
+14.4 Test tích hợp VOﬃce Test luồng gửi hồ sơ, nhận trạng thái, nhận ﬁle kết quả 30
+14.5 Test migrate dữ liệu Test migrate thử, kiểm tra đối soát dữ liệu, xử lý lỗi dữ liệu 30
+14.6 Regression test Test hồi quy sau khi sửa lỗi/chỉnh sửa yêu cầu 30
+14.7 Hỗ trợ UAT Hỗ trợ người dùng kiểm thử, ghi nhận lỗi, giải đáp nghiệp vụ 40
+14.8 Sửa lỗi sau UAT Fix bug, kiểm tra lại, đóng lỗi trước nghiệm thu 20
+14.9 Biên bản nghiệm thu Tổng hợp kết quả test/UAT, biên bản nghiệm thu giai đoạn 10
+Tổng 270
+15. Đào tạo, go-live, tài liệu bàn giao — 180 triệu
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 16/29
+
+--- PAGE 17 ---
+Mã Chức năng / Hạng mục con Nội dung Chi phí
+15.1 Tài liệu hướng dẫn người dùng User guide cho các nhóm chức năng chính 30
+15.2 Tài liệu quản trị hệ thống Hướng dẫn quản trị danh mục, người dùng, phân quyền, cấu hình 25
+15.3 Đào tạo key-user Đào tạo nhóm người dùng chính, hướng dẫn thao tác nghiệp vụ 40
+15.4 Đào tạo admin/quản trị Đào tạo quản trị hệ thống, phân quyền, theo dõi log, xử lý lỗi cơ bản 25
+15.5 Chuẩn bị go-live Checklist go-live, tài khoản, dữ liệu, cấu hình, phân quyền 25
+15.6 Hỗ trợ sau go-live Hỗ trợ vận hành giai đoạn đầu, xử lý lỗi phát sinh ban đầu 35
+Tổng 180
+3. Nhận xét về mức 2,8 tỷ sau khi bổ sung VOﬃce + migrate
+Với việc có cả tích hợp VOﬃce và migrate dữ liệu, mức 2,8 tỷ là khá chặt, nhưng vẫn có thể hợp lý
+nếu FPT triển khai trên nền Procuva có sẵn và scope được đóng rõ.
+Điểm cần lưu ý là khi thêm VOﬃce, migrate, PM, test và yêu cầu phi chức năng, phần ngân sách dành
+cho từng module nghiệp vụ sẽ bị giảm xuống. Vì vậy, không nên để FPT mô tả chung chung là “bao gồm
+đầy đủ”, mà cần bắt họ xác nhận theo từng dòng chức năng.
+4. Các điều kiện nên yêu cầu FPT xác nhận bằng văn bản
+Nhóm Nội dung cần chốt
+VOﬃce Có bao gồm gửi hồ sơ sang VOﬃce, nhận trạng thái duyệt, nhận ﬁle đã ký/ban hành về Procuva không?
+VOﬃce Có bao gồm mapping người ký, vai trò ký, luồng ký theo từng loại hồ sơ không?
+Migration Có migrate ﬁle đính kèm không, hay chỉ migrate metadata hợp đồng?
+Migration Bao nhiêu bản ghi hợp đồng/phụ lục/nghiệm thu/thanh toán được migrate?
+Migration Có bao nhiêu lần migrate thử và bao nhiêu lần migrate chính thức?
+Báo cáo Có bao nhiêu báo cáo/dashboard nằm trong 2,8 tỷ?
+Test/UAT Có tối thiểu mấy vòng UAT? Nên yêu cầu ít nhất 2 vòng.
+Go-live Có hỗ trợ sau go-live bao lâu? Nên yêu cầu tối thiểu 30–60 ngày.
+Phi chức
+năng Có cam kết hiệu năng, bảo mật, log, backup/restore ở mức nào?
+Phát sinh Những yêu cầu nào được coi là trong scope, yêu cầu nào tính CR/phát sinh?
+5. Cách chốt với FPT
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 17/29
+
+--- PAGE 18 ---
+Bạn có thể yêu cầu FPT phản hồi theo cấu trúc này:
+“Đề nghị FPT xác nhận báo giá 2,8 tỷ đã bao gồm các nhóm việc: triển khai các phân hệ
+nghiệp vụ QLHĐ, tích hợp VOﬃce, migrate dữ liệu từ hệ thống QLHĐ cũ, quản trị dự án, kiểm
+thử, UAT, đào tạo, go-live và các yêu cầu phi chức năng cơ bản. Đề nghị FPT bóc tách theo
+từng nhóm cha – con, nêu rõ phạm vi bao gồm/không bao gồm, số lượng báo cáo, số lượng
+luồng duyệt, số vòng UAT, phạm vi migrate dữ liệu và thời gian hỗ trợ sau go-live.”
+Kết luận: 2,8 tỷ có thể chấp nhận được, nhưng chỉ nên chấp nhận nếu FPT xác nhận rõ VOﬃce +
+migrate + test + UAT + go-live + phi chức năng đều nằm trong phạm vi, không để thành khoản phát
+sinh sau này.
+- Tích hợp VOﬃce chỉ khoảng 50tr, vì đơn giản là gọi API trình ký văn bản đã có sẵn
+- Bổ sung module cảnh báo thực hiện hợp đồng (động)
+Đúng, nếu VOﬃce chỉ gọi API trình ký văn bản có sẵn thì để 300 triệu là cao. Mình điều chỉnh lại hợp
+lý hơn:
+Tích hợp VOﬃce: giảm từ 300 triệu →  50 triệu
+Phần 250 triệu còn lại đưa sang module mới: Cảnh báo thực hiện hợp đồng động
+Tổng ngân sách vẫn giữ: 2,8 tỷ VNĐ chưa VAT
+Module cảnh báo động là hợp lý vì proposal có nêu nhu cầu theo dõi/cảnh báo tiến độ thực hiện hợp
+đồng, các mốc kiểm tra, bàn giao, nghiệm thu, bảo lãnh, thanh toán, bảo hành, thanh lý.
+1. Bảng tổng hợp cập nhật
+Đơn vị: triệu VNĐ, chưa VAT
+Mã Nhóm cha Chi phí cũ Chi phí mới Ghi chú
+1 Quản trị dự án, khảo sát, phân tích, thiết kế 400 400 Giữ nguyên
+2 Quản trị danh mục, dữ liệu nền 130 130 Giữ nguyên
+3 Quản trị thông tin, danh sách hợp đồng 300 300 Giữ nguyên
+4 Quản lý sửa đổi hợp đồng/phụ lục 160 160 Giữ nguyên
+5 Quản lý thực hiện hợp đồng chung 180 180 Giữ nguyên, nhưng phần cảnh báo nâng cao tách riêng
+6 Quản lý nhận hàng/nghiệm thu 160 160 Giữ nguyên
+7 Quản lý tạm ứng 90 90 Giữ nguyên
+8 Quản lý thanh toán 130 130 Giữ nguyên
+9 Dashboard & báo cáo 160 160 Giữ nguyên
+10 Quản trị hệ thống, người dùng, phân quyền 110 110 Giữ nguyên
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 18/29
+
+--- PAGE 19 ---
+Mã Nhóm cha Chi phí cũ Chi phí mới Ghi chú
+11 Tích hợp VOﬃce 300 50 Giảm do chỉ gọi API trình ký có sẵn
+12 Migrate dữ liệu từ hệ thống QLHĐ cũ 220 220 Giữ nguyên
+13 Yêu cầu phi chức năng 210 210 Giữ nguyên
+14 Kiểm thử, UAT, nghiệm thu 270 270 Giữ nguyên
+15 Đào tạo, go-live, tài liệu bàn giao 180 180 Giữ nguyên
+16 Module cảnh báo thực hiện hợp đồng động 0 250 Bổ sung mới
+Tổng cộng 2.800 2.800
+2. Bóc tách lại phần Tích hợp VOﬃce — 50 triệu
+Mã Chức năng con Nội dung Chi phí
+11.1 Khảo sát API VOﬃce Làm rõ endpoint, token/tài khoản kỹ thuật, input/output API trình ký 8
+11.2 Gọi API tạo luồng trình ký Từ Procuva gửi hồ sơ/tờ trình sang VOﬃce để trình ký 15
+11.3 Nhận trạng thái xử lý Nhận trạng thái: chờ duyệt, đã duyệt, từ chối, hoàn tất/ban hành 10
+11.4 Nhận ﬁle kết quả Lấy ﬁle đã ký/ban hành về lưu trong hồ sơ hợp đồng 8
+11.5 Log lỗi và xử lý retry cơ bản Ghi nhận lỗi gọi API, cho phép gọi lại/thao tác lại khi lỗi 5
+11.6 Test tích hợp VOﬃce Test các kịch bản gửi hồ sơ, duyệt, từ chối, nhận kết quả 4
+Tổng 50
+Lưu ý: Mức 50 triệu hợp lý nếu API VOﬃce đã ổn định, không phải phát triển API mới, không phải
+customize luồng ký phức tạp, không phải đồng bộ danh bạ/người ký sâu.
+3. Bổ sung module Cảnh báo thực hiện hợp đồng động — 250
+triệu
+Đây là module nên tách riêng, vì khác với cảnh báo tĩnh. Cảnh báo động cho phép cấu hình điều kiện,
+ngưỡng cảnh báo, người nhận, mức độ ưu tiên và trạng thái xử lý cảnh báo.
+Mã Chức năng con Nội dung Chi phí
+16.1 Thiết kế mô hình cảnh báo động Thiết kế loại cảnh báo, nguồn dữ liệu, điều kiện kích hoạt, mức độ ưu tiên 25
+16.2 Cấu hình rule cảnh báo Cho phép cấu hình rule theo loại hợp đồng, trạng thái, mốc thời gian, giá trị, đơn vị phụ trách 45
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 19/29
+
+--- PAGE 20 ---
+Mã Chức năng con Nội dung Chi phí
+16.3 Cảnh báo mốc thời gian hợp đồng Cảnh báo sắp đến hạn/hết hạn: hiệu lực HĐ, nghiệm thu, bảo lãnh, bảo hành, thanh lý 35
+16.4 Cảnh báo tiến độ thực hiện HĐ Cảnh báo chậm nhận hàng, chậm nghiệm thu, chậm thanh toán, chậm tất toán tạm ứng 35
+16.5 Cảnh báo vượt/nguy cơ vượt giá trị Cảnh báo khi đề nghị thanh toán/tạm ứng có nguy cơ vượt hạn mức hoặc vượt giá trị HĐ/phụ lục 25
+16.6 Cảnh báo theo vai trò/người phụ trách Gửi cảnh báo trong hệ thống tới người phụ trách, trưởng đơn vị, nhóm nghiệp vụ liên quan 25
+16.7 Màn hình danh sách cảnh báo Danh sách cảnh báo, bộ lọc, trạng thái mới/đang xử lý/đã xử lý/quá hạn 25
+16.8 Xử lý và đóng cảnh báo Ghi nhận người xử lý, nội dung xử lý, thời điểm xử lý, kết quả xử lý 20
+16.9 Dashboard cảnh báo Tổng hợp số lượng cảnh báo theo loại, mức độ, đơn vị, trạng thái, thời gian 20
+16.10 Test rule cảnh báo Kiểm thử các kịch bản cảnh báo đúng/sai, tránh cảnh báo trùng/lặp quá nhiều 15
+Tổng 250
+4. Điều chỉnh lại nhóm “Quản lý thực hiện hợp đồng chung”
+Để tránh trùng lặp, dòng cảnh báo trong nhóm 5 nên đổi lại như sau:
+Mã Chức năng con Nội dung điều chỉnh Chi phí
+5.2 Dữ liệu nguồn phục vụ cảnh báo Chuẩn hóa mốc thực hiện, trạng thái, hạn xử lý, người phụ trách để module cảnh báo động sử dụng 35
+Tức là nhóm 5 vẫn quản lý dữ liệu/mốc/trạng thái thực hiện hợp đồng, còn nhóm 16 mới là nơi xử lý
+logic cảnh báo động.
+5. Bảng tổng hợp sau cập nhật theo nhóm nghiệp vụ
+Nhóm Chi phí
+Nghiệp vụ hợp đồng, phụ lục, thực hiện, nghiệm thu, tạm ứng, thanh toán 1.020 triệu
+Dashboard, báo cáo, cảnh báo động 410 triệu
+Danh mục, phân quyền, quản trị hệ thống 240 triệu
+Tích hợp VOﬃce 50 triệu
+Migrate dữ liệu QLHĐ cũ 220 triệu
+Quản trị dự án, phân tích, thiết kế 400 triệu
+Phi chức năng 210 triệu
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 20/29
+
+--- PAGE 21 ---
+Nhóm Chi phí
+Test, UAT, đào tạo, go-live 450 triệu
+Tổng cộng 2.800 triệu
+Kết luận
+Sau điều chỉnh, cơ cấu 2,8 tỷ hợp lý hơn:
+VOﬃce 50 triệu: đúng bản chất nếu chỉ gọi API trình ký đã có.
+Module cảnh báo động 250 triệu: rất đáng đưa vào scope, vì đây là phần tạo giá trị quản trị thực
+tế cho lãnh đạo/người phụ trách hợp đồng.
+Nên yêu cầu FPT ghi rõ: cảnh báo không chỉ là “hiển thị nhắc việc”, mà phải có rule động, mức độ
+cảnh báo, người nhận theo vai trò, trạng thái xử lý, dashboard cảnh báo và lịch sử xử lý.
+Lưu ý: Hợp đồng có nhiều loại của các đơn vị như: Trung tâm Xuất nhập khẩu, Trung tâm phân 
+phối, Trung tâm bán lẻ, Nhà Máy In, Và các hợp đồng mua sắm của khối cơ quan bao gồm các các 
+hợp đồng làm dự án CNTT
+Lưu ý này rất quan trọng vì phạm vi không còn là “một mẫu quản lý hợp đồng chung”, mà phải thiết kế
+theo hướng đa loại hợp đồng, đa đơn vị, đa nghiệp vụ. Trong proposal cũng có nêu hệ thống hiện tại
+có nhiều nhóm hợp đồng như hợp đồng dự án, thiết bị/dịch vụ, ủy thác, hàng tiêu dùng và quản lý thầu,
+nên cần bóc tách phần này thành một cụm chức năng riêng. 
+Điều chỉnh cần bổ sung vào scope
+Nên bổ sung một nhóm chức năng cha:
+“Cấu hình đa loại hợp đồng theo đơn vị/nghiệp vụ”
+Nhóm này không nhất thiết làm tăng tổng ngân sách 2,8 tỷ, nhưng phải được ghi rõ trong phạm vi để
+tránh FPT chỉ làm một form hợp đồng chung rồi sau này tính phát sinh khi mỗi đơn vị yêu cầu khác
+nhau.
+Cập nhật cơ cấu tổng 2,8 tỷ
+Đơn vị: triệu VNĐ, chưa VAT
+Mã Nhóm cha Chi phí đề xuất
+1 Quản trị dự án, khảo sát, phân tích, thiết kế 400
+2 Quản trị danh mục, dữ liệu nền 120
+3 Cấu hình đa loại hợp đồng theo đơn vị/nghiệp vụ 180
+4 Quản trị thông tin, danh sách hợp đồng 250
+5 Quản lý sửa đổi hợp đồng/phụ lục 150
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 21/29
+
+--- PAGE 22 ---
+Mã Nhóm cha Chi phí đề xuất
+6 Quản lý thực hiện hợp đồng chung 170
+7 Module cảnh báo thực hiện hợp đồng động 250
+8 Quản lý nhận hàng/nghiệm thu 150
+9 Quản lý tạm ứng 80
+10 Quản lý thanh toán 120
+11 Dashboard & báo cáo 150
+12 Quản trị hệ thống, người dùng, phân quyền 110
+13 Tích hợp VOﬃce 50
+14 Migrate dữ liệu từ hệ thống QLHĐ cũ 220
+15 Yêu cầu phi chức năng 200
+16 Kiểm thử, UAT, nghiệm thu 250
+17 Đào tạo, go-live, tài liệu bàn giao 170
+Tổng 2.800
+Bóc tách nhóm mới: Cấu hình đa loại hợp đồng theo đơn
+vị/nghiệp vụ — 180 triệu
+Mã Chức năng con Nội dung Chi phí
+3.1 Khảo sát đặc thù hợp đồng theo đơn vị Làm rõ đặc thù hợp đồng của Trung tâm Xuất nhập khẩu, Trung tâm phân phối, Trung tâm bán lẻ, Nhà Máy In, khối cơ quan 25
+3.2 Cấu hình nhóm loại hợp đồng Cấu hình cây loại hợp đồng: XNK, phân phối, bán lẻ, nhà máy in, mua sắm cơ quan, dự án CNTT 25
+3.3 Cấu hình bộ trường thông tin theo loại HĐ Mỗi loại HĐ có thể có trường riêng, trường bắt buộc riêng, cách hiển thị riêng 35
+3.4 Cấu hình mẫu biểu/hồ sơ theo loại HĐ Cấu hình danh sách hồ sơ bắt buộc, ﬁle đính kèm, mẫu tờ trình, mẫu phụ lục theo từng nhóm HĐ 25
+3.5 Cấu hình quy trình/trạng thái theo loại HĐ Mỗi nhóm HĐ có thể có trạng thái và bước xử lý khác nhau: tạo, trình ký, thực hiện, nghiệm thu, thanh toán, thanh lý 30
+3.6 Cấu hình phân quyền theo đơn vị/nghiệp vụ Người của đơn vị nào xem/xử lý hợp đồng của đơn vị đó; quyền theo khối, trung tâm, phòng ban 20
+3.7 Mapping dữ liệu migrate theo loại HĐ Khi migrate từ QLHĐ cũ, dữ liệu phải được phân loại đúng nhóm hợp đồng/đơn vị/nghiệp vụ 20
+Tổng 180
+Các loại hợp đồng nên đưa vào danh mục cấu hình
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 22/29
+
+--- PAGE 23 ---
+Nhóm đơn vị/nghiệp
+vụ Loại hợp đồng cần tính đến
+Trung tâm Xuất nhập
+khẩu
+Hợp đồng nhập khẩu, ủy thác, mua bán quốc tế, logistics, vận chuyển, bảo hiểm, thông
+quan nếu có
+Trung tâm phân phối Hợp đồng phân phối, mua bán hàng hóa, nhà cung cấp, vận chuyển, kho bãi
+Trung tâm bán lẻ Hợp đồng thuê mặt bằng, dịch vụ vận hành cửa hàng, mua sắm thiết bị, bảo trì, marketing, dịch vụ hỗ trợ bán lẻ
+Nhà Máy In Hợp đồng mua nguyên vật liệu, máy móc, bảo trì thiết bị, gia công, dịch vụ kỹ thuật
+Khối cơ quan Hợp đồng mua sắm hành chính, tư vấn, dịch vụ, tài sản, văn phòng phẩm, thuê ngoài
+Dự án CNTT Hợp đồng phần mềm, hạ tầng, tích hợp hệ thống, bảo trì, license, dịch vụ CNTT, triển khai dự án
+Điểm cần yêu cầu FPT cam kết
+Quan trọng nhất là không để FPT chỉ ghi chung “quản lý nhiều loại hợp đồng”. Nên yêu cầu họ xác nhận
+rõ:
+Nội dung cần chốt Cách ghi vào scope
+Số nhóm loại hợp đồng Tối thiểu bao gồm: XNK, phân phối, bán lẻ, nhà máy in, khối cơ quan, dự án CNTT
+Bộ trường riêng theo loại HĐ Cho phép cấu hình trường bắt buộc/không bắt buộc theo từng loại HĐ
+Hồ sơ bắt buộc theo loại HĐ Mỗi loại HĐ có checklist hồ sơ/tệp đính kèm riêng
+Quy trình/trạng thái theo loại
+HĐ Cho phép khác nhau giữa HĐ mua sắm, HĐ CNTT, HĐ XNK, HĐ bán lẻ
+Phân quyền theo đơn vị Đơn vị nào quản lý hợp đồng của đơn vị đó; cấp quản trị có thể xem tổng hợp
+Báo cáo theo loại HĐ và đơn vị Dashboard/báo cáo phải lọc được theo trung tâm, đơn vị, loại hợp đồng
+Cảnh báo động theo loại HĐ Rule cảnh báo phải cấu hình khác nhau theo từng loại hợp đồng/nghiệp vụ
+Câu nên đưa vào tài liệu/trao đổi với FPT
+“Hệ thống cần đáp ứng mô hình quản lý đa loại hợp đồng theo đặc thù từng đơn vị, bao gồm
+Trung tâm Xuất nhập khẩu, Trung tâm phân phối, Trung tâm bán lẻ, Nhà Máy In và khối cơ
+quan, trong đó có các hợp đồng mua sắm, hợp đồng dịch vụ và hợp đồng dự án CNTT. Mỗi
+nhóm hợp đồng có thể có bộ trường thông tin, hồ sơ đính kèm, quy trình xử lý, phân quyền,
+báo cáo và rule cảnh báo khác nhau. Đề nghị FPT xác nhận nội dung này nằm trong phạm vi
+báo giá 2,8 tỷ, không tính là phát sinh.”
+Kết luận: với lưu ý này, 2,8 tỷ vẫn có thể hợp lý, nhưng bắt buộc phải chốt rõ “đa loại hợp đồng theo
+đơn vị”. Nếu không, rủi ro lớn là sau này FPT chỉ bàn giao một khung hợp đồng chung, còn các đặc thù
+XNK, bán lẻ, phân phối, nhà máy in, khối cơ quan và dự án CNTT sẽ bị đẩy thành yêu cầu phát sinh.
+Tổng hợp thành ﬁle excel hoàn chỉnh
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 23/29
+
+--- PAGE 24 ---
+Đã tổng hợp thành ﬁle Excel hoàn chỉnh, gồm:
+Tổng quan: cơ cấu 2,8 tỷ, tỷ trọng từng nhóm, biểu đồ.
+WBS chi tiết: bảng phân cấp cha – con theo từng chức năng.
+Loại HĐ & đơn vị: XNK, phân phối, bán lẻ, Nhà Máy In, khối cơ quan, dự án CNTT.
+Phạm vi & điều kiện: bao gồm/không bao gồm, điều kiện cần chốt với FPT.
+Nguồn & ghi chú: căn cứ theo proposal Procuva và ghi chú lập bảng. 
+Tải ﬁle tại đây:
+FPT-VC-Đề xuất giải pháp …
+boc_tach_chi_phi_procuva_2_8_ty.xlsx
+Bổ sung thêm cột MD
+Đã bổ sung cột MD vào ﬁle Excel.
+Mình dùng giả định: 1 MD = 4 triệu VNĐ, nên tổng eﬀort quy đổi là 700 MD cho tổng ngân sách 2,8 tỷ.
+Bạn có thể chỉnh đơn giá tại sheet Tổng quan, ô I4, các cột MD sẽ tự cập nhật.
+Tải ﬁle mới tại đây:
+boc_tach_chi_phi_procuva_2_8_ty_bo_sung_MD.xlsx
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 24/29
+
+--- PAGE 25 ---
+Vẽ các luồng dữ liệu cho từng module chính
+Vẽ lại có mối liên kết với hệ thống RPA và OCR cho module nhập thông tin hợp đồng
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 25/29
+
+--- PAGE 26 ---
+Phần thanh toán thực hiện trên SAP
+Đúng, vậy cần chỉnh lại phạm vi như sau:
+Phần thanh toán không nên hiểu là Procuva thực hiện thanh toán.
+Procuva chỉ quản lý hồ sơ/đề nghị thanh toán, điều kiện thanh toán, chứng từ, trạng thái theo dõi,
+còn nghiệp vụ thanh toán/hạch toán/chi tiền thực hiện trên SAP.
+Trong proposal gốc có mô tả luồng thanh toán có bước đồng bộ sang ERP/Kế toán, nhưng trước đó
+mình đang loại trừ ERP/Kế toán. Nếu thực tế là SAP xử lý thanh toán thì cần ghi rõ SAP là hệ thống thực
+hiện cuối. 
+Cách sửa module “Quản lý thanh toán”
+Nên đổi tên module từ:
+Quản lý thanh toán
+thành:
+Quản lý hồ sơ đề nghị thanh toán & theo dõi trạng thái thanh toán trên SAP
+FPT-VC-Đề xuất giải pháp …
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 26/29
+
+--- PAGE 27 ---
+Phạm vi đúng của Procuva
+Nhóm chức năng Procuva thực hiện SAP thực hiện
+Tạo đề nghị thanh toán Có Không
+Kiểm tra giá trị HĐ/phụ lục còn lại Có Có thể đối chiếu
+Đính kèm hồ sơ/chứng từ thanh
+toán Có Có thể nhận/chứa bản ghi thanh toán
+Trình duyệt hồ sơ thanh toán Có, qua VOﬃce hoặc luồng duyệt nội bộ Không
+Thực hiện hạch toán kế toán Không Có
+Thực hiện thanh toán/chi tiền Không Có
+Sinh chứng từ kế toán Không Có
+Cập nhật trạng thái đã thanh toán Có, nếu nhập tay hoặc nhận từ SAP Có
+Báo cáo tiến độ thanh toán theo
+HĐ Có Có dữ liệu gốc thanh toán
+Nếu không tích hợp SAP
+Khi đó module thanh toán trong Procuva chỉ gồm:
+Mã Chức năng Nội dung
+1 Tạo đề nghị thanh toán Tạo hồ sơ đề nghị theo hợp đồng/phụ lục/nghiệm thu
+2 Kiểm tra điều kiện thanh toán Kiểm tra giá trị còn lại, nghiệm thu, tạm ứng, chứng từ
+3 Trình duyệt hồ sơ thanh toán Gửi hồ sơ sang VOﬃce hoặc luồng duyệt tương ứng
+4 Bàn giao hồ sơ sang SAP Người dùng lấy hồ sơ đã duyệt để thực hiện trên SAP
+5 Cập nhật trạng thái thanh toán Nhập tay trạng thái: đã chuyển SAP, đang xử lý, đã thanh toán, từ chối
+6 Lưu chứng từ/tham chiếu SAP Lưu mã chứng từ SAP, ngày thanh toán, số tiền đã thanh toán nếu người dùng nhập lại
+7 Theo dõi/cảnh báo Cảnh báo chậm thanh toán, quá hạn thanh toán, chưa cập nhật trạng thái SAP
+Nếu có tích hợp SAP
+Khi đó cần bổ sung một module/tác vụ riêng:
+Tích hợp SAP thanh toán
+Chức năng Nội dung
+Đẩy hồ sơ đề nghị thanh toán sang SAP Gửi metadata hồ sơ, số HĐ, số tiền, NCC, mã đơn vị, chứng từ
+Nhận mã chứng từ SAP SAP trả về mã chứng từ/kỳ hạch toán/trạng thái tiếp nhận
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 27/29
+
+--- PAGE 28 ---
+Chức năng Nội dung
+Đồng bộ trạng thái thanh toán Chưa xử lý, đang xử lý, đã hạch toán, đã thanh toán, bị từ chối
+Đối soát giá trị thanh toán So sánh số đề nghị, số đã thanh toán, số còn lại
+Ghi log tích hợp Lưu lịch sử gửi/nhận dữ liệu, lỗi API, retry
+Cập nhật lại luồng dữ liệu thanh toán
+Luồng đúng nên là:
+Procuva →  VOﬃce →  SAP →  Procuva
+Cụ thể:
+1. Đơn vị thực hiện tạo đề nghị thanh toán trên Procuva.
+2. Procuva kiểm tra hợp đồng, phụ lục, nghiệm thu, tạm ứng, giá trị còn lại.
+3. Hồ sơ được trình duyệt qua VOﬃce.
+4. Sau khi duyệt, hồ sơ được chuyển sang SAP.
+5. SAP thực hiện hạch toán/thanh toán.
+6. Trạng thái thanh toán được cập nhật lại về Procuva, nếu có tích hợp; hoặc người dùng nhập tay nếu
+không tích hợp.
+7. Procuva dùng trạng thái đó để báo cáo và cảnh báo chậm/quá hạn thanh toán.
+Điều chỉnh chi phí trong bảng 2,8 tỷ
+Nếu không tích hợp SAP, chi phí module thanh toán 120 triệu vẫn hợp lý, nhưng nên đổi tên thành:
+Quản lý hồ sơ đề nghị thanh toán & theo dõi trạng thái SAP — 120 triệu
+Nếu có tích hợp SAP thật sự, cần tách thêm:
+Hạng mục Ước lượng
+Tích hợp SAP mức cơ bản: gửi hồ sơ, nhận mã chứng từ, nhận trạng thái 150 – 300 triệu
+Tích hợp SAP sâu: đồng bộ chứng từ, đối soát thanh toán, xử lý lỗi, retry, mapping master data 300 – 600 triệu
+Câu nên chốt với FPT
+“Phần thanh toán thực hiện trên SAP. Procuva không thực hiện hạch toán hoặc chi tiền, mà
+chỉ quản lý hồ sơ đề nghị thanh toán, điều kiện thanh toán, chứng từ, trạng thái xử lý và báo
+cáo theo hợp đồng. Đề nghị FPT làm rõ trong báo giá 2,8 tỷ có bao gồm tích hợp SAP hay
+không. Nếu không tích hợp SAP, hệ thống cần cho phép nhập/cập nhật thủ công mã chứng từ
+SAP, trạng thái SAP, ngày thanh toán và số tiền đã thanh toán để phục vụ theo dõi và cảnh
+báo.”
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 28/29
+
+--- PAGE 29 ---
+Kết luận: phải đổi module thanh toán thành module theo dõi hồ sơ thanh toán liên thông SAP,
+tránh hiểu nhầm Procuva thay SAP xử lý thanh toán.
+Vẽ lại luồng thanh toán
+Tạo thành ﬁle với chi phí 2.6 tỷ
+Đã tạo ﬁle Excel cập nhật theo chi phí 2,6 tỷ VNĐ, gồm cả:
+Bóc tách chi phí theo nhóm cha – con.
+Cột MD, tổng 650 MD theo giả định 1 MD = 4 triệu.
+Bổ sung phạm vi OCR/RPA nhập thông tin hợp đồng.
+Điều chỉnh phần thanh toán: SAP hạch toán/thanh toán, Procuva quản lý hồ sơ và theo dõi
+trạng thái.
+Có sheet tóm tắt luồng dữ liệu theo module.
+Tải ﬁle tại đây:
+boc_tach_chi_phi_procuva_2_6_ty.xlsx
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 29/29

@@ -1,0 +1,95 @@
+{
+  "markdown": [
+    {
+      "file": "Đức BA training AI, ML models.md",
+      "bytes": 78747,
+      "words": 11362,
+      "headings": 15,
+      "images": 7,
+      "missing_links": [],
+      "code_fences": 2
+    },
+    {
+      "file": "Đức PO làm dự án VinDynamics.md",
+      "bytes": 76147,
+      "words": 10860,
+      "headings": 19,
+      "images": 3,
+      "missing_links": [],
+      "code_fences": 12
+    }
+  ],
+  "diagrams": [
+    {
+      "file": "01-knowledge-rag.drawio",
+      "nodes": 18,
+      "edges": 11,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "02-agent-workflow.drawio",
+      "nodes": 18,
+      "edges": 12,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "03-ai-training-feedback.drawio",
+      "nodes": 18,
+      "edges": 11,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "04-smart-safe-vision.drawio",
+      "nodes": 18,
+      "edges": 10,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "05-document-ai-rpa.drawio",
+      "nodes": 18,
+      "edges": 12,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "06-smart-factory-azure.drawio",
+      "nodes": 23,
+      "edges": 15,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "07-ai-data-hub.drawio",
+      "nodes": 18,
+      "edges": 11,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "08-vinuni-robot-platform.drawio",
+      "nodes": 23,
+      "edges": 15,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "09-vinuni-mission-flow.drawio",
+      "nodes": 18,
+      "edges": 11,
+      "png": true,
+      "svg": true
+    },
+    {
+      "file": "10-robot-evaluation-release.drawio",
+      "nodes": 18,
+      "edges": 11,
+      "png": true,
+      "svg": true
+    }
+  ],
+  "errors": []
+}

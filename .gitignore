@@ -1,0 +1,6 @@
+# Ignore MP4 videos in all folders (case-insensitive extension).
+*.[mM][pP]4
+
+# Temporary project files.
+/Các dự án cũ/Dự án và tính năng/.codex_tmp/
+/Các dự án cũ/Dự án và tính năng/.tmp-ocr-aihub/

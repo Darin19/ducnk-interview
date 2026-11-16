@@ -1,0 +1,214 @@
+# Bao cao phan tich chuc nang he thong mChat/VSS Chat Platform cho BA
+
+Ngay khao sat: 26/05/2026  
+Pham vi: khao sat truc tiep tren tab mChat/VSS Chat dang mo trong Chrome, che do doc-only.  
+Nguyen tac: khong gui tin nhan, khong luu, khong xoa, khong cap nhat cau hinh, khong thay doi du lieu.
+
+---
+
+## Trang 1 - Tong quan he thong, dinh nghia va muc dich su dung
+
+mChat trong man hinh dang khao sat hien thi voi ten san pham VSS Chat Platform. Ve ban chat, day la he thong cham soc khach hang va ban hang da kenh, gom cac cong cu tiep nhan hoi thoai, quan ly khach hang, phan cong nhan su, thiet lap kenh tuong tac, tu dong hoa quy trinh xu ly va bao cao hieu suat. He thong tap trung cac tuong tac tu nhieu nen tang vao mot khong gian lam viec chung de nhan vien khong can mo rieng tung kenh nhu website, Facebook, Zalo hoac cac kenh chat/xu ly khac.
+
+Muc dich chinh cua he thong la giam do phan manh trong cham soc khach hang online. Trong boi canh doanh nghiep co nhieu nguon khach hang tu website, mang xa hoi, san thuong mai dien tu va chien dich truyen thong, mChat dong vai tro nhu mot "trung tam hoi thoai". Moi hoi thoai co the duoc phan loai theo kenh, nhan, nhom, trang thai xu ly, nhan vien phu trach va cac thong tin lien quan den khach hang. Dieu nay giup doanh nghiep theo doi toan bo vong doi tuong tac: khach lien he, he thong ghi nhan, phan cong nhan vien, nhan vien phan hoi, cap nhat trang thai, dong hoi thoai va do luong hieu qua.
+
+Y nghia su dung doi voi nghiep vu gom bon nhom gia tri. Thu nhat la tap trung du lieu hoi thoai: tat ca cuoc trao doi duoc quan sat trong mot module Conversations. Thu hai la nang cao nang suat nhan vien: nhan vien co bo loc, tin nhan mau, ghi chu rieng, file dinh kem, lich su hoi thoai va thong tin khach hang ngay trong man hinh xu ly. Thu ba la chuan hoa van hanh: admin/giam sat co the cau hinh nhan su, nhom, kenh, nhan, SLA, quy tac phan phoi va tu dong hoa. Thu tu la quan tri bang so lieu: reports cho phep do so hoi thoai, tin nhan, toc do phan hoi, toc do giai quyet, chat luong CSAT, hieu suat nhan vien va ket qua theo kenh/nhom/nhan.
+
+He thong phu hop voi cac bo phan CSKH, ban hang online, marketing, van hanh kenh so va quan ly chat luong dich vu. BA khi phan tich can nhin mChat nhu mot he sinh thai gom: tac nhan nguoi dung noi bo, khach hang ben ngoai, kenh tuong tac, hoi thoai, quy trinh phan cong, tu dong hoa va bao cao.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 2 - Tac nhan, phan quyen va dong nghiep vu tong quat
+
+He thong the hien ro ba nhom vai tro noi bo: Tu van vien/Agent, Giam sat vien va Quan tri vien. Tu van vien xu ly hoi thoai duoc giao va xem danh sach khach hang lien quan den cong viec. Giam sat vien co quyen rong hon: xem va tra loi hoi thoai cua nhan vien duoi quyen, theo doi bao cao va mot phan cau hinh. Quan tri vien co quyen day du: xem/tra loi moi hoi thoai, xem bao cao, thuc hien cau hinh nguoi dung, nhom, kenh, nhan, automation, SLA va cac thiet lap he thong.
+
+Tac nhan ben ngoai la khach hang. Khach hang co the den tu website, Facebook, Zalo hoac cac kenh tuong tac duoc tich hop. Khach hang gui tin nhan/binh luan/email, he thong tao hoac cap nhat hoi thoai, gan kenh tuong tac va dua vao danh sach cho xu ly. Sau do he thong ho tro phan cong thu cong hoac phan cong tu dong theo quy tac. Nhan vien nhan hoi thoai, xem lich su, tra loi, gan nhan, them ghi chu noi bo, cap nhat thong tin lien he va thay doi trang thai xu ly.
+
+Vong doi hoi thoai co cac trang thai nghiep vu chinh: Mo, Da duoc giai quyet, Cho giai quyet, Tam dung va Tat ca. Ngoai trang thai xu ly, hoi thoai con co trang thai phan cong: Cua toi, Chua phan cong va Tat ca. Day la hai truc phan loai quan trong: mot truc cho tinh trang cong viec, mot truc cho nguoi/nhom phu trach. BA nen tach ro hai khai niem nay khi viet user story hoac mapping quy trinh.
+
+Dong nghiep vu tong quat:
+
+1. Khach hang phat sinh tuong tac tren kenh.
+2. He thong ghi nhan thanh hoi thoai va gan nguon kenh.
+3. Hoi thoai duoc dua vao queue theo trang thai, loai hoi thoai, kenh va nhan.
+4. He thong hoac giam sat vien phan cong hoi thoai cho nhan vien/nhom.
+5. Nhan vien xu ly: tra loi, su dung tin nhan mau, gan nhan, them note, cap nhat thong tin lien he.
+6. SLA va automation theo doi qua trinh phan hoi/giai quyet.
+7. Hoi thoai duoc tam dung, cho giai quyet hoac hoan thanh.
+8. Du lieu duoc tong hop vao bao cao theo nhieu chieu: nhan vien, kenh, nhom, nhan, SLA, CSAT va hieu suat.
+
+Diem can luu y voi BA: mChat khong chi la cong cu chat. No ket hop CRM nhe, ticketing, workforce routing, knowledge/canned response, automation va analytics.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 3 - Module Conversations: trung tam xu ly hoi thoai
+
+Conversations la module trong tam cua he thong. Man hinh duoc chia thanh cac vung: menu dieu huong trai, danh sach bo loc/nhom/kenh/nhan, danh sach hoi thoai, khung noi dung hoi thoai va panel chi tiet. Nguoi dung co the truy cap "Tat ca cuoc hoi thoai", "Nhac toi", nhom lam viec, loai hoi thoai, kenh tuong tac va cac nhan da tao.
+
+Cac bo loc co san gom: Tat ca cuoc hoi thoai, Nhac toi, Thu muc/bo loc tuy chinh, Nhom, Loai hoi thoai, Kenh tuong tac va Nhan. Loai hoi thoai duoc chia thanh Tin nhan, Email va Binh luan. Trang thai hoi thoai co Mo, Da duoc giai quyet, Cho giai quyet, Tam dung, Tat ca. Trang thai phan cong gom Cua toi, Chua phan cong, Tat ca. Nguoi dung cung co o tim kiem tin nhan trong hoi thoai, ho tro tra cuu noi dung da trao doi.
+
+Trong khung hoi thoai, nhan vien co cac chuc nang tra loi khach hang, tao luu y rieng/noi bo, dinh kem file va gui tin nhan. O nhap lieu co goi y su dung "/" de chon cau tra loi soan truoc, phu hop voi nghiep vu CSKH can cau tra loi mau, thong diep chuan hoac thong tin lap lai. Nut Gui chi kha dung khi co noi dung hop le, giup han che thao tac gui rong.
+
+Panel chi tiet hoi thoai gom thong tin khach hang, tinh trang san sang, hanh dong hoi thoai, nhan vien duoc phan cong, nhom duoc phan cong, nhan hoi thoai, thong tin hoi thoai, thuoc tinh lien he va hoi thoai truoc do. Cac muc nay giup nhan vien co du boi canh truoc khi tra loi, dong thoi giup giam sat vien kiem soat chat luong xu ly.
+
+Ve nghiep vu, module Conversations dap ung cac nhu cau sau:
+
+- Tiep nhan va gom hoi thoai tu nhieu kenh ve mot noi.
+- Loc hoi thoai theo trang thai, kenh, loai, nhan, nhom va phan cong.
+- Xu ly hoi thoai bang tra loi truc tiep, ghi chu rieng, file dinh kem va tin nhan mau.
+- Cap nhat nguoi/nhom phu trach de dieu phoi cong viec.
+- Gan nhan de phan loai, uu tien, theo doi chien dich hoac nhom van de.
+- Xem lich su hoi thoai truoc do de giu tinh lien tuc khi cham soc khach.
+
+BA nen mo ta module nay nhu "workspace chinh cua agent". Moi thay doi lon ve quy trinh CSKH se tac dong truc tiep den Conversations.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 4 - Module Contacts/Khach hang: quan ly danh ba va ho so lien he
+
+Contacts la module quan ly danh sach khach hang/lien he. Man hinh danh sach hien thi cac cot nhu STT, Ho ten, So dien thoai, Email, Dia chi, Hoat dong gan nhat va Thao tac. He thong co phan trang, tuy chon so ban ghi moi trang va cac o tim kiem/loc theo cot. Day la lop du lieu khach hang dung chung cho hoi thoai va cac nghiep vu cham soc tiep theo.
+
+Theo tai lieu huong dan noi bo, module Contacts co cac nhom chuc nang chinh: them lien lac moi, xoa lien lac, nhap lien lac bang file CSV, xem chi tiet lien lac, bat dau tin nhan moi voi khach hang va chinh sua thong tin lien lac. Khi them moi, cac truong co dau bat buoc can duoc nhap truoc khi gui. Khi xoa, he thong yeu cau xac nhan bang cach go ten khach hang truoc khi xoa vinh vien. Day la co che giam rui ro xoa nham.
+
+Tinh nang nhap lien lac bang CSV co y nghia quan trong voi van hanh. Doanh nghiep co the dua danh sach khach hang co san vao he thong thay vi tao tung ban ghi. BA can lam ro dinh dang file CSV, cac cot bat buoc, logic xu ly trung lap, thong bao loi import va quyen nao duoc phep import.
+
+Tai man hinh chi tiet lien he, nguoi dung co the xem thong tin khach, lich su hoat dong, cac hoi thoai lien quan va co the bat dau mot tin nhan moi. Tinh nang "Tin nhan moi" cho phep chon hop thu den/kenh tuong tac, tu do khoi tao hoi thoai voi khach qua kenh phu hop. Dieu nay bien Contacts thanh diem bat dau cho cham soc chu dong, khong chi la noi tra cuu du lieu.
+
+Gia tri nghiep vu cua Contacts:
+
+- Luu tru va tra cuu ho so khach hang tap trung.
+- Ho tro agent nhan dien khach, xem lich su va boi canh truoc khi phan hoi.
+- Cho phep cap nhat thong tin khach hang trong qua trinh tuong tac.
+- Ho tro import danh sach khach hang hang loat.
+- Ket noi voi custom attributes de ghi nhan thong tin thuc te nhu VIP, goi dang ky, trang thai don hang hoac cac dau hieu cham soc dac biet.
+
+BA nen xem Contacts nhu phan CRM co ban cua he thong. Cac entity lien quan gom Contact, Contact Attribute, Conversation, Inbox/Channel va Agent.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 5 - Module kenh tuong tac/Inboxes: hop nhat nguon hoi thoai da kenh
+
+Kien truc mChat dua tren khong gian "Kenh tuong tac" hay "Inbox". Khi mot website, trang Facebook, Zalo OA hoac kenh chat duoc ket noi vao he thong, no tro thanh mot kenh tuong tac. Tat ca hoi thoai tu cac kenh nay duoc dua ve Conversations, dong thoi nguoi dung co the loc hoi thoai rieng theo tung kenh.
+
+Man hinh Settings - Kenh tuong tac hien thi cac kenh hien co, gom cac kenh loai Facebook va Zalo, dong thoi co chuc nang Them Kenh tuong tac. Tai lieu noi bo mo ta cac dang tich hop chinh: Zalo, Website va Facebook.
+
+Voi Website, nguoi dung chon kenh Website, nhap thong tin website can ket noi, tao kenh tuong tac, them agent phu trach, sau do he thong sinh mot doan script de gan vao ma nguon website. Script nay la cau noi de widget/chat cua website gui hoi thoai ve VSS Chat. Sau khi gan script, nguoi dung co the tiep tuc cau hinh tuy chon hoac hoan tat lien ket.
+
+Voi Facebook, nguoi dung can co quyen voi trang Facebook, thuc hien ket noi qua Facebook Developers/Continue with Facebook, chon trang muon ket noi va them agent cho kenh. Mot kenh Facebook co the gan nhieu agent. Cac binh luan/tin nhan phat sinh tu fanpage sau do duoc dua ve he thong de quan ly tap trung.
+
+Voi Zalo, nguoi dung can co Zalo Official Account. He thong cho phep chon bieu tuong Zalo, ket noi Zalo OA va chon tai khoan OA co san. Sau khi ket noi, Zalo tro thanh mot nguon hoi thoai trong mChat.
+
+Y nghia nghiep vu:
+
+- MChat khong phu thuoc vao mot kenh don le ma gom nhieu nguon khach hang.
+- Moi kenh co the gan agent/nha cung cap xu ly rieng.
+- Bao cao co the tach theo hop thu/kenh, giup danh gia chat luong tung nguon.
+- Kenh la dieu kien quan trong cho routing, campaign va phan tich hieu suat.
+
+BA can ghi nhan yeu cau phi chuc nang cho module nay: bao mat ket noi, quan ly token/tai khoan kenh, trang thai ket noi, log loi tich hop, quyen them/xoa kenh va kha nang phuc hoi khi kenh mat ket noi.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 6 - Campaigns, Livestream va Binh luan tu dong
+
+Module Campaigns dung de tao chien dich tuong tac voi khach hang. Man hinh co hai tab: Dang dien ra va Mot lan. Chien dich dang dien ra duoc thiet ke cho cac thong diep hien thi lap lai hoac kich hoat theo dieu kien tren kenh website. Khi tao chien dich, nguoi dung nhap tieu de, thong diep, chon hop thu den/kenh tuong tac, nhap URL hop le, cau hinh thoi gian hien thi tren trang, chon co van hanh chien dich hay khong va co chi kich hoat trong gio lam viec hay khong. Chien dich mot lan phuc vu nhu cau gui/khai thac thong diep theo dot, khong lap lai lien tuc nhu ongoing campaign.
+
+Ve BA, Campaigns can duoc mo ta nhu cong cu marketing/engagement nam trong he thong cham soc khach hang. No khac Conversations o cho Conversations la noi xu ly hoi thoai phat sinh, con Campaigns la noi chu dong tao kich ban tiep can hoac thong diep hien thi.
+
+Settings - Live stream cho thay he thong co quan ly kich ban livestream. Danh sach kich ban gom ten kich ban, trang ap dung, trang thai, kich hoat va hanh dong. Tai lieu noi bo mo ta quy trinh ket noi kich ban livestream voi Facebook, phat truc tiep tu fanpage, sau do tao/chinh sua kich ban trong mChat. Nguoi dung chon trang Facebook da ket noi, dat ten kich ban, cau hinh noi dung va kich hoat de phuc vu tuong tac livestream.
+
+Settings - Binh luan tu dong cho thay module tao kich ban tu dong cho binh luan, thuong gan voi cac chien dich fanpage/minigame/san pham. Danh sach co ten kich ban, trang ap dung, trang thai Dang su dung/Chua su dung, kich hoat va hanh dong. Chuc nang nay giup marketing/CSKH tu dong phan hoi hoac xu ly binh luan theo kich ban, dac biet trong cac dot co luu luong comment lon.
+
+Gia tri nghiep vu cua nhom module nay:
+
+- Tao chu dong cac thong diep ban hang/cham soc.
+- Giam tai cho agent trong cac chien dich co luong tuong tac cao.
+- Ket noi hoat dong social commerce, livestream va CSKH.
+- Cho phep theo doi trang thai kich ban va kich hoat/ngung kich hoat.
+- Tao du lieu dau vao cho bao cao livestream va hieu suat chien dich.
+
+BA can lam ro them dieu kien kich hoat, do uu tien giua nhieu kich ban, cach xu ly trung lap comment, audit log khi bat/tat kich ban va quyen nao duoc thao tac voi campaign/livestream/auto comment.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 7 - Settings: nguoi dung, nhom, nhan, tin nhan mau va thuoc tinh tuy chinh
+
+Settings la module cau hinh van hanh. Cac muc quan trong gom Nguoi dung, Nhom, Kenh tuong tac, Nhan, Tin nhan mau, Live stream, Binh luan tu dong, Quy tac phan phoi, Thuoc tinh tuy chinh, Cau hinh tu dong, Thiet lap SLA, Kich hoat nguoi dung va Cai dat tai khoan.
+
+Nguoi dung: man hinh hien thi danh sach nhan su voi ma nhan vien, ho ten, chuc danh, vai tro, kenh tuong tac, phong ban, nhom nhan vien, trang thai va thao tac. He thong mo ta quyen vai tro: Agent xem hoi thoai cua minh va danh sach khach hang; Supervisor xem/tra loi hoi thoai cua nhan vien duoi quyen va xem bao cao/cai dat; Admin co toan quyen. Chuc nang them, sua, xoa agent va gui huong dan dat lai mat khau duoc manual mo ta ro.
+
+Nhom: module Nhom/Phong ban cho phep to chuc nhan vien theo trach nhiem. Nhan vien co the thuoc nhieu nhom. Hoi thoai co the duoc gan cho nhom, giup dieu phoi theo chuyen mon, phong ban hoac kenh kinh doanh. Chuc nang gom tao nhom moi, them agent vao nhom, chinh sua nhom va xoa nhom co xac nhan.
+
+Nhan: nhan dung de phan loai va uu tien hoi thoai. Moi nhan co ten, mo ta, mau sac va hanh dong. Nhan co the dung de loc hoi thoai tren sidebar, tao quy trinh xu ly noi bo va thong ke bao cao theo nhan. Cac quy tac ten nhan can duoc kiem soat: toi thieu 2 ky tu, cho phep chu cai, chu so, dau gach ngang va gach duoi.
+
+Tin nhan mau: module nay luu cac cau tra loi lap lai voi ma ngan va noi dung. Trong khung chat, agent co the go "/" de goi cau tra loi soan truoc. Chuc nang gom tao, sua, xoa tin nhan mau. Day la cong cu quan trong de chuan hoa thong diep, giam thoi gian tra loi va giam sai lech thong tin.
+
+Thuoc tinh tuy chinh: cho phep mo rong du lieu lien he/hoi thoai bang cac truong cau hinh. Cac loai du lieu quan sat duoc gom Text, Number, Link, Date, List va Checkbox. Vi du nghiep vu: khach VIP, goi dang ky, trang thai don hang, da mua lan dau hay chua. Thuoc tinh co ten hien thi, mo ta, loai va khoa. Thuoc tinh nay co the dung trong panel khach hang, routing va phan tich.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 8 - Automation, quy tac phan phoi va SLA
+
+Cau hinh tu dong giup giam thao tac thu cong va dam bao quy trinh duoc xu ly nhat quan. Tai lieu noi bo mo ta ba loai automation: tu dong gui tin nhan chao khach hang khi co tin nhan dau tien tu khach moi; tu dong tam dung hoi thoai toi phan hoi tiep theo cua khach hang khi khach khong phan hoi trong khoang thoi gian cau hinh; tu dong hoan thanh hoi thoai khi hoi thoai ket thuc hoac khong con hoat dong. Man hinh thuc te the hien bang cau hinh che do tu dong, thoi gian, noi dung tin nhan tu dong, trang thai va nut cap nhat cai dat.
+
+Quy tac phan phoi la module quan trong de dieu phoi cong viec. Man hinh cho thay cac nhom cau hinh: gio lam viec, uu tien phan phoi hoi thoai, uu tien cho nhan vien tiep nhan cuoi cung cua khach hang, uu tien theo thuoc tinh lien he, uu tien toi phong ban/nhom, quy tac phan phoi toi nhan vien, gioi han so hoi thoai theo loai, giai phap khi khong phan phoi duoc va tu dong phan phoi lai.
+
+Cac chien luoc phan phoi quan sat duoc gom: phan phoi cho nhan vien co so hoi thoai Mo it nhat, uu tien nhan vien co thoi gian tra loi nhanh va phan phoi can bang cong viec giua cac nhan vien. He thong cung co gioi han so hoi thoai cho tung loai Tin nhan, Binh luan, Email. Khi khong phan phoi duoc, he thong co the khong dung ho tro tu dong, gui tin nhan tu dong hoac dua hoi thoai vao danh sach cho. Ngoai ra co tu dong phan phoi lai khi nhan vien khong phan hoi khach hang, khi nhan vien offline va khi co nhan vien moi online.
+
+SLA duoc cau hinh rieng cho ba loai hoi thoai: Tin nhan, Binh luan va Email. Moi loai co ba giai doan: Tiep nhan yeu cau, Giai dap thong tin va Hoan thanh cuoc hoi thoai. SLA Tiep nhan yeu cau tinh tu khi hoi thoai duoc phan phoi den luc nhan vien phan hoi dau tien. SLA Giai dap thong tin tinh cho cac lan phan hoi tiep theo sau moi tin nhan cua khach. SLA Hoan thanh hoi thoai tinh tu khi phan phoi den khi dong/hoan thanh hoi thoai. He thong co canh bao vi pham SLA trong khung chat, giup agent biet can uu tien xu ly.
+
+BA nen coi routing, automation va SLA la bo ba dieu hanh van hanh. Ba module nay quyet dinh ai xu ly, xu ly trong bao lau, khi nao he thong can tu dong can thiep va khi nao can canh bao.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 9 - Reports: do luong hieu qua va giam sat van hanh
+
+Reports gom cac nhom bao cao: Tong quan, Muc do hai long, Nhan vien, Nhan, Hop thu den, Nhom, SLA, Live stream va Nhan vien/Employee performance. Cac bao cao co the loc theo thoi gian nhu Hom nay, 7 ngay cuoi, 30 ngay cuoi, 3 thang vua qua, 6 thang vua qua, Nam ngoai va pham vi ngay tuy chinh. Nhieu man hinh co chuc nang tai xuong bao cao.
+
+Bao cao Tong quan hien cac chi so chinh: tong so hoi thoai, tong tin nhan nhan duoc, tong tin nhan gui di, thoi gian phan hoi dau tien trung binh, thoi gian giai quyet trung binh va so luong giai quyet. Day la dashboard cap quan ly de danh gia tai luong cong viec va toc do xu ly chung.
+
+Bao cao CSAT do muc do hai long cua khach hang. Cac thong tin gom tong so phan hoi, muc do hai long, ty le phan hoi, lien he, nhan vien duoc phan cong, danh gia va binh luan phan hoi. Module nay can du lieu danh gia tu khach hang va phu hop voi nhom chat luong dich vu.
+
+Bao cao Nhan vien cho phep chon agent va xem so hoi thoai, tin nhan gui di, thoi gian phan hoi dau tien, thoi gian giai quyet va so luong giai quyet theo nhan vien. Bao cao Nhan cho phep theo doi ket qua theo tung nhan hoi thoai. Bao cao Hop thu den cho biet hieu qua tung kenh tuong tac. Bao cao Nhom tong hop theo phong ban/nhom xu ly.
+
+Bao cao SLA do so hoi thoai vi pham hoac cham tai cac giai doan Tiep nhan yeu cau, Giai dap thong tin va Hoan thanh hoi thoai. Bao cao Live stream phuc vu theo doi ket qua kich ban/live social. Bao cao Hieu suat nhan vien dua tren hoi thoai co bang theo ngay, gom so hoi thoai binh luan, ty le hoi thoai binh luan da tra loi, hoi thoai tin nhan, ty le hoi thoai tin nhan da tra loi, so khach tiep nhan va so khach co so dien thoai.
+
+Gia tri cho BA:
+
+- Xac dinh KPI van hanh: speed, volume, resolution, CSAT, SLA.
+- Xac dinh cac chieu phan tich: thoi gian, agent, nhom, kenh, nhan, live stream.
+- Kiem tra du lieu dau vao cho bao cao: hoi thoai, tin nhan, trang thai, phan cong, nhan, danh gia, SLA.
+- Lam ro yeu cau export: dinh dang, quyen tai, cot du lieu, bo loc va thoi diem cap nhat.
+
+<div style="page-break-after: always;"></div>
+
+## Trang 10 - Notifications, Questions/User manual, account settings va ghi chu BA
+
+Notifications hien thi thong bao he thong, co dem so thong bao va chuc nang danh dau tat ca da xong. Module nay phu hop voi cac su kien can agent/giam sat vien chu y: duoc nhac toi, hoi thoai duoc gan, cap nhat trang thai, canh bao SLA hoac cac su kien he thong. BA can lam ro cac loai notification, muc do uu tien, ai nhan, khi nao tao va khi nao duoc danh dau da xu ly.
+
+Questions/User manual la module huong dan su dung noi bo, ho tro ngon ngu Tieng Viet va English. Cac muc huong dan gom gioi thieu, dang ky/dang nhap/dang xuat/quen mat khau, khach hang, cuoc hoi thoai, bao cao, chien dich, agent, nhom, tich hop kenh tuong tac, Zalo, Web, Facebook, nhan, tin nhan mau, livestream, thuoc tinh tuy chinh, automation, SLA, cai dat tai khoan, dieu khoan/chinh sach va chinh sach bao mat. Day la nguon tri thuc san pham quan trong de BA doi chieu voi hanh vi thuc te cua man hinh.
+
+Cai dat tai khoan cho phep cau hinh ten cong ty, ngon ngu trang web, so ngay tu dong giai quyet hoi thoai neu khong co hoat dong, xem/sao chep ID tai khoan phuc vu tich hop API va xem phien ban he thong. Trong khao sat, he thong hien version v2.2.1. ID tai khoan la gia tri co dinh, khong nen cho phep sua, chi nen sao chep khi can tich hop.
+
+Tong hop module chinh:
+
+| Module | Muc dich | Tinh nang noi bat |
+| --- | --- | --- |
+| Conversations | Xu ly hoi thoai da kenh | Bo loc, trang thai, phan cong, tra loi, note rieng, file, nhan, lich su |
+| Contacts | Quan ly khach hang | Danh sach, tim kiem, them/sua/xoa, import CSV, chi tiet, tin nhan moi |
+| Reports | Giam sat hieu qua | Tong quan, CSAT, agent, nhan, inbox, nhom, SLA, live stream, employee performance |
+| Campaigns | Chu dong tuong tac | Ongoing campaign, one-off campaign, dieu kien URL/gio lam viec |
+| Settings | Cau hinh van hanh | Users, teams, inboxes, labels, canned responses, automation, SLA, routing |
+| Questions | Huong dan noi bo | Manual song ngu, quy trinh thao tac, chinh sach |
+| Notifications | Canh bao/thong bao | Danh sach thong bao, danh dau da xu ly |
+
+Khuyen nghi cho BA khi tiep tuc phan tich:
+
+1. Ve so do quy trinh end-to-end tu khach hang phat sinh hoi thoai den khi giai quyet.
+2. Lap ma tran role-permission cho Agent, Supervisor, Admin va cac role noi bo Viettel neu co.
+3. Chuan hoa tu dien du lieu: Contact, Conversation, Message, Inbox, Channel, Label, Team, Agent, SLA, Campaign, Script, Attribute.
+4. Xac dinh ro hanh vi tu dong: routing, auto message, auto pause, auto close, reassign khi offline/khong phan hoi.
+5. Kiem tra cac diem can audit log: xoa contact, sua cau hinh, bat/tat campaign, sua SLA, kich hoat/huy kich hoat nguoi dung.
+6. Tach yeu cau bao cao thanh chi so, bo loc, quyen xem, export va nguon du lieu.
+
+Ket luan: mChat/VSS Chat Platform la he thong cham soc khach hang da kenh co day du cac thanh phan chinh cua mot contact center nhe: hoi thoai tap trung, CRM lien he, phan cong nhan su, tu dong hoa, SLA, chien dich, social/live support va bao cao quan tri. Trong pham vi khao sat, he thong da co cau truc module ro rang va phu hop de BA tiep tuc chi tiet hoa thanh BRD/SRS, use case, user story va acceptance criteria.

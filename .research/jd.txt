@@ -1,0 +1,300 @@
+Senior Business Analyst
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KRRLTD58');
+window.__APP_STATE__ = {
+      currentLanguageId: "00000O",
+      currentSeoCode: "vi"
+    };
+    window.__I18N__ = {"TAG.ERROR.NOT_FOUND":"Kh\u00F4ng t\u00ECm th\u1EA5y tag.","FORM.FIELD.ERROR.REQUIRED":"Tr\u01B0\u1EDDng n\u00E0y b\u1EAFt bu\u1ED9c.","FORM.ERROR.FORMDEF_ID_REQUIRED":"Thi\u1EBFu m\u00E3 \u0111\u1ECBnh ngh\u0129a bi\u1EC3u m\u1EABu.","ARTICLE.ERROR.ID_REQUIRED":"Thi\u1EBFu m\u00E3 b\u00E0i vi\u1EBFt.","NEWSLETTER.MSG.UNSUBSCRIBE_SUCCESS":"H\u1EE7y \u0111\u0103ng k\u00FD nh\u1EADn tin th\u00E0nh c\u00F4ng.","FORM.ERROR.CAPTCHA":"Captcha kh\u00F4ng h\u1EE3p l\u1EC7.","FILE.ERROR.TYPE_INVALID":"\u0110\u1ECBnh d\u1EA1ng file kh\u00F4ng h\u1EE3p l\u1EC7.","FORM.FIELD.ERROR.AUTH_REQUIRED":"Y\u00EAu c\u1EA7u \u0111\u0103ng nh\u1EADp.","FORM.ERROR.DATA_REQUIRED":"Vui l\u00F2ng nh\u1EADp d\u1EEF li\u1EC7u bi\u1EC3u m\u1EABu.","FORM.FIELD.ERROR.MIN_LENGTH":"T\u1ED1i thi\u1EC3u {min} k\u00FD t\u1EF1.","FORM.FIELD.ERROR.UNKNOWN_FIELD":"Tr\u01B0\u1EDDng kh\u00F4ng x\u00E1c \u0111\u1ECBnh.","NEWSLETTER.ERROR.CAPTCHA":"Captcha kh\u00F4ng h\u1EE3p l\u1EC7.","NEWSLETTER.MSG.RESUBSCRIBE_SUCCESS":"\u0110\u0103ng k\u00FD l\u1EA1i th\u00E0nh c\u00F4ng.","ERROR.UNAUTHORIZED":"B\u1EA1n kh\u00F4ng c\u00F3 quy\u1EC1n th\u1EF1c hi\u1EC7n thao t\u00E1c n\u00E0y.","CATEGORY.ERROR.NOT_FOUND":"Kh\u00F4ng t\u00ECm th\u1EA5y chuy\u00EAn m\u1EE5c.","TAG.ERROR.ID_REQUIRED":"Thi\u1EBFu m\u00E3 tag.","FILE.ERROR.UPLOAD_FAILED":"T\u1EA3i file th\u1EA5t b\u1EA1i. Vui l\u00F2ng th\u1EED l\u1EA1i.","ERROR.NETWORK.GENERIC":"L\u1ED7i k\u1EBFt n\u1ED1i m\u1EA1ng. Vui l\u00F2ng ki\u1EC3m tra v\u00E0 th\u1EED l\u1EA1i.","NEWSLETTER.PORTAL.PRIVACY_NOTE":"Ch\u00FAng t\u00F4i t\u00F4n tr\u1ECDng h\u1ED9p th\u01B0 c\u1EE7a b\u1EA1n. C\u00F3 th\u1EC3 h\u1EE7y \u0111\u0103ng k\u00FD b\u1EA5t c\u1EE9 l\u00FAc n\u00E0o.","TAG.ERROR.GET_FAILED":"Kh\u00F4ng th\u1EC3 l\u1EA5y th\u00F4ng tin tag.","NEWSLETTER.PORTAL.UNSUBSCRIBE_SUCCESS":"H\u1EE7y \u0111\u0103ng k\u00FD nh\u1EADn tin th\u00E0nh c\u00F4ng.","NEWSLETTER.ERROR.WEBSITE":"Kh\u00F4ng x\u00E1c \u0111\u1ECBnh \u0111\u01B0\u1EE3c website.","TOPIC.ERROR.PARENT_TRANSLATION_GROUP_ID_REQUIRED":"Vui l\u00F2ng cung c\u1EA5p \u0111\u1ECBnh danh hub.","NEWSLETTER.PORTAL.SUBSCRIBE_BUTTON":"\u0110\u0103ng k\u00FD","FORM.FIELD.ERROR.INVALID_OPTION":"L\u1EF1a ch\u1ECDn kh\u00F4ng h\u1EE3p l\u1EC7.","FORM.ERROR.ID_REQUIRED":"Thi\u1EBFu m\u00E3 bi\u1EC3u m\u1EABu.","NEWSLETTER.ERROR.ALREADY_EXISTS":"Email \u0111\u00E3 \u0111\u0103ng k\u00FD nh\u1EADn tin.","FORM.ERROR.SUBMIT_FAILED":"G\u1EEDi bi\u1EC3u m\u1EABu th\u1EA5t b\u1EA1i. Vui l\u00F2ng th\u1EED l\u1EA1i.","FORM.FIELD.ERROR.INVALID_DATE":"Ng\u00E0y kh\u00F4ng h\u1EE3p l\u1EC7.","NEWSLETTER.MSG.SUBSCRIBE_SUCCESS":"\u0110\u0103ng k\u00FD nh\u1EADn tin th\u00E0nh c\u00F4ng.","ARTICLE.ERROR.BUILD_FAILED":"Kh\u00F4ng th\u1EC3 t\u1EA3i danh s\u00E1ch b\u00E0i vi\u1EBFt.","FORM.FIELD.ERROR.MAX_LENGTH":"T\u1ED1i \u0111a {max} k\u00FD t\u1EF1.","TOPIC.ERROR.NOT_FOUND":"Kh\u00F4ng t\u00ECm th\u1EA5y ch\u1EE7 \u0111\u1EC1.","ARTICLE.ERROR.NOT_FOUND":"Kh\u00F4ng t\u00ECm th\u1EA5y b\u00E0i vi\u1EBFt.","NEWSLETTER.PORTAL.TITLE":"\u0110\u0103ng k\u00FD nh\u1EADn b\u1EA3n tin","CATEGORY.ERROR.ID_REQUIRED":"Thi\u1EBFu m\u00E3 chuy\u00EAn m\u1EE5c.","TOPIC.ERROR.BUILD_FAILED":"Kh\u00F4ng th\u1EC3 t\u1EA3i danh s\u00E1ch ch\u1EE7 \u0111\u1EC1.","NEWSLETTER.ERROR.EMAIL_INVALID":"Email kh\u00F4ng h\u1EE3p l\u1EC7.","NEWSLETTER.PORTAL.EMAIL_PLACEHOLDER":"Nh\u1EADp email c\u1EE7a b\u1EA1n","FORM.ERROR.NOT_FOUND":"Kh\u00F4ng t\u00ECm th\u1EA5y bi\u1EC3u m\u1EABu.","NEWSLETTER.PORTAL.RESUBSCRIBE_SUCCESS":"\u0110\u0103ng k\u00FD l\u1EA1i th\u00E0nh c\u00F4ng.","FILE.ERROR.SIZE_EXCEEDED":"File v\u01B0\u1EE3t qu\u00E1 dung l\u01B0\u1EE3ng cho ph\u00E9p ({max}MB).","NEWSLETTER.ERROR.GENERIC":"Kh\u00F4ng th\u1EC3 \u0111\u0103ng k\u00FD nh\u1EADn tin. Vui l\u00F2ng th\u1EED l\u1EA1i.","TAG.ERROR.BUILD_FAILED":"Kh\u00F4ng th\u1EC3 t\u1EA3i danh s\u00E1ch tag.","TOPIC.ERROR.ID_REQUIRED":"Thi\u1EBFu m\u00E3 ch\u1EE7 \u0111\u1EC1.","NEWSLETTER.PORTAL.DESCRIPTION":"Nh\u1EADn c\u00E1c b\u00E0i vi\u1EBFt m\u1EDBi nh\u1EA5t g\u1EEDi th\u1EB3ng v\u00E0o h\u1ED9p th\u01B0 c\u1EE7a b\u1EA1n.","FORM.SUBMIT_SUCCESS":"G\u1EEDi bi\u1EC3u m\u1EABu th\u00E0nh c\u00F4ng.","NEWSLETTER.ERROR.LANGUAGE":"Ng\u00F4n ng\u1EEF kh\u00F4ng h\u1EE3p l\u1EC7.","FORM.FIELD.ERROR.INVALID_EMAIL":"Email kh\u00F4ng h\u1EE3p l\u1EC7.","NEWSLETTER.ERROR.INVALID_LINK":"Li\u00EAn k\u1EBFt kh\u00F4ng h\u1EE3p l\u1EC7 ho\u1EB7c \u0111\u00E3 h\u1EBFt h\u1EA1n.","ERROR.SYSTEM.GENERIC":"\u0110\u00E3 c\u00F3 l\u1ED7i x\u1EA3y ra. Vui l\u00F2ng th\u1EED l\u1EA1i sau.","CATEGORY.ERROR.GET_FAILED":"Kh\u00F4ng th\u1EC3 l\u1EA5y th\u00F4ng tin chuy\u00EAn m\u1EE5c.","CATEGORY.ERROR.BUILD_FAILED":"Kh\u00F4ng th\u1EC3 t\u1EA3i danh s\u00E1ch chuy\u00EAn m\u1EE5c.","FORM.FIELD.ERROR.INVALID_NUMBER":"S\u1ED1 kh\u00F4ng h\u1EE3p l\u1EC7."};
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d2f1ac747f9b77123630b2237b_CA89BF13ED4E1F02BCFE40C5CA5CEEFC.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d2f55b74a99c5e195a4ee6f532_2E1BC31D8BD8752F784AAF316406F4D3.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d2f7e671fbbf8b6426688eba03_47758EEB13B1EC9F4A46153149FECDED.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d2fa3070b3a0786fa23fa10e5b_EA17E7664C5AD33C28EB0F3A7B23399B.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d3044573518a45d1a663992e04_8009EFBAE27C3AFB63E4955F05F55EC6.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d305fe7b0d85fe8ca8d33c7372_90D5010E490333F315DFE871279684C8.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d307f57326830f0ff334c9ad7a_70760795CE01180D1A27D0ADC97CC463.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d3099b7e2591c5132b798d78e1_6E658301D00DFFF27F007D2CEE38627D.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d30b4a74f4abb33bd04d4cdccb_DF17704583839268F58C613A375FCA0D.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d30d28714bb6c06eec85e8d7de_F677A4F534464AF8E0A9B283936553DD.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d30e667c0e9db1710d6b152c9a_D00177163F3AC66A10754628638EAA15.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d30f74716fbcf74a5f8bb86aff_B3147A60E11658BD6493C90205363E3F.ttf&site=000006') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://vindynamics.net/api/v2/file/view?fileId=mwp-prod%2Fpublic%2F2026%2F08%2F03%2F019fc7d310bf71f8a0b6ed6dd28c6cdc_DE70636A33927A2739C5FDE51ED4A212.ttf&site=000006') format('truetype');
+}
+Liên hệ
+Giải pháp Robot
+Robot
+Động cơ
+Bàn tay
+Data Factory
+Tuyển dụng
+Tin tức
+Về chúng tôi
+VI
+VI
+Liên hệ
+Menu
+Liên hệ
+01
+Giải pháp Robot
+Robot
+Động cơ
+Bàn tay
+02
+Data Factory
+03
+Tuyển dụng
+04
+Tin tức
+05
+Về chúng tôi
+VI
+Tuyển dụng
+Senior Business Analyst
+Hanoi
+Full-time
+Senior Business Analyst
+Bộ phận: Robotics Solutions
+ABOUT VINDYNAMICS
+At VinDynamics, we design safe, affordable, and intelligent humanoid robots to assist in everyday life — robots for everyone. Backed by Vingroup, Vietnam’s leading technology conglomerate, we are on a mission to make advanced robotics accessible, reliable, and beneficial for billions of people worldwide. By combining cutting-edge AI, world-class engineering, and human-centered design, we aim to seamlessly integrate robots into daily life — enhancing safety, productivity, and happiness at home and beyond.
+KEY RESPONSIBILITIES:
+1. Requirement Discovery & Analysis
+Work with Product Owner, Market Development, and customers to understand business problems, use cases, operating conditions, and expected outcomes.
+Elicit, clarify, and document requirements; analyze current and target workflows;
+identify
+gaps, risks, and impact on robot behavior and system integration.
+Manage assumptions, dependencies, constraints, and known limitations.
+2. Requirement Specification for Development
+Write user stories, use cases, workflows, and functional/non-functional requirements with clear, measurable acceptance criteria.
+Specify API/system integration, data flows, state transitions, error handling, fallback behavior, and edge cases (e.g., network loss, sensor failure, incorrect AI response).
+Define evaluation criteria for AI features (e.g., accuracy, latency, behavior boundaries) together with Tech Leads.
+3. Day-to-day Collaboration with the Development Team
+Participate in backlog refinement, sprint planning, daily stand-ups, and sprint reviews; keep stories ready for development ahead of each sprint.
+Answer developers’ questions promptly and align requirement interpretation with Tech Leads and R&D.
+Review demos and builds against acceptance criteria and report deviations early.
+Support QC by reviewing test cases against requirements and clarifying expected behavior.
+4. Change Management & Traceability
+Manage requirement changes: assess impact on scope, timeline, and dependencies, and escalate to Product Owner/PMO for decision.
+Maintain requirement documentation and end-to-end traceability (requirement → story → test case → result).
+Keep one consistent requirement baseline shared across Development, QC, Deployment, and PMO.
+5. UAT, Deployment Support & Field Feedback
+Support UAT, onsite testing, commissioning, and customer acceptance when requirement or product expertise is needed.
+Analyze customer and field feedback; classify into defects, requirement gaps, AI limitations, and deployment issues; convert them into backlog items with clear acceptance criteria.
+Recommend priorities to the Product Owner and confirm re-validation after fixes.
+6. Cross-functional Collaboration
+Partner with Market Development on customer discovery; Market Development owns opportunity and customer relationship, Product Owner owns priority and release decisions, Senior BA owns requirement clarity and quality.
+Partner closely with Tech Leads and developers on feasibility and trade-offs; Tech Lead owns HOW (architecture and technical solution).
+Align QC, Deployment, Robot Operations, and PMO around the same requirement baseline.
+QUALIFICATIONS
+Relevant Education & Experience
+Bachelor’s degree or above in Computer Science, AI, Robotics, Mechatronics, Automation, Software Engineering, Information Systems, or related fields.
+4+ years of experience
+as a Business Analyst, Technical BA, or System Analyst, including 2+ years on systems with complex integration (hardware–software, IoT, AI, or cloud platforms).
+Proven experience working daily with developers in Agile/Scrum teams: backlog refinement, sprint planning, sprint review, and requirement clarification during the sprint.
+Ability to write clear user stories, use cases, workflows, functional and non-functional requirements, and measurable acceptance criteria (e.g., Given-When-Then).
+Skilled in process and system modeling (BPMN/UML,
+sequence
+and state diagrams) and in specifying API/integration, data flows, error handling, and edge cases.
+Hands-on with Jira, Confluence (or equivalent tools); able to read logs and write basic SQL. Good English: able to read and write technical documentation and communicate with international stakeholders.
+Preferred Qualifications
+Understanding of
+humanoid robotics, hardware–software integration, ROS/ROS2 concepts, AI Vision/VLM, LLM/Agentic AI, Conversational AI, or Human-Robot Interaction.
+Familiarity with edge/cloud architecture, logging, monitoring, configuration, or release management.
+Experience supporting UAT or deployment of robotics or AI systems in real-world
+environments, and
+defining evaluation criteria for AI features.
+Awareness of robot safety requirements and how to express them as non-functional requirements.
+Personality / Attitude
+Strong ownership of requirement quality; analytical, system thinking, and
+data-driven
+.
+Comfortable
+challenging
+unclear requirements and technical assumptions constructively; communicates clearly with both business and engineering.
+Customer-oriented, collaborative, and effective in a fast-paced technology environment.
+BENEFITS & COMPENSATIONS
+Attractive income, competitive and commensurate with individual capabilities.
+13th-month salary, gifts on public holidays and special occasions, and performance-based bonuses.
+Meal allowance, annual company trips, health insurance, and exclusive benefits within the Group’s ecosystem
+Clear career development opportunities aligned with the company’s growth, with access to training programs based on capability and job role.
+A dynamic and open working environment with diverse cultural and sports activities.
+Bạn có hứng thú với vị trí này
+Ứng tuyển ngay
+Vị trí liên quan
+Ứng tuyển Senior Business Analyst
+Họ và tên
+*
+Năm sinh
+*
+Email
+*
+Số điện thoại
+*
+Địa chỉ
+Kéo thả file vào đây hoặc
+Chọn tệp tin
+Định dạng hỗ trợ: PDF
+Dung lượng tối đa: 20MB
+0%
+Tôi đồng ý chia sẻ dữ liệu cho VinDynamics thu thập và sử dụng dữ liệu cá nhân của tôi theo
+Chính sách bảo mật
+.
+Nộp hồ sơ
+Nộp hồ sơ thành công
+Trao đổi với chuyên gia
+Để lại thông tin, chúng tôi sẽ liên hệ lại trong vòng 2 ngày làm việc.
+Liên hệ
+TechnoPark Tower, Vinhomes Ocean Park, Gia Lâm, Hà Nội
+[email protected]
+Theo dõi
+© VinDynamics 2025 - Bản quyền
+01
+Giải pháp Robot
+02
+Data Factory
+03
+Tuyển dụng
+04
+Tin tức
+Chính sách bảo mật
+Điều khoản sử dụng
+© VinDynamics 2025 - Bản quyền
+(function(){const l=document.documentElement.lang||'en',g=l.split('-')[0],s=['en','vi'];window.sdk_config={website:"vindynamics_net",currentLang:s.includes(g)?g:'en',tncList:[],tncDetail:[]}})();
+(function(){let b=[],c=[],a=!1,i=!1,p=[],o=Element.prototype.appendChild,r=Element.prototype.insertBefore,s=[];function d(n){return n.tagName==='SCRIPT'&&a&&b?.length&&n.src?(m=b.find(t=>t.source_url&&n.src.includes(t.source_url)))&&!c.some(k=>k.category==='necessary'&&k.title===m.title)?(s.push(n),n.type='text/plain',n.setAttribute('consent-data-blocked','true'),!0):!1:!1;var m}Element.prototype.appendChild=function(n,...g){return n.tagName==='SCRIPT'?i?d(n)?n:o.call(this,n,...g):(p.push({node:n,method:'appendChild',parent:this,args:g}),n):o.call(this,n,...g)};Element.prototype.insertBefore=function(n,...g){return n.tagName==='SCRIPT'?i?d(n)?n:r.call(this,n,...g):(p.push({node:n,method:'insertBefore',parent:this,args:g}),n):r.call(this,n,...g)};(async()=>{try{const n=await fetch('https://cp-api.v-app.vn/policy/v1/public/sdk/cookie-consents/vindynamics_net');if(n.ok){const g=await n.json();g?.data&&(b=g.data.block_list||[],a=g.data.auto_block||!1,c=g.data.cookies_list||[])}}catch{a=!1}i=!0;p.forEach(({node:n,method:g,parent:e,args:t})=>{d(n)||(g==='appendChild'?o.call(e,n,...t):r.call(e,n,...t))});p=[]})();window.updateCookieConsent=function(n){n&&(s.forEach(g=>{if(g.getAttribute('consent-data-blocked')==='true'){g.type='text/javascript';g.removeAttribute('consent-data-blocked');const e=document.createElement('script');g.src?e.src=g.src:e.textContent=g.textContent;g.parentNode.replaceChild(e,g)}}),s.length=0)};window.isConsentReady=()=>i})();
+Cảm ơn bạn đã gửi thông tin. Chúng tôi sẽ liên hệ lại sớm nhất.
+Gửi yêu cầu khác
+Liên hệ với chúng tôi
+Để lại thông tin, đội ngũ VinDynamics sẽ liên hệ lại trong vòng 2 ngày làm việc.
+Tên
+*
+Họ
+*
+Email công việc
+*
+Công ty
+*
+Nội dung
+Tôi đồng ý chia sẻ dữ liệu cho VinDynamics thu thập và sử dụng dữ liệu cá nhân của tôi theo
+Chính sách bảo mật
+Tiếp theo
+Chúng tôi đã nhận được thông tin của bạn.
+Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong 2 ngày làm việc.
+Chúng tôi muốn hiểu thêm về bạn.
+Quốc gia
+Vietnam
+United States
+Singapore
+Japan
+South Korea
+China
+Số điện thoại
+*
++84
+Sản phẩm quan tâm
+Chọn sản phẩm
+Gửi
+[{"field_keys":"firstname,first_name","label":"T\u00EAn","placeholder":"Trang"},{"field_keys":"lastname,last_name","label":"H\u1ECD","placeholder":"Nguy\u1EC5n"},{"field_keys":"fullname","label":"H\u1ECD v\u00E0 t\u00EAn","placeholder":"Nguy\u1EC5n V\u0103n A"},{"field_keys":"email,work_email","label":"Email","placeholder":"email@congty.com"},{"field_keys":"phone,phonenumber","label":"S\u1ED1 \u0111i\u1EC7n tho\u1EA1i","placeholder":"0987 654 321"},{"field_keys":"company","label":"C\u00F4ng ty","placeholder":"T\u00EAn c\u00F4ng ty"},{"field_keys":"message","label":"N\u1ED9i dung","placeholder":"N\u1ED9i dung b\u1EA1n mu\u1ED1n trao \u0111\u1ED5i..."},{"field_keys":"content","label":"N\u1ED9i dung c\u00E2u h\u1ECFi","placeholder":"N\u1ED9i dung c\u00E2u h\u1ECFi"},{"field_keys":"requirements","label":"M\u00F4 t\u1EA3 y\u00EAu c\u1EA7u c\u1EE7a b\u1EA1n","placeholder":"VD: b\u1ED9 d\u1EEF li\u1EC7u robot tay g\u1EAFp trong kho h\u00E0ng..."},{"field_keys":"additional_note","label":"Ghi ch\u00FA th\u00EAm","placeholder":"Th\u00F4ng tin b\u1ED5 sung (n\u1EBFu c\u00F3)..."},{"field_keys":"productid,product_interest,product_ids","label":"S\u1EA3n ph\u1EA9m quan t\u00E2m","placeholder":""},{"field_keys":"year_of_birth","label":"N\u0103m sinh","placeholder":"1998"},{"field_keys":"address","label":"\u0110\u1ECBa ch\u1EC9","placeholder":"S\u1ED1 nh\u00E0, \u0111\u01B0\u1EDDng, qu\u1EADn/huy\u1EC7n..."},{"field_keys":"introduce","label":"Gi\u1EDBi thi\u1EC7u b\u1EA3n th\u00E2n","placeholder":"Chia s\u1EBB \u0111\u00F4i n\u00E9t v\u1EC1 b\u1EA3n th\u00E2n b\u1EA1n..."},{"field_keys":"cv","label":"CV","placeholder":""},{"field_keys":"dataset_name","label":"B\u1ED9 d\u1EEF li\u1EC7u","placeholder":""}]
+{
+"validation_required": "Vui l\u00F2ng nh\u1EADp tr\u01B0\u1EDDng n\u00E0y",
+"validation_max_length": "V\u01B0\u1EE3t qu\u00E1 \u0111\u1ED9 d\u00E0i cho ph\u00E9p ({max} k\u00FD t\u1EF1)",
+"validation_min_length": "Vui l\u00F2ng nh\u1EADp t\u1ED1i thi\u1EC3u {min} k\u00FD t\u1EF1",
+"validation_invalid_email": "Email kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_invalid_phone": "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_invalid_generic": "Gi\u00E1 tr\u1ECB kh\u00F4ng h\u1EE3p l\u1EC7",
+"validation_consent_required": "Vui l\u00F2ng \u0111\u1ED3ng \u00FD v\u1EDBi ch\u00EDnh s\u00E1ch b\u1EA3o m\u1EADt."
+}
+document.addEventListener("DOMContentLoaded", function () {
+        PlatformModules.onInit({}, PlatformAppConfig);
+    })
+(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5afd5b84fcee6ca',t:'MTc5NDc2MjI2NA=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5afd5b84fcee6ca',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();

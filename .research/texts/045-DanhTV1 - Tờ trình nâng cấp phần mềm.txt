@@ -1,0 +1,505 @@
+
+--- PAGE 1 ---
+DanhTV1 - Tờ trình nâng cấp phần mềm
+Lập tờ trình đề xuất thuê dịch vụ nâng cấp các hệ thống phần mềm: QLHĐ, CRM, VBOS, phân hệ 
+đầu tư mua sắm của phần mềm quản lý tài sản
+Lý do 01 nhân sự nghỉ việc, nhiều yêu cầu nâng cấp từ các phần mềm trên, lượng nhân sự hiện tại 
+của P.CNTT (03 dev) không đáp ứng kịp.
+Dưới đây là dự thảo Tờ trình đề xuất thuê dịch vụ nâng cấp các hệ thống phần mềm:
+TỜ TRÌNH
+V/v đề xuất thuê dịch vụ nâng cấp, chỉnh sửa các hệ thống phần mềm QLHĐ, CRM, VBOS và phân
+hệ Đầu tư mua sắm của phần mềm Quản lý tài sản
+Kính gửi: Ban Lãnh đạo Công ty
+I. Căn cứ đề xuất
+Căn cứ nhu cầu vận hành, khai thác và nâng cấp các hệ thống phần mềm phục vụ hoạt động quản trị,
+điều hành và sản xuất kinh doanh của Công ty;
+Căn cứ số lượng yêu cầu nâng cấp, chỉnh sửa, bổ sung chức năng phát sinh trong quá trình sử dụng các
+hệ thống phần mềm hiện nay;
+Căn cứ tình hình nhân sự hiện tại của Phòng Công nghệ thông tin, trong đó có 01 nhân sự phát triển
+phần mềm đã nghỉ việc, số lượng nhân sự phát triển phần mềm còn lại hiện chỉ có 03 người, không đáp
+ứng kịp thời khối lượng công việc phát sinh;
+Phòng Công nghệ thông tin kính trình Ban Lãnh đạo xem xét, chấp thuận chủ trương thuê dịch vụ nâng
+cấp, chỉnh sửa các hệ thống phần mềm: QLHĐ, CRM, VBOS và phân hệ Đầu tư mua sắm của phần
+mềm Quản lý tài sản.
+II. Thực trạng
+Hiện nay, Công ty đang vận hành nhiều hệ thống phần mềm phục vụ các mảng nghiệp vụ trọng yếu,
+bao gồm:
+STT Hệ thống phần mềm Vai trò chính
+1 QLHĐ Quản lý hợp đồng, theo dõi tiến độ thực hiện, lưu trữ hồ sơ hợp đồng
+2 CRM Quản lý thông tin khách hàng, chăm sóc khách hàng, hỗ trợ hoạt động kinh doanh
+3 VBOS Hỗ trợ quản trị, vận hành nghiệp vụ bán hàng/điều hành
+4 Phân hệ Đầu tư mua sắm thuộc phần mềm Quản lý tài sản Quản lý quy trình đầu tư, mua sắm, theo dõi tài sản và hồ sơ liên quan
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/14
+
+--- PAGE 2 ---
+Trong quá trình khai thác sử dụng, các đơn vị nghiệp vụ liên tục phát sinh các yêu cầu nâng cấp, chỉnh
+sửa, bổ sung báo cáo, điều chỉnh luồng xử lý và hoàn thiện chức năng nhằm phù hợp với thực tế vận
+hành.
+Tuy nhiên, nguồn lực phát triển phần mềm nội bộ hiện nay còn hạn chế. Phòng Công nghệ thông tin
+hiện chỉ còn 03 nhân sự phát triển phần mềm, trong khi vẫn phải đồng thời thực hiện nhiều nhiệm vụ
+như:
+Duy trì vận hành các hệ thống phần mềm hiện có;
+Xử lý lỗi phát sinh trong quá trình sử dụng;
+Hỗ trợ người dùng tại các đơn vị;
+Phát triển, chỉnh sửa các yêu cầu mới;
+Tham gia các nhiệm vụ chuyển đổi số, tích hợp hệ thống và báo cáo quản trị.
+Đặc biệt, việc 01 nhân sự phát triển phần mềm nghỉ việc đã làm giảm đáng kể năng lực xử lý yêu cầu
+của Phòng Công nghệ thông tin. Với khối lượng yêu cầu hiện tại, nếu chỉ sử dụng nguồn lực nội bộ thì
+tiến độ nâng cấp các hệ thống sẽ bị kéo dài, ảnh hưởng đến hoạt động của các đơn vị nghiệp vụ.
+III. Sự cần thiết phải thuê dịch vụ
+Việc thuê dịch vụ nâng cấp các hệ thống phần mềm là cần thiết nhằm:
+1. Đảm bảo tiến độ xử lý các yêu cầu nghiệp vụ phát sinh
+Các hệ thống QLHĐ, CRM, VBOS và phân hệ Đầu tư mua sắm đều là các hệ thống phục vụ trực tiếp hoạt
+động quản trị, điều hành và sản xuất kinh doanh. Việc chậm nâng cấp, chỉnh sửa có thể ảnh hưởng đến
+hiệu quả vận hành, gây khó khăn cho người dùng và làm giảm chất lượng quản lý dữ liệu.
+2. Bù đắp thiếu hụt nguồn lực phát triển phần mềm nội bộ
+Với 03 nhân sự hiện tại, Phòng Công nghệ thông tin chỉ có thể ưu tiên duy trì vận hành, xử lý lỗi và thực
+hiện một phần các yêu cầu cấp thiết. Việc thuê ngoài sẽ giúp bổ sung nguồn lực kỹ thuật, giảm tải cho
+đội ngũ nội bộ và đảm bảo các yêu cầu được xử lý đúng tiến độ.
+3. Nâng cao chất lượng hệ thống
+Các yêu cầu nâng cấp không chỉ là chỉnh sửa nhỏ lẻ mà còn liên quan đến hoàn thiện quy trình nghiệp
+vụ, tối ưu giao diện, bổ sung báo cáo, cải thiện hiệu năng và tăng tính ổn định của hệ thống. Do đó cần
+có thêm nguồn lực chuyên môn để rà soát, phân tích và triển khai bài bản.
+4. Hạn chế rủi ro gián đoạn hoạt động
+Nếu các hệ thống không được nâng cấp kịp thời, có thể phát sinh các rủi ro như: dữ liệu không đồng bộ,
+quy trình xử lý thủ công, khó theo dõi tiến độ công việc, giảm hiệu quả quản trị và làm tăng áp lực hỗ trợ
+người dùng cho Phòng Công nghệ thông tin.
+IV. Nội dung đề xuất thuê dịch vụ
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/14
+
+--- PAGE 3 ---
+Phòng Công nghệ thông tin đề xuất thuê đơn vị cung cấp dịch vụ công nghệ thông tin để thực hiện
+nâng cấp, chỉnh sửa, bổ sung chức năng cho các hệ thống sau:
+STT Hệ thống Nội dung công việc dự kiến
+1 QLHĐ Nâng cấp chức năng quản lý hợp đồng, bổ sung luồng xử lý, cảnh báo, báo cáo, chỉnh sửa theo yêu cầu nghiệp vụ
+2 CRM Bổ sung/chỉnh sửa chức năng quản lý khách hàng, chăm sóc khách hàng, khai thác dữ liệu và báo cáo
+3 VBOS Điều chỉnh, nâng cấp các chức năng phục vụ vận hành nghiệp vụ, tối ưu trải nghiệm người dùng
+4 Phân hệ Đầu tư mua sắm của phần mềm Quản lý tài sản Bổ sung, hoàn thiện quy trình đầu tư mua sắm, theo dõi hồ sơ, tình trạng xử lý, báo cáo quản trị
+Các nội dung chi tiết sẽ được Phòng Công nghệ thông tin phối hợp với các đơn vị nghiệp vụ rà soát, tổng
+hợp và lập danh mục yêu cầu cụ thể trước khi triển khai.
+V. Hình thức thực hiện
+Đề xuất thực hiện theo hình thức thuê dịch vụ nâng cấp, chỉnh sửa phần mềm theo danh mục yêu
+cầu.
+Đơn vị cung cấp dịch vụ có trách nhiệm:
+Khảo sát, tiếp nhận và phân tích yêu cầu;
+Lập phương án kỹ thuật và kế hoạch triển khai;
+Phát triển, chỉnh sửa, nâng cấp chức năng;
+Kiểm thử nội bộ trước khi bàn giao;
+Phối hợp với Phòng Công nghệ thông tin và đơn vị nghiệp vụ nghiệm thu;
+Bàn giao mã nguồn, tài liệu kỹ thuật, tài liệu hướng dẫn sử dụng nếu có;
+Hỗ trợ xử lý lỗi sau triển khai trong thời gian bảo hành.
+Phòng Công nghệ thông tin chịu trách nhiệm:
+Là đầu mối tiếp nhận, tổng hợp và làm rõ yêu cầu nghiệp vụ;
+Quản lý tiến độ, chất lượng triển khai;
+Kiểm tra kỹ thuật, phối hợp kiểm thử;
+Tổ chức nghiệm thu kết quả thực hiện;
+Tiếp nhận bàn giao và quản lý vận hành sau triển khai.
+VI. Hiệu quả dự kiến
+Việc thuê dịch vụ nâng cấp các hệ thống phần mềm sẽ mang lại các hiệu quả sau:
+Đẩy nhanh tiến độ xử lý các yêu cầu nâng cấp, chỉnh sửa phần mềm;
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/14
+
+--- PAGE 4 ---
+Đáp ứng kịp thời nhu cầu vận hành thực tế của các đơn vị nghiệp vụ;
+Giảm tải cho nhân sự Phòng Công nghệ thông tin;
+Nâng cao chất lượng, tính ổn định và hiệu quả sử dụng của các hệ thống;
+Hạn chế tình trạng xử lý thủ công, giảm sai sót trong quá trình vận hành;
+Góp phần nâng cao hiệu quả quản trị, điều hành và chuyển đổi số tại Công ty.
+VII. Kiến nghị
+Từ các nội dung nêu trên, Phòng Công nghệ thông tin kính đề nghị Ban Lãnh đạo xem xét, chấp thuận:
+1. Chủ trương thuê dịch vụ nâng cấp, chỉnh sửa các hệ thống phần mềm gồm: QLHĐ, CRM, VBOS và
+phân hệ Đầu tư mua sắm của phần mềm Quản lý tài sản.
+2. Giao Phòng Công nghệ thông tin chủ trì, phối hợp với các đơn vị liên quan rà soát, tổng hợp danh
+mục yêu cầu chi tiết, lập phạm vi công việc và dự toán chi phí thực hiện.
+3. Cho phép triển khai các thủ tục lựa chọn đơn vị cung cấp dịch vụ theo quy định hiện hành của Công
+ty.
+Kính trình Ban Lãnh đạo xem xét, phê duyệt.
+Nơi nhận:
+Như trên;
+Lưu: P.CNTT.
+PHÒNG CÔNG NGHỆ THÔNG TIN
+Ngày …… tháng …… năm 2026
+Người lập tờ trình
+(Ký, ghi rõ họ tên)
+Gói nâng cấp dịch vụ dự kiến: 300tr VNĐ, chi tiết hiện có các yêu cầu sau cần nâng cấp bao gồm:
+- Hệ thống VBOS: Nâng cấp xây dựng các chức năng import, báo cáo, dashboard cho P.Tài Chính
+- Hệ thống CRM: Khắc phục các lỗi phát sinh của hệ thống như: Xử lý hiệu năng phân bổ cuộc hội 
+thoại, Tích hợp đầu số tổng đài mới, Xử lý các lỗi phát sinh (nếu có).
+- Hệ thống QLHĐ của TTXNK: Sửa 31 yêu cầu nâng cấp phần mềm QLHĐ của trung tâm xuất nhập 
+khẩu, xây dựng hệ thống RPA, OCR tự động nhập thông tin hợp đồng
+- Phân hệ đầu tư mua sắm trên phần mềm Đầu tư KTTS: Hiện đã có chức năng tuy nhiên chưa đáp 
+ứng yêu cầu nghiệp vụ, cần nâng cấp theo yêu cầu mới của Phòng Pháp Chế&Đầu tư
+Show moreShow less
+Dưới đây là bản cập nhật Tờ trình đã bổ sung giá trị gói dịch vụ dự kiến 300 triệu VNĐ và chi tiết các
+yêu cầu nâng cấp hiện có.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/14
+
+--- PAGE 5 ---
+TỜ TRÌNH
+V/v đề xuất thuê dịch vụ nâng cấp, chỉnh sửa các hệ thống phần mềm VBOS, CRM, QLHĐ và phân
+hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS
+Kính gửi: Ban Lãnh đạo Công ty
+I. Căn cứ đề xuất
+Căn cứ nhu cầu vận hành, khai thác và nâng cấp các hệ thống phần mềm phục vụ công tác quản trị, điều
+hành và hoạt động sản xuất kinh doanh của Công ty;
+Căn cứ các yêu cầu nâng cấp, chỉnh sửa phần mềm phát sinh từ các đơn vị nghiệp vụ trong quá trình sử
+dụng các hệ thống VBOS, CRM, QLHĐ và phân hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS;
+Căn cứ tình hình nhân sự hiện tại của Phòng Công nghệ thông tin, trong đó có 01 nhân sự phát triển
+phần mềm đã nghỉ việc, số lượng nhân sự phát triển phần mềm hiện còn 03 người, không đáp ứng kịp
+khối lượng yêu cầu nâng cấp, chỉnh sửa phát sinh;
+Phòng Công nghệ thông tin kính trình Ban Lãnh đạo xem xét, chấp thuận chủ trương thuê dịch vụ nâng
+cấp, chỉnh sửa các hệ thống phần mềm nêu trên.
+II. Thực trạng
+Hiện nay, Công ty đang vận hành nhiều hệ thống phần mềm phục vụ các mảng nghiệp vụ quan trọng
+như quản lý hợp đồng, chăm sóc khách hàng, quản trị bán hàng, tài chính, đầu tư, mua sắm và quản lý
+tài sản.
+Trong quá trình sử dụng, các đơn vị nghiệp vụ tiếp tục phát sinh nhiều yêu cầu nâng cấp, chỉnh sửa, bổ
+sung chức năng, báo cáo, dashboard và tối ưu quy trình xử lý để đáp ứng yêu cầu quản trị thực tế.
+Tuy nhiên, nguồn lực phát triển phần mềm nội bộ hiện nay còn hạn chế. Phòng Công nghệ thông tin
+hiện chỉ còn 03 nhân sự phát triển phần mềm, trong khi vẫn phải đồng thời thực hiện các nhiệm vụ:
+Duy trì vận hành các hệ thống phần mềm hiện có;
+Xử lý lỗi phát sinh trong quá trình sử dụng;
+Hỗ trợ người dùng tại các đơn vị;
+Phát triển, chỉnh sửa các yêu cầu mới;
+Thực hiện các nhiệm vụ tích hợp, báo cáo, chuyển đổi số và hỗ trợ vận hành hệ thống.
+Đặc biệt, việc 01 nhân sự phát triển phần mềm nghỉ việc đã làm giảm đáng kể năng lực xử lý yêu cầu
+của Phòng Công nghệ thông tin. Với khối lượng yêu cầu hiện tại, nếu chỉ sử dụng nguồn lực nội bộ thì
+tiến độ xử lý sẽ bị kéo dài, ảnh hưởng đến hiệu quả vận hành của các đơn vị nghiệp vụ.
+III. Các yêu cầu nâng cấp hiện có
+Hiện tại, các hệ thống đang có các yêu cầu nâng cấp, chỉnh sửa chính như sau:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/14
+
+--- PAGE 6 ---
+STT Hệ thống/phân hệ Nội dung yêu cầu nâng cấp
+1 Hệ thống VBOS Nâng cấp, xây dựng các chức năng import dữ liệu, báo cáo và dashboard phục vụ công tác quản trị, theo dõi số liệu của Phòng Tài chính.
+2 Hệ thống CRM
+Khắc phục các lỗi phát sinh của hệ thống; xử lý hiệu năng chức năng phân
+bổ cuộc hội thoại; tích hợp đầu số tổng đài mới; xử lý các lỗi phát sinh khác
+nếu có trong quá trình vận hành.
+3
+Hệ thống QLHĐ của
+Trung tâm Xuất nhập
+khẩu
+Thực hiện chỉnh sửa, nâng cấp 31 yêu cầu phần mềm QLHĐ của Trung tâm
+Xuất nhập khẩu; xây dựng hệ thống RPA, OCR để tự động nhập thông tin
+hợp đồng, giảm thao tác thủ công và tăng hiệu quả xử lý dữ liệu.
+4
+Phân hệ Đầu tư mua sắm
+trên phần mềm Đầu tư
+KTTS
+Phân hệ hiện đã có chức năng cơ bản, tuy nhiên chưa đáp ứng đầy đủ yêu
+cầu nghiệp vụ thực tế; cần nâng cấp, hoàn thiện theo yêu cầu mới của
+Phòng Pháp chế & Đầu tư.
+IV. Sự cần thiết phải thuê dịch vụ
+Việc thuê dịch vụ nâng cấp, chỉnh sửa phần mềm là cần thiết vì các lý do sau:
+1. Đảm bảo tiến độ xử lý yêu cầu nghiệp vụ
+Các yêu cầu nâng cấp hiện nay liên quan trực tiếp đến hoạt động của nhiều đơn vị như Phòng Tài chính,
+Trung tâm Xuất nhập khẩu, Phòng Pháp chế & Đầu tư và các bộ phận vận hành hệ thống CRM. Nếu
+không được xử lý kịp thời, các đơn vị sẽ tiếp tục phải thực hiện thủ công hoặc vận hành trên các chức
+năng chưa tối ưu, ảnh hưởng đến hiệu quả quản trị và chất lượng dữ liệu.
+2. Bù đắp thiếu hụt nguồn lực phát triển phần mềm nội bộ
+Phòng Công nghệ thông tin hiện chỉ còn 03 nhân sự phát triển phần mềm, trong khi khối lượng công
+việc vận hành, hỗ trợ và nâng cấp hệ thống ngày càng tăng. Việc thuê dịch vụ bên ngoài sẽ giúp bổ sung
+nguồn lực kỹ thuật, giảm tải cho đội ngũ nội bộ và đảm bảo các yêu cầu cấp thiết được triển khai đúng
+tiến độ.
+3. Nâng cao chất lượng và tính ổn định của hệ thống
+Một số yêu cầu nâng cấp không chỉ là chỉnh sửa nhỏ mà liên quan đến tối ưu hiệu năng, tích hợp tổng
+đài, xây dựng dashboard, tự động hóa nhập liệu bằng RPA/OCR và hoàn thiện quy trình nghiệp vụ đầu
+tư mua sắm. Do đó, cần có thêm nguồn lực chuyên môn để phân tích, phát triển, kiểm thử và triển khai
+bài bản.
+4. Giảm rủi ro vận hành thủ công
+Đối với hệ thống QLHĐ của Trung tâm Xuất nhập khẩu, việc xây dựng RPA/OCR tự động nhập thông tin
+hợp đồng sẽ giúp giảm thời gian nhập liệu thủ công, hạn chế sai sót và nâng cao hiệu quả xử lý hồ sơ
+hợp đồng. Đây là nội dung phù hợp với định hướng số hóa, tự động hóa quy trình nghiệp vụ của Công
+ty.
+V. Nội dung đề xuất thuê dịch vụ
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/14
+
+--- PAGE 7 ---
+Phòng Công nghệ thông tin đề xuất thuê đơn vị cung cấp dịch vụ công nghệ thông tin để thực hiện gói
+nâng cấp, chỉnh sửa các hệ thống phần mềm, bao gồm:
+1. Nâng cấp hệ thống VBOS
+Xây dựng chức năng import dữ liệu;
+Xây dựng/bổ sung các báo cáo phục vụ Phòng Tài chính;
+Xây dựng dashboard theo dõi, tổng hợp số liệu.
+2. Nâng cấp, khắc phục lỗi hệ thống CRM
+Xử lý hiệu năng chức năng phân bổ cuộc hội thoại;
+Tích hợp đầu số tổng đài mới;
+Khắc phục các lỗi phát sinh trong quá trình vận hành hệ thống;
+Hỗ trợ kiểm tra, tối ưu và đảm bảo hệ thống vận hành ổn định sau nâng cấp.
+3. Nâng cấp hệ thống QLHĐ của Trung tâm Xuất nhập khẩu
+Thực hiện 31 yêu cầu nâng cấp, chỉnh sửa phần mềm QLHĐ;
+Xây dựng chức năng RPA/OCR tự động nhập thông tin hợp đồng;
+Hỗ trợ kiểm thử, hiệu chỉnh dữ liệu nhận dạng và bàn giao vận hành.
+4. Nâng cấp phân hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS
+Rà soát chức năng hiện có;
+Phân tích yêu cầu nghiệp vụ mới của Phòng Pháp chế & Đầu tư;
+Nâng cấp, hoàn thiện chức năng theo quy trình nghiệp vụ thực tế;
+Bổ sung các chức năng, biểu mẫu, báo cáo cần thiết theo phạm vi thống nhất.
+VI. Dự toán chi phí
+Giá trị gói dịch vụ nâng cấp, chỉnh sửa phần mềm dự kiến là:
+300.000.000 VNĐ
+Bằng chữ: Ba trăm triệu đồng.
+Giá trị trên là chi phí dự kiến cho gói dịch vụ nâng cấp các hệ thống phần mềm VBOS, CRM, QLHĐ và
+phân hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS. Chi phí chính thức sẽ được xác định trên cơ sở
+phạm vi công việc chi tiết, báo giá của đơn vị cung cấp dịch vụ và các thủ tục lựa chọn nhà cung cấp theo
+quy định hiện hành của Công ty.
+VII. Hình thức thực hiện
+Đề xuất thực hiện theo hình thức thuê dịch vụ nâng cấp, chỉnh sửa phần mềm theo gói công việc.
+Đơn vị cung cấp dịch vụ có trách nhiệm:
+Khảo sát, tiếp nhận và phân tích yêu cầu;
+Lập phương án kỹ thuật, kế hoạch triển khai;
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/14
+
+--- PAGE 8 ---
+Phát triển, chỉnh sửa, nâng cấp chức năng;
+Kiểm thử nội bộ trước khi bàn giao;
+Phối hợp với Phòng Công nghệ thông tin và các đơn vị nghiệp vụ kiểm thử, nghiệm thu;
+Bàn giao mã nguồn, tài liệu kỹ thuật, tài liệu hướng dẫn sử dụng nếu có;
+Hỗ trợ xử lý lỗi sau triển khai trong thời gian bảo hành/bảo trì theo thỏa thuận.
+Phòng Công nghệ thông tin chịu trách nhiệm:
+Là đầu mối tiếp nhận, tổng hợp và làm rõ yêu cầu nghiệp vụ;
+Phối hợp với các đơn vị liên quan xác nhận phạm vi công việc;
+Quản lý tiến độ, chất lượng triển khai;
+Kiểm tra kỹ thuật, phối hợp kiểm thử;
+Tổ chức nghiệm thu kết quả thực hiện;
+Tiếp nhận bàn giao và quản lý vận hành sau triển khai.
+VIII. Hiệu quả dự kiến
+Việc thuê dịch vụ nâng cấp các hệ thống phần mềm dự kiến mang lại các hiệu quả sau:
+Đáp ứng kịp thời các yêu cầu nâng cấp, chỉnh sửa phần mềm từ các đơn vị nghiệp vụ;
+Giảm tải cho nhân sự phát triển phần mềm của Phòng Công nghệ thông tin;
+Tăng hiệu quả khai thác hệ thống VBOS, CRM, QLHĐ và phần mềm Đầu tư KTTS;
+Nâng cao chất lượng dữ liệu, báo cáo và dashboard phục vụ công tác quản trị;
+Cải thiện hiệu năng và tính ổn định của hệ thống CRM;
+Tự động hóa một phần quy trình nhập thông tin hợp đồng thông qua RPA/OCR;
+Hoàn thiện phân hệ Đầu tư mua sắm, đáp ứng tốt hơn yêu cầu nghiệp vụ của Phòng Pháp chế &
+Đầu tư;
+Góp phần thúc đẩy chuyển đổi số và nâng cao hiệu quả vận hành của Công ty.
+IX. Kiến nghị
+Từ các nội dung nêu trên, Phòng Công nghệ thông tin kính đề nghị Ban Lãnh đạo xem xét, chấp thuận:
+1. Chủ trương thuê dịch vụ nâng cấp, chỉnh sửa các hệ thống phần mềm gồm: VBOS, CRM, QLHĐ của
+Trung tâm Xuất nhập khẩu và phân hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS.
+2. Phê duyệt giá trị gói dịch vụ dự kiến là 300.000.000 VNĐ để làm cơ sở triển khai các bước tiếp theo.
+3. Giao Phòng Công nghệ thông tin chủ trì, phối hợp với các đơn vị liên quan rà soát, thống nhất phạm
+vi yêu cầu chi tiết, làm cơ sở trao đổi với đơn vị cung cấp dịch vụ.
+4. Cho phép Phòng Công nghệ thông tin thực hiện các thủ tục lựa chọn đơn vị cung cấp dịch vụ theo
+quy định hiện hành của Công ty.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/14
+
+--- PAGE 9 ---
+Kính trình Ban Lãnh đạo xem xét, phê duyệt.
+Nơi nhận:
+Như trên;
+Lưu: P.CNTT.
+Ngày …… tháng …… năm 2026
+PHÒNG CÔNG NGHỆ THÔNG TIN
+Người lập tờ trình
+(Ký, ghi rõ họ tên)
+Dự kiến từ 300-400tr VNĐ phụ thuộc vào báo giá của đối tác sau khi khảo sát. Tính ước lượng sơ bộ 
+tương ứng với số tiền.
+Có thể điều chỉnh phần Dự toán chi phí trong Tờ trình như sau:
+VI. Dự toán chi phí sơ bộ
+Trên cơ sở khối lượng yêu cầu nâng cấp hiện có, Phòng Công nghệ thông tin dự kiến giá trị gói dịch vụ
+nâng cấp, chỉnh sửa các hệ thống phần mềm trong khoảng:
+Từ 300.000.000 VNĐ đến 400.000.000 VNĐ
+Bằng chữ: Từ ba trăm triệu đồng đến bốn trăm triệu đồng.
+Giá trị chính thức sẽ được xác định sau khi đối tác khảo sát chi tiết hiện trạng hệ thống, làm rõ phạm vi
+yêu cầu, đánh giá mức độ phức tạp kỹ thuật và gửi báo giá chính thức.
+1. Cơ sở ước lượng sơ bộ
+Dự toán được ước lượng trên cơ sở:
+Số lượng hệ thống cần nâng cấp: 04 hệ thống/phân hệ;
+Khối lượng yêu cầu nghiệp vụ phát sinh tương đối lớn;
+Có các hạng mục cần xử lý kỹ thuật phức tạp như: tối ưu hiệu năng CRM, tích hợp tổng đài, xây
+dựng dashboard, RPA/OCR nhập liệu hợp đồng;
+Cần có nguồn lực thực hiện các công việc: khảo sát, phân tích yêu cầu, lập trình, kiểm thử, triển
+khai, hiệu chỉnh sau nghiệm thu và bàn giao tài liệu;
+Đơn giá dịch vụ phát triển phần mềm thuê ngoài được tạm tính theo mức bình quân khoảng 2,5
+triệu đồng/ngày công.
+Với tổng kinh phí dự kiến từ 300–400 triệu đồng, khối lượng triển khai tương ứng khoảng:
+Mức dự toán Đơn giá tạm tính Khối lượng ngày công tương ứng
+300.000.000 VNĐ 2.500.000 VNĐ/ngày công Khoảng 120 ngày công
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/14
+
+--- PAGE 10 ---
+Mức dự toán Đơn giá tạm tính Khối lượng ngày công tương ứng
+400.000.000 VNĐ 2.500.000 VNĐ/ngày công Khoảng 160 ngày công
+2. Ước lượng chi phí theo từng hệ thống/phân hệ
+STT Hệ thống/phân hệ Nội dung chính
+Ngày
+công dự
+kiến
+Chi phí
+dự kiến
+1 VBOS Xây dựng chức năng import dữ liệu, báo cáo, dashboard phục vụ Phòng Tài chính 28–36 MD 70–90 triệu VNĐ
+2 CRM
+Xử lý hiệu năng phân bổ cuộc hội thoại, tích
+hợp đầu số tổng đài mới, khắc phục lỗi phát
+sinh
+20–28 MD 50–70 triệu VNĐ
+3 QLHĐ của TTXNK
+Sửa 31 yêu cầu nâng cấp phần mềm QLHĐ;
+xây dựng RPA/OCR tự động nhập thông tin
+hợp đồng
+48–64 MD 120–160 triệu VNĐ
+4 Phân hệ Đầu tư mua sắm trên phần mềm Đầu tư KTTS Nâng cấp, hoàn thiện theo yêu cầu nghiệp vụ mới của Phòng Pháp chế & Đầu tư 24–32 MD 60–80 triệu VNĐ
+Tổng cộng 120–160 MD 300–400 triệu VNĐ
+3. Cơ cấu ngày công dự kiến
+Nhóm công việc Tỷ trọng dự kiến Nội dung thực hiện
+Khảo sát, phân tích yêu cầu 10–15% Làm rõ nghiệp vụ, hiện trạng hệ thống, phạm vi nâng cấp
+Thiết kế giải pháp, thiết kế kỹ
+thuật 10–15% Đề xuất phương án xử lý, thiết kế luồng, dữ liệu, giao diện, tích hợp
+Lập trình, nâng cấp chức năng 50–60% Phát triển chức năng, chỉnh sửa lỗi, tích hợp, tối ưu hệ thống
+Kiểm thử, hiệu chỉnh 10–15% Test nội bộ, phối hợp UAT với đơn vị nghiệp vụ, sửa lỗi sau kiểm thử
+Triển khai, bàn giao, hỗ trợ sau
+triển khai 5–10% Cài đặt, nghiệm thu, bàn giao tài liệu, hỗ trợ vận hành ban đầu
+4. Ghi chú
+Mức dự toán trên là ước lượng sơ bộ để làm căn cứ trình chủ trương thuê dịch vụ. Chi phí thực tế có
+thể thay đổi tùy thuộc vào:
+Kết quả khảo sát chi tiết của đối tác;
+Mức độ phức tạp của từng yêu cầu;
+Khả năng tận dụng lại mã nguồn, dữ liệu và chức năng hiện có;
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/14
+
+--- PAGE 11 ---
+Số lượng báo cáo, dashboard, biểu mẫu phát sinh thêm;
+Phạm vi tích hợp RPA/OCR và yêu cầu độ chính xác của dữ liệu nhận dạng;
+Thời gian bảo hành, hỗ trợ sau triển khai.
+Do đó, Phòng Công nghệ thông tin đề xuất Ban Lãnh đạo cho phép thực hiện khảo sát, lấy báo giá từ
+đối tác để xác định chi phí chính thức, dự kiến trong phạm vi 300–400 triệu VNĐ.
+Bổ sung việc tổ chức thực hiện giữa các đơn vị: P.CNTT, Phòng Pháp Chế Đầu Tư, Phòng Tài Chính
+Có thể bổ sung vào Tờ trình thêm mục sau:
+VII. Tổ chức thực hiện
+Để đảm bảo việc thuê dịch vụ nâng cấp các hệ thống phần mềm được triển khai đúng phạm vi, đúng
+tiến độ và đáp ứng yêu cầu nghiệp vụ, đề xuất phân công trách nhiệm giữa các đơn vị như sau:
+STT Đơn vị Trách nhiệm thực hiện
+1
+Phòng
+Công nghệ
+thông tin
+Là đầu mối chủ trì triển khai gói dịch vụ; tổng hợp các yêu cầu nâng cấp từ các đơn vị; phối
+hợp với đối tác khảo sát hiện trạng hệ thống; làm rõ yêu cầu kỹ thuật; quản lý tiến độ, chất
+lượng thực hiện; kiểm tra kỹ thuật, phối hợp kiểm thử, nghiệm thu và tiếp nhận bàn giao
+sản phẩm sau nâng cấp.
+2
+Phòng Pháp
+chế & Đầu
+tư
+Cung cấp, làm rõ các yêu cầu nghiệp vụ liên quan đến phân hệ Đầu tư mua sắm trên phần
+mềm Đầu tư KTTS; rà soát quy trình nghiệp vụ hiện tại; xác nhận các biểu mẫu, luồng xử lý,
+báo cáo cần nâng cấp; phối hợp kiểm thử và nghiệm thu các chức năng thuộc phạm vi phụ
+trách.
+3 Phòng Tài chính
+Cung cấp, làm rõ các yêu cầu liên quan đến chức năng import dữ liệu, báo cáo và
+dashboard trên hệ thống VBOS; xác nhận các chỉ tiêu, mẫu biểu, dữ liệu đầu vào/đầu ra;
+phối hợp kiểm thử số liệu, đối chiếu tính đúng đắn của báo cáo và nghiệm thu các chức
+năng phục vụ công tác tài chính.
+4 Đơn vị cung cấp dịch vụ
+Khảo sát hiện trạng, phân tích yêu cầu, đề xuất phương án kỹ thuật; thực hiện lập trình,
+nâng cấp, chỉnh sửa chức năng; kiểm thử nội bộ; phối hợp với P.CNTT và các đơn vị nghiệp
+vụ trong quá trình kiểm thử, hiệu chỉnh; bàn giao mã nguồn, tài liệu kỹ thuật, tài liệu
+hướng dẫn và hỗ trợ sau triển khai theo thỏa thuận.
+Nguyên tắc phối hợp thực hiện
+1. Phòng Công nghệ thông tin là đầu mối duy nhất làm việc với đối tác về phạm vi kỹ thuật, tiến độ,
+chất lượng và nghiệm thu tổng thể gói dịch vụ.
+2. Các đơn vị nghiệp vụ có trách nhiệm cử đầu mối phối hợp, cung cấp yêu cầu đầy đủ, kịp thời; xác
+nhận yêu cầu trước khi phát triển và tham gia kiểm thử, nghiệm thu sau khi hoàn thành.
+3. Các yêu cầu nâng cấp phải được thống nhất bằng danh mục chi tiết, trong đó nêu rõ: nội dung yêu
+cầu, đơn vị đề xuất, mức độ ưu tiên, phạm vi xử lý, kết quả đầu ra và tiêu chí nghiệm thu.
+4. Trong quá trình triển khai, nếu phát sinh yêu cầu ngoài phạm vi đã thống nhất, P.CNTT sẽ phối hợp
+với các đơn vị liên quan đánh giá mức độ cần thiết, ảnh hưởng chi phí, tiến độ và báo cáo Ban Lãnh
+đạo xem xét khi cần thiết.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/14
+
+--- PAGE 12 ---
+5. Kết quả nghiệm thu từng phần cần có xác nhận của đơn vị nghiệp vụ sử dụng trực tiếp và Phòng
+Công nghệ thông tin trước khi nghiệm thu tổng thể gói dịch vụ.
+Kế hoạch phối hợp dự kiến
+Giai
+đoạn Nội dung thực hiện Đơn vị chủ trì Đơn vị phối hợp
+1 Tổng hợp, rà soát danh mục yêu cầu nâng cấp P.CNTT Phòng Pháp chế & Đầu tư, Phòng Tài chính, các đơn vị liên quan
+2 Khảo sát hiện trạng, làm rõ phạm vi công việc P.CNTT Đối tác, các đơn vị nghiệp vụ
+3 Thống nhất yêu cầu, phương án kỹ thuật và báo giá P.CNTT Đối tác, Phòng Pháp chế & Đầu tư, Phòng Tài chính
+4 Triển khai lập trình, nâng cấp, chỉnh sửa hệ thống Đối tác P.CNTT
+5 Kiểm thử, hiệu chỉnh theo phản hồi người dùng P.CNTT Phòng Pháp chế & Đầu tư, Phòng Tài chính, đối tác
+6 Nghiệm thu, bàn giao và đưa vào sử dụng P.CNTT Các đơn vị nghiệp vụ, đối tác
+Có thể đưa mục này vào sau phần Dự toán chi phí sơ bộ, rồi đánh số lại các mục phía sau trong Tờ
+trình.
+xuất thành ﬁle word
+Tôi sẽ tổng hợp các nội dung đã chốt thành một tờ trình hoàn chỉnh, định dạng Word theo văn bản hành
+chính và xuất ﬁle .docx để anh tải về.
+Đã xuất ﬁle Word hoàn chỉnh:
+Mục đích là thuê nhân sự onsite thì có cần sửa đổi gì không?
+Có, nên sửa. Bản hiện tại đang viết theo hướng thuê gói dịch vụ nâng cấp phần mềm theo sản phẩm
+đầu ra. Nếu mục đích thực tế là thuê nhân sự onsite thì cần chỉnh lại để đúng bản chất, tránh khi phê
+duyệt/triển khai bị hiểu là thuê trọn gói nâng cấp hệ thống.
+Nên sửa theo hướng:
+1. Sửa tên tờ trình
+Từ:
+Đề xuất thuê dịch vụ nâng cấp, chỉnh sửa các hệ thống phần mềm...
+Thành:
+Đề xuất thuê dịch vụ cung cấp nhân sự phát triển phần mềm onsite để thực hiện nâng cấp, chỉnh
+sửa các hệ thống phần mềm VBOS, CRM, QLHĐ và phân hệ Đầu tư mua sắm
+Hoặc ngắn gọn hơn:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/14
+
+--- PAGE 13 ---
+Đề xuất thuê nhân sự CNTT onsite hỗ trợ nâng cấp các hệ thống phần mềm
+2. Sửa bản chất đề xuất
+Không nên viết là “thuê đơn vị thực hiện gói nâng cấp” quá mạnh, mà nên viết:
+Phòng Công nghệ thông tin đề xuất thuê dịch vụ cung cấp nhân sự phát triển phần mềm làm
+việc onsite tại Công ty trong thời gian nhất định, nhằm bổ sung nguồn lực cho P.CNTT để thực
+hiện các yêu cầu nâng cấp, chỉnh sửa, tối ưu các hệ thống phần mềm hiện có.
+3. Sửa phần dự toán chi phí
+Dự toán 300–400 triệu vẫn dùng được, nhưng cần diễn giải theo ngày công/tháng công nhân sự
+onsite, ví dụ:
+Nội dung Ước lượng
+Tổng kinh phí dự kiến 300–400 triệu VNĐ
+Đơn giá tạm tính 2,5 triệu VNĐ/ngày công
+Khối lượng tương
+ứng 120–160 ngày công
+Quy đổi tương đương Khoảng 6–8 tháng công của 01 nhân sự onsite, hoặc 3–4 tháng nếu bố trí 02 nhân sự onsite
+Có thể viết:
+Kinh phí chính thức phụ thuộc vào số lượng nhân sự onsite, trình độ nhân sự, thời gian thuê,
+đơn giá ngày công/tháng công và báo giá của đối tác sau khi khảo sát, thống nhất phạm vi
+công việc.
+4. Sửa phần hình thức thực hiện
+Bản hiện tại đang thiên về “đối tác nhận việc và bàn giao sản phẩm”. Với onsite nên sửa thành:
+Hình thức thực hiện là thuê dịch vụ cung cấp nhân sự phát triển phần mềm onsite. Nhân sự
+của đối tác làm việc trực tiếp tại Công ty hoặc theo hình thức kết hợp onsite/remote theo yêu
+cầu, chịu sự điều phối công việc hằng ngày của P.CNTT, thực hiện các yêu cầu nâng cấp, chỉnh
+sửa, kiểm thử và hỗ trợ vận hành theo danh mục công việc được giao.
+5. Sửa phần nghiệm thu/thanh toán
+Cần bổ sung rõ nghiệm thu theo ngày công, bảng chấm công và kết quả công việc, không chỉ nghiệm
+thu theo sản phẩm cuối cùng.
+Nên bổ sung:
+Việc nghiệm thu được thực hiện định kỳ theo tháng hoặc theo giai đoạn, căn cứ trên bảng
+chấm công, nhật ký công việc, danh mục yêu cầu đã xử lý, kết quả kiểm thử và xác nhận của
+P.CNTT/các đơn vị nghiệp vụ liên quan.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 13/14
+
+--- PAGE 14 ---
+6. Sửa trách nhiệm các bên
+Nên nhấn mạnh:
+P.CNTT: quản lý, giao việc, kiểm soát chất lượng code, review kỹ thuật, xác nhận ngày công.
+Đối tác: cung cấp nhân sự đúng năng lực, thay thế nhân sự nếu không đáp ứng, quản lý hành
+chính/lao động của nhân sự.
+P.Tài chính, P.Pháp chế & Đầu tư: cung cấp yêu cầu, kiểm thử, xác nhận kết quả nghiệp vụ.
+7. Sửa phần sản phẩm bàn giao
+Vẫn cần bàn giao, nhưng không ghi như thuê trọn gói. Nên viết:
+Kết quả thực hiện bao gồm mã nguồn đã chỉnh sửa, chức năng đã nâng cấp, tài liệu mô tả
+thay đổi nếu cần, biên bản kiểm thử, biên bản nghiệm thu công việc theo từng đợt/tháng.
+8. Câu chốt nên dùng trong tờ trình
+Có thể đưa đoạn này vào phần đề xuất:
+Việc thuê nhân sự onsite không làm thay đổi vai trò chủ trì của P.CNTT. P.CNTT vẫn là đơn vị
+quản lý kỹ thuật, phân công công việc, kiểm soát chất lượng và tiếp nhận kết quả. Nhân sự
+onsite đóng vai trò bổ sung nguồn lực phát triển phần mềm nhằm xử lý kịp thời các yêu cầu
+đang tồn đọng và phát sinh mới.
+Tóm lại: cần sửa, vì nếu giữ bản hiện tại thì đang giống thuê đối tác làm trọn gói nâng cấp hệ thống. Với
+mục tiêu thuê onsite, nên đổi trọng tâm sang bổ sung nguồn lực phát triển phần mềm cho P.CNTT,
+còn các hệ thống VBOS, CRM, QLHĐ, Đầu tư mua sắm là danh mục công việc dự kiến giao cho nhân
+sự onsite thực hiện.
+Xuất ra ﬁle word
+Tôi sẽ chỉnh bản Word sang đúng hướng thuê nhân sự onsite thay vì thuê gói sản phẩm trọn gói, đồng
+thời giữ các nội dung chi phí 300–400 triệu và phân công giữa các đơn vị.
+Đã xuất ﬁle Word bản chỉnh theo hướng thuê nhân sự onsite:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 14/14

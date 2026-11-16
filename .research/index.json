@@ -1,0 +1,628 @@
+[
+  {
+    "path": "Các dự án có AI tôi đã tham gia.txt",
+    "text": "000-Các dự án có AI tôi đã tham gia.txt",
+    "chars": 614
+  },
+  {
+    "path": "Kim Đức CV full.pdf",
+    "text": "001-Kim Đức CV full.txt",
+    "chars": 29112
+  },
+  {
+    "path": "Kim Đức CV rút gọn.pdf",
+    "text": "002-Kim Đức CV rút gọn.txt",
+    "chars": 21283
+  },
+  {
+    "path": "ChatGPT\\Kiến trúc dự án RPA OCR.md",
+    "text": "003-Kiến trúc dự án RPA OCR.txt",
+    "chars": 55135
+  },
+  {
+    "path": "ChatGPT\\Mã nguồn robot hình người của các tập đoàn lớn.md",
+    "text": "004-Mã nguồn robot hình người của các tập đoàn lớn.txt",
+    "chars": 10529
+  },
+  {
+    "path": "ChatGPT\\Mô tả hệ thống điều phối xử lý thủ tục hành chính.md",
+    "text": "005-Mô tả hệ thống điều phối xử lý thủ tục hành chính.txt",
+    "chars": 7414
+  },
+  {
+    "path": "ChatGPT\\Tìm hiểu Robot VinDynamics.md",
+    "text": "006-Tìm hiểu Robot VinDynamics.txt",
+    "chars": 79373
+  },
+  {
+    "path": "Các dự án cũ\\CV viết lại.docx",
+    "text": "007-CV viết lại.txt",
+    "chars": 2178
+  },
+  {
+    "path": "Tori AI\\0. Usecases TCLife.pdf",
+    "text": "008-0. Usecases TCLife.txt",
+    "chars": 22062
+  },
+  {
+    "path": "Tori AI\\JD Alphaway.pdf",
+    "text": "009-JD Alphaway.txt",
+    "chars": 13634
+  },
+  {
+    "path": "Tori AI\\JD_TechcomBank.pdf",
+    "text": "010-JD_TechcomBank.txt",
+    "chars": 4010
+  },
+  {
+    "path": "Các dự án cũ\\AI - OCR - RPA\\AI Document Understanding End-To-End.docx",
+    "text": "011-AI Document Understanding End-To-End.txt",
+    "chars": 10839
+  },
+  {
+    "path": "Các dự án cũ\\AI - OCR - RPA\\Báo cáo xây dựng phần mềm RPA v2.docx",
+    "text": "012-Báo cáo xây dựng phần mềm RPA v2.txt",
+    "chars": 29653
+  },
+  {
+    "path": "Các dự án cũ\\AI - OCR - RPA\\khóa học.txt",
+    "text": "013-khóa học.txt",
+    "chars": 116
+  },
+  {
+    "path": "Các dự án cũ\\AI - OCR - RPA\\Kịch bản OCR RPA.docx",
+    "text": "014-Kịch bản OCR RPA.txt",
+    "chars": 3636
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\AI Hub interview.docx",
+    "text": "015-AI Hub interview.txt",
+    "chars": 3195
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\AI Hub rút gọn.docx",
+    "text": "016-AI Hub rút gọn.txt",
+    "chars": 6750
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\AI Hub tính năng bản ngắn.docx",
+    "text": "017-AI Hub tính năng bản ngắn.txt",
+    "chars": 2006
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\AI Hub – System Feature Description.pdf",
+    "text": "018-AI Hub – System Feature Description.txt",
+    "chars": 22478
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\BA làm gì.docx",
+    "text": "019-BA làm gì.txt",
+    "chars": 9108
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\Full thuyết trình.docx",
+    "text": "020-Full thuyết trình.txt",
+    "chars": 7467
+  },
+  {
+    "path": "Các dự án cũ\\AI Hub\\Phỏng vấn BA.docx",
+    "text": "021-Phỏng vấn BA.txt",
+    "chars": 14133
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\CV - dự án và tính năng.pdf",
+    "text": "022-CV - dự án và tính năng.txt",
+    "chars": 15412
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Danh_muc_tinh_nang_va_7_cong_viec_BA_Viettel_Samsung.docx",
+    "text": "023-Danh_muc_tinh_nang_va_7_cong_viec_BA_Viettel_Samsung.txt",
+    "chars": 65904
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Payroll.txt",
+    "text": "024-Payroll.txt",
+    "chars": 125
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Phỏng vấn BA.docx",
+    "text": "025-Phỏng vấn BA.txt",
+    "chars": 6777
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Phỏng vấn BA_đang làm dở.docx",
+    "duplicate_of": "021-Phỏng vấn BA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Testing.txt",
+    "text": "026-Testing.txt",
+    "chars": 62
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\0. Thuyết trình.docx",
+    "duplicate_of": "025-Phỏng vấn BA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\0. Usecases TCLife.pdf",
+    "duplicate_of": "008-0. Usecases TCLife.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\1. Giới thiệu HRAI.pdf",
+    "text": "027-1. Giới thiệu HRAI.txt",
+    "chars": 26374
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\2. Luồng Training AI HRAI.pdf",
+    "text": "028-2. Luồng Training AI HRAI.txt",
+    "chars": 42174
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\3. mChat.pdf",
+    "text": "029-3. mChat.txt",
+    "chars": 76244
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Cay-chuc-nang-CRM-Cogover.docx",
+    "text": "030-Cay-chuc-nang-CRM-Cogover.txt",
+    "chars": 4709
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Cách làm BA-QA HRAI.pdf",
+    "text": "031-Cách làm BA-QA HRAI.txt",
+    "chars": 20240
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\HRAI - Cách insert data kiểm thử vào DB.pdf",
+    "text": "032-HRAI - Cách insert data kiểm thử vào DB.txt",
+    "chars": 26927
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\JD Alphaway.pdf",
+    "duplicate_of": "009-JD Alphaway.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Kim Đức CV1.pdf",
+    "text": "033-Kim Đức CV1.txt",
+    "chars": 15412
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Kim Đức CV2.pdf",
+    "text": "034-Kim Đức CV2.txt",
+    "chars": 13585
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Phân biệt luồng OCR VLM.pdf",
+    "text": "035-Phân biệt luồng OCR VLM.txt",
+    "chars": 140493
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn\\Quản lý ingestion OCR.pdf",
+    "text": "036-Quản lý ingestion OCR.txt",
+    "chars": 14358
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\0. Thuyết trình.docx",
+    "duplicate_of": "025-Phỏng vấn BA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\1. Giới thiệu HRAI.pdf",
+    "duplicate_of": "027-1. Giới thiệu HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\2. Luồng Training AI HRAI.pdf",
+    "duplicate_of": "028-2. Luồng Training AI HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\3. mChat.pdf",
+    "duplicate_of": "029-3. mChat.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Cách làm BA-QA HRAI.pdf",
+    "duplicate_of": "031-Cách làm BA-QA HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\HRAI - Cách insert data kiểm thử vào DB.pdf",
+    "duplicate_of": "032-HRAI - Cách insert data kiểm thử vào DB.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Kim Đức CV1.pdf",
+    "duplicate_of": "033-Kim Đức CV1.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Kim Đức CV2.pdf",
+    "duplicate_of": "034-Kim Đức CV2.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Nguyen-Kim-Duc-TopCV.vn-060626.175215.pdf",
+    "text": "037-Nguyen-Kim-Duc-TopCV.vn-060626.175215.txt",
+    "chars": 13585
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Phân biệt luồng OCR VLM.pdf",
+    "duplicate_of": "035-Phân biệt luồng OCR VLM.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\Quản lý ingestion OCR.pdf",
+    "duplicate_of": "036-Quản lý ingestion OCR.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\Báo cáo RPA.docx",
+    "text": "038-Báo cáo RPA.txt",
+    "chars": 8989
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\CRM.docx",
+    "text": "039-CRM.txt",
+    "chars": 12202
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\Các usecase áp dụng RPA, OCR (1).docx",
+    "text": "040-Các usecase áp dụng RPA, OCR (1).txt",
+    "chars": 4350
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - Checklist khảo sát đối thủ.pdf",
+    "text": "041-DanhTV1 - Checklist khảo sát đối thủ.txt",
+    "chars": 69717
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - Công việc vận hành hệ thống.pdf",
+    "text": "042-DanhTV1 - Công việc vận hành hệ thống.txt",
+    "chars": 12126
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - Giá trị làm lợi phần mềm.pdf",
+    "text": "043-DanhTV1 - Giá trị làm lợi phần mềm.txt",
+    "chars": 3107
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - So sánh Viettel Software FPT IS.pdf",
+    "text": "044-DanhTV1 - So sánh Viettel Software FPT IS.txt",
+    "chars": 41083
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - Tờ trình nâng cấp phần mềm.pdf",
+    "text": "045-DanhTV1 - Tờ trình nâng cấp phần mềm.txt",
+    "chars": 28806
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\DanhTV1 - Ước lượng chi phí dự án.pdf",
+    "text": "046-DanhTV1 - Ước lượng chi phí dự án.txt",
+    "chars": 52901
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\fptshop-cdp-tracking-audit.md",
+    "text": "047-fptshop-cdp-tracking-audit.txt",
+    "chars": 12849
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\KPI thực hiện T10.2025_TTBL (VST).pdf",
+    "text": "048-KPI thực hiện T10.2025_TTBL (VST).txt",
+    "chars": 10941
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\KPI thực hiện T11.2025_TTBL (VST).pdf",
+    "text": "049-KPI thực hiện T11.2025_TTBL (VST).txt",
+    "chars": 11018
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\KPI thực hiện T12.2025_TTBL (VST).pdf",
+    "text": "050-KPI thực hiện T12.2025_TTBL (VST).txt",
+    "chars": 10949
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\KPI thực hiện T9.2025_TTBL (VST).pdf",
+    "text": "051-KPI thực hiện T9.2025_TTBL (VST).txt",
+    "chars": 10310
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\RPA usecases.docx",
+    "text": "052-RPA usecases.txt",
+    "chars": 4027
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\CV-cũ.pdf",
+    "duplicate_of": "033-Kim Đức CV1.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\CV-mới.pdf",
+    "text": "053-CV-mới.txt",
+    "chars": 13598
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\Phỏng vấn BA.docx",
+    "duplicate_of": "021-Phỏng vấn BA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\AI Hub interview.docx",
+    "duplicate_of": "015-AI Hub interview.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\AI Hub rút gọn.docx",
+    "duplicate_of": "016-AI Hub rút gọn.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\AI Hub tính năng bản ngắn.docx",
+    "duplicate_of": "017-AI Hub tính năng bản ngắn.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\AI Hub – System Feature Description.pdf",
+    "duplicate_of": "018-AI Hub – System Feature Description.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\BA làm gì.docx",
+    "duplicate_of": "019-BA làm gì.txt"
+  },
+  {
+    "path": "Các dự án cũ\\PV Tiếng Anh\\AI Hub\\Full thuyết trình AI Hub.docx",
+    "duplicate_of": "020-Full thuyết trình.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\mChat\\mchat-ba-analysis.md",
+    "text": "054-mchat-ba-analysis.txt",
+    "chars": 23031
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\mChat\\mChat.txt",
+    "text": "055-mChat.txt",
+    "chars": 95
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\mChat\\mChat_Dương đăng ký sáng kiến ý tưởng.docx",
+    "text": "056-mChat_Dương đăng ký sáng kiến ý tưởng.txt",
+    "chars": 4664
+  },
+  {
+    "path": "Các dự án cũ\\Projects VCM\\mChat\\VSS mChat SRS.docx",
+    "text": "057-VSS mChat SRS.txt",
+    "chars": 57916
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\In\\ChatGPT - CV (2).pdf",
+    "text": "058-ChatGPT - CV (2).txt",
+    "chars": 3110
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\In\\ChatGPT - CV.pdf",
+    "text": "059-ChatGPT - CV.txt",
+    "chars": 53112
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\In\\CV - Chi tiết dự án CV.pdf",
+    "text": "060-CV - Chi tiết dự án CV.txt",
+    "chars": 69686
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\In\\CV_Ban_Tieng_Viet.docx",
+    "text": "061-CV_Ban_Tieng_Viet.txt",
+    "chars": 15201
+  },
+  {
+    "path": "Các dự án cũ\\Phỏng vấn (2)\\In\\Nguyen-Kim-Duc-TopCV.vn-050626.64410.pdf",
+    "text": "062-Nguyen-Kim-Duc-TopCV.vn-050626.64410.txt",
+    "chars": 15412
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\AI Hub interview.docx",
+    "duplicate_of": "015-AI Hub interview.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\AI Hub rút gọn.docx",
+    "duplicate_of": "016-AI Hub rút gọn.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\AI Hub tính năng bản ngắn.docx",
+    "duplicate_of": "017-AI Hub tính năng bản ngắn.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\AI Hub – System Feature Description.pdf",
+    "duplicate_of": "018-AI Hub – System Feature Description.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\BA làm gì.docx",
+    "duplicate_of": "019-BA làm gì.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\AI Hub\\Full thuyết trình.docx",
+    "duplicate_of": "020-Full thuyết trình.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\CRM\\CRM.docx",
+    "duplicate_of": "039-CRM.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\CRM\\Danh_muc_tinh_nang_va_7_cong_viec_BA_Viettel_Samsung.docx",
+    "duplicate_of": "023-Danh_muc_tinh_nang_va_7_cong_viec_BA_Viettel_Samsung.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\HRAI\\1. Giới thiệu HRAI.pdf",
+    "duplicate_of": "027-1. Giới thiệu HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\HRAI\\2. Luồng Training AI HRAI.pdf",
+    "duplicate_of": "028-2. Luồng Training AI HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\HRAI\\Cách làm BA-QA HRAI.pdf",
+    "duplicate_of": "031-Cách làm BA-QA HRAI.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\HRAI\\HRAI - Cách insert data kiểm thử vào DB.pdf",
+    "duplicate_of": "032-HRAI - Cách insert data kiểm thử vào DB.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Hỏi ChatGPT chi tiết\\0. Usecases TCLife.pdf",
+    "duplicate_of": "008-0. Usecases TCLife.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Hỏi ChatGPT chi tiết\\ChatGPT - CV (2).pdf",
+    "duplicate_of": "058-ChatGPT - CV (2).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Hỏi ChatGPT chi tiết\\ChatGPT - CV.pdf",
+    "duplicate_of": "059-ChatGPT - CV.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Hỏi ChatGPT chi tiết\\CV - Chi tiết dự án CV.pdf",
+    "duplicate_of": "060-CV - Chi tiết dự án CV.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Hỏi ChatGPT chi tiết\\CV_Ban_Tieng_Viet.docx",
+    "duplicate_of": "061-CV_Ban_Tieng_Viet.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - Checklist khảo sát đối thủ.pdf",
+    "duplicate_of": "041-DanhTV1 - Checklist khảo sát đối thủ.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - Công việc vận hành hệ thống.pdf",
+    "duplicate_of": "042-DanhTV1 - Công việc vận hành hệ thống.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - Giá trị làm lợi phần mềm.pdf",
+    "duplicate_of": "043-DanhTV1 - Giá trị làm lợi phần mềm.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - So sánh Viettel Software FPT IS.pdf",
+    "duplicate_of": "044-DanhTV1 - So sánh Viettel Software FPT IS.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - Tờ trình nâng cấp phần mềm.pdf",
+    "duplicate_of": "045-DanhTV1 - Tờ trình nâng cấp phần mềm.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\DanhTV1 - Ước lượng chi phí dự án.pdf",
+    "duplicate_of": "046-DanhTV1 - Ước lượng chi phí dự án.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\fptshop-cdp-tracking-audit.md",
+    "duplicate_of": "047-fptshop-cdp-tracking-audit.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\KPI thực hiện T10.2025_TTBL (VST).pdf",
+    "duplicate_of": "048-KPI thực hiện T10.2025_TTBL (VST).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\KPI thực hiện T11.2025_TTBL (VST).pdf",
+    "duplicate_of": "049-KPI thực hiện T11.2025_TTBL (VST).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\KPI thực hiện T12.2025_TTBL (VST).pdf",
+    "duplicate_of": "050-KPI thực hiện T12.2025_TTBL (VST).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\Khác\\KPI thực hiện T9.2025_TTBL (VST).pdf",
+    "duplicate_of": "051-KPI thực hiện T9.2025_TTBL (VST).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\3. mChat.pdf",
+    "duplicate_of": "029-3. mChat.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\mchat-ba-analysis.md",
+    "duplicate_of": "054-mchat-ba-analysis.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\mchat-ba-analysis.pdf",
+    "text": "063-mchat-ba-analysis.txt",
+    "chars": 27289
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\mChat.txt",
+    "duplicate_of": "055-mChat.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\mChat_Dương đăng ký sáng kiến ý tưởng.docx",
+    "duplicate_of": "056-mChat_Dương đăng ký sáng kiến ý tưởng.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\mChat\\VSS mChat SRS.docx",
+    "duplicate_of": "057-VSS mChat SRS.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\AI Document Understanding End-To-End.docx",
+    "duplicate_of": "011-AI Document Understanding End-To-End.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Báo cáo RPA.docx",
+    "duplicate_of": "038-Báo cáo RPA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Báo cáo xây dựng phần mềm RPA v2.docx",
+    "duplicate_of": "012-Báo cáo xây dựng phần mềm RPA v2.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Các usecase áp dụng RPA, OCR (1).docx",
+    "duplicate_of": "040-Các usecase áp dụng RPA, OCR (1).txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Kịch bản OCR RPA.docx",
+    "duplicate_of": "014-Kịch bản OCR RPA.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Phân biệt luồng OCR VLM.pdf",
+    "duplicate_of": "035-Phân biệt luồng OCR VLM.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\Quản lý ingestion OCR.pdf",
+    "duplicate_of": "036-Quản lý ingestion OCR.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\OCR & RPA\\RPA usecases.docx",
+    "duplicate_of": "052-RPA usecases.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\1. Giới thiệu HRAI.pdf.txt",
+    "text": "064-1. Giới thiệu HRAI.pdf.txt",
+    "chars": 28347
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\2. Luồng Training AI HRAI.pdf.txt",
+    "text": "065-2. Luồng Training AI HRAI.pdf.txt",
+    "chars": 60897
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\3. mChat.pdf.txt",
+    "text": "066-3. mChat.pdf.txt",
+    "chars": 102690
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\Cách làm BA-QA HRAI.pdf.txt",
+    "text": "067-Cách làm BA-QA HRAI.pdf.txt",
+    "chars": 21688
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\HRAI - Cách insert data kiểm thử vào DB.pdf.txt",
+    "text": "068-HRAI - Cách insert data kiểm thử vào DB.pdf.txt",
+    "chars": 35470
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\mchat-ba-analysis.md.txt",
+    "text": "069-mchat-ba-analysis.md.txt",
+    "chars": 23031
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\mChat.txt.txt",
+    "duplicate_of": "055-mChat.txt"
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\mChat_Dương đăng ký sáng kiến ý tưởng.docx.txt",
+    "text": "070-mChat_Dương đăng ký sáng kiến ý tưởng.docx.txt",
+    "chars": 4895
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\extracts\\VSS mChat SRS.docx.txt",
+    "text": "071-VSS mChat SRS.docx.txt",
+    "chars": 75884
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\video_deps\\imageio_ffmpeg-0.6.0.dist-info\\top_level.txt",
+    "text": "072-top_level.txt",
+    "chars": 15
+  },
+  {
+    "path": "Các dự án cũ\\Dự án và tính năng\\.codex_tmp\\mchat_hrai\\video_deps\\imageio_ffmpeg\\binaries\\README.md",
+    "text": "073-README.txt",
+    "chars": 45
+  }
+]

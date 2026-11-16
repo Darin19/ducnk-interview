@@ -1,0 +1,1502 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><style>body{font:17px/1.65 Arial;color:#1f2937;max-width:1180px;margin:50px auto;padding:0 32px}h1{font-size:36px}h2{margin-top:56px;color:#123156}h3{margin-top:32px}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid #d1d5db;padding:10px;text-align:left;vertical-align:top}th{background:#eff6ff}img{max-width:100%;height:auto}pre{background:#f1f5f9;padding:20px;overflow:auto}blockquote{border-left:4px solid #3b82f6;padding:12px 22px;background:#f8fafc}a{color:#155eab}code{font-size:14px}</style><h1>Đức PO làm dự án VinDynamics</h1>
+<p>Case thực hành: <strong>Đội robots an ninh bảo vệ Vin University</strong> · Chuẩn bị phỏng vấn ngày 16/11/2026.</p>
+<h2>Mục lục</h2>
+<ul>
+<li><a href="#1-ph%E1%BA%A1m-vi-v%C3%A0-c%C3%A2u-chuy%E1%BB%87n-chuy%E1%BB%83n-ng%C3%A0nh">1. Phạm vi và câu chuyện chuyển ngành</a></li>
+<li><a href="#2-t%C3%B4i-s%E1%BA%BD-ti%E1%BA%BFp-c%E1%BA%ADn-h%E1%BB%87-th%E1%BB%91ng-m%E1%BB%9Bi-nh%C6%B0-th%E1%BA%BF-n%C3%A0o">2. Tôi sẽ tiếp cận hệ thống mới như thế nào?</a></li>
+<li><a href="#3-product-scope-%C4%91%E1%BB%99i-robot-an-ninh-vinuni">3. Product scope: đội robot an ninh VinUni</a></li>
+<li><a href="#4-ki%E1%BA%BFn-tr%C3%BAc-t%E1%BB%95ng-th%E1%BB%83-%C4%91%E1%BB%81-xu%E1%BA%A5t">4. Kiến trúc tổng thể đề xuất</a></li>
+<li><a href="#5-lu%E1%BB%93ng-xuy%C3%AAn-su%E1%BB%91t-camera-b%C3%A1o-s%E1%BB%B1-ki%E1%BB%87n--robot-x%C3%A1c-minh--b%E1%BA%A3o-v%E1%BB%87-x%E1%BB%AD-l%C3%BD">5. Luồng xuyên suốt: camera báo sự kiện → robot xác minh → bảo vệ xử lý</a></li>
+<li><a href="#6-h%E1%BB%87-tri-th%E1%BB%A9c-v%C3%A0-ai-agent-chatbot-cho-robot">6. Hệ tri thức và AI Agent chatbot cho robot</a></li>
+<li><a href="#7-baqc-trong-ai-training-fine-tune-v%C3%A0-d%E1%BB%AF-li%E1%BB%87u-robot">7. BA/QC trong AI training, fine-tune và dữ liệu robot</a></li>
+<li><a href="#8-h%E1%BB%A3p-%C4%91%E1%BB%93ng-t%C3%ADch-h%E1%BB%A3p-d%E1%BB%AF-li%E1%BB%87u-v%C3%A0-state-machine">8. Hợp đồng tích hợp, dữ liệu và state machine</a></li>
+<li><a href="#9-backlog-m%E1%BA%ABu-user-story-v%C3%A0-acceptance-criteria">9. Backlog mẫu, user story và acceptance criteria</a></li>
+<li><a href="#10-nfr-l%E1%BB%97i-v%C3%A0-ranh-gi%E1%BB%9Bi-an-to%C3%A0n">10. NFR, lỗi và ranh giới an toàn</a></li>
+<li><a href="#11-qc-uat-commissioning-v%C3%A0-field-feedback">11. QC, UAT, commissioning và field feedback</a></li>
+<li><a href="#12-traceability-sqllogs-change-v%C3%A0-release">12. Traceability, SQL/logs, change và release</a></li>
+<li><a href="#13-industry-solution-packs-%C3%A1p-d%E1%BB%A5ng-t%C6%B0-duy-workflow-v%C3%A0-policy-t%E1%BB%AB-ch%C3%ADnh-ph%E1%BB%A7">13. Industry Solution Packs: áp dụng tư duy workflow và policy từ chính phủ</a></li>
+<li><a href="#14-%C3%A1nh-x%E1%BA%A1-kinh-nghi%E1%BB%87m-c%C5%A9-sang-c%C3%B4ng-vi%E1%BB%87c-m%E1%BB%9Bi">14. Ánh xạ kinh nghiệm cũ sang công việc mới</a></li>
+<li><a href="#15-ma-tr%E1%BA%ADn-ph%E1%BB%A7-jd-vindynamics">15. Ma trận phủ JD VinDynamics</a></li>
+<li><a href="#16-c%C3%A1ch-l%C3%A0m-vi%E1%BB%87c-h%E1%BA%B1ng-ng%C3%A0y-v%C3%A0-raci">16. Cách làm việc hằng ngày và RACI</a></li>
+<li><a href="#17-b%C3%A0i-tr%E1%BA%A3-l%E1%BB%9Di-ph%E1%BB%8Fng-v%E1%BA%A5n-v%C3%A0-v%C3%AD-d%E1%BB%A5-%C4%91%E1%BB%83-k%E1%BB%83">17. Bài trả lời phỏng vấn và ví dụ để kể</a></li>
+<li><a href="#18-ngu%E1%BB%93n-v%C3%A0-s%C6%A1-%C4%91%E1%BB%93-b%C3%A0n-giao">18. Nguồn và sơ đồ bàn giao</a></li>
+</ul>
+<h2>1. Phạm vi và câu chuyện chuyển ngành</h2>
+<p>Đây là <strong>phương án giả định để luyện phỏng vấn và thảo luận thiết kế</strong>, không phải mô tả kiến trúc nội bộ, hợp đồng hoặc dự án đã được VinDynamics/VinUni xác nhận. Tên công nghệ là lựa chọn tham chiếu; thông số pilot là giả định phải được khảo sát và phê duyệt. Hai tài liệu người dùng cung cấp, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/ChatGPT/T%C3%ACm%20hi%E1%BB%83u%20Robot%20VinDynamics.md">Tìm hiểu Robot VinDynamics</a> và <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/ChatGPT/M%C3%A3%20ngu%E1%BB%93n%20robot%20h%C3%ACnh%20ng%C6%B0%E1%BB%9Di%20c%E1%BB%A7a%20c%C3%A1c%20t%E1%BA%ADp%20%C4%91o%C3%A0n%20l%E1%BB%9Bn.md">Mã nguồn robot hình người</a>, được dùng như nguồn ý tưởng, không như tài liệu kỹ thuật chính thức của hãng.</p>
+<p>Tiền đề kinh nghiệm nằm trong <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/%C4%90%E1%BB%A9c%20BA%20training%20AI,%20ML%20models.md">Đức BA training AI, ML models</a>. Nguồn hồ sơ gốc là <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Kim%20%C4%90%E1%BB%A9c%20CV%20full.pdf">CV full</a>. Phần Tori ở tài liệu trước là mô phỏng BA/QC, không phải kinh nghiệm đã làm. Azure/ML/fleet bổ sung cho Smart Factory cũng là thiết kế đề xuất.</p>
+<blockquote>
+<p>Tôi chưa coi kinh nghiệm phần mềm doanh nghiệp là kinh nghiệm điều khiển humanoid. Điều tôi mang sang là năng lực phân tích hệ thống có thiết bị, dữ liệu, trạng thái, quyền và nhiều bên tham gia. Smart Safe giúp tôi hiểu cảnh báo và vận hành an ninh; Smart Factory giúp tôi hiểu health, bảo trì và chất lượng; chính phủ giúp tôi về workflow và governance; AI Hub và các sản phẩm AI giúp tôi về dữ liệu, evaluation và release. Tôi có thể dùng nền tảng đó để làm rõ robot phải làm gì, trong điều kiện nào, khi nào không được làm và chứng minh bằng test ra sao, đồng thời học phần robotics cùng Tech Lead.</p>
+</blockquote>
+<h3>Phân vai đúng với JD</h3>
+<p>Tên file dùng PO theo yêu cầu, nhưng vị trí tuyển dụng là <strong>Senior BA</strong>. Nếu vào vai BA: tôi sở hữu chất lượng và tính nhất quán yêu cầu, phân tích tác động và đề xuất ưu tiên. Nếu được giao thêm PO: tôi mới sở hữu mục tiêu sản phẩm, thứ tự backlog và quyết định release trong phạm vi được ủy quyền. Kiến trúc dưới đây là đề xuất để trao đổi; Tech Lead/Architect chốt HOW. QC chịu kế hoạch/thực thi kiểm thử; vai trò hybrid có thể trực tiếp hỗ trợ nhưng không tự nghiệm thu tất cả phần mình làm.</p>
+<h2>2. Tôi sẽ tiếp cận hệ thống mới như thế nào?</h2>
+<h3>2.1. Khảo sát từ hoạt động bảo vệ hiện tại</h3>
+<p>Không bắt đầu bằng câu hỏi “robot dùng model gì?”. Bắt đầu bằng ca trực: ai tuần tra, khu vực nào hay bỏ sót, sự kiện nào xảy ra, ai xác minh, mất bao lâu, điều gì làm bảo vệ khó xử lý, camera hiện hữu có điểm mù gì. Đi thực địa cả ban ngày và ca tối theo điều kiện được phép; quan sát đông người, đường dốc, cửa kính, thang máy, hành lang hẹp, Wi-Fi và vị trí sạc.</p>
+<table>
+<thead>
+<tr>
+<th>Đối tượng</th>
+<th>Câu hỏi cần chốt</th>
+<th>Bằng chứng thu thập</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Trưởng an ninh</td>
+<td>Mục tiêu, mức ưu tiên, ai nhận cảnh báo, ai đóng sự cố?</td>
+<td>SOP, ca trực, incident log, SLA hiện tại</td>
+</tr>
+<tr>
+<td>Bảo vệ/Robot Operations</td>
+<td>Khi nào cần robot; khi nào thao tác tay; ai có thể tiếp cận robot?</td>
+<td>Shadowing, task analysis, pain point list</td>
+</tr>
+<tr>
+<td>Sinh viên/nhân viên/khách</td>
+<td>Robot gây cản trở, khó hiểu hoặc lo ngại gì; kênh yêu cầu giúp đỡ?</td>
+<td>HRI interviews, usability scenarios</td>
+</tr>
+<tr>
+<td>IT/OT và quản lý tòa nhà</td>
+<td>Camera/VMS, access control, mạng, thang máy, cửa và BMS có API nào?</td>
+<td>Inventory, network/site map, integration constraints</td>
+</tr>
+<tr>
+<td>Robotics/R&amp;D</td>
+<td>Capabilities đã ổn định, ODD, controller, SDK, map/localization, chế độ an toàn?</td>
+<td>Demo thật, interface docs, limitation register</td>
+</tr>
+<tr>
+<td>AI/Data</td>
+<td>Model nào sẵn có, nhãn/dataset nào, điều kiện suy giảm và benchmark?</td>
+<td>Model/data cards, evaluation report</td>
+</tr>
+<tr>
+<td>Safety/Security/Privacy</td>
+<td>Ai phê duyệt cách vận hành, recording, quyền truy cập và tình huống khẩn cấp?</td>
+<td>Hazard/risk register, policy, evidence plan</td>
+</tr>
+<tr>
+<td>PO/Market Development/PMO</td>
+<td>Pilot chứng minh gì, ngân sách/thời gian, khách hàng chấp nhận thế nào?</td>
+<td>Product goal, scope, success criteria, milestones</td>
+</tr>
+</tbody></table>
+<h3>2.2. Năm bản đồ overview cần hoàn thành</h3>
+<ol>
+<li><strong>Context map:</strong> robot, bảo vệ, người trong campus, camera, hệ thống cửa, mạng, cloud, helpdesk và người quản trị. Chỉ rõ hệ thống sở hữu dữ liệu nào và boundary của nhà cung cấp.</li>
+<li><strong>Capability map:</strong> tuần tra, quan sát, phát hiện, tương tác, xác minh, điều phối, sạc, health, vận hành và quản trị AI. Phân biệt đã có/demo/roadmap/chưa kiểm chứng.</li>
+<li><strong>Journey và BPMN AS-IS/TO-BE:</strong> một sự cố từ phát hiện tới đóng; bước có con người, SLA và đầu ra bằng chứng.</li>
+<li><strong>Data/integration map:</strong> sensor/topic/event → site gateway → mission/incident → evidence → report; mapping schema, owner, tần suất, lỗi và retention.</li>
+<li><strong>State/deployment map:</strong> trạng thái robot, mission, incident; dịch vụ nào chạy robot/site/cloud; khi đứt một kết nối còn năng lực nào.</li>
+</ol>
+<p>Deliverable: <code>System Overview v0.1</code>, glossary, interface inventory, RACI, assumption/risk/dependency log. Dùng Confluence, draw.io, Jira, Figma, Excel, Postman và SQL. Mục tiêu là cả Dev–QC–Deployment–Operations đọc cùng một mô tả, không mỗi đội có một định nghĩa “robot online” khác nhau.</p>
+<h3>2.3. Lộ trình 30–60–90 ngày có đầu ra</h3>
+<table>
+<thead>
+<tr>
+<th>Giai đoạn</th>
+<th>Công việc</th>
+<th>Deliverable và điều kiện hoàn thành</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ngày 1–10</td>
+<td>Đọc spec, quan sát demo, thực địa, stakeholder interviews; lập danh sách điều chưa biết</td>
+<td>Overview, ODD draft, glossary, scope/assumptions; Tech Lead xác nhận capability baseline</td>
+</tr>
+<tr>
+<td>Ngày 11–30</td>
+<td>Phân tích 3 luồng ưu tiên; mapping API/event; dựng prototype operations UI; chốt test basis</td>
+<td>BPMN, state/API contract, backlog ready tối thiểu cho sprint kế tiếp; QC review AC; PO chốt pilot</td>
+</tr>
+<tr>
+<td>Ngày 31–60</td>
+<td>Refinement/daily clarification; review demo; xây gold scenarios; SIL/HIL và integration testing</td>
+<td>RTM, test reports, defect taxonomy, deployment checklist; blocker safety/integration được xử lý trước field</td>
+</tr>
+<tr>
+<td>Ngày 61–90</td>
+<td>Pilot có giám sát; onsite acceptance; thu telemetry/feedback; điều chỉnh backlog</td>
+<td>Pilot report, business KPI, re-validation evidence, training/SOP, quyết định mở rộng có điều kiện</td>
+</tr>
+</tbody></table>
+<p>Mốc là kế hoạch mẫu; không cam kết 90 ngày đủ production nếu platform robot hoặc site chưa sẵn sàng.</p>
+<h2>3. Product scope: đội robot an ninh VinUni</h2>
+<h3>3.1. Product goal và giả định</h3>
+<p>Mục tiêu: tăng độ bao phủ tuần tra và tốc độ cung cấp thông tin cho bảo vệ, đồng thời duy trì tương tác an toàn và khả năng kiểm soát của con người. Robot quan sát, báo cáo, hỗ trợ chỉ dẫn và tạo bằng chứng; nhân viên an ninh quyết định xử lý sự việc.</p>
+<p>Pilot giả định <strong>3 robot, 1–2 khu nhà, tuyến bằng phẳng đã khảo sát</strong>, có nhân sự giám sát, không thử cầu thang/địa hình phức tạp trước khi có capability và phê duyệt tương ứng. Đây là giả định thiết kế, không phải thông tin về VinUni. Nếu phần cứng là humanoid, cơ chế đi đứng do platform/vendor cung cấp và được kiểm chứng; không coi Nav2 là bộ điều khiển giữ thăng bằng.</p>
+<p><strong>ODD — Operational Design Domain</strong> mô tả ranh giới vận hành: loại mặt sàn/độ dốc, bề rộng, ánh sáng, mưa/nước, mật độ người, bản đồ, vùng cấm, tín hiệu mạng, tải trọng và giới hạn pin. BA ghi các điều kiện và cách nhận biết ngoài ODD; Robotics/Safety xác nhận ngưỡng vật lý bằng thử nghiệm và phân tích rủi ro.</p>
+<h3>3.2. Use case và thứ tự phát triển</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Use case</th>
+<th>Trigger → kết quả</th>
+<th>Phạm vi</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SEC-01</td>
+<td>Tuần tra định kỳ</td>
+<td>Lịch/ca trực → route checkpoints → báo cáo</td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>SEC-02</td>
+<td>Camera/cảm biến báo sự kiện</td>
+<td>Event → incident → robot phù hợp quan sát từ vị trí an toàn → bảo vệ xác minh</td>
+<td>MVP sau integration gate</td>
+</tr>
+<tr>
+<td>SEC-03</td>
+<td>Robot phát hiện bất thường</td>
+<td>Vision/rule → evidence + alert → human review</td>
+<td>MVP giới hạn loại sự kiện</td>
+</tr>
+<tr>
+<td>SEC-04</td>
+<td>Hỏi đường/yêu cầu trợ giúp</td>
+<td>Người gọi → xác nhận nhu cầu → trả lời KB hoặc gọi bảo vệ</td>
+<td>Giai đoạn tiếp theo</td>
+</tr>
+<tr>
+<td>SEC-05</td>
+<td>Telepresence/teleoperation</td>
+<td>Người có quyền yêu cầu → phiên điều khiển độc quyền → trả quyền</td>
+<td>MVP ở chế độ được vendor hỗ trợ</td>
+</tr>
+<tr>
+<td>SEC-06</td>
+<td>Pin thấp/sạc</td>
+<td>Dự báo không đủ năng lượng → handover nhiệm vụ → dock</td>
+<td>MVP theo capability phần cứng</td>
+</tr>
+<tr>
+<td>SEC-07</td>
+<td>Thiết bị suy giảm</td>
+<td>Health alert → hạn chế capability/maintenance ticket</td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>SEC-08</td>
+<td>Báo cáo ca trực</td>
+<td>Mission/incident/evidence → bản tổng hợp được kiểm tra</td>
+<td>Sau khi data pipeline ổn định</td>
+</tr>
+</tbody></table>
+<p>Chưa đưa vào pilot: truy đuổi/khống chế người, tự nhận dạng sinh viên bằng khuôn mặt, tự kết luận người vi phạm, mở khóa cửa theo yêu cầu tự do, tác vụ thao tác tay chưa được kiểm chứng. Đây là quyết định scope cụ thể cho case an ninh có người đi lại, không phải suy đoán robot không có năng lực đó.</p>
+<h3>3.3. Chỉ số thành công đo từ đâu?</h3>
+<table>
+<thead>
+<tr>
+<th>Mục tiêu</th>
+<th>Metric và mẫu số</th>
+<th>Nguồn</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bao phủ tuần tra</td>
+<td>Checkpoint hoàn tất hợp lệ / checkpoint đến hạn trong ODD</td>
+<td>Mission events; lý do bỏ lỡ riêng</td>
+</tr>
+<tr>
+<td>Hữu ích cho bảo vệ</td>
+<td>Thời gian event → bảo vệ có evidence dùng được, median/p95</td>
+<td>Trace event/evidence/view timestamps</td>
+</tr>
+<tr>
+<td>Chất lượng cảnh báo</td>
+<td>Confirmed true events / reviewed alerts; false alarms/robot-hour</td>
+<td>Incident adjudication; không bỏ qua pending</td>
+</tr>
+<tr>
+<td>Hoàn thành nhiệm vụ</td>
+<td>Mission thành công / mission đã chấp nhận trong scope; report abort reason</td>
+<td>Mission state ledger</td>
+</tr>
+<tr>
+<td>Mức can thiệp</td>
+<td>Human interventions/mission hoặc /robot-hour, phân loại</td>
+<td>Teleoperation/handover logs</td>
+</tr>
+<tr>
+<td>Khả dụng</td>
+<td>Thời gian đủ capability / thời gian lịch yêu cầu; phân planned/unplanned</td>
+<td>Health + schedule + maintenance</td>
+</tr>
+<tr>
+<td>HRI</td>
+<td>Tỷ lệ hiểu đúng intent, gọi hỗ trợ thành công, đánh giá usability</td>
+<td>Test transcripts và thử nghiệm người dùng</td>
+</tr>
+<tr>
+<td>Chi phí</td>
+<td>Cost/robot-hour hữu ích, cost/mission, công vận hành/bảo trì</td>
+<td>Billing + ops + mission logs</td>
+</tr>
+</tbody></table>
+<p>Đặt target sau đo baseline; với các chỉ số pilot ghi rõ cỡ mẫu, tuyến, điều kiện và phiên bản. “Không có va chạm trong pilot” là kết quả thử nghiệm giới hạn, không chứng minh an toàn tuyệt đối.</p>
+<h2>4. Kiến trúc tổng thể đề xuất</h2>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/08-vinuni-robot-platform.drawio.png" alt="Kiến trúc đội robot an ninh VinUni"></p>
+<h3>4.1. Phân lớp và công nghệ cụ thể</h3>
+<table>
+<thead>
+<tr>
+<th>Lớp</th>
+<th>Công nghệ tham chiếu</th>
+<th>Trách nhiệm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Robot hardware/control</td>
+<td>Camera RGB/depth, LiDAR nếu có, IMU, encoder, microphone, battery/BMS, E-stop; controller/SDK của hãng</td>
+<td>Đo thế giới, chuyển động, cân bằng; safety circuit độc lập theo thiết kế phần cứng</td>
+</tr>
+<tr>
+<td>Robot middleware</td>
+<td>ROS 2 Jazzy làm baseline khảo sát, DDS/Fast DDS hoặc Cyclone DDS theo platform</td>
+<td>Nodes, topics, services, actions, QoS; chốt distro/OS/vendor compatibility trước sử dụng</td>
+</tr>
+<tr>
+<td>Navigation/skills</td>
+<td>Vendor locomotion; Nav2 khi phù hợp; BehaviorTree.CPP cho task execution</td>
+<td>Route/local planning, skill có goal/feedback/result, fallback được kiểm chứng</td>
+</tr>
+<tr>
+<td>Edge perception</td>
+<td>YOLOX + ByteTrack; ONNX Runtime/TensorRT; Jetson Orin hoặc máy tính tương đương theo benchmark</td>
+<td>Detect/track, vùng quan sát; model không trực tiếp điều khiển actuator</td>
+</tr>
+<tr>
+<td>Site edge</td>
+<td>Industrial server, Docker; MQTT broker EMQX; local mission adapter, SQLite/PostgreSQL buffer</td>
+<td>Kết nối robot/site, offline queue, đồng bộ cloud; không thay controller an toàn</td>
+</tr>
+<tr>
+<td>Mission/fleet</td>
+<td>ASP.NET Core modular backend; PostgreSQL; Open-RMF adapter nếu tương thích</td>
+<td>Mission lifecycle, capability/energy/resource checks, allocation, incident linkage</td>
+</tr>
+<tr>
+<td>Business workflow</td>
+<td>Camunda 8 BPMN; OPA policy service</td>
+<td>Human task, escalation, policy/industry pack; license/runtime cần thẩm định</td>
+</tr>
+<tr>
+<td>Cloud trên Azure</td>
+<td>IoT Hub/DPS, Service Bus, Container Apps; ADLS/Blob, Azure SQL/PostgreSQL, ADX</td>
+<td>Identity/telemetry, API, event processing, lưu bằng chứng và báo cáo</td>
+</tr>
+<tr>
+<td>AI assistant</td>
+<td>FastAPI + LangGraph; Qwen qua vLLM; Qdrant/OpenSearch RAG; speech pipeline</td>
+<td>Hiểu yêu cầu, tìm tri thức, đề xuất tool, giải thích có nguồn</td>
+</tr>
+<tr>
+<td>Ops UI</td>
+<td>React/TypeScript; map/floor plan; WebRTC cho phiên video nếu được hỗ trợ</td>
+<td>Fleet status, incident inbox, mission timeline, quyền điều khiển</td>
+</tr>
+<tr>
+<td>Observability/release</td>
+<td>OpenTelemetry, Prometheus/Grafana hoặc Azure Monitor; MLflow/Azure ML, ACR/Azure DevOps</td>
+<td>Trace, health, model evaluation, artifact/version, rollout và rollback</td>
+</tr>
+</tbody></table>
+<p>Đây là modular architecture; không có yêu cầu tạo một microservice cho mỗi ô. Pilot có thể dùng một backend chia module Mission/Fleet/Incident/Configuration, giữ riêng robotics runtime, AI inference và evidence storage theo tính chất tải/quyền.</p>
+<p>ROS 2 cung cấp topic/service/action; action phù hợp tác vụ có goal, feedback và result. Open-RMF là nền tảng tích hợp/điều phối cần adapter, không phải giải pháp tự biến humanoid thành robot đi an toàn. <a href="https://raw.githubusercontent.com/ros2/ros2_documentation/jazzy/source/Concepts/Basic/About-Interfaces.rst">ROS 2 interfaces</a>, <a href="https://github.com/open-rmf/rmf">Open-RMF</a>.</p>
+<h3>4.2. Edge/cloud chia theo độ trễ, tính tự chủ và dữ liệu</h3>
+<ul>
+<li><strong>Robot:</strong> điều khiển thời gian thực, tránh va chạm/giám sát an toàn theo platform, cảm biến, localization, skill execution và phản ứng khi mất mạng. Cloud mất không được làm mất cơ chế an toàn cục bộ.</li>
+<li><strong>Site:</strong> gateway camera/cửa, buffering, đồng bộ, điều phối cục bộ trong phạm vi đã thiết kế, dashboard tối thiểu nếu cần. Nếu không có điều phối cục bộ thì mất cloud phải chuyển mode rõ ràng, không giả định vẫn làm mọi nhiệm vụ.</li>
+<li><strong>Cloud:</strong> fleet lịch dài hạn, quản trị nhiều site, workflow, dataset/training, báo cáo, KB và model lớn khi băng thông cho phép.</li>
+</ul>
+<p>Truyền telemetry metadata liên tục; gửi ảnh/clip theo event và quyền, không stream mọi camera về cloud mặc định. Video và dữ liệu điều khiển đi kênh riêng: WebRTC/RTSP theo adapter cho media; MQTT/HTTPS cho event/command ở tầng ứng dụng. DDS chủ yếu trong robot/mạng được thiết kế; không mở thẳng ROS graph ra Internet.</p>
+<h3>4.3. Bốn tầng “điều phối” phải phân biệt</h3>
+<table>
+<thead>
+<tr>
+<th>Tầng</th>
+<th>Ví dụ</th>
+<th>Cơ chế phù hợp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nghiệp vụ</td>
+<td>Incident cần bảo vệ xác minh rồi đóng</td>
+<td>BPMN/Camunda, tác vụ người, SLA</td>
+</tr>
+<tr>
+<td>Fleet</td>
+<td>Robot nào nhận mission, ai giữ dock/đoạn đường</td>
+<td>Scheduler + allocation/resource reservation</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>Đi tới waypoint, quan sát, phát lời nhắc, dock</td>
+<td>Behavior tree/state machine + ROS 2 Action</td>
+</tr>
+<tr>
+<td>Motion/control</td>
+<td>Giữ thăng bằng, điều khiển khớp, phản ứng vật lý</td>
+<td>Vendor controller, điều khiển thời gian thực và cơ chế safety</td>
+</tr>
+</tbody></table>
+<p>LangGraph/LLM có thể đề xuất nhiệm vụ mức cao, không thay cả bốn tầng. Nav2 phù hợp bài toán navigation trong phạm vi platform hỗ trợ; humanoid cần thêm footstep/whole-body/locomotion controller và kiểm chứng riêng. <a href="https://docs.nav2.org/">Nav2 documentation</a>.</p>
+<h2>5. Luồng xuyên suốt: camera báo sự kiện → robot xác minh → bảo vệ xử lý</h2>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/09-vinuni-mission-flow.drawio.png" alt="Luồng nhiệm vụ, handover và xử lý ngoại lệ"></p>
+<ol>
+<li>Camera ở hành lang phát hiện người trong vùng theo lịch giám sát. Event có camera/site/zone/time/model version/evidence; “có người” chưa đồng nghĩa “người xâm nhập”.</li>
+<li>Event service validate/dedupe/correlate; tạo incident <code>OPEN</code>, kiểm tra policy đang hiệu lực và hiện trạng camera.</li>
+<li>Security workflow tạo yêu cầu <code>observe_zone</code>, gắn <code>incident_id</code>, vị trí quan sát an toàn và deadline. Mission service kiểm tra quyền, scope và dữ liệu cần thiết.</li>
+<li>Fleet lọc robot có capability, health, pin/đường về sạc, map version và route trong ODD; sau đó mới chấm chi phí/ETA.</li>
+<li>Scheduler tạo assignment lease/reservation và gửi command có <code>command_id</code>, <code>mission_id</code>, TTL, <code>assignment_epoch</code>. Robot ACK việc nhận hoặc reject vì điều kiện đã thay đổi.</li>
+<li>Edge recheck policy/health và controller readiness. Skill runtime gọi ROS Action điều hướng; feedback cập nhật tiến độ. Safety controller được ưu tiên hơn mission.</li>
+<li>Tới observation point, robot thu evidence. Detector/rules đưa tín hiệu; VLM nếu dùng chỉ tóm tắt vùng ảnh được cấp, không tự xác nhận danh tính hay hành vi vi phạm.</li>
+<li>Dashboard gửi clip/cảnh báo cho bảo vệ. Tương tác bằng lời chỉ theo phrase/template được duyệt; không gây cản trở và không tự tăng mức phản ứng.</li>
+<li>Bảo vệ xác minh, phân loại false alarm/needs action/incident confirmed; tạo ticket hoặc can thiệp. Robot có thể giữ vị trí an toàn, chuyển telepresence hoặc nhận nhiệm vụ mới theo quy tắc.</li>
+<li>Mission kết thúc khi có bằng chứng nhiệm vụ quan sát hoàn tất; incident chỉ đóng khi người có thẩm quyền hoàn thành xử lý. Hai vòng đời không được gộp thành một nút “Done”.</li>
+</ol>
+<p><strong>Ngoại lệ:</strong> không có robot đủ điều kiện → chuyển bảo vệ; không nhận ACK → kiểm tra assignment trước retry; robot mất mạng sau nhận → mission ở trạng thái execution chưa xác định, áp chính sách offline/lease thay vì lập tức giao trùng; robot không tới được → cung cấp lý do và evidence, không báo thành công.</p>
+<h3>5.1. Logic phân công fleet</h3>
+<p>Hard constraints trước: tenant/site, ODD, skill/version, safety readiness, localization freshness, năng lượng cho nhiệm vụ + dự phòng + tới điểm sạc, route/access, payload, maintenance lock, không bị teleoperation khác giữ quyền.</p>
+<p>Sau khi lọc, score có thể là <code>w1*ETA + w2*energy_cost + w3*workload + w4*coverage_gap_penalty</code>. Weights được thử nghiệm bằng dữ liệu/simulation. Robot gần nhất chưa chắc tốt nhất nếu pin thấp hoặc route bị chặn. Fleet assignment không tự giải quyết collision avoidance.</p>
+<p>Tài nguyên chia sẻ: hành lang hẹp, thang máy, cửa, dock. Dùng reservation có timeout và cơ chế phân xử; vẫn cần local obstacle avoidance. Khi lease hết hạn mà chưa xác minh robot cũ dừng, chỉ được tái giao theo protocol có fencing/epoch và kế hoạch an toàn; không dùng timeout làm bằng chứng thế giới vật lý đã hoàn tác.</p>
+<h2>6. Hệ tri thức và AI Agent chatbot cho robot</h2>
+<h3>6.1. Phân tách ba nhóm tri thức</h3>
+<table>
+<thead>
+<tr>
+<th>Nhóm</th>
+<th>Nguồn và cách lưu</th>
+<th>Cách truy cập</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Công khai</td>
+<td>Bản đồ hướng dẫn, giờ hoạt động, điểm dịch vụ được công bố</td>
+<td>RAG theo site/version; trả lời khách</td>
+</tr>
+<tr>
+<td>Nội bộ vận hành</td>
+<td>SOP an ninh, escalation, maintenance, skill limitations</td>
+<td>RAG có role/scope; chỉ operator được phép</td>
+</tr>
+<tr>
+<td>Dữ liệu thời gian thực</td>
+<td>Mission, battery, health, vị trí, incident, cửa</td>
+<td>API/tool có quyền; không coi vector index là nguồn realtime</td>
+</tr>
+</tbody></table>
+<p>Sơ đồ nền dùng lại <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/01-knowledge-rag.drawio.png">Hệ tri thức và RAG</a> và <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/02-agent-workflow.drawio.png">Agent workflow</a>. Tài liệu trước đã mô tả ingestion, chunking, hybrid search, reranking, memory, ACL và fine-tuning; tại robot thêm context site–zone–map–mission–ODD.</p>
+<h3>6.2. Pipeline cụ thể</h3>
+<p>SOP/map guide/FAQ → Tika hoặc PaddleOCR → human content review → MinIO/Blob bản gốc + PostgreSQL metadata → chunks có <code>site_id</code>, <code>visibility</code>, <code>effective_from/to</code>, <code>source_owner</code>, <code>map_version</code> → bge-m3 embedding → Qdrant + OpenSearch → bge reranker → Qwen2.5-7B-Instruct/vLLM → output schema/citation checks.</p>
+<p>Hội thoại giọng nói: microphone → voice activity detection (Silero VAD) → <strong>faster-whisper</strong> STT baseline → intent/context → agent → approved answer → <strong>Azure AI Speech</strong> TTS hoặc engine edge đã benchmark tiếng Việt. STT confidence/quality thấp thì hỏi lại; xác thực quyền không dựa vào giọng nói tự nhận. Việc dùng Whisper/Speech ở đây là lựa chọn thiết kế, không phải stack của VinDynamics đã biết.</p>
+<p>LangGraph graph đề xuất:</p>
+<p><code>Receive → Identify user mode → Resolve site/context → Classify intent → Public KB | Operator KB | Read tool | Propose mission → Policy validation → Answer/Confirm → Execute permitted API → Verify → Report</code>.</p>
+<p>Giới hạn số vòng tool, timeout tổng và token/cost budget. Trace lưu quyết định ở dạng cấu trúc, nguồn và tool results đã mask; không yêu cầu log chuỗi suy nghĩ nội bộ của model. Không đưa lịch tuần tra nhạy cảm hoặc nội dung camera vào câu trả lời khách công khai.</p>
+<h3>6.3. Tool catalog mẫu</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Actor</th>
+<th>Input/output</th>
+<th>Chính sách</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>lookup_public_location</code></td>
+<td>Khách/người trong campus</td>
+<td>Tên nơi → chỉ dẫn đã được duyệt</td>
+<td>Read-only, vùng công khai</td>
+</tr>
+<tr>
+<td><code>search_security_sop</code></td>
+<td>Bảo vệ/operator</td>
+<td>Tình huống → đoạn SOP có nguồn/phiên bản</td>
+<td>Role/site filter ở backend</td>
+</tr>
+<tr>
+<td><code>get_robot_health</code></td>
+<td>Operator</td>
+<td>Robot ID → health + freshness</td>
+<td>Không coi dữ liệu cũ là trạng thái hiện tại</td>
+</tr>
+<tr>
+<td><code>get_incident_context</code></td>
+<td>Bảo vệ có scope</td>
+<td>Incident ID → timeline/evidence token</td>
+<td>Evidence URL ngắn hạn, kiểm tra quyền khi tải</td>
+</tr>
+<tr>
+<td><code>propose_patrol_mission</code></td>
+<td>Operator</td>
+<td>Zone/time → draft + feasible constraints</td>
+<td>Chỉ tạo đề xuất; không trực tiếp chạy skill</td>
+</tr>
+<tr>
+<td><code>submit_mission</code></td>
+<td>Dispatcher</td>
+<td>Draft ID + expected version → mission ID</td>
+<td>Confirmation + OPA + state/ODD checks</td>
+</tr>
+<tr>
+<td><code>request_guard_help</code></td>
+<td>Người cần trợ giúp</td>
+<td>Location + mô tả tối thiểu → ticket/ack</td>
+<td>Chống spam theo policy; không yêu cầu thông tin cá nhân không cần thiết</td>
+</tr>
+</tbody></table>
+<p><strong>Không cấp tool trực tiếp kiểu <code>set_joint_torque</code> cho LLM.</strong> Với lệnh “đi theo người áo đỏ”, agent phải kiểm tra use case được phép và xin làm rõ/phê duyệt khi cần; không suy ra đây là quyền theo dõi mọi người trong campus. Prompt/system instruction không phải cơ chế an toàn vật lý.</p>
+<h3>6.4. BA/QC của hệ tri thức robot</h3>
+<p>BA lập ontology <code>Site–Zone–Place–Route–Capability–Skill–Policy–Mission–Incident</code>; Knowledge Graph chỉ thêm khi cần truy vấn nhiều quan hệ và có provenance. Nguồn SOP do owner duyệt, bản đồ từ mapping team, realtime từ API. Định nghĩa <code>unknown/stale/conflict</code> thành kết quả hợp lệ thay vì ép AI luôn trả lời.</p>
+<p>Golden set gồm: hai phòng trùng tên khác tòa; lối đi thay đổi sau sửa chữa; khách yêu cầu vào vùng cấm; operator ngoài site; tài liệu đã hết hiệu lực; hỏi bí mật lịch tuần tra; câu tiếng Việt không dấu/tiếng Anh/mã phòng; tiếng ồn và câu nói bị cắt; tool timeout; hội thoại bị chen ngang; nguồn chứa prompt injection.</p>
+<p>Chấm riêng STT, intent/slots, retrieval, answer, tool selection/arguments, permission, task outcome và HRI. Nói đúng tên phòng nhưng dẫn qua vùng cấm vẫn fail. Trả lời có nguồn cũ sau đổi map vẫn fail. Yêu cầu hành động không thể hoàn thành phải được nói rõ, không thông báo “đã gửi robot” khi mới tạo draft.</p>
+<h2>7. BA/QC trong AI training, fine-tune và dữ liệu robot</h2>
+<h3>7.1. Bốn loại model có quy trình khác nhau</h3>
+<table>
+<thead>
+<tr>
+<th>Loại</th>
+<th>Dataset</th>
+<th>BA/QC đóng góp</th>
+<th>Engineer sở hữu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vision detector/event model</td>
+<td>Ảnh/video theo camera/site, label object/event</td>
+<td>Event taxonomy, annotation guide, negative examples, condition coverage</td>
+<td>Training code, augmentations, inference optimization</td>
+</tr>
+<tr>
+<td>LLM/VLM assistant</td>
+<td>Q&amp;A có nguồn, hội thoại, image-question, tool-call samples</td>
+<td>Ground truth, rubric, refusal/permission cases, error adjudication</td>
+<td>Base model choice, LoRA/SFT setup, serving</td>
+</tr>
+<tr>
+<td>Tabular ML cho health/ETA</td>
+<td>Telemetry windows, incident, maintenance, mission outcomes</td>
+<td>Định nghĩa target/horizon và data leakage rules</td>
+<td>Feature implementation, model/calibration</td>
+</tr>
+<tr>
+<td>Robot skill/VLA/policy</td>
+<td>Episode observations/actions/proprioception, success/safety labels</td>
+<td>Task definition, success/failure criteria, dataset coverage, test protocol</td>
+<td>Teleoperation capture, imitation/RL, dynamics/control và sim-to-real</td>
+</tr>
+</tbody></table>
+<p>Không gọi mọi feedback về robot là “fine-tune LLM”. Vision update, navigation config, workflow policy và VLA training là những thay đổi khác nhau, có gate khác nhau.</p>
+<h3>7.2. Open-source dùng ở đâu?</h3>
+<table>
+<thead>
+<tr>
+<th>Dự án</th>
+<th>Có thể nghiên cứu/tận dụng</th>
+<th>Điều không được suy ra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ROS 2</td>
+<td>Middleware, interface, tool introspection/replay</td>
+<td>Không có sẵn mọi driver/control/safety certification</td>
+</tr>
+<tr>
+<td>Open-RMF</td>
+<td>Fleet adapters, task/traffic/resource integration</td>
+<td>Không thay robot controller hoặc tự hỗ trợ mọi humanoid</td>
+</tr>
+<tr>
+<td>NVIDIA Isaac GR00T</td>
+<td>VLA/pretrained policy và adaptation cho robot tương thích</td>
+<td>Không phải sản phẩm an ninh hoàn chỉnh; code/weights/license cần xem riêng</td>
+</tr>
+<tr>
+<td>NVIDIA Isaac Lab</td>
+<td>Robot learning trong mô phỏng</td>
+<td>Sim success không bảo đảm real success</td>
+</tr>
+<tr>
+<td>Hugging Face LeRobot</td>
+<td>Dữ liệu, policy và pipeline học kỹ năng</td>
+<td>Không bảo đảm chạy ngay trên hardware VinDynamics</td>
+</tr>
+<tr>
+<td>Nav2/BehaviorTree.CPP</td>
+<td>Navigation/task execution trong phạm vi tương thích</td>
+<td>Không cung cấp giữ thăng bằng hai chân</td>
+</tr>
+</tbody></table>
+<p>Đã đối chiếu kho chính thức: <a href="https://github.com/NVIDIA/Isaac-GR00T">Isaac GR00T</a>, <a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a>, <a href="https://github.com/huggingface/lerobot">LeRobot</a>. Không chốt “model mới nhất” hoặc giấy phép thương mại cho toàn bộ ecosystem từ một README; khi chọn phải pin commit/version, xem code/model/data license, supported embodiment và compute requirement.</p>
+<h3>7.3. Quy trình dữ liệu đến release</h3>
+<p><img src="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc/10-robot-evaluation-release.drawio.png" alt="Đánh giá và phát hành AI/robot theo từng tầng"></p>
+<ol>
+<li><strong>Scenario specification:</strong> BA định nghĩa tác vụ/ODD, precondition, success, failure, abort, human takeover; QC lập matrix bao phủ.</li>
+<li><strong>Capture:</strong> engineer/ops ghi camera, sensor, command, state và intervention đồng bộ thời gian; dùng rosbag2/MCAP hoặc format của platform. Thu đúng quyền và giới hạn dữ liệu; đây là công cụ robot đề xuất, chưa phải kinh nghiệm cũ.</li>
+<li><strong>Dataset curation:</strong> kiểm tra timestamp, calibration, dropped frames, episode boundary, bản đồ và robot version; loại/đánh dấu dữ liệu hỏng. Nhãn perception khác nhãn hành động và task success.</li>
+<li><strong>Split:</strong> theo site, ca/ngày, người biểu diễn, episode hoặc robot tùy mục tiêu. Không đưa frame/step liền nhau của cùng episode vào train và test khác nhau.</li>
+<li><strong>Train:</strong> AI/Robotics Engineer chọn detector/LoRA/VLA/IL/RL; BA/QC quản lý semantics, coverage và golden scenarios. Reward RL cần phản ánh success và violation; chặn reward hacking bằng điều kiện kiểm tra độc lập.</li>
+<li><strong>Offline evaluation:</strong> metric model, hard negatives, safety/permission cases, performance trên target hardware; đánh giá quantized model, không chỉ full precision.</li>
+<li><strong>Simulation/SIL → HIL → khu vực kiểm soát:</strong> tăng độ khó theo gate; mô phỏng người/obstacle/mất mạng và sensor faults khi an toàn. Simulation không thay hazard analysis hoặc thử nghiệm phần cứng.</li>
+<li><strong>Shadow/canary:</strong> vision/assistant có thể shadow, không tác động điều khiển; policy hành động phải test môi trường kiểm soát trước, không A/B ngẫu nhiên hành vi chưa kiểm chứng với người đi lại.</li>
+<li><strong>Release:</strong> manifest ràng buộc firmware/controller/model/skill/map/policy, người duyệt, test run và rollback path. Theo dõi drift và field failures, không auto-retrain rồi tự rollout.</li>
+</ol>
+<p><strong>Manifest đề xuất:</strong> <code>robot_type</code>, <code>hardware_revision</code>, <code>firmware</code>, <code>ros_distro</code>, <code>driver_version</code>, <code>model_id/hash</code>, <code>preprocess_version</code>, <code>skill_version</code>, <code>map_version</code>, <code>policy_pack_version</code>, <code>evaluation_run_id</code>, <code>approved_by</code>, <code>rollback_bundle</code>. Đây là kế thừa trực tiếp tư duy AI Hub.</p>
+<h2>8. Hợp đồng tích hợp, dữ liệu và state machine</h2>
+<h3>8.1. API/command mẫu cho BA dùng với developer</h3>
+<pre><code class="language-http">POST /v1/sites/VINUNI-PILOT/missions
+Authorization: Bearer &lt;operator-token&gt;
+Idempotency-Key: &lt;request-uuid&gt;
+Content-Type: application/json
+</code></pre>
+<pre><code class="language-json">{
+  &quot;mission_type&quot;: &quot;observe_zone&quot;,
+  &quot;incident_id&quot;: &quot;INC-DEMO-001&quot;,
+  &quot;zone_id&quot;: &quot;BUILDING-A-LOBBY&quot;,
+  &quot;observation_point_id&quot;: &quot;SAFE-POINT-02&quot;,
+  &quot;requested_capabilities&quot;: [&quot;navigate&quot;, &quot;capture_evidence&quot;],
+  &quot;priority&quot;: &quot;P2&quot;,
+  &quot;expires_at&quot;: &quot;2026-11-16T15:30:00Z&quot;,
+  &quot;map_version&quot;: &quot;map-demo-v3&quot;,
+  &quot;policy_pack_version&quot;: &quot;security-demo-v2&quot;
+}
+</code></pre>
+<p>Ví dụ schema, không phải API hãng. Backend lấy actor/tenant từ token, kiểm tra scope; server kiểm tra quyền đặt priority. <code>202 Accepted</code> chỉ xác nhận nhận yêu cầu và trả <code>mission_id/state=VALIDATING</code>, chưa có nghĩa robot đã chạy. Schema nên ràng buộc enum, length, coordinate frame, unit, nullable và time format.</p>
+<p>Error contract: <code>400 INVALID_REQUEST</code>, <code>403 FORBIDDEN</code>, <code>409 STATE_CONFLICT/IDEMPOTENCY_CONFLICT</code>, <code>422 OUTSIDE_ODD/INCOMPATIBLE_CAPABILITY</code>, <code>503 NO_ELIGIBLE_ROBOT/SERVICE_UNAVAILABLE</code> tùy policy API đã chốt. Retry sau 503 khác retry sau 403; không tự retry vô hạn. Một idempotency key với payload khác phải reject.</p>
+<h3>8.2. Event contract</h3>
+<pre><code class="language-json">{
+  &quot;event_id&quot;: &quot;evt-demo-001&quot;,
+  &quot;schema_version&quot;: &quot;1.0&quot;,
+  &quot;event_type&quot;: &quot;mission.progress&quot;,
+  &quot;robot_id&quot;: &quot;R-DEMO-01&quot;,
+  &quot;site_id&quot;: &quot;VINUNI-PILOT&quot;,
+  &quot;mission_id&quot;: &quot;M-DEMO-001&quot;,
+  &quot;command_id&quot;: &quot;C-DEMO-001&quot;,
+  &quot;assignment_epoch&quot;: 7,
+  &quot;sequence_no&quot;: 14,
+  &quot;boot_id&quot;: &quot;boot-demo-a&quot;,
+  &quot;observed_at&quot;: &quot;2026-11-16T15:00:04Z&quot;,
+  &quot;received_at&quot;: &quot;2026-11-16T15:00:05Z&quot;,
+  &quot;state&quot;: &quot;NAVIGATING&quot;,
+  &quot;map_version&quot;: &quot;map-demo-v3&quot;,
+  &quot;trace_id&quot;: &quot;trace-demo-001&quot;
+}
+</code></pre>
+<p>Phân biệt thời gian sự kiện và thời gian nhận; lưu UTC và hiển thị Asia/Saigon. <code>boot_id</code> giúp diễn giải sequence reset; không so sequence của hai lần boot như một chuỗi. Location phải có frame/map/uncertainty; tọa độ bản đồ tầng không tự đồng nhất với GPS.</p>
+<h3>8.3. ROS 2 concepts ở mức BA cần dùng</h3>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Ví dụ minh họa</th>
+<th>BA phải đặc tả</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Topic</td>
+<td><code>/battery_state</code>, <code>/robot_health</code>, <code>/pose</code></td>
+<td>Schema, unit, frame, frequency, freshness, QoS và behavior khi stale</td>
+</tr>
+<tr>
+<td>Service</td>
+<td><code>get_capabilities</code>, <code>validate_goal</code></td>
+<td>Request/response, timeout, error; tác vụ nên ngắn</td>
+</tr>
+<tr>
+<td>Action</td>
+<td><code>navigate_to_observation_point</code>, <code>dock</code></td>
+<td>Goal, feedback, result, reject, cancel/preempt và timeout</td>
+</tr>
+</tbody></table>
+<p>Tên trên là đề xuất, không khẳng định topic/API của robot thực. QoS reliable không có nghĩa mọi dữ liệu đều mới hoặc side effect chỉ xảy ra một lần. Sensor stream có thể ưu tiên latest/best-effort; command cần protocol ứng dụng và ACK; cấu hình cụ thể do Robotics Lead chốt.</p>
+<h3>8.4. Trạng thái cần tách riêng</h3>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>State chủ yếu</th>
+<th>Quy tắc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Robot connectivity</td>
+<td>ONLINE / STALE / OFFLINE</td>
+<td>Dựa trên heartbeat freshness; không bằng operational readiness</td>
+</tr>
+<tr>
+<td>Robot operation</td>
+<td>READY / BUSY / DEGRADED / MAINTENANCE / SAFETY_STOP</td>
+<td>Capability availability là kết quả health + mode + policy</td>
+</tr>
+<tr>
+<td>Mission</td>
+<td>DRAFT → VALIDATING → QUEUED → ASSIGNED → ACKNOWLEDGED → EXECUTING → SUCCEEDED</td>
+<td>Nhánh REJECTED, PAUSED, FAILED, CANCELLING → CANCELLED; timeout có thể là EXECUTION_UNKNOWN</td>
+</tr>
+<tr>
+<td>Incident</td>
+<td>OPEN → TRIAGED → INVESTIGATING → RESOLVED → CLOSED</td>
+<td>Bằng chứng và người đóng; có REOPENED theo policy</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>CREATED → SENT → ACCEPTED → RUNNING → SUCCEEDED/FAILED</td>
+<td>ACCEPTED khác hoàn tất; duplicate giữ cùng command ID</td>
+</tr>
+</tbody></table>
+<p>Transition <code>EXECUTING → SUCCEEDED</code> cần result hợp lệ và evidence yêu cầu. <code>CANCELLING → CANCELLED</code> chỉ khi xác nhận kết thúc/giành quyền theo protocol; UI không được gọi “đã dừng” chỉ vì bấm nút. Safety stop cần điều kiện khôi phục và người được phép; không tự resume sau reconnect.</p>
+<h2>9. Backlog mẫu, user story và acceptance criteria</h2>
+<h3>9.1. Các epic</h3>
+<table>
+<thead>
+<tr>
+<th>Epic</th>
+<th>Nội dung</th>
+<th>Căn cứ ưu tiên</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>E01 Site &amp; ODD setup</td>
+<td>Zone/map/route, role, policy, capability baseline</td>
+<td>Điều kiện trước vận hành</td>
+</tr>
+<tr>
+<td>E02 Fleet &amp; Mission</td>
+<td>Schedule, allocation, state, cancel, handover</td>
+<td>Luồng giá trị cốt lõi</td>
+</tr>
+<tr>
+<td>E03 Event &amp; Incident</td>
+<td>Camera adapter, dedupe, evidence, escalation</td>
+<td>Cung cấp thông tin hữu ích cho bảo vệ</td>
+</tr>
+<tr>
+<td>E04 Health &amp; Safety behavior</td>
+<td>Freshness, degraded mode, fault handling, E-stop status</td>
+<td>Gate bắt buộc trước field</td>
+</tr>
+<tr>
+<td>E05 AI Assistant &amp; HRI</td>
+<td>KB, speech, tool policy, handover</td>
+<td>Sau khi core vận hành có kiểm soát</td>
+</tr>
+<tr>
+<td>E06 Data &amp; Evaluation</td>
+<td>Dataset, labeling, metric, regression, lineage</td>
+<td>Xuyên suốt, không chờ cuối dự án</td>
+</tr>
+<tr>
+<td>E07 Configuration &amp; Release</td>
+<td>Config approval, version compatibility, rollout/rollback</td>
+<td>Tránh thay đổi không truy vết</td>
+</tr>
+<tr>
+<td>E08 Commercial Operations</td>
+<td>Tenant/site package, SLA, usage, support</td>
+<td>Sau pilot chứng minh giá trị</td>
+</tr>
+</tbody></table>
+<p>PO chọn ưu tiên theo value, risk, dependency và readiness. BA đề xuất và chứng minh phụ thuộc; không dùng điểm RICE để đẩy gate an toàn xuống sau tính năng đẹp.</p>
+<h3>9.2. Story SEC-01-03: phân công robot tuần tra</h3>
+<p><strong>Là</strong> điều phối viên, <strong>tôi muốn</strong> hệ thống chỉ phân công robot đủ điều kiện cho tuyến tuần tra, <strong>để</strong> route được thực hiện trong phạm vi đã phê duyệt và bảo vệ thấy rõ khi cần can thiệp.</p>
+<p>Preconditions: site/map/policy có hiệu lực; schedule được duyệt; có capability catalog và health feed. Happy path: tạo mission → validate → chọn robot → gửi assignment → nhận ACK → theo dõi checkpoint → report.</p>
+<p>Acceptance criteria:</p>
+<pre><code class="language-gherkin">Given robot R1 có dữ liệu health quá hạn freshness threshold đã cấu hình
+When scheduler lựa chọn robot cho mission tuần tra
+Then R1 không thuộc danh sách đủ điều kiện
+And reason_code là HEALTH_STALE và quyết định được ghi audit
+
+Given request tạo mission đã thành công với cùng idempotency key
+When client gửi lại cùng payload sau timeout
+Then server trả cùng mission_id
+And không tạo thêm assignment hoặc lệnh di chuyển
+
+Given không có robot đủ điều kiện
+When hết thời gian chờ trong policy
+Then mission được chuyển tới hàng đợi can thiệp của bảo vệ
+And dashboard nêu rõ nguyên nhân và không hiển thị “đang tuần tra”
+
+Given robot đã ACK nhưng mất kết nối trước completion
+When cloud hết thời gian chờ feedback
+Then trạng thái thể hiện chưa xác định tiến trình thực thi
+And hệ thống áp dụng protocol offline và quyền điều khiển đã thiết kế
+And không lập tức gửi lệnh trùng cho robot khác chỉ dựa trên timeout
+</code></pre>
+<h3>9.3. Story SEC-02-05: human verification</h3>
+<p>Là bảo vệ, tôi muốn xem clip, thời gian và nguồn cảnh báo trước khi phân loại sự cố, để phản ứng dựa trên bằng chứng. AC: clip đúng incident/site/time window; quyền tải kiểm tra lại; clip chưa có thì hiển thị pending chứ không lấy clip khác; mark false alarm yêu cầu reason; sửa kết luận giữ lịch sử; mission hoàn thành không tự đóng incident.</p>
+<h3>9.4. Story SEC-04-02: hội thoại hỏi đường</h3>
+<p>Là khách, tôi muốn hỏi vị trí bằng tiếng Việt và nhận chỉ dẫn trong vùng công khai. AC: tên địa điểm mơ hồ phải hỏi lại; map cũ bị chặn theo policy; không tiết lộ khu vực nội bộ; khi không nghe rõ thì xác nhận; đang ở mode yêu cầu tập trung an toàn thì hoãn hội thoại theo thiết kế HRI. Nói “đưa tôi tới phòng máy chủ” không tự tạo mission dẫn vào vùng hạn chế.</p>
+<h3>9.5. Definition of Ready và Definition of Done</h3>
+<p><strong>Ready:</strong> actor/value, ODD/precondition, main/alternative/exception flows, schema/API dependencies, state/error/fallback, AC đo được, test data và owner quyết định. Không đưa story “AI hiểu mọi tình huống” vào sprint mà không có coverage và boundary.</p>
+<p><strong>Done:</strong> code review và kiểm thử phù hợp đã đạt, AC có evidence, RTM cập nhật, known limitations ghi rõ, telemetry/log đủ truy vết, docs/config/version đồng bộ; nếu thuộc field release phải có gate và người duyệt tương ứng. “Demo chạy một lần” chưa đủ Done cho release hiện trường.</p>
+<h2>10. NFR, lỗi và ranh giới an toàn</h2>
+<h3>10.1. NFR phải đo được nhưng không bịa ngưỡng vật lý</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Yêu cầu đề xuất</th>
+<th>Cách kiểm chứng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NFR-01</td>
+<td>Cơ chế an toàn cục bộ hoạt động độc lập với cloud</td>
+<td>Fault injection network trong testbed; telemetry và quan sát vật lý</td>
+</tr>
+<tr>
+<td>NFR-02</td>
+<td>Command hết TTL không khởi động hành động mới</td>
+<td>Contract/integration test với đồng hồ và queue delay</td>
+</tr>
+<tr>
+<td>NFR-03</td>
+<td>Mọi mission/action có correlation, version và actor</td>
+<td>Query trace coverage trên toàn bộ test run</td>
+</tr>
+<tr>
+<td>NFR-04</td>
+<td>Unauthorized command bị từ chối ở backend và execution boundary</td>
+<td>Negative tests với role/site/capability; audit</td>
+</tr>
+<tr>
+<td>NFR-05</td>
+<td>Telemetry tuổi dữ liệu vượt threshold hiển thị stale</td>
+<td>Giữ observed_at/received_at, replay delayed data</td>
+</tr>
+<tr>
+<td>NFR-06</td>
+<td>Không mất bằng chứng đã xác nhận lưu trong phạm vi durability policy</td>
+<td>Restart/reconnect/storage failure test; checksum/reconciliation</td>
+</tr>
+<tr>
+<td>NFR-07</td>
+<td>AI trả lời thiếu bằng chứng phải fallback theo rubric</td>
+<td>Unanswerable/conflict benchmark và SME review</td>
+</tr>
+<tr>
+<td>NFR-08</td>
+<td>Rollback giữ compatibility model–preprocess–skill–map–policy</td>
+<td>Deployment rehearsal và smoke/regression</td>
+</tr>
+</tbody></table>
+<p><strong>SLO ứng dụng mẫu để thảo luận:</strong> p95 event metadata tới dashboard ≤2 giây dưới tải pilot đã định nghĩa; p95 câu trả lời KB ≤5 giây với giới hạn corpus/query đã ghi; 100% unauthorized requests trong test suite bị từ chối; 100% mission test có trace/version. Đây là target minh họa, không phải số đo hoặc cam kết an toàn. Cần ghi timestamp bắt đầu/kết thúc, tải đồng thời, network profile, phần cứng và sample count.</p>
+<p>Tốc độ tối đa, khoảng cách người–robot, stopping distance, phản ứng E-stop, slope và giới hạn lực không dùng các số SLO trên. Robotics/Safety phải xác định theo robot, tải, mặt sàn và nguy cơ; BA đưa chúng thành yêu cầu và test protocol đã ký duyệt. Không tuyên bố đạt tiêu chuẩn chứng nhận từ việc pass vài test trong tài liệu.</p>
+<h3>10.2. Error/fallback matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Sự cố</th>
+<th>Cách phát hiện</th>
+<th>Hành vi phải đặc tả</th>
+<th>Bằng chứng QC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mất cloud</td>
+<td>Heartbeat/API timeout</td>
+<td>Duy trì safety cục bộ; chỉ tiếp tục subset offline đã phê duyệt hoặc chuyển safe mode</td>
+<td>Cut network, event timeline, physical outcome</td>
+</tr>
+<tr>
+<td>Mất localization</td>
+<td>Pose quality/freshness, controller status</td>
+<td>Không tiếp tục navigation mù; safe response theo vendor và hỗ trợ người</td>
+<td>Replay/fault injection trong môi trường kiểm soát</td>
+</tr>
+<tr>
+<td>Sensor lỗi/che khuất</td>
+<td>Health/self-test và dữ liệu bất thường</td>
+<td>Hạ capability hoặc dừng nhiệm vụ phụ thuộc sensor</td>
+<td>Case covered camera, dropout, stuck value</td>
+</tr>
+<tr>
+<td>Pin không đủ</td>
+<td>Energy estimate + reserve + dock route</td>
+<td>Không nhận mission mới; handover/return theo policy</td>
+<td>Boundary cases; dock bị chiếm/hỏng</td>
+</tr>
+<tr>
+<td>AI sai/không chắc</td>
+<td>Validation/rubric/không nguồn</td>
+<td>Không thực hiện action vượt boundary; hỏi lại/chuyển người</td>
+<td>Ambiguous request, unsupported scene</td>
+</tr>
+<tr>
+<td>Cửa/thang máy không phản hồi</td>
+<td>Adapter timeout và physical state</td>
+<td>Không coi command accepted là cửa đã mở; chờ/replan/escalate</td>
+<td>ACK giả, event trễ, physical obstruction</td>
+</tr>
+<tr>
+<td>Queue gửi trùng/sai thứ tự</td>
+<td>ID, sequence, epoch</td>
+<td>Dedupe và state transition guard; ghi anomaly</td>
+<td>Duplicate/reordered payload</td>
+</tr>
+<tr>
+<td>Teleoperation mất link</td>
+<td>Session heartbeat/deadman theo platform</td>
+<td>Chuyển safe behavior được duyệt; không để lệnh cũ tiếp tục vô hạn</td>
+<td>Controlled link-loss test</td>
+</tr>
+<tr>
+<td>Map/policy sai version</td>
+<td>Manifest mismatch</td>
+<td>Reject hoặc migration theo quy trình; không tự đoán</td>
+<td>Compatibility test</td>
+</tr>
+<tr>
+<td>Storage đầy</td>
+<td>Disk/buffer metrics</td>
+<td>Ưu tiên dữ liệu/giới hạn recording theo policy; báo degraded</td>
+<td>Fill-buffer test, data-loss accounting</td>
+</tr>
+<tr>
+<td>E-stop/safety stop</td>
+<td>Hardware/controller status</td>
+<td>Ngắt nhiệm vụ theo thiết kế, cần điều kiện khôi phục rõ</td>
+<td>Safety-team test protocol, không chỉ UI mock</td>
+</tr>
+</tbody></table>
+<h3>10.3. Human–Robot Interaction</h3>
+<p>BA đặc tả robot thể hiện mode bằng UI/đèn/âm thanh dễ hiểu; lời nói ngắn, không đe dọa; thời điểm ngắt lời; điều kiện tiếp cận, nhường đường và không chắn lối thoát. Người dùng cần biết đang nói với AI hay bảo vệ qua telepresence. Luồng gọi trợ giúp phải dễ tiếp cận với người không nghe rõ hoặc không dùng điện thoại.</p>
+<p>Tình huống đông người, người đứng chắn đường, trẻ em tiếp cận hoặc người cố tương tác với phần chuyển động cần được đưa vào hazard review và test có kiểm soát. BA không tự cho người thật diễn tình huống nguy hiểm để “test edge case”.</p>
+<h2>11. QC, UAT, commissioning và field feedback</h2>
+<h3>11.1. Các lớp kiểm thử</h3>
+<table>
+<thead>
+<tr>
+<th>Lớp</th>
+<th>Nội dung</th>
+<th>Công cụ đề xuất</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Requirement/static review</td>
+<td>Inconsistent state, missing fallback, AC không đo được</td>
+<td>Confluence, Jira, draw.io review</td>
+</tr>
+<tr>
+<td>API/data contract</td>
+<td>Schema, permission, idempotency, concurrency, errors</td>
+<td>Postman/Newman, pytest, SQL</td>
+</tr>
+<tr>
+<td>Component/AI</td>
+<td>Model slices, OCR/STT/RAG/tool correctness</td>
+<td>Python, evaluation harness, Label Studio/CVAT</td>
+</tr>
+<tr>
+<td>Integration/SIL</td>
+<td>Robot simulator + cloud/site adapters; event ordering</td>
+<td>ROS 2 tools, rosbag2, Gazebo hoặc Isaac Sim, mocks</td>
+</tr>
+<tr>
+<td>HIL</td>
+<td>Sensor/controller thật trong môi trường kiểm soát</td>
+<td>Vendor diagnostics, rqt, Foxglove; thiết bị đo được phê duyệt</td>
+</tr>
+<tr>
+<td>Field/UAT</td>
+<td>Tuyến thật, ca trực thật, điều kiện được duyệt</td>
+<td>Test script, synchronized logs/video, operator checklist</td>
+</tr>
+<tr>
+<td>Regression/release</td>
+<td>Replay bộ lỗi đã sửa và compatibility</td>
+<td>CI runner, versioned test suite, release manifest</td>
+</tr>
+</tbody></table>
+<p>Tất cả công cụ robotics ở bảng này là đề xuất cần học/thử; CV chỉ chứng minh nền tảng QA/SQL/API chung. Tool không thay người có năng lực đánh giá an toàn.</p>
+<h3>11.2. Coverage matrix</h3>
+<p>Chiều bao phủ: site/zone, sáng–tối, sàn và route trong ODD, mật độ người, battery bands, robot capability, network quality, role, policy/map/model version. Dùng pairwise cho tổ hợp ít rủi ro; các nguy cơ quan trọng phải có test trực tiếp, không giảm hết thành pairwise.</p>
+<p>Mỗi case có ID, requirement ID, setup, version manifest, input, expected state/physical behavior, metric, actual, trace/video evidence, verdict và reviewer. Tập benchmark được đóng version và không tự sửa để candidate pass. Khi yêu cầu thay đổi, tạo version mới và ghi impact.</p>
+<h3>11.3. UAT/commissioning checklist</h3>
+<ol>
+<li>Xác nhận site, zone, route, map, dock, mạng, biển báo/điều kiện tiếp cận và nhân sự phụ trách.</li>
+<li>Kiểm tra robot identity/certificate, health, sensor calibration, firmware/model/policy compatibility.</li>
+<li>Chạy test preflight và phản ứng mất mạng/dừng/khôi phục theo protocol an toàn.</li>
+<li>Demo luồng tuần tra–event–evidence–human review; kiểm tra cả luồng thất bại.</li>
+<li>Xác nhận quyền operator, quyền tải clip, audit, retention và phân vùng dữ liệu.</li>
+<li>Diễn tập handover, maintenance ticket, rollback và thay ca; xác nhận hướng dẫn vận hành.</li>
+<li>Chốt unresolved defects/known limitations với owner, điều kiện chấp nhận và thời hạn; lỗi blocker không được che bằng waiver không đúng thẩm quyền.</li>
+<li>Bàn giao baseline và ghi chữ ký/decision theo quy trình khách hàng; cập nhật scope khi mở thêm site/ODD.</li>
+</ol>
+<h3>11.4. Phân loại field feedback đúng JD</h3>
+<table>
+<thead>
+<tr>
+<th>Quan sát</th>
+<th>Phân loại chính</th>
+<th>Hướng xử lý</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>System nhận cùng event và tạo hai mission dù spec cấm</td>
+<td>Defect</td>
+<td>Dev sửa, QC replay và regression</td>
+</tr>
+<tr>
+<td>Bảo vệ cần hoãn mission trong đổi ca nhưng chưa có requirement</td>
+<td>Requirement gap</td>
+<td>BA khảo sát, PO ưu tiên, bổ sung AC</td>
+</tr>
+<tr>
+<td>Vision kém khi camera chói trong điều kiện đã dự tính nhưng model chưa đáp ứng</td>
+<td>AI limitation</td>
+<td>Data/model analysis, hạn chế phạm vi và cải tiến</td>
+</tr>
+<tr>
+<td>Map sai tầng hoặc camera lắp lệch khi commissioning</td>
+<td>Deployment issue</td>
+<td>Deployment sửa cấu hình/calibration, re-validation</td>
+</tr>
+<tr>
+<td>Nhiều nguyên nhân cùng xảy ra</td>
+<td>Primary + contributing causes</td>
+<td>Không ép mọi sự cố thành “AI lỗi”; giữ dependency</td>
+</tr>
+</tbody></table>
+<p><strong>Defect template:</strong> <code>Observed behavior</code>, <code>Expected requirement</code>, <code>site/robot/mission</code>, <code>ODD conditions</code>, <code>versions</code>, <code>trace_id</code>, <code>evidence</code>, <code>reproducibility</code>, <code>business/safety impact</code>, <code>temporary containment</code>, <code>owner</code>, <code>retest result</code>. Severity dựa trên hậu quả; priority do PO cân đối và owner safety đặt gate khi liên quan.</p>
+<h2>12. Traceability, SQL/logs, change và release</h2>
+<h3>12.1. RTM mẫu</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Story</th>
+<th>Test</th>
+<th>Bằng chứng mong đợi</th>
+<th>Release gate</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R-FLT-01: chỉ robot đủ điều kiện được giao</td>
+<td>SEC-01-03</td>
+<td>TC-FLT-001..008</td>
+<td>Eligibility reason, health snapshot, assignment trace</td>
+<td>Tất cả critical cases pass</td>
+</tr>
+<tr>
+<td>R-CMD-02: command idempotent</td>
+<td>SEC-01-04</td>
+<td>TC-CMD-011</td>
+<td>Cùng command ID, không có duplicate execution</td>
+<td>Contract + integration</td>
+</tr>
+<tr>
+<td>R-AI-03: không lộ SOP nội bộ</td>
+<td>SEC-04-02</td>
+<td>TC-AI-021..030</td>
+<td>Permission denial và không leak snippet/download</td>
+<td>Security/data gate</td>
+</tr>
+<tr>
+<td>R-OPS-04: incident closure có người chịu trách nhiệm</td>
+<td>SEC-02-05</td>
+<td>TC-INC-041</td>
+<td>Audit actor/reason và state history</td>
+<td>UAT</td>
+</tr>
+<tr>
+<td>R-SAF-05: safe behavior khi mất cloud</td>
+<td>SEC-07-03</td>
+<td>TC-HIL-051</td>
+<td>Local response theo protocol đã duyệt</td>
+<td>Robotics/Safety sign-off</td>
+</tr>
+</tbody></table>
+<p>Đây là RTM dự kiến, không phải kết quả test đã pass. Liên kết thêm bug ID, change request, test run và version manifest để truy end-to-end.</p>
+<h3>12.2. SQL mẫu để điều tra</h3>
+<p>Ví dụ PostgreSQL, tên bảng giả định. BA dùng read-only account và giới hạn phạm vi; không truy vấn dữ liệu cá nhân không cần thiết.</p>
+<pre><code class="language-sql">-- Command nào có nhiều lần bắt đầu thực thi vật lý cho cùng ID?
+SELECT command_id, COUNT(DISTINCT execution_id) AS starts
+FROM command_execution_event
+WHERE event_type = &#39;STARTED&#39;
+  AND site_id = :site_id
+  AND observed_at &gt;= :from_time
+GROUP BY command_id
+HAVING COUNT(DISTINCT execution_id) &gt; 1;
+
+-- Mission nào chưa có terminal event sau hạn dự kiến?
+SELECT m.mission_id, m.robot_id, m.state, m.deadline_at
+FROM mission m
+WHERE m.site_id = :site_id
+  AND m.deadline_at &lt; CURRENT_TIMESTAMP
+  AND m.state NOT IN (&#39;SUCCEEDED&#39;, &#39;FAILED&#39;, &#39;CANCELLED&#39;, &#39;REJECTED&#39;);
+
+-- p95 độ trễ nhận sự kiện: phải lọc đồng hồ đã được xác thực đồng bộ.
+SELECT percentile_cont(0.95) WITHIN GROUP
+       (ORDER BY EXTRACT(EPOCH FROM received_at - observed_at)) AS p95_seconds
+FROM robot_event
+WHERE site_id = :site_id
+  AND observed_at &gt;= :from_time
+  AND clock_sync_valid = TRUE
+  AND received_at &gt;= observed_at;
+</code></pre>
+<p>Một duplicate event không chứng minh robot chạy hai lần, vì event delivery có thể at-least-once. Cần phân biệt <code>event_id</code> với <code>execution_id</code>; câu SQL đầu tìm nhiều execution khác nhau, sau đó kiểm tra trace thực tế.</p>
+<h3>12.3. Cách đọc log có phương pháp</h3>
+<p>Từ incident/mission ID tìm <code>trace_id</code>; nối API validation → policy decision → scheduler → queue → edge ACK → ROS action feedback/result → evidence upload. So <code>observed_at/received_at</code>, map/model/config version và assignment epoch. Nếu cloud chỉ có SENT không có ACK, chưa kết luận robot không nhận. Nếu ACK có mà không RUNNING, kiểm tra precondition/controller; nếu RUNNING nhưng result trễ, kiểm tra edge buffer/network trước khi gọi lỗi model.</p>
+<h3>12.4. Một change request minh họa</h3>
+<p>Khách yêu cầu “cho robot tuần tra cả khu ngoài trời”. BA phân tích impact tới ODD, weather, traction, map, localization, network, ingress protection của phần cứng, dataset vision, battery, incident SOP, privacy, test plan và support. PO quyết định scope/timeline; Tech Lead chốt solution feasibility; Safety/Operations duyệt điều kiện vận hành. Không sửa polygon trên UI rồi coi là hoàn thành mở rộng.</p>
+<p>Baseline gồm BRD/SRS version, story/AC, API/schema, workflow/policy, test suite và deployment manifest. Quy trình <code>change request → impact assessment → decision → update baseline → implement → revalidate → release</code>. Quy trình dài đang chạy phải có rule pin version/migration; không tự áp workflow mới vào mission giữa chừng.</p>
+<h3>12.5. Rollout và rollback</h3>
+<p>Thứ tự mẫu: lab → controlled site → một robot trong khung có giám sát → một zone → mở rộng. Track firmware/model/map/policy theo từng robot. Lệnh update không chạy khi robot đang thực hiện nhiệm vụ nếu không có cơ chế hỗ trợ và đánh giá phù hợp. Artifact ký/hash, preflight compatibility, backup config, health checks, post-deploy acceptance.</p>
+<p>Rollback trigger có thể là regression KPI, lỗi cấp nghiêm trọng hoặc vi phạm compatibility. Model perception rollback không nhất thiết rollback cả backend; nhưng preprocessing/label schema liên quan phải đồng bộ. DB migration không tương thích cần kế hoạch riêng; “đổi lại model cũ” không hoàn tác hành động vật lý đã xảy ra.</p>
+<h2>13. Industry Solution Packs: áp dụng tư duy workflow và policy từ chính phủ</h2>
+<p>Core dùng chung: identity/site/device, event, mission, fleet, skill contract, evidence, audit, monitoring và release. Pack gồm domain ontology, event taxonomy, SOP/workflow, DMN/policy, mission templates, role/scope, KB, integration mappings và evaluation cases. Không để pack thay đổi safety limit cốt lõi ngoài quy trình phê duyệt.</p>
+<table>
+<thead>
+<tr>
+<th>Pack</th>
+<th>Quy trình đặc thù</th>
+<th>Quy tắc/adapter riêng</th>
+<th>Kinh nghiệm cũ kế thừa</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Security</td>
+<td>Tuần tra → phát hiện → xác minh → xử lý</td>
+<td>VMS/access control; quyền xem clip; escalation ca trực</td>
+<td>Smart Safe, mChat routing, chính phủ</td>
+</tr>
+<tr>
+<td>Hospital</td>
+<td>Giao vật tư → xác nhận bàn giao → vệ sinh/return</td>
+<td>Restricted areas, hygiene, người nhận; không tự quyết định y khoa</td>
+<td>Workflow/thẩm quyền, OCR traceability</td>
+</tr>
+<tr>
+<td>Hotel</td>
+<td>Guest request → giao đồ → xác nhận</td>
+<td>PMS/room status; privacy; quiet hours</td>
+<td>CRM, CXP, service ticket</td>
+</tr>
+<tr>
+<td>Restaurant</td>
+<td>Order ready → pickup → deliver → tray return</td>
+<td>POS/KDS, table ID, tải trọng, đổ tràn</td>
+<td>Omnichannel/fulfillment, WMS</td>
+</tr>
+<tr>
+<td>Residential</td>
+<td>Patrol/public guidance → incident → management</td>
+<td>Building access, visitor policy, tenant/site separation</td>
+<td>Smart Safe SaaS, governance</td>
+</tr>
+<tr>
+<td>Industrial</td>
+<td>Inspection → abnormality → maintenance</td>
+<td>MES/SCADA/ERP, zone permissions, machine interlocks</td>
+<td>Smart Factory, maintenance/QMS</td>
+</tr>
+</tbody></table>
+<h3>Một mission template có version</h3>
+<pre><code class="language-yaml">pack_id: security-vinuni
+pack_version: 1.0.0-demo
+mission_type: observe_zone
+required_capabilities: [navigate, capture_evidence]
+allowed_roles: [security_dispatcher]
+preconditions:
+  - robot_health_fresh
+  - localization_valid
+  - route_inside_approved_odd
+  - energy_reserve_sufficient
+steps:
+  - skill: navigate_to_observation_point
+    on_failure: request_human_assistance
+  - skill: capture_evidence
+    on_failure: report_missing_evidence
+  - skill: await_guard_decision
+completion:
+  requires: [observation_result, evidence_status]
+incident_closure:
+  actor: authorized_guard
+</code></pre>
+<p>Đây là DSL minh họa, chưa phải schema thực thi của Camunda hay ROS. Toolchain cần validator, signature, dependency/compatibility check, review và tests trước khi đưa pack vào runtime.</p>
+<p><strong>Kế thừa từ chính phủ:</strong> quy trình có bước/người/thẩm quyền; policy hiệu lực theo thời gian; dữ liệu có owner/sensitivity; workflow instance gắn version; audit và segregation of duties. <strong>Khác biệt cần học:</strong> lỗi robot có hậu quả vật lý, latency và state uncertain; nghiệp vụ không được yêu cầu robot vượt giới hạn controller/safety.</p>
+<h2>14. Ánh xạ kinh nghiệm cũ sang công việc mới</h2>
+<table>
+<thead>
+<tr>
+<th>Nguồn kinh nghiệm</th>
+<th>Năng lực chuyển được</th>
+<th>Việc cụ thể tại VinUni</th>
+<th>Giới hạn cần nói rõ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Smart Safe</td>
+<td>Sensor–gateway–cloud, alarm lifecycle, role/site, incident</td>
+<td>Event contract, device health, clip evidence, false-alarm triage</td>
+<td>AI camera model cụ thể chưa xác nhận; chưa chứng minh locomotion</td>
+</tr>
+<tr>
+<td>Samsung Smart Factory</td>
+<td>Equipment hierarchy, maintenance, OEE, QMS, ERP</td>
+<td>Robot/component registry, readiness, maintenance, fault taxonomy, integration</td>
+<td>Azure/ML/fleet trong bài là mở rộng đề xuất</td>
+</tr>
+<tr>
+<td>V-Tracking trong CV</td>
+<td>GPS/fleet tracking và realtime data</td>
+<td>Fleet dashboard, telemetry freshness, location history</td>
+<td>Tracking không đồng nghĩa multi-robot path planning</td>
+</tr>
+<tr>
+<td>mChat</td>
+<td>Routing/queue/assignment, SLA, handover, multi-turn</td>
+<td>Mission assignment, operator inbox, handover, conversation context</td>
+<td>Handover robot cần energy, path và physical state</td>
+</tr>
+<tr>
+<td>Điều phối TTHC</td>
+<td>Workflow liên thông, trạng thái, quyền, audit</td>
+<td>Mission/incident workflow, external callbacks, retries, baseline</td>
+<td>Camunda không điều khiển motor</td>
+</tr>
+<tr>
+<td>Một cửa/vi phạm hành chính</td>
+<td>KB, thẩm quyền, hiệu lực, allowed actions</td>
+<td>SOP chatbot, site/role ACL, policy packs và guardrails</td>
+<td>Không dùng legal reasoning để suy ra safety physics</td>
+</tr>
+<tr>
+<td>HRAI</td>
+<td>Feature/label, snapshot, feedback, evaluation</td>
+<td>Health ML, scenario taxonomy, error slices, gold adjudication</td>
+<td>Không dùng suy đoán HR để phân loại người qua camera</td>
+</tr>
+<tr>
+<td>AI Data Hub</td>
+<td>Dataset/model/job/evaluation/deployment lineage</td>
+<td>Robot data factory, manifest, approval, model rollout/rollback</td>
+<td>Phải bổ sung embodiment/hardware/map compatibility</td>
+</tr>
+<tr>
+<td>RPA &amp; OCR/VLM</td>
+<td>Extraction, schema, human review, idempotent automation</td>
+<td>Đọc tài liệu SOP/maintenance, visual evidence review, tool execution</td>
+<td>VLM hiểu ảnh không thay perception/control đã kiểm chứng</td>
+</tr>
+<tr>
+<td>CDP/CXP/CRM</td>
+<td>Customer journey, tenant, service package, ticket/SLA</td>
+<td>Customer onboarding, Robot-as-a-Service, support và usage analytics</td>
+<td>Không dùng dữ liệu người qua camera cho marketing</td>
+</tr>
+<tr>
+<td>Harness/skills/orchestration</td>
+<td>Capability contract, permission, context, checkpoints</td>
+<td>Skill catalog, policy, mission observability, human interruption</td>
+<td>Robot skill là code/controller có precondition, không chỉ file Markdown</td>
+</tr>
+<tr>
+<td>Developer nền tảng</td>
+<td>API, DB, async, logs, debugging</td>
+<td>Trao đổi technical feasibility, contract, root cause, SQL</td>
+<td>Không tự nhận đã viết safety-critical embedded code</td>
+</tr>
+</tbody></table>
+<h3>Harness và robot: điểm giống dùng được</h3>
+<p>Một skill nên có input schema, output schema, precondition, effects, timeout, cancellation semantics, resource locks, version và telemetry. Agent chỉ chọn skill trong catalog được cấp; runtime enforce policy. Checkpoint của phần mềm giúp khôi phục logic, nhưng không “undo” được vị trí robot hoặc thao tác đã thực hiện. Một checkpoint cũ phải đối chiếu thế giới hiện tại trước resume.</p>
+<h3>Thương mại hóa: kinh nghiệm Omnichannel giúp gì?</h3>
+<p>PO phân tích khách hàng–site–gói capability–SLA–support; onboarding site, provisioning robot, giới hạn vùng và người vận hành, usage metering, incident ticket và gia hạn dịch vụ. Xây pricing hypothesis dựa trên cost/robot-hour hữu ích, support effort, battery/maintenance và giá trị nghiệp vụ, không chỉ số token AI. Theo dõi adoption của người bảo vệ và thời gian training; customer success loop quay lại backlog. Đơn hàng/gói dịch vụ không được tự mở capability an toàn chưa được nghiệm thu.</p>
+<h2>15. Ma trận phủ JD VinDynamics</h2>
+<p>Ma trận dưới là phân tích áp dụng cho case, dùng các mã riêng để đối chiếu; không coi đây là cách chia module chính thức của VinDynamics. JD được đọc từ trang chính thức ngày 16/11/2026. <a href="https://vindynamics.net/vi/career/senior-business-analyst-001114.html">Senior Business Analyst — VinDynamics</a>.</p>
+<h3>15.1. Key responsibilities</h3>
+<table>
+<thead>
+<tr>
+<th>Nhóm JD</th>
+<th>Tôi thực hiện trong case VinUni</th>
+<th>Artifact / ví dụ kinh nghiệm</th>
+<th>Mục tài liệu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Discovery cùng PO/Market/customer</td>
+<td>Khảo sát ca trực, use case, ODD và kết quả mong đợi</td>
+<td>Context, AS-IS/TO-BE; Smart Safe</td>
+<td>2–3</td>
+</tr>
+<tr>
+<td>Làm rõ gap, risk và ảnh hưởng robot/integration</td>
+<td>Map yêu cầu sang capability và adapter; nêu hạn chế</td>
+<td>Gap/assumption/dependency log; Factory</td>
+<td>2, 4, 10</td>
+</tr>
+<tr>
+<td>Stories/use cases/FR/NFR/AC</td>
+<td>Viết story với điều kiện và test basis</td>
+<td>SEC-01-03, NFR table; BA hồ sơ</td>
+<td>9–10</td>
+</tr>
+<tr>
+<td>API/data/state/error/fallback</td>
+<td>Command/event schema, state machine, retry/cancel</td>
+<td>OpenAPI, sequence, exception matrix; IoT/chính phủ</td>
+<td>5, 8, 10</td>
+</tr>
+<tr>
+<td>AI quality với Tech Lead</td>
+<td>Dataset slices, rubric, threshold, latency/boundary</td>
+<td>Evaluation plan; HRAI/AI Hub</td>
+<td>6–7, 11</td>
+</tr>
+<tr>
+<td>Refinement/planning/daily/review</td>
+<td>Giữ story ready; giải đáp nhanh; review build so AC</td>
+<td>Jira backlog, decision log; CV Viettel/Samsung</td>
+<td>9, 16</td>
+</tr>
+<tr>
+<td>Đồng nhất cách hiểu với R&amp;D/Dev</td>
+<td>Review contract và feasibility trước implementation</td>
+<td>Interface workshop, ADR do Tech Lead chốt</td>
+<td>4, 8</td>
+</tr>
+<tr>
+<td>Hỗ trợ QC</td>
+<td>Review coverage/expected behavior; triage và retest</td>
+<td>RTM, negative/field cases</td>
+<td>10–12</td>
+</tr>
+<tr>
+<td>Change impact/escalation</td>
+<td>Phân tích yêu cầu mở thêm ODD/site; PO/PMO quyết định</td>
+<td>Change request, dependency map</td>
+<td>12.4</td>
+</tr>
+<tr>
+<td>Traceability và baseline chung</td>
+<td>Requirement → story → test/result → release</td>
+<td>Versioned RTM, manifest</td>
+<td>12</td>
+</tr>
+<tr>
+<td>UAT/onsite/commissioning/acceptance</td>
+<td>Preflight, field scripts, operator training, sign-off</td>
+<td>UAT pack; Smart Safe/AI product rollout</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Phân loại feedback và ưu tiên</td>
+<td>Defect/gap/AI limitation/deployment; đề xuất backlog</td>
+<td>Triage template, re-validation</td>
+<td>11.4</td>
+</tr>
+<tr>
+<td>Hợp tác và ranh giới ownership</td>
+<td>Market giữ cơ hội; PO ưu tiên; BA clarity; Tech Lead HOW</td>
+<td>RACI và decision record</td>
+<td>1, 16</td>
+</tr>
+</tbody></table>
+<h3>15.2. Qualifications, preferred và thái độ</h3>
+<table>
+<thead>
+<tr>
+<th>Yêu cầu</th>
+<th>Bằng chứng/chuẩn bị của Đức</th>
+<th>Khoảng trống cần xử lý trung thực</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bằng cấp phù hợp</td>
+<td>CV: kỹ sư CNTT PTIT</td>
+<td>Chuẩn bị bằng/thông tin theo hồ sơ khi được hỏi</td>
+</tr>
+<tr>
+<td>4+ năm BA/Technical BA/System Analyst</td>
+<td>CV có BA từ 02/2023 và công việc developer trước đó</td>
+<td>Đến 16/11/2026, chức danh BA ghi trong CV chưa đủ 4 năm; cần chứng minh nhiệm vụ system analysis trước 2023 nếu có</td>
+</tr>
+<tr>
+<td>2+ năm tích hợp phức tạp</td>
+<td>Smart Factory 2023–2024, Smart Safe và các hệ AI; API/ERP/IoT</td>
+<td>Nêu cụ thể thời gian và ownership, không cộng nhiều dự án song song thành thêm năm</td>
+</tr>
+<tr>
+<td>Làm hằng ngày với Agile/Scrum team</td>
+<td>Backlog, sprint, clarification và developer handover trong CV</td>
+<td>Chuẩn bị một ví dụ bất đồng yêu cầu được giải quyết</td>
+</tr>
+<tr>
+<td>Stories/workflows/FR/NFR/Gherkin</td>
+<td>Mẫu story/AC ở mục 9 và thực hành trong CV</td>
+<td>Chỉ ra measurable expected result và exception</td>
+</tr>
+<tr>
+<td>BPMN/UML/sequence/state/API/data</td>
+<td>Chính phủ, AI Hub, Smart Safe/Factory</td>
+<td>Giải thích được sơ đồ và contract, không chỉ liệt kê tên</td>
+</tr>
+<tr>
+<td>Jira/Confluence/logs/SQL</td>
+<td>CV ghi tools, SQL/DB và troubleshooting</td>
+<td>Có query/trace mẫu ở mục 12 để trình bày</td>
+</tr>
+<tr>
+<td>English</td>
+<td>CV TOEIC 860 năm 2020, làm việc HQ Korea</td>
+<td>Chứng chỉ cũ không thay năng lực hiện tại; luyện giải thích technical case</td>
+</tr>
+<tr>
+<td>Humanoid/ROS2/Vision/VLM/LLM/HRI</td>
+<td>Bài nghiên cứu và kiến thức từ AI/IoT; phân lớp ở mục 4–7</td>
+<td>Chưa có bằng chứng triển khai humanoid, cần học trên simulator/SDK</td>
+</tr>
+<tr>
+<td>Edge/cloud/logging/config/release</td>
+<td>Smart Safe/Factory + thiết kế Azure</td>
+<td>Phân biệt công nghệ đã dùng với kiến trúc mới đề xuất</td>
+</tr>
+<tr>
+<td>UAT/real-world AI evaluation</td>
+<td>CV có AI QA, UAT/go-live; bộ test dự án cũ</td>
+<td>Robot field validation là phần mới, cần phối hợp Deployment/Safety</td>
+</tr>
+<tr>
+<td>Robot safety thành NFR</td>
+<td>ODD, boundary, fail-safe requirements và test protocol</td>
+<td>Không tự nhận safety certification hoặc tự đặt ngưỡng vật lý</td>
+</tr>
+<tr>
+<td>Ownership/system/data thinking</td>
+<td>Traceability, source-of-truth, lỗi theo layer</td>
+<td>Đưa ví dụ quyết định có evidence, không chỉ tự đánh giá bản thân</td>
+</tr>
+<tr>
+<td>Challenge constructive</td>
+<td>Hỏi định nghĩa “an toàn”, “hiểu đúng”, “realtime”; đề xuất cách đo</td>
+<td>Đưa phương án và trade-off thay vì phản đối chung chung</td>
+</tr>
+<tr>
+<td>Customer/collaboration/fast pace</td>
+<td>Pilot tăng dần, feedback → backlog, clarity trong sprint</td>
+<td>Giữ baseline và xử lý ưu tiên thay đổi có người quyết định</td>
+</tr>
+</tbody></table>
+<h2>16. Cách làm việc hằng ngày và RACI</h2>
+<p>Một ngày của BA hybrid: xem incident/defect mới và log có phạm vi; daily chốt blocker; workshop ngắn với Dev/QC làm rõ trạng thái/exception; cập nhật story và decision log; review demo; chuẩn bị dữ liệu/test cho feature kế tiếp; cuối ngày bảo đảm thay đổi requirement được đồng bộ. Tôi không cần tham dự mọi cuộc họp, nhưng câu hỏi làm dev/QC dừng việc phải có owner và thời điểm trả lời.</p>
+<table>
+<thead>
+<tr>
+<th>Quyết định/hoạt động</th>
+<th>Owner chịu trách nhiệm cuối</th>
+<th>BA/PO hybrid làm gì</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cơ hội và quan hệ khách hàng</td>
+<td>Market Development</td>
+<td>Hỗ trợ discovery và đánh giá scope</td>
+</tr>
+<tr>
+<td>Product goal, priority, release scope</td>
+<td>PO</td>
+<td>Nếu là BA: đề xuất bằng evidence; nếu được giao PO: quyết định trong thẩm quyền</td>
+</tr>
+<tr>
+<td>Requirement clarity/baseline</td>
+<td>Senior BA</td>
+<td>Sở hữu spec, traceability, clarification và impact</td>
+</tr>
+<tr>
+<td>Architecture/algorithm/implementation</td>
+<td>Tech Lead/R&amp;D</td>
+<td>Đưa constraints, đánh giá trade-off cùng nhóm; không tự duyệt thay</td>
+</tr>
+<tr>
+<td>Test execution/quality evidence</td>
+<td>QC Lead</td>
+<td>Review expected behavior và trực tiếp test phần được giao</td>
+</tr>
+<tr>
+<td>Robot operational/safety readiness</td>
+<td>Robotics/Safety/Operations theo tổ chức</td>
+<td>Chuyển rủi ro thành requirements và acceptance evidence</td>
+</tr>
+<tr>
+<td>Site commissioning</td>
+<td>Deployment Lead</td>
+<td>Hỗ trợ requirement/UAT và ghi nhận gap</td>
+</tr>
+<tr>
+<td>Customer acceptance</td>
+<td>Đại diện khách hàng được ủy quyền</td>
+<td>Chuẩn bị acceptance pack và làm rõ kết quả</td>
+</tr>
+<tr>
+<td>Timeline/dependencies/escalation</td>
+<td>PMO/PM</td>
+<td>Báo impact và giữ liên kết giữa scope, dependency, readiness</td>
+</tr>
+</tbody></table>
+<h2>17. Bài trả lời phỏng vấn và ví dụ để kể</h2>
+<h3>17.1. “Anh mới vào VinDynamics thì làm gì trong tháng đầu?”</h3>
+<blockquote>
+<p>Tôi sẽ làm rõ ba thứ: bài toán vận hành của khách hàng, capability thực tế của robot và boundary tích hợp. Với VinUni, tôi đi theo một ca bảo vệ để hiểu tuần tra và xử lý sự cố hiện tại, đồng thời xem demo robot cùng R&amp;D để phân biệt chức năng đã ổn định với roadmap. Sau đó tôi dựng context map, luồng event-to-incident-to-mission, state machine và ODD/assumption log. Tôi chọn cùng PO một luồng nhỏ đủ giá trị, viết API, ngoại lệ và AC để Dev/QC dùng ngay. Tôi mang kinh nghiệm Smart Safe và Smart Factory vào health, alarm và integration, còn phần điều khiển/an toàn robot tôi làm việc trực tiếp với Robotics Lead.</p>
+</blockquote>
+<h3>17.2. “Kinh nghiệm AI trước đây liên quan gì tới robot?”</h3>
+<blockquote>
+<p>Tôi có kinh nghiệm ở lớp dữ liệu, nghiệp vụ và đánh giá của sản phẩm AI. AI Hub cho tôi tư duy truy vết dataset đến model và deployment; HRAI và các sản phẩm AI giúp tôi định nghĩa label, input snapshot, gold set và feedback; OCR/mChat giúp tôi xử lý output không chắc chắn và tích hợp vào workflow. Với robot, tôi áp dụng vào perception, assistant và data factory, nhưng bổ sung ODD, physical outcome, sensor freshness và hardware compatibility. Tôi không coi một model trả lời đúng là toàn hệ thống đã an toàn.</p>
+</blockquote>
+<h3>17.3. “Tại sao chọn anh thay vì BA thuần robotics?”</h3>
+<blockquote>
+<p>Tôi có thể đóng góp ngay ở phần nền tảng doanh nghiệp bao quanh robot: mission/incident workflow, fleet operations, integration, data governance, quyền và release. Tôi có nền tảng developer để đọc API/log/SQL và trao đổi với engineer, đồng thời có kinh nghiệm BA/PO để làm rõ ưu tiên và hành vi người dùng. Tôi biết khoảng trống của mình ở locomotion và safety engineering, nên sẽ dùng tài liệu, simulation và phối hợp R&amp;D để học đúng chỗ thay vì nhận mình đã làm phần đó.</p>
+</blockquote>
+<h3>17.4. Ba câu chuyện STAR cần hoàn thiện bằng bằng chứng thật</h3>
+<table>
+<thead>
+<tr>
+<th>Câu chuyện</th>
+<th>Situation/Task có căn cứ</th>
+<th>Action nên kể</th>
+<th>Result cần điền từ thực tế</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Smart Safe incident lifecycle</td>
+<td>Nền tảng nhiều thiết bị/site, cảnh báo và trạng thái</td>
+<td>Làm rõ heartbeat, duplicate/recovery, scope quyền, UAT</td>
+<td>Một lỗi thực tế đã giảm/khắc phục hoặc kết quả nghiệm thu; không tự thêm %</td>
+</tr>
+<tr>
+<td>AI Hub governance</td>
+<td>Nhiều dataset/model và luồng phê duyệt</td>
+<td>Chuẩn hóa metadata, lifecycle, permission và lineage</td>
+<td>Evidence về flow được thống nhất/pilot/handover; nêu đúng phạm vi</td>
+</tr>
+<tr>
+<td>HRAI/AI QA</td>
+<td>Output AI cần kiểm chứng nghiệp vụ</td>
+<td>Golden cases, sửa ground truth, phân loại nguyên nhân và regression</td>
+<td>Một ví dụ before/after có dataset/version và report</td>
+</tr>
+</tbody></table>
+<p>Nếu chưa có số liệu, dùng kết quả định tính kiểm chứng được: yêu cầu được thống nhất, luồng lỗi được bổ sung, UAT có sign-off, hoặc feature được bàn giao. Không tạo số chính xác để câu chuyện nghe mạnh hơn.</p>
+<h3>17.5. Đoạn tiếng Anh ngắn</h3>
+<blockquote>
+<p>My strongest contribution is translating operational needs into testable system behavior. I have worked on IoT monitoring, factory operations, workflow and data governance, as well as AI data preparation and evaluation. For a security robot fleet, I would define the operating domain, mission states, integration contracts, failure behavior and acceptance evidence with the technical leads. I would keep mission orchestration separate from real-time robot control, and distinguish a successful AI response from a safely completed physical task.</p>
+</blockquote>
+<h3>17.6. Câu hỏi nên hỏi nhà tuyển dụng</h3>
+<ol>
+<li>Phạm vi Senior BA hiện tập trung fleet/mission, AI assistant, industry solutions hay toàn bộ robot platform?</li>
+<li>Những capability nào đã vận hành ngoài thực địa; những capability nào đang ở nghiên cứu/demo?</li>
+<li>Ai sở hữu ODD, safety requirements và quyết định cho phép mở rộng site?</li>
+<li>Đội đang dùng interface/SDK nào giữa cloud, fleet và robot; có baseline contract và simulator không?</li>
+<li>Dataset, evaluation và field feedback được quản lý ở đâu; BA tham gia tới mức nào?</li>
+<li>Pilot đầu tiên cần chứng minh giá trị gì, ai nghiệm thu, và sai số nào không được chấp nhận?</li>
+<li>Cơ chế phối hợp BA–PO–QC–Deployment–R&amp;D và quyền quyết định change/release cụ thể ra sao?</li>
+</ol>
+<h2>18. Nguồn và sơ đồ bàn giao</h2>
+<p>Nguồn nền: <a href="https://vindynamics.net/vi/career/senior-business-analyst-001114.html">JD VinDynamics</a>, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/Kim%20%C4%90%E1%BB%A9c%20CV%20full.pdf">CV đầy đủ</a>, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/ChatGPT/T%C3%ACm%20hi%E1%BB%83u%20Robot%20VinDynamics.md">tài liệu robot người dùng cung cấp</a>, <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/ChatGPT/M%C3%A3%20ngu%E1%BB%93n%20robot%20h%C3%ACnh%20ng%C6%B0%E1%BB%9Di%20c%E1%BB%A7a%20c%C3%A1c%20t%E1%BA%ADp%20%C4%91o%C3%A0n%20l%E1%BB%9Bn.md">nguồn mã mở người dùng cung cấp</a>. Tài liệu tham khảo nền tảng: <a href="https://raw.githubusercontent.com/ros2/ros2_documentation/jazzy/source/Concepts/Basic/About-Interfaces.rst">ROS 2</a>, <a href="https://github.com/open-rmf/rmf">Open-RMF</a>, <a href="https://docs.camunda.io/docs/components/best-practices/best-practices-overview/">Camunda</a>, <a href="https://docs.langchain.com/oss/python/langgraph/overview">LangGraph</a>, <a href="https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins">Azure IoT device twins</a>, <a href="https://learn.microsoft.com/en-us/azure/machine-learning/concept-model-management-and-deployment?view=azureml-api-2">Azure ML</a>.</p>
+<p>Sơ đồ editable và ảnh nằm trong <a href="file:///C:/Users/nguye/OneDrive/Desktop/Ph%E1%BB%8Fng%20v%E1%BA%A5n%20VinDynamics/S%C6%A1%20%C4%91%E1%BB%93%20ki%E1%BA%BFn%20tr%C3%BAc">Sơ đồ kiến trúc</a>. Các hình là <strong>thiết kế tham chiếu</strong> cùng với hai tài liệu, không phải sơ đồ hệ thống nội bộ do công ty cũ hoặc VinDynamics công bố. Mỗi sơ đồ có file <code>.drawio</code>, PNG để đọc trong Markdown và SVG để phóng lớn.</p>
+</html>

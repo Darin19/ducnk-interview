@@ -1,0 +1,904 @@
+
+--- PAGE 1 ---
+DanhTV1 - So sánh Viettel Software FPT IS
+So sánh 2 đối thủ làm đối tác xây dựng phần mềm Quản lý hợp đồng:
+1. Viettel Software
+2. Fis - FPT
+Tôi sẽ so sánh theo góc nhìn chọn đối tác triển khai QLHĐ: năng lực nền tảng, kinh nghiệm tích hợp,
+nguồn lực triển khai, rủi ro vận hành, chi phí và mức phù hợp với bài toán của anh.
+Tôi đã kiểm tra nhanh nguồn công khai: FPT IS có lợi thế rất rõ về hệ sinh thái hợp đồng điện
+tử/SAP/ERP; Viettel mạnh ở phần phát triển phần mềm tùy chỉnh, VOﬃce, RPA/OCR và yêu cầu bảo mật
+nội bộ.
+Em hiểu “Fis - FPT” là FPT IS. Với bài toán phần mềm Quản lý hợp đồng có các yêu cầu như: nhiều loại
+hợp đồng, migrate dữ liệu cũ, tích hợp VOﬃce trình ký, tích hợp SAP phần thanh toán, OCR/RPA nhập
+liệu, dashboard/cảnh báo… thì có thể so sánh như sau:
+1. Kết luận nhanh
+Nếu ưu tiên hệ thống QLHĐ may đo theo nghiệp vụ nội bộ, tích hợp sâu VOﬃce, yêu cầu bảo mật
+cao, triển khai on-premise/private và muốn kiểm soát chi phí tùy biến: nên nghiêng về Viettel
+Software.
+Nếu ưu tiên chuẩn hóa quản trị hợp đồng theo hướng doanh nghiệp lớn, có sẵn hệ sinh thái hợp
+đồng điện tử, mạnh về SAP/ERP, tư vấn quy trình tổng thể và triển khai bài bản: nên nghiêng về
+FPT IS.
+Với bài toán của anh, em chấm sơ bộ:
+Tiêu chí Viettel Software FPT IS
+Phát triển phần mềm tùy chỉnh 9/10 8.5/10
+Kinh nghiệm hệ thống quản trị doanh nghiệp 8/10 9/10
+Hợp đồng điện tử / pháp lý ký số 8/10 9.5/10
+Tích hợp VOﬃce 9.5/10 7.5/10
+Tích hợp SAP / ERP / tài chính 7.5/10 9/10
+RPA/OCR nhập liệu hợp đồng 8.5/10 8.5/10
+Bảo mật, triển khai nội bộ, dữ liệu nhạy cảm 9/10 8.5/10
+Tư vấn quy trình & quản trị dự án 8/10 9/10
+Tối ưu chi phí theo hướng may đo 8.5/10 7.5/10
+Phù hợp tổng thể 86/100 88/100
+Nhận định: FPT IS nhỉnh hơn nếu coi QLHĐ là một phần của hệ sinh thái ERP/SAP và hợp đồng điện tử.
+Viettel Software nhỉnh hơn nếu hệ thống cần “đóng theo nghiệp vụ riêng”, tích hợp VOﬃce sâu và kiểm
+soát chặt dữ liệu nội bộ.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/25
+
+--- PAGE 2 ---
+2. So sánh chi tiết
+Nhóm tiêu
+chí Viettel Software FPT IS
+Năng lực
+phát triển
+phần mềm
+Mạnh về phần mềm tùy chỉnh quy mô lớn.
+Viettel Software được giới thiệu là đơn vị phụ
+trách tư vấn, phát triển giải pháp phần mềm quy
+mô lớn, thiết kế riêng từ khảo sát đến bảo trì
+vận hành. 
+Mạnh về tích hợp hệ thống, tư vấn tổng thể
+và giải pháp doanh nghiệp. FPT IS giới thiệu
+năng lực cung cấp dịch vụ từ tư vấn đến
+triển khai, có hệ sinh thái nền tảng/sản
+phẩm đa dạng. 
+Quản lý hợp
+đồng / hợp
+đồng điện tử
+Có lợi thế nếu đi theo hệ sinh thái Viettel như
+VOﬃce, chữ ký số, vContract. Viettel Oﬃce hỗ
+trợ số hóa văn bản, lưu trữ tập trung, ký số
+SimCA, USB Token, MySign và đa nền tảng.
+Rất mạnh. FPT.eContract là giải pháp hợp
+đồng điện tử cho ký kết tài liệu/hợp đồng
+đơn phương, song phương, đa phương; kết
+hợp FPT.CeCA để chứng thực hợp đồng điện
+tử với dấu xác thực của Bộ Công Thương.
+Tích hợp
+VOﬃce /
+trình ký văn
+bản
+Lợi thế lớn vì cùng hệ sinh thái Viettel.
+VOﬃce/Viettel Oﬃce có sẵn quản lý văn bản,
+luồng xử lý, ký số và vận hành trên web/mobile.
+Làm được qua API nhưng không phải lợi thế
+tự nhiên. Cần làm rõ kinh nghiệm tích hợp
+thực tế với VOﬃce/Viettel Oﬃce trong
+proposal.
+Tích hợp SAP
+/ thanh toán
+/ tài chính
+Có thể làm theo hướng tích hợp API, nhưng cần
+kiểm chứng năng lực SAP cụ thể trong hồ sơ
+năng lực.
+Lợi thế rõ. FPT IS công bố kinh nghiệm triển
+khai ERP/SAP, đội ngũ hơn 1000 chuyên gia,
+có khả năng tích hợp các giải pháp số xung
+quanh ERP. 
+OCR/RPA
+nhập thông
+tin hợp đồng
+Viettel IA kết hợp RPA, AI, OCR, analytics để tự
+động hóa quy trình doanh nghiệp; đã triển khai
+tự động hóa hàng trăm quy trình tại hơn 16
+doanh nghiệp trong nhiều lĩnh vực. 
+FPT cũng mạnh. Các giải pháp như FDA có
+OCR/RPA để trích xuất, kiểm tra, phê duyệt
+hóa đơn và tích hợp ERP/phần mềm kế toán;
+akaBot cũng được dùng cho tự động hóa
+nhập liệu, đối chiếu, phân quyền.
+ 
+AI, tìm kiếm,
+tóm tắt,
+phân tích
+hợp đồng
+Viettel E-Oﬃce có AI hỗ trợ tra cứu, tóm tắt, tổng
+hợp văn bản, Speech2Text/Text2Speech và cổng
+phê duyệt tập trung. 
+FPT IS cũng định hướng CLM với AI, phân
+tích dự đoán, tích hợp CRM/ERP và bảo mật
+tuân thủ trong quản lý vòng đời hợp đồng.
+Quản trị dự
+án
+Phù hợp nếu yêu cầu may đo, nhiều vòng làm rõ
+nghiệp vụ, nhiều chỉnh sửa đặc thù.
+Phù hợp nếu muốn tư vấn bài bản, chuẩn
+hóa quy trình, quản trị thay đổi, tích hợp hệ
+thống lớn. FPT IS nhấn mạnh kinh nghiệm
+lập kế hoạch, phân bổ nguồn lực, hỗ trợ
+chuyển đổi, xử lý chất lượng dữ liệu và quản
+lý thay đổi trong dự án SAP. 
+Rủi ro triển
+khai
+Rủi ro chính: nếu yêu cầu QLHĐ cần chuẩn CLM
+sâu, pháp lý hợp đồng điện tử đầy đủ, SAP phức
+tạp thì cần kiểm chứng kỹ.
+Rủi ro chính: chi phí có thể cao hơn, tùy biến
+đặc thù có thể phát sinh nếu đi theo bộ giải
+pháp/hệ sinh thái sẵn có.
+Chi phí Có khả năng linh hoạt hơn nếu đặt bài toán là phát triển riêng theo phạm vi đã chốt. Có thể cao hơn nếu dùng nhiều nền tảng/hệ sinh thái sản phẩm, nhưng bù lại giảm rủi ro ở SAP, eContract, ERP, tư vấn quy trình.
+Viettel Software
+FPT IS - Công ty
+TNHH FPT IS
+Viettel Solutions FPT IS - Công ty
+TNHH FPT IS
+Viettel Solutions
+FPT IS - Công ty
+TNHH FPT IS
+Viettel Solutions
+FPT IS - Công ty
+TNHH FPT IS
+FPT IS - Công ty
+TNHH FPT IS
+Viettel Software FPT IS - Công ty
+TNHH FPT IS
+FPT IS - Công ty
+TNHH FPT IS
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/25
+
+--- PAGE 3 ---
+3. Đánh giá theo đúng bài toán QLHĐ của anh
+Nếu hệ thống cần các module chính sau:
+Module / yêu cầu Đối tác phù hợp hơn Lý do
+Quản lý nhiều loại hợp đồng: XNK, phân
+phối, bán lẻ, nhà máy in, mua sắm, dự án
+CNTT
+Viettel Software Nghiêng về phát triển tùy chỉnh theo nghiệp vụ đặc thù.
+Luồng trình ký VOﬃce Viettel Software Cùng hệ sinh thái Viettel, tích hợp tự nhiên hơn.
+Thanh toán qua SAP FPT IS FPT IS có lợi thế SAP/ERP rõ hơn.
+OCR/RPA nhập dữ liệu hợp đồng Ngang nhau Viettel có Viettel IA; FPT có akaBot/FDA/OCR/RPA.
+Migrate dữ liệu từ QLHĐ cũ Ngang nhau Cần đánh giá qua phương án migrate cụ thể, mapping dữ liệu, làm sạch dữ liệu.
+Dashboard, báo cáo, cảnh báo thực hiện
+hợp đồng
+Ngang nhau, Viettel
+nhỉnh nếu may đo
+Cả hai đều làm được; Viettel có lợi nếu
+dashboard bám sát nghiệp vụ nội bộ.
+Hợp đồng điện tử, xác thực pháp lý, ký
+đa bên FPT IS FPT.eContract/FPT.CeCA là lợi thế rất rõ.
+Chuẩn hóa quy trình quản trị hợp đồng
+toàn doanh nghiệp FPT IS Mạnh về tư vấn quy trình, ERP, hệ sinh thái doanh nghiệp.
+Bảo mật, triển khai nội bộ, kiểm soát dữ
+liệu Viettel Software Phù hợp với hệ thống nhạy cảm, cần tùy biến và triển khai kiểm soát chặt.
+4. Khuyến nghị lựa chọn
+Em đề xuất không chọn chỉ theo thương hiệu, mà chọn theo hướng triển khai:
+Phương án 1 — Chọn FPT IS làm tổng thầu
+Phù hợp nếu lãnh đạo muốn hệ thống QLHĐ đi theo hướng chuẩn hóa quản trị doanh nghiệp, có kết
+nối sâu với SAP/ERP, hợp đồng điện tử, chứng thực pháp lý, quy trình tài chính.
+Điểm mạnh: bài bản, có sẵn hệ sinh thái, giảm rủi ro ở SAP/eContract.
+Điểm cần ràng buộc: phải cam kết tích hợp VOﬃce, không ép thay thế VOﬃce nếu đơn vị đang dùng ổn
+định.
+Phương án 2 — Chọn Viettel Software làm tổng thầu
+Phù hợp nếu hệ thống QLHĐ là bài toán may đo theo nghiệp vụ nội bộ, nhiều luồng hợp đồng đặc thù,
+cần tích hợp VOﬃce, OCR/RPA, dashboard, cảnh báo, phân quyền phức tạp.
+Điểm mạnh: linh hoạt, phù hợp tùy chỉnh, tích hợp VOﬃce tốt, kiểm soát dữ liệu tốt.
+Điểm cần ràng buộc: phải chứng minh năng lực SAP, hợp đồng điện tử, pháp lý ký số và quản lý vòng
+đời hợp đồng.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/25
+
+--- PAGE 4 ---
+Phương án 3 — Tối ưu nhất nếu dự án lớn
+Viettel Software làm hệ thống lõi QLHĐ + tích hợp VOﬃce; FPT IS tư vấn/tích hợp phần SAP hoặc
+eContract nếu cần.
+Nhưng phương án này chỉ nên dùng nếu quy mô dự án đủ lớn, vì có rủi ro chia tách trách nhiệm. Với
+ngân sách vừa phải, nên chọn một tổng thầu chịu trách nhiệm end-to-end.
+5. Đề xuất chấm thầu/RFP
+Nên yêu cầu 2 bên demo theo cùng một kịch bản:
+1. Tạo hợp đồng mua sắm/dự án CNTT.
+2. OCR ﬁle scan hợp đồng cũ để bóc tách: số hợp đồng, đối tác, giá trị, hiệu lực, điều khoản thanh toán.
+3. Trình ký qua VOﬃce.
+4. Sau ký, tự động sinh tiến độ thực hiện hợp đồng.
+5. Đẩy thông tin thanh toán sang SAP.
+6. Dashboard cảnh báo: sắp hết hạn, chậm nghiệm thu, chậm thanh toán, vượt giá trị, thiếu hồ sơ.
+7. Migrate thử 1 tập dữ liệu QLHĐ cũ.
+8. Phân quyền theo đơn vị: XNK, phân phối, bán lẻ, nhà máy in, khối cơ quan.
+Điều kiện chấm bắt buộc: không chỉ nghe trình bày slide, phải yêu cầu demo prototype hoặc PoC
+trong 2–3 tuần với dữ liệu mẫu thật.
+Kết luận đề xuất
+Nếu bắt buộc chọn một bên ngay: FPT IS phù hợp hơn nếu trọng tâm là QLHĐ chuẩn doanh nghiệp +
+SAP + hợp đồng điện tử.
+Nhưng với bối cảnh của anh có VOﬃce, nhiều nghiệp vụ hợp đồng đặc thù, OCR/RPA, migrate QLHĐ
+cũ, dashboard/cảnh báo, em nghiêng nhẹ về Viettel Software, với điều kiện trong hợp đồng phải ràng
+buộc rõ phần tích hợp SAP, migrate dữ liệu và nghiệm thu OCR/RPA.
+Đề xuất các tiêu chí để lựa chọn sau khi 2 bên đã khảo sát và gửi báo giá cũng như có kế hoạch 
+thực hiện
+Dưới đây là bộ tiêu chí đề xuất để lựa chọn đối tác xây dựng phần mềm Quản lý hợp đồng sau khi
+Viettel Software và FPT IS đã khảo sát, gửi báo giá và kế hoạch thực hiện.
+1. Nguyên tắc lựa chọn
+Không nên chọn đơn vị giá thấp nhất, mà nên chọn theo nguyên tắc:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/25
+
+--- PAGE 5 ---
+Đối tác có phương án phù hợp nhất với nghiệp vụ, cam kết triển khai rõ ràng, kiểm soát
+được rủi ro và tổng chi phí hợp lý nhất.
+Nên chấm theo thang 100 điểm, gồm:
+Nhóm tiêu chí Trọng số đề xuất
+1. Mức độ đáp ứng nghiệp vụ 25 điểm
+2. Giải pháp kỹ thuật & tích hợp 20 điểm
+3. Kế hoạch triển khai & nhân sự 15 điểm
+4. Kinh nghiệm & năng lực đối tác 15 điểm
+5. Chi phí & tính hợp lý báo giá 15 điểm
+6. Bảo hành, vận hành, hỗ trợ sau triển khai 10 điểm
+Tổng cộng 100 điểm
+2. Bảng tiêu chí chấm điểm chi tiết
+2.1. Mức độ đáp ứng nghiệp vụ — 25 điểm
+Tiêu chí Điểm
+Hiểu đúng bài toán quản lý hợp đồng của nhiều đơn vị: XNK, phân phối, bán lẻ, nhà máy in, khối cơ quan,
+mua sắm, dự án CNTT 5
+Đáp ứng đầy đủ các chức năng lõi: tạo hợp đồng, quản lý vòng đời hợp đồng, phụ lục, nghiệm thu, thanh
+toán, gia hạn, thanh lý 5
+Có module cảnh báo động: sắp hết hạn, chậm nghiệm thu, chậm thanh toán, vượt giá trị, thiếu hồ sơ 4
+Có dashboard/báo cáo phục vụ lãnh đạo và phòng chuyên môn 3
+Có phương án migrate dữ liệu từ hệ thống QLHĐ cũ rõ ràng 3
+Có khả năng cấu hình quy trình theo từng loại hợp đồng, từng đơn vị 3
+Có phương án xử lý các yêu cầu phát sinh/hay thay đổi nghiệp vụ 2
+Tổng 25
+Lưu ý: Đây là nhóm quan trọng nhất. Đối tác nào hiểu nghiệp vụ sâu hơn, mô tả đúng luồng thực tế hơn
+thì nên được ưu tiên, kể cả giá cao hơn một chút.
+2.2. Giải pháp kỹ thuật & tích hợp — 20 điểm
+Tiêu chí Điểm
+Kiến trúc hệ thống rõ ràng, dễ mở rộng, dễ bảo trì 4
+Tích hợp VOﬃce trình ký văn bản 4
+Tích hợp SAP cho luồng thanh toán/thực hiện hợp đồng 4
+Có phương án RPA/OCR tự động bóc tách thông tin hợp đồng 3
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/25
+
+--- PAGE 6 ---
+Tiêu chí Điểm
+Phân quyền dữ liệu theo đơn vị, phòng ban, vai trò người dùng 2
+Bảo mật, nhật ký thao tác, truy vết lịch sử thay đổi hợp đồng 2
+Có tài liệu kỹ thuật, API, phương án backup/restore 1
+Tổng 20
+Lưu ý riêng:
+Với hệ thống QLHĐ, cần yêu cầu đối tác cam kết rõ các điểm tích hợp:
+VOﬃce: trình ký, nhận kết quả ký, trạng thái văn bản.
+SAP: đồng bộ thông tin thanh toán, nghiệm thu, giá trị đã thanh toán.
+OCR/RPA: chỉ nghiệm thu nếu bóc tách dữ liệu đạt tỷ lệ chính xác thực tế theo mẫu hợp đồng của
+đơn vị.
+2.3. Kế hoạch triển khai & nhân sự — 15 điểm
+Tiêu chí Điểm
+Kế hoạch triển khai rõ từng giai đoạn: khảo sát chi tiết, thiết kế, phát triển, test, UAT, đào tạo, golive 4
+Tiến độ hợp lý, không quá dài nhưng cũng không cam kết phi thực tế 3
+Có nhân sự chủ chốt rõ ràng: PM, BA, Tech Lead, Dev, Tester, chuyên gia tích hợp 3
+Có phương án phối hợp với P.CNTT, Phòng Pháp chế Đầu tư, Phòng Tài chính và các đơn vị sử dụng 2
+Có kế hoạch quản trị rủi ro, xử lý thay đổi phạm vi 2
+Có phương án đào tạo, chuyển giao tài liệu, hỗ trợ người dùng 1
+Tổng 15
+Điểm cần soi kỹ:
+Nếu kế hoạch chỉ ghi chung chung kiểu “khảo sát - phát triển - kiểm thử - bàn giao” mà không có mốc,
+đầu ra, trách nhiệm từng bên thì nên trừ điểm.
+2.4. Kinh nghiệm & năng lực đối tác — 15 điểm
+Tiêu chí Điểm
+Có kinh nghiệm triển khai hệ thống quản lý hợp đồng hoặc hệ thống quản trị doanh nghiệp tương tự 4
+Có kinh nghiệm tích hợp với hệ thống văn phòng điện tử, ERP/SAP, ký số, OCR/RPA 4
+Có năng lực tư vấn quy trình, không chỉ làm phần mềm theo yêu cầu 3
+Có đội ngũ triển khai ổn định, không phụ thuộc quá nhiều vào một vài cá nhân 2
+Có hồ sơ dự án tham chiếu, khách hàng tương tự, biên bản nghiệm thu hoặc case study 2
+Tổng 15
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/25
+
+--- PAGE 7 ---
+Nên yêu cầu thêm:
+Hai bên cung cấp danh sách ít nhất 3 dự án tương tự, gồm:
+Tên khách hàng.
+Quy mô người dùng.
+Phạm vi chức năng.
+Các hệ thống đã tích hợp.
+Thời gian triển khai.
+Kết quả nghiệm thu.
+2.5. Chi phí & tính hợp lý báo giá — 15 điểm
+Tiêu chí Điểm
+Tổng giá trị báo giá phù hợp ngân sách 4
+Bóc tách chi phí rõ theo module/chức năng 3
+Chi phí tích hợp VOﬃce, SAP, OCR/RPA, migrate dữ liệu được tách riêng minh bạch 3
+Không có nhiều chi phí ẩn: license, bảo trì, nâng cấp, máy chủ, nhân sự onsite, API, đào tạo 2
+Chính sách thanh toán theo mốc nghiệm thu hợp lý 2
+Chi phí bảo trì/nâng cấp sau nghiệm thu hợp lý 1
+Tổng 15
+Không nên chọn chỉ vì giá thấp.
+Nếu giá thấp nhưng phạm vi mơ hồ, không bao gồm migrate, không bao gồm tích hợp SAP/VOﬃce,
+không cam kết OCR/RPA thì rủi ro phát sinh rất lớn.
+2.6. Bảo hành, vận hành, hỗ trợ sau triển khai — 10 điểm
+Tiêu chí Điểm
+Thời gian bảo hành tối thiểu 12 tháng 2
+Cam kết SLA hỗ trợ lỗi rõ ràng: lỗi nghiêm trọng, lỗi trung bình, lỗi nhỏ 2
+Có đội hỗ trợ sau golive 2
+Có phương án bảo trì, nâng cấp, tối ưu hiệu năng 2
+Có cam kết bàn giao source code, tài liệu, tài khoản quản trị, hướng dẫn vận hành 2
+Tổng 10
+3. Các tiêu chí bắt buộc, nếu không đạt thì loại
+Ngoài chấm điểm, nên có một số tiêu chí bắt buộc đạt:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/25
+
+--- PAGE 8 ---
+Tiêu chí bắt buộc Yêu cầu
+Tích hợp VOﬃce Phải có phương án kỹ thuật rõ ràng
+Tích hợp SAP Phải có phương án kết nối dữ liệu thanh toán
+Migrate dữ liệu QLHĐ cũ Phải có phương án mapping, làm sạch, đối soát
+Phân quyền dữ liệu Phải đáp ứng theo đơn vị, phòng ban, vai trò
+Bàn giao source code Phải cam kết trong hợp đồng
+Bảo mật dữ liệu Phải có nhật ký thao tác, phân quyền, backup
+Kế hoạch triển khai Phải có timeline, nhân sự, đầu ra từng giai đoạn
+Báo giá Phải bóc tách chi tiết, không báo giá gộp chung chung
+4. Mẫu bảng chấm tổng hợp
+Nhóm tiêu chí Trọng số Viettel Software FPT IS Ghi chú
+Mức độ đáp ứng nghiệp vụ 25
+Giải pháp kỹ thuật & tích hợp 20
+Kế hoạch triển khai & nhân sự 15
+Kinh nghiệm & năng lực đối tác 15
+Chi phí & tính hợp lý báo giá 15
+Bảo hành, vận hành, hỗ trợ 10
+Tổng điểm 100
+5. Cách ra quyết định
+Có thể áp dụng nguyên tắc sau:
+Kết quả chấm Khuyến nghị
+Một bên cao hơn từ 10 điểm trở lên Chọn bên điểm cao hơn
+Hai bên chênh dưới 5 điểm Ưu tiên bên có giá tốt hơn và kế hoạch triển khai rõ hơn
+Một bên giá thấp hơn nhưng điểm kỹ thuật/nghiệp vụ
+thấp Không nên chọn nếu rủi ro phát sinh cao
+Một bên giá cao hơn nhưng cam kết rõ, ít rủi ro Có thể chọn nếu tổng chi phí vòng đời hợp lý
+Cả hai đều chưa rõ tích hợp SAP/VOﬃce/OCR Yêu cầu làm rõ hoặc demo PoC trước khi chọn
+6. Đề xuất trọng tâm khi đánh giá 2 bên
+Với bài toán QLHĐ của anh, em đề xuất ưu tiên theo thứ tự:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/25
+
+--- PAGE 9 ---
+1. Đáp ứng nghiệp vụ thực tế
+Có hiểu đúng các loại hợp đồng và quy trình nội bộ không.
+2. Tích hợp VOﬃce và SAP
+Đây là hai điểm dễ phát sinh rủi ro nhất.
+3. Migrate dữ liệu cũ
+Nếu migrate không tốt thì hệ thống mới sẽ khó đưa vào vận hành thật.
+4. OCR/RPA nhập liệu hợp đồng
+Phải yêu cầu demo trên mẫu hợp đồng thật, không nên chỉ nghe cam kết lý thuyết.
+5. Cam kết triển khai và hỗ trợ sau golive
+Hệ thống QLHĐ liên quan nhiều phòng ban, nên sau golive chắc chắn sẽ có phát sinh.
+6. Chi phí hợp lý, minh bạch
+Giá không nhất thiết thấp nhất, nhưng phải rõ phạm vi, rõ đầu ra, rõ trách nhiệm.
+7. Đề xuất kết luận đưa vào báo cáo
+Có thể viết trong báo cáo như sau:
+Sau khi hai đối tác hoàn thành khảo sát, gửi báo giá và kế hoạch triển khai, việc lựa chọn đối
+tác cần căn cứ trên đánh giá tổng thể về mức độ đáp ứng nghiệp vụ, giải pháp kỹ thuật, khả
+năng tích hợp với các hệ thống hiện hữu, năng lực triển khai, chi phí và cam kết hỗ trợ sau
+triển khai.
+Không lựa chọn đơn vị chỉ dựa trên tiêu chí giá thấp nhất, do hệ thống Quản lý hợp đồng có
+phạm vi nghiệp vụ rộng, liên quan đến nhiều đơn vị, nhiều loại hợp đồng và cần tích hợp với
+các hệ thống quan trọng như VOﬃce, SAP, OCR/RPA và hệ thống dữ liệu hiện hữu.
+Đề xuất áp dụng phương pháp chấm điểm theo thang 100 điểm, trong đó ưu tiên cao nhất
+cho mức độ đáp ứng nghiệp vụ, giải pháp kỹ thuật và năng lực triển khai. Đối tác được lựa
+chọn là đơn vị có tổng điểm cao nhất, đồng thời đáp ứng đầy đủ các tiêu chí bắt buộc về tích
+hợp, bảo mật, migrate dữ liệu, bàn giao và hỗ trợ vận hành sau triển khai.
+làm thành ﬁle excel
+Đã làm xong ﬁle Excel chấm điểm lựa chọn đối tác.
+File gồm các sheet:
+Tong_quan
+Bang_cham_diem
+Chi_tiet_tieu_chi
+Tieu_chi_bat_buoc
+Huong_dan_su_dung
+Anh tải tại đây:
+Tieu_chi_lua_chon_doi_tac_QLHD.xlsx
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/25
+
+--- PAGE 10 ---
+Báo cáo lựa chọn đối tác xây dựng phần mềm Quản lý ĐTMS VCM.pptx
+Presentation
+Làm lại slide này cho đẹp
+Đã làm lại slide đẹp hơn theo ﬁle gốc. 
+Báo cáo lựa chọn đối tác xây dự…
+Bao_cao_lua_chon_doi_tac_QLDTMS_VCM_redesign.pptx
+Nên thêm ảnh cho sinh động hơn không?
+Có — nên thêm, nhưng chỉ thêm vừa phải để slide sinh động hơn mà vẫn giữ tính báo cáo, trang
+trọng.
+Khuyến nghị chung
+Với bộ slide này, em nghĩ nên dùng:
+icon/phác họa minh họa nhẹ
+ảnh/illustration dạng công nghệ, dashboard, quy trình
+không nên chèn quá nhiều ảnh người hoặc ảnh trang trí không liên quan
+Vì đây là báo cáo đề xuất lựa chọn đối tác, nên mục tiêu là:
+1. Dễ nhìn hơn
+2. Nhấn mạnh nội dung chính
+3. Tăng tính chuyên nghiệp
+4. Không làm loãng thông tin
+Slide nào nên thêm ảnh
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/25
+
+--- PAGE 11 ---
+1. Slide mở đầu
+Nên thêm
+1 ảnh nền mờ hoặc illustration về:
+phần mềm quản lý
+hợp đồng số
+quy trình doanh nghiệp
+dashboard công nghệ
+Tác dụng: tạo cảm giác hiện đại, chuyên nghiệp ngay từ đầu.
+2. Slide “Bối cảnh và đề xuất phương án triển khai”
+Nên thêm
+icon cho từng module
+hoặc 1 sơ đồ nhỏ minh họa:
+09 module tổng thể
+highlight 3 module triển khai trước
+Tốt hơn ảnh thật, vì slide này thiên về logic và kế hoạch.
+3. Slide “Hiện trạng, mục đích”
+Rất nên thêm
+Có thể thêm 2 nhóm hình:
+Hiện trạng: icon hồ sơ phân tán, theo dõi thủ công, cảnh báo thiếu
+Mục đích: OCR, cảnh báo tiến độ, lưu trữ tập trung, dashboard
+Slide này nếu có icon/illustration sẽ dễ hiểu hơn rất nhiều.
+4. Slide “Các chức năng phần mềm”
+Nên thêm
+icon cho từng phân hệ:
+Quản lý hợp đồng
+Sửa đổi hợp đồng
+Thực hiện hợp đồng
+Quản trị/danh mục/phân quyền
+Không cần ảnh lớn, chỉ cần icon đồng bộ là đẹp.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/25
+
+--- PAGE 12 ---
+5. Slide so sánh 2 đối tác
+Có thể thêm nhẹ
+logo Viettel / FPT IS (nếu dùng nội bộ và phù hợp)
+hoặc icon:
+chi phí
+tiến độ
+giải pháp
+Nhưng phần này chủ yếu là bảng, nên chỉ thêm ít để tránh rối.
+6. Slide chấm điểm / tiêu chí bắt buộc
+Không nên thêm ảnh nhiều
+chỉ nên thêm icon nhỏ ở tiêu đề hoặc đầu mục
+nên tập trung vào bảng, màu nhấn, tick/check, highlight kết quả
+Đây là slide phân tích, ưu tiên rõ ràng hơn “đẹp”.
+7. Slide tổng kết và kiến nghị
+Nên thêm
+icon ưu điểm / nhược điểm / đề xuất
+hoặc 1 khối highlight ở cột “đề xuất”
+nếu muốn có thể thêm visual kiểu:
+“recommended”
+“decision”
+“selection result”
+Mức độ nên thêm
+Em khuyên theo mức này:
+Phù hợp nhất:
+mỗi slide 1–3 icon
+1–2 slide quan trọng có ảnh nền mờ hoặc illustration
+giữ bố cục sạch, nhiều khoảng trắng
+Không nên:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/25
+
+--- PAGE 13 ---
+chèn ảnh full màn hình ở nhiều slide
+dùng ảnh quá màu mè
+mỗi ý một hình khác nhau gây loạn
+dùng ảnh không đồng bộ phong cách
+Loại hình ảnh nên dùng
+Ưu tiên:
+icon line / ﬂat hiện đại
+illustration công nghệ
+ảnh dashboard / ﬂow / tài liệu số
+hình OCR / workﬂow / contract / e-sign
+Tránh:
+ảnh stock người bắt tay quá nhiều
+ảnh trang trí không liên quan
+ảnh màu quá rực
+clipart lỗi thời
+Kết luận
+Có, nên thêm ảnh — nhưng theo hướng tối giản, chuyên nghiệp, hỗ trợ nội dung chứ không phải để
+trang trí.
+Gợi ý tốt nhất:
+Slide mở đầu: thêm ảnh nền công nghệ/hợp đồng số
+Slide hiện trạng/mục đích: thêm icon minh họa
+Slide chức năng: thêm icon cho từng phân hệ
+Slide kết luận: thêm icon nhấn mạnh đề xuất
+Các slide bảng điểm: chỉ thêm rất nhẹ
+Nếu anh muốn, em có thể làm tiếp theo 1 trong 2 cách:
+1. Chỉ đưa ra danh sách cụ thể từng slide nên chèn ảnh gì
+2. Làm lại luôn ﬁle PowerPoint, bổ sung icon/ảnh cho đồng bộ và đẹp hơn
+Nếu muốn, em sẽ làm theo phương án 2.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 13/25
+
+--- PAGE 14 ---
+Theo gợi ý tốt nhất, làm lại ﬁle
+Em sẽ chỉnh trực tiếp trên bản PowerPoint đã làm lại, bổ sung ảnh/icon theo mức vừa phải: slide mở đầu
+có nền công nghệ, các slide nghiệp vụ có icon minh họa, slide bảng giữ sạch để không rối.
+Em đang bổ sung theo hướng “vừa đủ”: không biến slide thành brochure, chỉ tăng tính trực quan ở các
+slide mở đầu, hiện trạng, chức năng và kiến nghị.
+Đã làm lại ﬁle theo hướng thêm ảnh/icon vừa phải, chuyên nghiệp: slide mở đầu có visual công nghệ,
+slide hiện trạng/mục đích có icon minh họa, slide chức năng có icon cho từng phân hệ, slide kết luận có
+icon nhấn mạnh đề xuất. Nội dung vẫn giữ theo ﬁle gốc đã upload. 
+Báo cáo lựa chọn đối tác xây dự…
+Bao_cao_lua_chon_doi_tac_QLDTMS_VCM_redesign_co_hinh_anh.pptx
+Làm lại slide đầu, nền sáng đưa ra các mục lớn cần trình bày, thêm ảnh liên quan đến quản lý đầu 
+tư mua sắm, các side khác viết chi tiết hơn chút và cỡ chữ to lên
+Đã làm lại theo yêu cầu:
+Slide đầu: nền sáng, có các mục lớn cần trình bày, thêm hình minh họa liên quan đến quản lý
+đầu tư / mua sắm / hợp đồng.
+Các slide còn lại: em đã viết chi tiết hơn một chút, bố cục rõ hơn và tăng cỡ chữ để dễ trình bày.
+Anh tải ﬁle tại đây:
+Bao_cao_lua_chon_doi_tac_QLDTMS_VCM_redesign_v2.pptx
+Trong bộ câu hỏi căn cứ vào đâu để Đưa ra mức Điểm tối đa cho từng tiêu chí chi tiết
+Mức điểm tối đa cho từng tiêu chí chi tiết nên được xác định theo mức độ quan trọng của tiêu chí
+đó đối với thành công của dự án, chứ không chia đều cơ học.
+Có thể giải thích trong báo cáo như sau:
+Việc phân bổ điểm tối đa cho từng tiêu chí chi tiết được căn cứ trên mức độ ảnh hưởng của
+tiêu chí đó đến khả năng triển khai thành công phần mềm Quản lý Đầu tư, Mua sắm; mức độ
+rủi ro nếu tiêu chí không được đáp ứng; tính bắt buộc của yêu cầu đối với VCM; mức độ phức
+tạp kỹ thuật; phạm vi ảnh hưởng đến người dùng và khả năng vận hành hệ thống sau
+nghiệm thu.
+1. Các căn cứ chính để phân bổ điểm
+1. Mức độ ảnh hưởng đến mục tiêu dự án
+Tiêu chí nào ảnh hưởng trực tiếp đến việc phần mềm có dùng được trong thực tế hay không thì điểm
+cao hơn.
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 14/25
+
+--- PAGE 15 ---
+Tiêu chí Vì sao điểm cao
+Đáp ứng chức năng quản lý hợp đồng Là chức năng lõi của dự án
+Tích hợp VOﬃce Liên quan trực tiếp đến trình ký, phê duyệt
+Tích hợp SAP Liên quan thanh toán, nghiệm thu, tài chính
+Migrate dữ liệu cũ Quyết định khả năng chuyển đổi sang hệ thống mới
+2. Mức độ rủi ro nếu không đáp ứng
+Tiêu chí nào nếu không làm tốt sẽ gây rủi ro lớn về tiến độ, chi phí, vận hành hoặc pháp lý thì điểm
+cao hơn.
+Ví dụ:
+Tiêu chí Rủi ro nếu không đạt
+Phân quyền dữ liệu Lộ dữ liệu, sai phạm quyền truy cập
+Bảo mật, nhật ký thao tác Khó truy vết, khó kiểm tra sau này
+Kế hoạch triển khai Dễ chậm tiến độ, phát sinh phạm vi
+Bàn giao source code VCM bị phụ thuộc nhà cung cấp
+3. Mức độ phức tạp kỹ thuật
+Tiêu chí nào có độ khó kỹ thuật cao, cần năng lực thực hiện rõ ràng thì được phân bổ điểm cao hơn.
+Ví dụ:
+Tích hợp VOﬃce.
+Tích hợp SAP.
+OCR/RPA bóc tách dữ liệu hợp đồng.
+Migrate dữ liệu từ hệ thống cũ.
+Phân quyền theo đơn vị/phòng ban/vai trò.
+Dashboard động, báo cáo theo thời gian thực.
+4. Phạm vi ảnh hưởng đến nhiều đơn vị sử dụng
+Tiêu chí nào ảnh hưởng đến nhiều phòng ban, nhiều đơn vị, nhiều nhóm người dùng thì điểm cao hơn.
+Ví dụ:
+Tiêu chí Lý do
+Quản lý nhiều loại hợp đồng Ảnh hưởng nhiều đơn vị: XNK, phân phối, bán lẻ, nhà máy in, khối cơ quan
+Dashboard báo cáo Phục vụ lãnh đạo, phòng chuyên môn, đơn vị sử dụng
+Cảnh báo tiến độ Ảnh hưởng trực tiếp đến người thực hiện hợp đồng
+Phân quyền dữ liệu Liên quan toàn bộ hệ thống
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 15/25
+
+--- PAGE 16 ---
+5. Mức độ bắt buộc đối với VCM
+Một số tiêu chí không chỉ chấm điểm mà cần đưa vào nhóm đạt/không đạt.
+Ví dụ:
+Tiêu chí Cách đánh giá
+Bàn giao source code Bắt buộc đạt
+Tích hợp VOﬃce Bắt buộc đạt
+Tích hợp SAP Bắt buộc đạt
+Migrate dữ liệu Bắt buộc đạt
+Bảo mật, backup, log Bắt buộc đạt
+Các tiêu chí này nếu không đáp ứng thì dù tổng điểm cao vẫn cần xem xét loại hoặc yêu cầu làm rõ.
+2. Cách giải thích vì sao có tiêu chí 5 điểm, 4 điểm, 3 điểm, 2 điểm,
+1 điểm
+Có thể quy ước như sau:
+Mức điểm tối đa Ý nghĩa
+5 điểm Tiêu chí rất quan trọng, ảnh hưởng trực tiếp đến mục tiêu chính của dự án
+4 điểm Tiêu chí quan trọng, có rủi ro cao nếu không đáp ứng
+3 điểm Tiêu chí cần thiết, ảnh hưởng đến hiệu quả sử dụng hoặc vận hành
+2 điểm Tiêu chí hỗ trợ, giúp hệ thống đầy đủ và dễ quản trị hơn
+1 điểm Tiêu chí bổ sung, mang tính hoàn thiện hồ sơ/tài liệu/quy trình
+3. Ví dụ áp dụng vào bộ tiêu chí hiện tại
+Nhóm 1: Mức độ đáp ứng nghiệp vụ — 25 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Hiểu đúng bài toán quản lý hợp đồng
+của nhiều đơn vị 5 Đây là điều kiện nền tảng, nếu hiểu sai nghiệp vụ thì phần mềm khó dùng thực tế
+Đáp ứng đầy đủ chức năng lõi quản lý
+hợp đồng 5 Là mục tiêu chính của dự án
+Module cảnh báo động 4 Giải quyết trực tiếp vấn đề quá hạn, chậm nghiệm thu, chậm thanh toán
+Dashboard/báo cáo 3 Phục vụ lãnh đạo và công tác giám sát
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 16/25
+
+--- PAGE 17 ---
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Migrate dữ liệu cũ 3 Quan trọng để chuyển đổi sang hệ thống mới
+Cấu hình quy trình theo từng loại hợp
+đồng 3 Giúp hệ thống phù hợp nhiều đơn vị, nhiều loại hợp đồng
+Xử lý yêu cầu phát sinh/thay đổi nghiệp
+vụ 2 Hỗ trợ triển khai linh hoạt nhưng không phải chức năng lõi ban đầu
+Nhóm 2: Giải pháp kỹ thuật & tích hợp — 20 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Kiến trúc hệ thống rõ ràng, dễ
+mở rộng 4 Ảnh hưởng lâu dài đến bảo trì, nâng cấp
+Tích hợp VOﬃce 4 Liên quan trực tiếp đến quy trình trình ký/phê duyệt
+Tích hợp SAP 4 Liên quan tài chính, thanh toán, dữ liệu kế toán
+OCR/RPA nhập liệu hợp đồng 3 Giúp giảm nhập liệu thủ công nhưng cần nghiệm thu theo độ chính xác thực tế
+Phân quyền dữ liệu 2 Quan trọng về kiểm soát truy cập
+Bảo mật, log, truy vết 2 Phục vụ kiểm tra, giám sát, an toàn hệ thống
+Tài liệu kỹ thuật, API,
+backup/restore 1 Là yêu cầu hoàn thiện vận hành, nhưng thường là phần tiêu chuẩn
+Nhóm 3: Kế hoạch triển khai & nhân sự — 15 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Kế hoạch triển khai rõ từng giai đoạn 4 Quyết định khả năng kiểm soát tiến độ
+Tiến độ hợp lý 3 Tránh cam kết quá ngắn hoặc kéo dài không cần thiết
+Nhân sự chủ chốt rõ ràng 3 Đảm bảo có đủ PM, BA, Dev, Tester, chuyên gia tích hợp
+Phương án phối hợp với các phòng
+ban 2 Dự án liên quan PCĐT, CNTT, Tài chính và đơn vị sử dụng
+Quản trị rủi ro, thay đổi phạm vi 2 Giảm phát sinh, tranh chấp khi triển khai
+Đào tạo, chuyển giao 1 Cần thiết nhưng thường thực hiện ở cuối dự án
+Nhóm 4: Kinh nghiệm & năng lực đối tác — 15 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Kinh nghiệm triển khai hệ thống tương
+tự 4 Giảm rủi ro do đã từng làm bài toán gần giống
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 17/25
+
+--- PAGE 18 ---
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Kinh nghiệm tích hợp
+VOﬃce/SAP/OCR/RPA 4 Đây là các điểm kỹ thuật khó của dự án
+Năng lực tư vấn quy trình 3 Giúp chuẩn hóa nghiệp vụ, không chỉ lập trình theo yêu cầu
+Đội ngũ triển khai ổn định 2 Tránh phụ thuộc cá nhân
+Hồ sơ dự án tham chiếu/case study 2 Là bằng chứng kiểm chứng năng lực
+Nhóm 5: Chi phí & tính hợp lý báo giá — 15 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Tổng giá trị phù hợp ngân sách 4 Ảnh hưởng trực tiếp đến khả năng phê duyệt
+Bóc tách chi phí theo module/chức năng 3 Giúp kiểm soát phạm vi và phát sinh
+Tách riêng chi phí tích hợp, migrate,
+OCR/RPA 3 Đây là các hạng mục dễ phát sinh chi phí
+Không có chi phí ẩn 2 Giảm rủi ro tăng chi phí sau ký hợp đồng
+Chính sách thanh toán theo mốc nghiệm
+thu 2 Gắn thanh toán với kết quả thực hiện
+Chi phí bảo trì/nâng cấp sau nghiệm thu 1 Quan trọng cho vận hành dài hạn nhưng có thể đàm phán sau
+Nhóm 6: Bảo hành, vận hành, hỗ trợ — 10 điểm
+Tiêu chí Điểm tối đa Căn cứ phân bổ
+Thời gian bảo hành tối thiểu 12 tháng 2 Đảm bảo hỗ trợ sau nghiệm thu
+Cam kết SLA xử lý lỗi 2 Cần rõ thời gian phản hồi và khắc phục
+Đội hỗ trợ sau golive 2 Giai đoạn vận hành thật thường phát sinh nhiều lỗi
+Bảo trì, nâng cấp, tối ưu hiệu năng 2 Đảm bảo hệ thống ổn định lâu dài
+Bàn giao source code, tài liệu, tài khoản quản
+trị 2 Giúp VCM chủ động tiếp quản hệ thống
+4. Cách chấm điểm từng tiêu chí chi tiết
+Có thể dùng nguyên tắc chấm như sau:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 18/25
+
+--- PAGE 19 ---
+Mức đáp ứng Tỷ lệ điểm
+Đáp ứng đầy đủ, có tài liệu/chứng cứ rõ ràng 100% điểm
+Đáp ứng cơ bản, còn cần làm rõ một số nội dung 70–80% điểm
+Đáp ứng một phần, rủi ro còn đáng kể 40–60% điểm
+Chưa chứng minh được hoặc trả lời chung chung 10–30% điểm
+Không đáp ứng 0 điểm
+Ví dụ tiêu chí Tích hợp SAP: 4 điểm:
+Mức đáp ứng Điểm
+Có phương án API rõ, mapping dữ liệu, cơ chế đồng bộ, xử lý lỗi, kinh nghiệm tương tự 4
+Có phương án tích hợp nhưng mapping/chống lỗi chưa rõ 3
+Mới nêu định hướng chung, chưa có thiết kế cụ thể 2
+Chưa chứng minh được năng lực tích hợp SAP 1
+Không đáp ứng 0
+5. Đoạn giải thích có thể đưa vào slide/báo cáo
+Anh có thể đưa đoạn này vào phần “Nguyên tắc chấm điểm”:
+Mức điểm tối đa của từng tiêu chí chi tiết được phân bổ căn cứ vào mức độ quan trọng của
+tiêu chí đối với mục tiêu dự án, mức độ ảnh hưởng đến vận hành thực tế, độ phức tạp kỹ
+thuật, rủi ro nếu không đáp ứng và phạm vi tác động đến các đơn vị sử dụng.
+Các tiêu chí liên quan trực tiếp đến chức năng lõi, tích hợp hệ thống trọng yếu, migrate dữ
+liệu, bảo mật và khả năng vận hành sau nghiệm thu được phân bổ điểm cao hơn. Các tiêu chí
+mang tính hỗ trợ, bổ sung hoặc hoàn thiện hồ sơ được phân bổ điểm thấp hơn.
+Ngoài hệ thống điểm số, một số yêu cầu có tính điều kiện bắt buộc được đánh giá theo
+nguyên tắc đạt/không đạt, nhằm đảm bảo đối tác được lựa chọn đáp ứng các yêu cầu tối
+thiểu của VCM trước khi xem xét tổng điểm.
+Tieu chi lua chon doi tac QLHDTong_quan
+Now interactive!
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 19/25
+
+--- PAGE 20 ---
+Dựa vào bảng đã đánh giá này tổng hợp thành những ý key nhất để báo cáo
+Em thấy ﬁle Excel anh gửi là khung tiêu chí, phần điểm chi tiết chưa được nhập. Dựa trên bảng đã
+đánh giá trong slide hiện tại — VTIT 95 điểm, FIS 96 điểm, nhưng FIS không đạt tiêu chí bắt buộc về
+bàn giao source code — có thể tổng hợp thành các ý key để báo cáo như sau:
+1. Về phương pháp đánh giá
+Việc lựa chọn đối tác không căn cứ duy nhất vào giá chào hoặc tổng điểm, mà đánh giá theo 2 lớp:
+Một là chấm điểm theo thang 100 điểm, gồm 6 nhóm tiêu chí: nghiệp vụ, kỹ thuật tích hợp, kế hoạch
+triển khai, năng lực đối tác, chi phí và hỗ trợ sau triển khai.
+Hai là đánh giá các tiêu chí bắt buộc đạt/không đạt, gồm: tích hợp VOﬃce, tích hợp SAP, migrate dữ
+liệu, phân quyền, bảo mật, kế hoạch triển khai, báo giá chi tiết và đặc biệt là bàn giao source code.
+Có thể nói trong báo cáo:
+Do hệ thống Quản lý Đầu tư, Mua sắm liên quan nhiều nghiệp vụ, nhiều phòng ban và cần
+tích hợp với các hệ thống hiện hữu, việc lựa chọn đối tác được thực hiện theo hướng đánh giá
+tổng thể, không lựa chọn đơn vị chỉ theo giá thấp nhất.
+2. Về kết quả chấm điểm tổng thể
+Kết quả chấm điểm 6 nhóm tiêu chí cho thấy:
+Đối tác Tổng điểm
+VTIT 95/100
+FIS 96/100
+FIS cao hơn VTIT 01 điểm, chủ yếu do có lợi thế hơn về kinh nghiệm, năng lực triển khai và thương
+hiệu trong lĩnh vực CNTT.
+Tuy nhiên, mức chênh lệch 01 điểm là không lớn, không đủ để trở thành yếu tố quyết định duy nhất.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 20/25
+
+--- PAGE 21 ---
+Ý key để báo cáo:
+Về điểm số tổng thể, hai đối tác có năng lực tương đối sát nhau. FIS nhỉnh hơn 01 điểm, tuy
+nhiên chênh lệch này không lớn và cần được xem xét cùng với các tiêu chí bắt buộc, chi phí,
+thời gian mua sắm và mức độ chủ động của VCM sau triển khai.
+3. Về tiêu chí bắt buộc
+Đây là điểm quan trọng nhất.
+VTIT: Đạt các tiêu chí bắt buộc.
+FIS: Không đạt tiêu chí bắt buộc về bàn giao source code.
+Ý key để báo cáo:
+Mặc dù FIS có tổng điểm chấm cao hơn 01 điểm, nhưng FIS chưa đáp ứng tiêu chí bắt buộc về
+bàn giao source code. Đây là yêu cầu quan trọng để VCM chủ động quản trị, vận hành, bảo trì,
+nâng cấp và tránh phụ thuộc nhà cung cấp sau khi hệ thống đi vào sử dụng.
+Có thể nhấn mạnh:
+Tiêu chí bàn giao source code không chỉ là yêu cầu kỹ thuật, mà còn ảnh hưởng trực tiếp đến
+khả năng làm chủ hệ thống, kiểm soát chi phí vòng đời và xử lý các yêu cầu phát sinh trong
+tương lai.
+4. Về VTIT
+Các điểm mạnh chính của VTIT:
+Chi phí thấp hơn FIS khoảng 12%.
+Phù hợp với hướng xây dựng, phát triển theo yêu cầu riêng của VCM.
+Có khả năng đáp ứng yêu cầu bàn giao source code.
+Thủ tục mua sắm dự kiến nhanh hơn, khoảng 12–14 ngày để ký hợp đồng.
+Thuận lợi hơn nếu cần phối hợp trong hệ sinh thái Viettel và các hệ thống liên quan.
+Điểm cần lưu ý:
+Kinh nghiệm, hồ sơ năng lực và case study tương tự chưa nổi trội bằng FIS.
+Cần ràng buộc chặt trong hợp đồng về tiến độ, nhân sự, SLA, bàn giao source code, tích hợp
+VOﬃce/SAP, migrate dữ liệu và OCR/RPA.
+Ý key để báo cáo:
+VTIT có lợi thế về chi phí, thời gian thực hiện thủ tục mua sắm và khả năng đáp ứng yêu cầu
+bàn giao source code. Tuy nhiên, để hạn chế rủi ro về năng lực triển khai, cần yêu cầu VTIT
+cam kết rõ nhân sự chủ chốt, kế hoạch triển khai, SLA hỗ trợ và các đầu ra nghiệm thu cụ thể.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 21/25
+
+--- PAGE 22 ---
+5. Về FIS
+Các điểm mạnh chính của FIS:
+Có thương hiệu và kinh nghiệm tốt trong ngành CNTT.
+Có năng lực triển khai các hệ thống doanh nghiệp lớn.
+Đã từng là đối tác xây dựng phần mềm Tài chính SAP B1 cho VCM năm 2023.
+Điểm năng lực, kinh nghiệm cao hơn VTIT.
+Điểm hạn chế chính:
+Chi phí cao hơn VTIT khoảng 12%.
+Không bàn giao source code, chưa đáp ứng tiêu chí bắt buộc.
+Thủ tục mua sắm dự kiến kéo dài hơn, khoảng 30 ngày do phải đấu thầu rộng rãi trên Mạng Đấu
+thầu Quốc gia.
+Ý key để báo cáo:
+FIS có lợi thế về kinh nghiệm và năng lực triển khai, tuy nhiên chưa đáp ứng yêu cầu bàn giao
+source code. Đây là điểm hạn chế lớn, ảnh hưởng đến khả năng chủ động tiếp quản và vận
+hành hệ thống của VCM sau nghiệm thu.
+6. Nhận định tổng hợp
+Có thể đưa đoạn này vào báo cáo:
+Kết quả đánh giá cho thấy FIS nhỉnh hơn VTIT về tổng điểm chấm do có lợi thế về kinh
+nghiệm và năng lực triển khai. Tuy nhiên, VTIT có lợi thế về chi phí, thời gian mua sắm và đặc
+biệt là đáp ứng yêu cầu bàn giao source code.
+Trong bối cảnh VCM cần chủ động quản trị, vận hành, bảo trì và mở rộng phần mềm sau triển
+khai, tiêu chí bàn giao source code là yếu tố quan trọng, có tính chất quyết định. Do đó, mặc
+dù tổng điểm của VTIT thấp hơn FIS 01 điểm, VTIT vẫn là phương án phù hợp hơn để ưu tiên
+lựa chọn.
+7. Kiến nghị báo cáo
+Đề xuất viết ngắn gọn như sau:
+Trên cơ sở kết quả chấm điểm và đánh giá tiêu chí bắt buộc, Phòng PCĐT kiến nghị ưu tiên
+lựa chọn VTIT là đối tác xây dựng phần mềm Quản lý Đầu tư, Mua sắm tại VCM.
+Lý do: VTIT đáp ứng các tiêu chí bắt buộc, có chi phí thấp hơn, thời gian thực hiện thủ tục mua
+sắm nhanh hơn và cam kết bàn giao source code, giúp VCM chủ động trong vận hành, bảo trì
+và phát triển hệ thống sau này.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 22/25
+
+--- PAGE 23 ---
+Đối với FIS, chỉ xem xét lựa chọn trong trường hợp FIS điều chỉnh phương án và đáp ứng yêu
+cầu bàn giao source code theo tiêu chí bắt buộc của VCM.
+8. Câu kết luận ngắn để đưa vào slide
+Kiến nghị ưu tiên lựa chọn VTIT, do đáp ứng tiêu chí bắt buộc, chi phí thấp hơn, thủ tục
+mua sắm nhanh hơn và đảm bảo khả năng chủ động của VCM sau triển khai thông qua việc
+bàn giao source code. FIS chỉ xem xét lựa chọn nếu đáp ứng yêu cầu bàn giao source code.
+Thêm 1 mục tổng hợp các tiêu chí
+Có thể thêm một mục riêng tên là:
+3. Tổng hợp các tiêu chí đánh giá lựa chọn đối tác
+Nội dung đưa vào báo cáo/slides như sau:
+3. Tổng hợp các tiêu chí đánh giá
+Việc đánh giá lựa chọn đối tác được thực hiện theo 02 nhóm tiêu chí:
+1. Nhóm tiêu chí chấm điểm theo thang 100 điểm
+Nhằm đánh giá tổng thể năng lực, giải pháp, chi phí và khả năng triển khai của từng đối tác.
+2. Nhóm tiêu chí bắt buộc đạt/không đạt
+Nhằm xác định các điều kiện tối thiểu mà đối tác phải đáp ứng trước khi được xem xét lựa chọn.
+3.1. Nhóm tiêu chí chấm điểm 100 điểm
+Nhóm tiêu chí Trọng số Ý nghĩa đánh giá
+Mức độ đáp ứng
+nghiệp vụ
+25
+điểm
+Đánh giá khả năng hiểu đúng bài toán, đáp ứng các chức năng quản lý hợp
+đồng, cảnh báo, báo cáo, migrate dữ liệu và cấu hình quy trình theo từng
+loại hợp đồng.
+Giải pháp kỹ thuật &
+tích hợp
+20
+điểm
+Đánh giá kiến trúc hệ thống, khả năng tích hợp VOﬃce, SAP, OCR/RPA, phân
+quyền, bảo mật và khả năng mở rộng.
+Kế hoạch triển khai &
+nhân sự
+15
+điểm
+Đánh giá tiến độ, phương án triển khai, nhân sự chủ chốt, kế hoạch phối
+hợp giữa các phòng ban và quản trị rủi ro.
+Kinh nghiệm & năng
+lực đối tác
+15
+điểm
+Đánh giá kinh nghiệm triển khai hệ thống tương tự, năng lực tích hợp, năng
+lực tư vấn quy trình và hồ sơ dự án tham chiếu.
+Chi phí & tính hợp lý
+báo giá
+15
+điểm
+Đánh giá tổng chi phí, mức độ bóc tách báo giá, chi phí tích hợp, migrate,
+OCR/RPA, chi phí ẩn và điều kiện thanh toán.
+Bảo hành, vận hành,
+hỗ trợ sau triển khai
+10
+điểm
+Đánh giá thời gian bảo hành, SLA hỗ trợ lỗi, đội hỗ trợ sau golive, bảo trì,
+nâng cấp và bàn giao tài liệu/source code.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 23/25
+
+--- PAGE 24 ---
+Nhóm tiêu chí Trọng số Ý nghĩa đánh giá
+Tổng cộng 100 điểm
+3.2. Nhóm tiêu chí bắt buộc
+Các tiêu chí bắt buộc được đánh giá theo nguyên tắc Đạt/Không đạt, không chỉ tính điểm số. Đây là các
+điều kiện có ảnh hưởng trực tiếp đến khả năng vận hành, làm chủ hệ thống và kiểm soát rủi ro sau triển
+khai.
+Tiêu chí bắt buộc Ý nghĩa
+Tích hợp VOﬃce Đảm bảo phần mềm kết nối được với quy trình trình ký/phê duyệt hiện hữu.
+Tích hợp SAP Đảm bảo kết nối dữ liệu thanh toán, nghiệm thu, giá trị hợp đồng với hệ thống tài chính.
+Migrate dữ liệu hệ thống cũ Đảm bảo dữ liệu hợp đồng hiện hữu được chuyển đổi sang hệ thống mới đầy đủ, đối soát được.
+Phân quyền dữ liệu theo đơn vị/phòng
+ban/vai trò
+Đảm bảo mỗi đơn vị, người dùng chỉ truy cập đúng phạm vi dữ
+liệu được phân quyền.
+Bàn giao source code Giúp VCM chủ động quản trị, vận hành, bảo trì, nâng cấp và tránh phụ thuộc nhà cung cấp.
+Bảo mật, nhật ký thao tác, backup Đảm bảo an toàn dữ liệu, truy vết lịch sử thao tác và phục hồi khi có sự cố.
+Kế hoạch triển khai rõ timeline, nhân sự,
+đầu ra từng giai đoạn
+Giúp kiểm soát tiến độ, phạm vi công việc và trách nhiệm các
+bên.
+Báo giá bóc tách chi tiết Giúp kiểm soát chi phí, tránh phát sinh không rõ ràng trong quá trình triển khai.
+Đoạn kết luận cho mục này
+Có thể đưa vào báo cáo:
+Các tiêu chí đánh giá được xây dựng trên cơ sở yêu cầu thực tế của dự án, bao gồm mức độ
+đáp ứng nghiệp vụ, năng lực kỹ thuật, khả năng tích hợp hệ thống, kế hoạch triển khai, kinh
+nghiệm đối tác, chi phí và cam kết hỗ trợ sau triển khai.
+Bên cạnh hệ thống chấm điểm 100 điểm, VCM xác định một số tiêu chí bắt buộc để đảm bảo
+đối tác được lựa chọn có khả năng triển khai hệ thống một cách đầy đủ, an toàn, có thể vận
+hành lâu dài và giúp VCM chủ động quản trị hệ thống sau nghiệm thu.
+Bản ngắn gọn để đưa vào slide
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 24/25
+
+--- PAGE 25 ---
+Tổng hợp tiêu chí đánh giá
+Việc lựa chọn đối tác được đánh giá theo 02 lớp:
+1. Chấm điểm theo thang 100 điểm
+Nhóm tiêu chí Trọng số
+Đáp ứng nghiệp vụ 25
+Kỹ thuật & tích hợp 20
+Kế hoạch triển khai & nhân sự 15
+Kinh nghiệm & năng lực 15
+Chi phí & báo giá 15
+Bảo hành, vận hành, hỗ trợ 10
+Tổng cộng 100
+2. Tiêu chí bắt buộc đạt/không đạt
+Gồm: tích hợp VOﬃce, tích hợp SAP, migrate dữ liệu, phân quyền, bảo mật, kế hoạch triển khai, báo giá
+chi tiết và bàn giao source code.
+Nhấn mạnh:
+Không lựa chọn đối tác chỉ theo tổng điểm hoặc giá thấp nhất; cần ưu tiên đơn vị đáp ứng đầy đủ tiêu
+chí bắt buộc và đảm bảo VCM chủ động vận hành, bảo trì, mở rộng hệ thống sau triển khai.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 25/25

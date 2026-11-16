@@ -1,0 +1,960 @@
+[P0001 | STYLE=Normal] I. TỔNG QUAN
+VSS Chat Platform – Nền tảng chat đa kênh cho bán hàng và chăm sóc khách hàng
+[P0002 | STYLE=Normal] Trong bối cảnh doanh nghiệp phải tương tác với khách hàng trên nhiều nền tảng như Facebook, Zalo, TikTok, website và các kênh bán hàng khác, việc quản lý hội thoại phân tán trở nên phức tạp, dễ bỏ sót khách hàng và khó kiểm soát hiệu suất nhân viên. VSS Chat Platform được phát triển nhằm tập trung toàn bộ hội thoại đa kênh vào một hệ thống duy nhất, giúp doanh nghiệp chăm sóc khách hàng hiệu quả hơn, nâng cao chất lượng vận hành và tối ưu hoạt động kinh doanh.
+[P0003 | STYLE=Normal] Sản phẩm cho phép người dùng quản lý tất cả cuộc hội thoại trên một màn hình tập trung, thay vì phải mở từng nền tảng riêng lẻ. Nhân viên có thể lọc hội thoại theo kênh, nhãn, trạng thái; đồng thời thu thập, cập nhật thông tin khách hàng ngay trong quá trình trao đổi để hỗ trợ chăm sóc và quản lý đơn hàng tốt hơn.
+[P0004 | STYLE=Normal] Bên cạnh đó, hệ thống hỗ trợ quản lý nhân viên, phân quyền, theo dõi cuộc hội thoại và đánh giá hiệu quả làm việc. Quản trị viên có thể phân công hoặc chuyển tiếp hội thoại cho cá nhân/nhóm phù hợp, giúp kiểm soát luồng xử lý khách hàng rõ ràng và linh hoạt hơn.
+[P0005 | STYLE=Normal] Điểm nổi bật của VSS Chat Platform là khả năng tự động hóa. Hệ thống có thể tự động phân phối hội thoại, gửi tin nhắn tự động, hỗ trợ các tác vụ lặp lại và giảm rủi ro do xử lý thủ công như sai sót, chậm phản hồi hoặc bỏ lỡ thông tin khách hàng.
+[P0006 | STYLE=Normal] Ngoài ra, nền tảng còn cung cấp báo cáo theo thời gian thực, giúp doanh nghiệp theo dõi số lượng hội thoại, thời gian phản hồi, mức độ xử lý và hiệu suất nhân viên. Dữ liệu được trực quan hóa bằng biểu đồ và có thể xuất ra CSV để phân tích sâu hơn, phục vụ việc ra quyết định và xây dựng chiến lược kinh doanh.
+[P0007 | STYLE=Normal] Tóm lại, VSS Chat Platform là giải pháp chat đa kênh giúp doanh nghiệp tập trung hội thoại, quản lý khách hàng, điều phối nhân viên, tự động hóa chăm sóc khách hàng và theo dõi hiệu quả vận hành. Đây là công cụ phù hợp cho các doanh nghiệp có lượng khách hàng online lớn và cần một hệ thống thống nhất để nâng cao trải nghiệm khách hàng cũng như tối ưu hoạt động bán hàng.
+[P0008 | STYLE=Normal] 
+[P0009 | STYLE=Normal] 
+[P0010 | STYLE=Normal] 
+[P0011 | STYLE=Normal] 
+[P0012 | STYLE=Normal] 
+[P0013 | STYLE=Normal] II. Quản lý hội thoại
+[P0014 | STYLE=Normal] Tạo bộ lọc tùy chỉnh
+[P0015 | STYLE=Normal] 
+[P0016 | STYLE=Normal] 
+[P0017 | STYLE=Normal] Cây menu
++ Tất cả cuộc hội thoại
++ Nhắc tới
++ Nhóm (+ Tạo nhóm)
++ Loại hội thoại (Tin nhắn, Email, Bình luận)
++ Kênh tương tác (+ Kênh mới Facebook, Zalo, WhatsApp)
++ Nhãn (+ Nhãn mới)
+[P0018 | STYLE=Normal] 
+[P0019 | STYLE=Normal] Trạng thái hội thoại
+[P0020 | STYLE=Normal] + Mở => Hoàn thành, Đánh dấu chưa giải quyết, Tạm dừng đến khi (Phản hồi kế tiếp, Ngày mai, Tuần sau)
++ Đã được giải quyết => Mở lại, Đánh dấu chưa giải quyết
++ Chờ giải quyết
++ Tạm dừng
++ Tất cả
+[P0021 | STYLE=Normal] 
+[P0022 | STYLE=Normal] Bộ lọc khác
++ Của tôi
++ Chưa được phân công
++ Tất cả
+[P0023 | STYLE=Normal] 
+[P0024 | STYLE=Normal] Chat
+[P0025 | STYLE=Normal] Gõ “/”  => dùng tin nhắn mẫu
+[P0026 | STYLE=Normal] 
+[P0027 | STYLE=Normal] Hành động của cuộc hội thoại
+[P0028 | STYLE=Normal] + Admin có thể phân công lại cuộc hội thoại tới Agent hoặc Nhóm bất kỳ
+[P0029 | STYLE=Normal] Lịch sử các cuộc hội thoại
+[P0030 | STYLE=Normal] + Thấy được lịch sử các cuộc hội thoại trước đó liên quan đến khách hàng => Chỉnh sửa Thuộc tính của liên hệ
+[P0031 | STYLE=Normal] 
+[P0032 | STYLE=Normal] II.2. Tính năng lưu ý
+[P0033 | STYLE=Normal] + Gộp liên lạc sẽ gộp thông tin khách hàng về làm một hồ sơ. Người dùng lựa chọn Liên lạc chính ở phía bên trên là liên lạc sẽ được giữ lại sau khi gộp liên lạc với Liên lạc cần góp (liên lạc sẽ bị xóa).
+[P0034 | STYLE=Normal] + Ở phần Thuộc tính của liên hệ , người dùng có thể thêm thuộc tính để phân loại khách hàng sau đó thêm hoặc chọn giá trị cho thuộc tính, hệ thống sẽ dựa trên Thuộc tính của liên hệ để phục vụ cho một số tính năng khác của hệ thống (ví dụ khi đặt thuộc tính VIP cho khách hàng xong, có thể dựa trên đó để phân phối đến nhân viên mới hoặc nhân viên nhiều kinh nghiệm).
+[P0035 | STYLE=Normal] + Người dùng có thể bấm Tạo thuộc tính mới để thêm thuộc tính khác ngoài những thuộc tính đã tạo, hệ thống sẽ chuyển người dùng sang màn hình Cài đặt dẫn đến mục Thuộc tính tùy chỉnh.
+[P0036 | STYLE=Normal] + Nhãn danh bạ hỗ trợ người dùng đánh dấu khách hàng (có thể phục vụ cho nhiều mục đích như là khách hàng sẽ được giải quyết sau, khách hàng thân thiết...).
+[P0037 | STYLE=Normal] 
+[P0038 | STYLE=Normal] III. Danh mục Khách hàng
+[P0039 | STYLE=Normal] + Import file excel
++ Thêm, sửa, xóa thông tin khách hàng
++ Xem chi tiết lịch sử chat
++ Thêm thuộc tính liên hệ
+[P0040 | STYLE=Normal] 
+[P0041 | STYLE=Normal] IV. Báo cáo
+[P0042 | STYLE=Normal] 1. Báo cáo hiệu suất nhân viên dựa trên hội thoại
+[P0043 | STYLE=Normal] 
+[P0044 | STYLE=Normal] 
+[P0045 | STYLE=Normal] 
+[P0046 | STYLE=Normal] Các loại báo cáo khác
+
+===== TABLE 1 =====
+ROW 001: Loại báo cáo || Mục đích chính || Chỉ số nổi bật
+ROW 002: Báo cáo tổng quan || Theo dõi hiệu quả vận hành toàn hệ thống || Tổng hội thoại, tin nhắn nhận/gửi, thời gian phản hồi đầu tiên, thời gian giải quyết, số lượng đã giải quyết
+ROW 003: Báo cáo CSAT || Đánh giá chất lượng cuộc hội thoại theo phản hồi của khách hàng || Mức độ hài lòng, đánh giá, bình luận phản hồi, liên kết đến cuộc hội thoại
+ROW 004: Báo cáo Agent || Đo hiệu suất xử lý của từng nhân viên || Số hội thoại xử lý, tin nhắn gửi đi, thời gian phản hồi, thời gian giải quyết, số lượng hoàn thành
+ROW 005: Báo cáo nhãn cuộc hội thoại || Phân tích hội thoại theo từng nhãn được gán || Tổng hội thoại, tin nhắn, thời gian phản hồi/giải quyết, số lượng giải quyết theo nhãn
+ROW 006: Báo cáo hộp thư đến / kênh tương tác || Đánh giá hiệu quả từng kênh như Facebook, Zalo, Website… || Số hội thoại, tin nhắn nhận/gửi, tốc độ phản hồi, tốc độ giải quyết theo kênh
+ROW 007: Báo cáo nhóm Agent || Theo dõi hiệu suất theo từng nhóm/phòng ban xử lý || Tổng hội thoại, tin nhắn, thời gian phản hồi, thời gian giải quyết, số lượng giải quyết theo nhóm
+ROW 008: Báo cáo SLA || Kiểm soát việc vi phạm cam kết thời gian xử lý || Vi phạm SLA tiếp nhận yêu cầu, giải đáp thông tin, hoàn thành hội thoại
+ROW 009: Báo cáo Live stream || Theo dõi hiệu quả tương tác từ các livestream || Kênh livestream, kịch bản livestream, dữ liệu bình luận/tương tác theo thời gian
+[P0047 | STYLE=Normal] Các báo cáo đều hỗ trợ lọc theo thời gian như hôm nay, 7 ngày cuối, 30 ngày cuối, 3 tháng, 6 tháng, năm ngoái hoặc phạm vi ngày tùy chỉnh. Một số báo cáo có thể xem bằng biểu đồ cột và hỗ trợ tải xuống báo cáo để phân tích thêm.
+[P0048 | STYLE=Normal] 
+[P0049 | STYLE=Normal] V. Chiến dịch
+[P0050 | STYLE=Normal] Chiến dịch là tính năng cho phép doanh nghiệp tạo các thông điệp chủ động hiển thị trên Website nhằm tương tác với khách hàng khi họ đang truy cập trang web.
+[P0051 | STYLE=Normal] Tính năng này giống dạng proactive chat message hoặc website engagement campaign, tức là hệ thống tự hiện lời mời/tin nhắn để khuyến khích khách hàng bắt đầu hội thoại với nhân viên chăm sóc khách hàng.
+[P0052 | STYLE=Normal] Ví dụ:
+[P0053 | STYLE=Normal] Khi khách truy cập website Viettel Store và ở lại trang sản phẩm trong một khoảng thời gian nhất định, hệ thống có thể tự hiển thị tin nhắn như: “Bạn cần tư vấn thêm về sản phẩm này không?”
+[P0054 | STYLE=Normal] 
+[P0055 | STYLE=Normal] V.1. Mục đích chức năng
+[P0056 | STYLE=Normal] Chủ động tiếp cận khách hàng trên Website
+Thay vì chờ khách tự nhắn tin, hệ thống có thể tự hiển thị thông điệp gợi mở hội thoại.
+[P0057 | STYLE=Normal] Tăng tỷ lệ tương tác và chuyển đổi
+Khách đang xem sản phẩm/dịch vụ có thể được mời tư vấn đúng thời điểm, giúp tăng khả năng mua hàng hoặc để lại thông tin.
+[P0058 | STYLE=Normal] Hỗ trợ hoạt động bán hàng và chăm sóc khách hàng
+Doanh nghiệp có thể dùng chiến dịch để giới thiệu ưu đãi, hỗ trợ tư vấn, điều hướng khách hàng hoặc thu hút khách bắt đầu cuộc trò chuyện.
+[P0059 | STYLE=Normal] Phân loại khách hàng theo hành vi tương tác
+Với chiến dịch một lần, hệ thống có thể gán nhãn cho khách hàng khi họ tương tác với thông điệp, giúp nhân viên dễ nhận biết nhóm khách hàng quan tâm.
+[P0060 | STYLE=Normal] V.2. Phạm vi hoạt động
+[P0061 | STYLE=Normal] Theo nội dung hiện tại, chiến dịch chỉ hoạt động trên kênh Website. Vì vậy, không nên hiểu đây là tính năng gửi tin nhắn marketing hàng loạt qua Facebook/Zalo. Facebook, Zalo có thể là kênh hội thoại trong hệ thống, nhưng phần Campaigns được mô tả ở đây là chiến dịch hiển thị thông điệp trên Website.
+[P0062 | STYLE=Normal] V.3. Các loại chiến dịch
+[P0063 | STYLE=Normal] 1. Chiến dịch đang diễn ra
+[P0064 | STYLE=Normal] Đây là loại chiến dịch có thể chạy liên tục và được sử dụng nhiều lần với nhiều khách hàng khác nhau. Người dùng có thể cấu hình:
+
+===== TABLE 2 =====
+ROW 001: Thành phần || Ý nghĩa
+ROW 002: Tiêu đề chiến dịch || Tên chiến dịch để quản lý
+ROW 003: Thông điệp || Nội dung tin nhắn hiển thị cho khách
+ROW 004: Hộp thư đến / kênh tương tác || Kênh Website mà chiến dịch sẽ chạy
+ROW 005: URL Website || Trang web cụ thể nơi chiến dịch được kích hoạt
+ROW 006: Thời gian trên trang || Khoảng thời gian khách ở trên trang trước khi thông điệp hiển thị
+ROW 007: Vận hành chiến dịch || Bật hoặc tắt chiến dịch
+ROW 008: Chỉ kích hoạt trong giờ làm việc || Chỉ cho phép chiến dịch chạy trong thời gian làm việc
+[P0065 | STYLE=Normal] Loại chiến dịch này phù hợp với các thông điệp thường xuyên như tư vấn sản phẩm, hỗ trợ mua hàng, nhắc ưu đãi hoặc mời khách chat với nhân viên.
+[P0066 | STYLE=Normal] 
+[P0067 | STYLE=Normal] 2. Chiến dịch một lần
+[P0068 | STYLE=Normal] Đây là loại chiến dịch chạy theo một thời điểm/lịch dự kiến cụ thể. Người dùng có thể cấu hình:
+
+===== TABLE 3 =====
+ROW 001: Thành phần || Ý nghĩa
+ROW 002: Tiêu đề chiến dịch || Tên chiến dịch
+ROW 003: Thông điệp || Nội dung tin nhắn hiển thị
+ROW 004: Hộp thư đến / kênh tương tác || Kênh Website áp dụng
+ROW 005: Khán giả / nhãn dán || Nhãn được gán cho khách hàng khi họ tương tác với chiến dịch
+ROW 006: Thời gian dự kiến || Thời điểm chiến dịch hoạt động
+[P0069 | STYLE=Normal] Loại chiến dịch này phù hợp với các chương trình ngắn hạn như khuyến mãi, sự kiện, chiến dịch bán hàng theo đợt hoặc thông báo đặc biệt.
+[P0070 | STYLE=Normal] 
+[P0071 | STYLE=Normal] V.4. Các thao tác chính
+[P0072 | STYLE=Normal] Tạo mới chiến dịch
+[P0073 | STYLE=Normal] Chỉnh sửa nội dung và cấu hình chiến dịch
+[P0074 | STYLE=Normal] Bật/tắt vận hành chiến dịch
+[P0075 | STYLE=Normal] Xóa chiến dịch khỏi hệ thống
+[P0076 | STYLE=Normal] Thiết lập thời gian hoặc điều kiện hiển thị
+[P0077 | STYLE=Normal] Gán nhãn khách hàng khi khách tương tác với chiến dịch
+[P0078 | STYLE=Normal] 
+[P0079 | STYLE=Normal] V.5. Kết luận
+[P0080 | STYLE=Normal] Campaigns trong VSS Chat Platform là tính năng tạo thông điệp chủ động trên Website, giúp doanh nghiệp tiếp cận khách hàng đúng thời điểm, tăng tương tác, hỗ trợ bán hàng và cải thiện hiệu quả chăm sóc khách hàng. Nói ngắn gọn hơn: Tính năng Chiến dịch giúp doanh nghiệp chủ động hiển thị tin nhắn trên Website để mời khách hàng tương tác, tư vấn hoặc nhận thông tin, từ đó tăng hiệu quả bán hàng và chăm sóc khách hàng.
+[P0081 | STYLE=Normal] VI. Phân quyền
+[P0082 | STYLE=Normal] Ngoài thêm, sửa, xóa thông tin người dùng (agent), còn cho phép phân quyền. Khi sửa có thể tái phân quyền, chọn kênh, chọn nhóm. Thậm chí là Đặt lại mật khẩu.
+[P0083 | STYLE=Normal] 
+[P0084 | STYLE=Normal] Quyền của các vai trò
++ Tư vấn viên có thể xem cuộc hội thoại của họ và danh sách khách hàng.
++ Giám sát viên có quyền xem, trả lời cuộc hội thoại của các nhân viên dưới quyền và xem các báo cáo, cài đặt.
++ Quản trị viên có quyền xem, trả lời của mọi cuộc hội thoại, xem các báo cáo và thực hiện các cài đặt.
+[P0085 | STYLE=Normal] 
+[P0086 | STYLE=Normal] Thực hiện với một người:
++ Chọn quyền (một trong 3: QTV; GSV; TVV)
++ Thêm, xóa Kênh tương tác
++ Chọn nhóm nhân viên
+[P0087 | STYLE=Normal] 
+[P0088 | STYLE=Normal] Thực hiện với nhiều người: 
++ Chọn thao tác: Phân quyền, Thêm vào Kênh, Xóa khỏi Kênh
+[P0089 | STYLE=Normal] 
+[P0090 | STYLE=Normal] VII. Cấu hình Nhóm - Phòng ban
+[P0091 | STYLE=Normal] Nhóm cho phép bạn tổ chức các nhân viên của mình thành các nhóm dựa trên trách nhiệm của họ. Một nhân viên có thể là một phần của nhiều nhóm. Bạn có thể chỉ định các cuộc hội thoại cho một nhóm khi bạn đang làm việc cộng tác.
+[P0092 | STYLE=List Paragraph] Cho phép chọn quản lý nhóm từ danh sách người dùng
+[P0093 | STYLE=Normal] 
+[P0094 | STYLE=Normal] VIII. Kênh tương tác
+[P0095 | STYLE=Normal] Khi bạn kết nối một trang web hoặc một Trang facebook với VSS Chat, nó được gọi là Kênh tương tác. Bạn có thể có kênh tương tác không giới hạn trong tài khoản VSS Chat của mình.
+[P0096 | STYLE=Normal] Click vào Thêm kênh tương tác để kết nối một trang web hoặc một Trang Facebook.
+[P0097 | STYLE=Normal] Trong Trang tổng quan, bạn có thể xem tất cả các cuộc hội thoại từ tất cả các kênh tương tác của mình ở một nơi duy nhất và trả lời chúng trong tab `Cuộc hội thoại`.
+[P0098 | STYLE=Normal] Bạn cũng có thể xem các cuộc hội thoại dành riêng cho một kênh tương tác bằng cách nhấp vào tên kênh tương tác trên ngăn bên trái của trang tổng quan.
+[P0099 | STYLE=Normal] 
+[P0100 | STYLE=Normal] VIII.1. Cài đặt kênh tương tác
+[P0101 | STYLE=Normal] + Tin nhắn mở đầu: bật/tắt - đặt tin nhắn mở đầu
++ Khảo sát mức hài lòng: bật/tắt
++ Chọn cộng tác viên
+[P0102 | STYLE=Normal] 
+[P0103 | STYLE=Normal] 
+[P0104 | STYLE=Normal] 
+[P0105 | STYLE=Normal] IX. Quản lý nhãn
+[P0106 | STYLE=Normal] Thêm / Sửa / Xóa nhãn
+[P0107 | STYLE=Normal] Nhãn giúp bạn phân loại các cuộc hội thoại và ưu tiên chúng. Bạn có thể gán nhãn cho một cuộc hội thoại từ bảng phụ.
+Nhãn được liên kết với tài khoản và có thể được sử dụng để tạo quy trình công việc tùy chỉnh trong tổ chức của bạn. Bạn có thể gán màu tùy chỉnh cho nhãn, điều này giúp bạn nhận dạng nhãn dễ dàng hơn. Bạn sẽ có thể hiển thị nhãn trên thanh bên để lọc các cuộc hội thoại một cách dễ dàng.
+[P0108 | STYLE=Normal] 
+[P0109 | STYLE=Normal] X. Cấu hình Tin nhắn mẫu
+[P0110 | STYLE=Normal] Tin nhắn mẫu là các mẫu trả lời đã lưu có thể được sử dụng để nhanh chóng gửi trả lời cho một cuộc hội thoại. Để tạo một Tin nhắn mẫu, chỉ cần ấn vào Thêm Tin nhắn mẫu. Bạn cũng có thể sửa hoặc xoá Tin nhắn mẫu bằng cách ấn nút Sửa hoặc Xoá. Tin nhắn mẫu được sử dụng với sự giúp đỡ của Mã Ngắn. Nhân viên có thể truy cập Tin nhắn mẫu khi nhập tin nhắn bằng cách nhập '/'.
+[P0111 | STYLE=Normal] 
+[P0112 | STYLE=Normal] 
+[P0113 | STYLE=Normal] Thêm / Sửa / Xóa tin nhắn mẫu. 2 trường: Mã tin nhắn; Nội dung tin nhắn.
+[P0114 | STYLE=Normal] 
+[P0115 | STYLE=Normal] 
+[P0116 | STYLE=Normal] 
+[P0117 | STYLE=Normal] 
+[P0118 | STYLE=Normal] 
+[P0119 | STYLE=Normal] XI. Quản lý kịch bản Livestream
+[P0120 | STYLE=Normal] Quản lý kịch bản Livestream là chức năng dùng để thiết lập cách hệ thống theo dõi, nhận diện, phản hồi và phân phối bình luận của khách hàng trong livestream. Nói dễ hiểu: khi Viettel Store hoặc doanh nghiệp livestream bán hàng trên Facebook, khách hàng có thể bình luận theo cú pháp như:
+[P0121 | STYLE=Normal] iPhone15 0987123654
+[P0122 | STYLE=Normal] Hệ thống sẽ đọc bình luận đó, kiểm tra xem có đúng cú pháp không, nhận diện khách quan tâm sản phẩm nào, lấy số điện thoại, sau đó có thể tự động phản hồi và chuyển bình luận/cuộc hội thoại cho nhân viên phụ trách xử lý.
+[P0123 | STYLE=Normal] Mục đích chức năng
+[P0124 | STYLE=Normal] Tự động thu lead/đơn quan tâm từ livestream
+Khách chỉ cần bình luận từ khóa sản phẩm và số điện thoại. Hệ thống ghi nhận thông tin để nhân viên chăm sóc tiếp.
+[P0125 | STYLE=Normal] Không bỏ sót bình luận khi livestream đông khách
+Livestream thường có nhiều comment, nhân viên khó đọc thủ công hết. Kịch bản giúp lọc và phân phối bình luận quan trọng.
+[P0126 | STYLE=Normal] Chuẩn hóa cách khách đặt hàng/để lại thông tin
+Hệ thống yêu cầu khách bình luận theo cú pháp rõ ràng:
+Từ khóa sản phẩm + dấu cách + số điện thoại.
+[P0127 | STYLE=Normal] Tự động phản hồi khách hàng
+Ví dụ khi khách bình luận đúng cú pháp, hệ thống có thể trả lời:
+“Mình đã ghi nhận đơn hàng, bạn kiểm tra tin nhắn giúp mình nhé!”
+[P0128 | STYLE=Normal] Phân phối bình luận cho nhân viên xử lý
+Các bình luận có thể được chuyển cho toàn bộ nhân viên phụ trách kênh hoặc một nhóm/phòng ban cụ thể.
+[P0129 | STYLE=Normal] 
+[P0130 | STYLE=Normal] Các thành phần chính của kịch bản Livestream
+
+===== TABLE 4 =====
+ROW 001: Thành phần || Ý nghĩa
+ROW 002: Chọn trang livestream || Chọn fanpage/kênh đang phát livestream
+ROW 003: Tên kịch bản || Tên cấu hình để quản lý, ví dụ: “Livestream iPhone 15 tháng 5”
+ROW 004: Từ khóa sản phẩm || Khai báo từ khóa khách sẽ bình luận và sản phẩm tương ứng
+ROW 005: Lựa chọn cú pháp || Quy định comment hợp lệ cần có những thành phần nào, ví dụ từ khóa + số điện thoại
+ROW 006: Phân phối bình luận || Quy định loại bình luận nào sẽ được chuyển cho nhân viên
+ROW 007: Phân phối tới nhân viên || Chọn chuyển cho tất cả nhân viên phụ trách kênh hoặc nhóm cụ thể
+ROW 008: Phản hồi tự động || Cấu hình nội dung hệ thống tự trả lời theo từng điều kiện
+[P0131 | STYLE=Normal] 
+[P0132 | STYLE=Normal] Luồng hoạt động nghiệp vụ
+[P0133 | STYLE=Normal] Admin tạo một kịch bản livestream.
+[P0134 | STYLE=Normal] Chọn trang livestream/fanpage áp dụng.
+[P0135 | STYLE=Normal] Khai báo từ khóa sản phẩm, ví dụ:
+[P0136 | STYLE=Normal] iPhone15 → iPhone 15
+[P0137 | STYLE=Normal] S24Ultra → Samsung Galaxy S24 Ultra
+[P0138 | STYLE=Normal] Cấu hình cú pháp bình luận hợp lệ.
+[P0139 | STYLE=Normal] Khách hàng xem livestream và bình luận theo cú pháp.
+[P0140 | STYLE=Normal] Hệ thống kiểm tra bình luận:
+[P0141 | STYLE=Normal] Đúng cú pháp
+[P0142 | STYLE=Normal] Sai cú pháp
+[P0143 | STYLE=Normal] Sai từ khóa
+[P0144 | STYLE=Normal] Có/không có số điện thoại
+[P0145 | STYLE=Normal] Hệ thống tự động phản hồi theo điều kiện đã cấu hình.
+[P0146 | STYLE=Normal] Bình luận được phân phối cho nhân viên hoặc nhóm phụ trách để chăm sóc tiếp.
+[P0147 | STYLE=Normal] Sau khi livestream kết thúc, hệ thống có thể tiếp tục xử lý hoặc ngừng phân phối bình luận tùy cấu hình.
+[P0148 | STYLE=Normal] 
+[P0149 | STYLE=Normal] 
+[P0150 | STYLE=Normal] 
+[P0151 | STYLE=Normal] 
+[P0152 | STYLE=Normal] Ví dụ thực tế
+[P0153 | STYLE=Normal] Viettel Store livestream bán iPhone 15. Admin cấu hình:
+
+===== TABLE 5 =====
+ROW 001: Từ khóa || Sản phẩm
+ROW 002: iPhone15 || iPhone 15
+[P0154 | STYLE=Normal] Cú pháp đúng: iPhone15 0987123654
+[P0155 | STYLE=Normal] Khi khách bình luận đúng, hệ thống có thể tự động phản hồi: “Mình đã ghi nhận đơn hàng, bạn kiểm tra tin nhắn giúp mình nhé!”. Sau đó bình luận hoặc thông tin khách sẽ được chuyển cho nhân viên phụ trách để gọi điện, nhắn tin tư vấn hoặc chốt đơn.
+[P0156 | STYLE=Normal] 
+[P0157 | STYLE=Normal] Giá trị nghiệp vụ
+[P0158 | STYLE=Normal] Chức năng này đặc biệt hữu ích cho social commerce, tức là bán hàng qua livestream/social media. Nó giúp biến livestream từ một hoạt động tương tác thủ công thành một quy trình có hệ thống:
+[P0159 | STYLE=Normal] Khách bình luận → hệ thống nhận diện nhu cầu → kiểm tra cú pháp → phản hồi tự động → phân phối cho nhân viên → chăm sóc/chốt đơn.
+[P0160 | STYLE=Normal] Kết luận ngắn gọn
+[P0161 | STYLE=Normal] Quản lý kịch bản Livestream là chức năng hỗ trợ doanh nghiệp tự động hóa việc bán hàng và chăm sóc khách hàng qua livestream. Hệ thống cho phép cấu hình từ khóa sản phẩm, cú pháp bình luận, phản hồi tự động và phân phối bình luận cho nhân viên, giúp doanh nghiệp ghi nhận khách hàng quan tâm nhanh hơn, giảm bỏ sót comment và tăng hiệu quả chốt đơn.
+[P0162 | STYLE=Normal] 
+[P0163 | STYLE=Normal] XII. Bình luận tự động
+[P0164 | STYLE=Normal] Các trường: 
++ Trạng thái: Đang sử dụng/Không sử dụng (có thể bật tắt)
++ Tên kịch bản
++ Kênh (một kênh có thể có nhiều kịch bản)
++ Chọn bài đăng
++ Nội dung kịch bản, ví dụ “Cảm ơn anh/chị đã chơi minigame, chúc anh/chị may mắn!”
++ Tickbox: Tự động phân phối
+[P0165 | STYLE=Normal] 
+[P0166 | STYLE=Normal] Bình luận tự động là chức năng cấu hình để hệ thống tự động phản hồi comment của khách hàng trên một bài đăng cụ thể thuộc một kênh đã kết nối, thường là Facebook fanpage. Nó không phải là livestream, cũng không phải chiến dịch hiển thị trên website. Nó giống chức năng:
+[P0167 | STYLE=Normal] Khách comment vào bài đăng → hệ thống tự reply comment theo nội dung đã cấu hình → nếu bật tự động phân phối thì chuyển comment/cuộc hội thoại cho nhân viên xử lý tiếp.
+[P0168 | STYLE=Normal] Trong tài liệu hệ thống, module này được mô tả là chức năng tạo kịch bản tự động cho bình luận, thường gắn với các chiến dịch fanpage, minigame hoặc sản phẩm, đặc biệt khi có lượng comment lớn.
+[P0169 | STYLE=Normal] Ý nghĩa nghiệp vụ
+[P0170 | STYLE=Normal] Chức năng này dùng để giảm thao tác phản hồi thủ công trên các bài đăng có nhiều bình luận. Ví dụ Viettel Store đăng bài minigame trên fanpage:
+[P0171 | STYLE=Normal] “Comment số may mắn để nhận voucher 500K.”
+[P0172 | STYLE=Normal] Nếu có hàng trăm người comment, nhân viên không cần vào trả lời từng người. Hệ thống có thể tự động phản hồi: “Cảm ơn anh/chị đã chơi minigame, chúc anh/chị may mắn!”
+[P0173 | STYLE=Normal] Nếu bật Tự động phân phối, các comment này còn có thể được đưa vào hệ thống để nhân viên phụ trách tiếp tục chăm sóc, nhắn tin hoặc xử lý sau đó.
+[P0174 | STYLE=Normal] 
+[P0175 | STYLE=Normal] Ý nghĩa từng trường
+
+===== TABLE 6 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Trạng thái || Bật/tắt kịch bản. Nếu “Đang sử dụng” thì hệ thống mới tự động phản hồi comment
+ROW 003: Tên kịch bản || Tên để quản lý, ví dụ: “Minigame tháng 6”, “Auto reply bài iPhone 15”
+ROW 004: Kênh || Fanpage/kênh đã kết nối. Một kênh có thể có nhiều kịch bản cho nhiều bài đăng khác nhau
+ROW 005: Chọn bài đăng || Chọn bài post cụ thể mà hệ thống sẽ theo dõi comment
+ROW 006: Nội dung kịch bản || Nội dung hệ thống sẽ tự động trả lời dưới comment của khách
+ROW 007: Tự động phân phối || Nếu bật, comment/cuộc hội thoại có thể được phân phối cho agent hoặc nhóm phụ trách để xử lý tiếp
+[P0176 | STYLE=Normal] 
+[P0177 | STYLE=Normal] Luồng hoạt động dễ hiểu
+[P0178 | STYLE=Normal] Admin chọn một kênh, ví dụ fanpage Viettel Store.
+[P0179 | STYLE=Normal] Admin chọn một bài đăng cụ thể trên fanpage.
+[P0180 | STYLE=Normal] Admin nhập nội dung phản hồi tự động.
+[P0181 | STYLE=Normal] Admin bật trạng thái kịch bản.
+[P0182 | STYLE=Normal] Khách hàng comment vào bài đăng đó.
+[P0183 | STYLE=Normal] Hệ thống tự động phản hồi comment theo nội dung đã cấu hình.
+[P0184 | STYLE=Normal] Nếu bật Tự động phân phối, hệ thống chuyển comment/cuộc hội thoại cho nhân viên phụ trách.
+[P0185 | STYLE=Normal] 
+[P0186 | STYLE=Normal] Khác gì với kịch bản Livestream?
+
+===== TABLE 7 =====
+ROW 001: Chức năng || Dùng cho || Cách hoạt động
+ROW 002: Livestream || Bình luận trong phiên live || Nhận diện từ khóa, cú pháp, số điện thoại, sản phẩm; phản hồi và phân phối theo kịch bản live
+ROW 003: Bình luận tự động || Bình luận trên bài đăng cụ thể || Khách comment vào post, hệ thống tự reply bằng nội dung đã cấu hình
+ROW 004: Campaigns || Website || Hiển thị tin nhắn chủ động cho khách truy cập website
+[P0187 | STYLE=Normal] 
+[P0188 | STYLE=Normal] Kết luận ngắn gọn
+[P0189 | STYLE=Normal] Bình luận tự động là chức năng giúp doanh nghiệp tự động trả lời comment của khách hàng trên các bài đăng đã chọn, thường dùng cho minigame, bài quảng cáo, bài giới thiệu sản phẩm hoặc bài có lượng tương tác cao.
+[P0190 | STYLE=Normal] Nói ngắn hơn: Chọn kênh + chọn bài đăng + nhập nội dung phản hồi + bật kịch bản. Khi khách comment vào bài đó, hệ thống tự động reply và có thể phân phối comment cho nhân viên xử lý tiếp.
+[P0191 | STYLE=Normal] 
+[P0192 | STYLE=Normal] 
+[P0193 | STYLE=Normal] 
+[P0194 | STYLE=Normal] 
+[P0195 | STYLE=Normal] 
+[P0196 | STYLE=Normal] 
+[P0197 | STYLE=Normal] XIII. Quy tắc phân phối
+[P0198 | STYLE=Normal] XIII.1. Cấu hình giờ làm việc
+[P0199 | STYLE=Normal] Quy tắc phân phối là nhóm cấu hình dùng để quyết định hội thoại/bình luận/tin nhắn của khách hàng sẽ được xử lý như thế nào và chuyển cho ai. Nói đơn giản: Khi khách hàng nhắn đến, hệ thống cần biết có đang trong giờ làm việc không, có agent online không, nên phân phối cho cá nhân nào, nhóm nào, hay đưa vào danh sách chờ. Chức năng này giúp doanh nghiệp tự động điều phối hội thoại, tránh việc phân công thủ công, giảm bỏ sót khách hàng và đảm bảo khách được xử lý đúng thời điểm.
+[P0200 | STYLE=Normal] Tab Giờ làm việc dùng để cấu hình thời gian hoạt động chính thức của doanh nghiệp trên một kênh tương tác. Ví dụ trong màn hình: doanh nghiệp đang đặt giờ làm việc từ khoảng 07:29 đến 21:59 cho các ngày trong tuần.
+[P0201 | STYLE=Normal] Mục đích của cấu hình giờ làm việc
+[P0202 | STYLE=Normal] 1. Xác định khi nào doanh nghiệp đang “sẵn sàng hỗ trợ”
+[P0203 | STYLE=Normal] Khi bật tùy chọn cho tickbox: Kích hoạt tính khả dụng của doanh nghiệp cho kênh tương tác này
+[P0204 | STYLE=Normal] Hệ thống sẽ hiểu rằng kênh này có khung giờ phục vụ chính thức. Khách truy cập có thể thấy giờ hoạt động trên tiện ích chat, kể cả khi toàn bộ nhân viên đang offline.
+[P0205 | STYLE=Normal] 2. Thông báo cho khách ngoài giờ làm việc
+[P0206 | STYLE=Normal] Nếu khách truy cập ngoài khung giờ đã cấu hình, hệ thống có thể hiển thị thông báo hoặc biểu mẫu trước hội thoại. Ví dụ: “Hiện tại đã ngoài giờ làm việc. Vui lòng để lại thông tin, chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.”
+[P0207 | STYLE=Normal] Ý nghĩa là khách vẫn có thể để lại nhu cầu, nhưng hệ thống không tạo kỳ vọng rằng sẽ có nhân viên phản hồi ngay.
+[P0208 | STYLE=Normal] 3. Hỗ trợ phân phối hội thoại hợp lý hơn
+[P0209 | STYLE=Normal] Giờ làm việc có thể được dùng làm điều kiện cho các logic phân phối:
+
+===== TABLE 8 =====
+ROW 001: Trường hợp || Cách hiểu
+ROW 002: Trong giờ làm việc || Hội thoại có thể được phân phối cho agent/nhóm xử lý
+ROW 003: Ngoài giờ làm việc || Có thể hiển thị thông báo, form thu thập thông tin hoặc đưa hội thoại vào hàng chờ
+ROW 004: Agent offline nhưng vẫn trong giờ làm việc || Hệ thống vẫn biết doanh nghiệp đang trong khung giờ hỗ trợ chính thức
+ROW 005: Tất cả agent offline ngoài giờ || Hệ thống không cần cố phân phối ngay, tránh tạo kỳ vọng sai cho khách
+[P0210 | STYLE=Normal] 
+[P0211 | STYLE=Normal] Ý nghĩa các trường cấu hình
+
+===== TABLE 9 =====
+ROW 001: Thành phần || Ý nghĩa
+ROW 002: Kích hoạt tính khả dụng của doanh nghiệp || Bật/tắt việc áp dụng giờ làm việc cho kênh
+ROW 003: Thứ trong tuần || Chọn ngày nào kênh được xem là hoạt động
+ROW 004: Cả ngày || Nếu bật, kênh hoạt động 24 giờ trong ngày đó
+ROW 005: Giờ bắt đầu || Thời điểm bắt đầu nhận/hỗ trợ khách
+ROW 006: Giờ kết thúc || Thời điểm kết thúc giờ hỗ trợ
+ROW 007: Cập nhật cài đặt || Lưu lại cấu hình giờ làm việc
+[P0212 | STYLE=Normal] 
+[P0213 | STYLE=Normal] Kết luận ngắn gọn
+[P0214 | STYLE=Normal] Cấu hình giờ làm việc trong Quy tắc phân phối giúp hệ thống biết khi nào doanh nghiệp đang hoạt động trên một kênh tương tác. Từ đó, hệ thống có thể hiển thị giờ hỗ trợ cho khách, cảnh báo khi ngoài giờ làm việc, thu thập thông tin trước hội thoại và hỗ trợ phân phối hội thoại hợp lý hơn cho nhân viên.
+[P0215 | STYLE=Normal] Có thể mô tả ngắn trong tài liệu BA như sau: Chức năng Giờ làm việc cho phép doanh nghiệp thiết lập khung thời gian hỗ trợ chính thức theo từng kênh tương tác. Cấu hình này giúp hệ thống xác định trạng thái sẵn sàng phục vụ, hiển thị thông tin giờ hoạt động cho khách hàng và hỗ trợ xử lý/phân phối hội thoại phù hợp trong hoặc ngoài giờ làm việc.
+[P0216 | STYLE=Normal] 
+[P0217 | STYLE=Normal] 
+[P0218 | STYLE=Normal] 
+[P0219 | STYLE=Normal] 
+[P0220 | STYLE=Normal] 
+[P0221 | STYLE=Normal] 
+[P0222 | STYLE=Normal] XIII.2. Cấu hình quy tắc phân phối
+[P0223 | STYLE=Normal] 1. Ưu tiên phân phối cuộc hội thoại (NHÓM 1)
+[P0224 | STYLE=Normal] Đây là phần cấu hình để hệ thống quyết định cuộc hội thoại mới của khách hàng nên được ưu tiên chuyển cho ai trước.
+[P0225 | STYLE=Normal] Nói đơn giản: Khi khách hàng nhắn đến, hệ thống không phân phối ngẫu nhiên ngay, mà kiểm tra các điều kiện ưu tiên trước: khách này đã từng gặp agent nào chưa, khách có thuộc tính đặc biệt không, có cần đưa về nhóm/phòng ban nào không.
+[P0226 | STYLE=Normal] 1.1. Ưu tiên tới nhân viên tiếp nhận cuộc hội thoại cuối cùng
+[P0227 | STYLE=Normal] Checkbox: Ưu tiên phân phối cuộc hội thoại tới nhân viên tiếp nhận cuộc hội thoại cuối cùng của khách hàng
+[P0228 | STYLE=Normal] Ý nghĩa: nếu khách hàng này trước đó từng được một nhân viên xử lý, lần sau khách nhắn lại thì hệ thống ưu tiên chuyển về đúng nhân viên đó.
+[P0229 | STYLE=Normal] Ví dụ:
+[P0230 | STYLE=Normal] Khách A trước đây được Agent Minh tư vấn.
+[P0231 | STYLE=Normal] Hôm sau khách A nhắn lại.
+[P0232 | STYLE=Normal] Nếu bật rule này, hệ thống sẽ ưu tiên phân phối cuộc hội thoại cho Agent Minh.
+[P0233 | STYLE=Normal] Mục đích là giữ tính liên tục chăm sóc khách hàng, giúp agent đã biết lịch sử khách tiếp tục xử lý, tránh việc khách phải giải thích lại từ đầu.
+[P0234 | STYLE=Normal] 
+[P0235 | STYLE=Normal] 1.2. Ưu tiên theo thuộc tính liên hệ của khách hàng
+[P0236 | STYLE=Normal] Checkbox: Ưu tiên phân phối cuộc hội thoại của khách hàng có thuộc tính liên hệ
+[P0237 | STYLE=Normal] Ý nghĩa: nếu khách hàng có một thuộc tính đặc biệt trong hồ sơ liên hệ, hệ thống sẽ ưu tiên chuyển cuộc hội thoại tới nhóm/phòng ban tương ứng.
+[P0238 | STYLE=Normal] Ví dụ trong màn hình:
+
+===== TABLE 10 =====
+ROW 001: Thuộc tính liên hệ || Giá trị thuộc tính || Ưu tiên tới nhóm
+ROW 002: kh vip || kh vip || Lựa chọn nhóm
+ROW 003: vip || vip || Nhóm 1
+[P0239 | STYLE=Normal] Có thể hiểu là: Nếu hồ sơ khách hàng có thuộc tính vip với giá trị vip, thì cuộc hội thoại của khách đó sẽ được ưu tiên chuyển tới Nhóm 1.
+[P0240 | STYLE=Normal] Mục đích là phân loại khách hàng theo đặc điểm nghiệp vụ. Ví dụ:
+
+===== TABLE 11 =====
+ROW 001: Loại khách || Nhóm nên xử lý
+ROW 002: Khách VIP || Nhóm chăm sóc khách hàng VIP
+ROW 003: Khách doanh nghiệp || Nhóm B2B
+ROW 004: Khách khiếu nại || Nhóm xử lý khiếu nại
+ROW 005: Khách có đơn hàng lớn || Nhóm sales chuyên trách
+[P0241 | STYLE=Normal] Trường Thêm thuộc tính dùng để thêm nhiều điều kiện khác nhau. Mỗi điều kiện là một cặp: Thuộc tính liên hệ + Giá trị thuộc tính → Nhóm/phòng ban ưu tiên nhận hội thoại
+[P0242 | STYLE=Normal] 
+[P0243 | STYLE=Normal] 1.3. Ưu tiên tới phòng ban / nhóm nhân viên
+[P0244 | STYLE=Normal] Checkbox: Ưu tiên phân phối cuộc hội thoại tới phòng ban / nhóm nhân viên
+[P0245 | STYLE=Normal] Ý nghĩa: hệ thống ưu tiên đưa cuộc hội thoại về một nhóm/phòng ban cụ thể thay vì phân phối tự do cho toàn bộ nhân viên. Ví dụ:
+[P0246 | STYLE=Normal] Tất cả hội thoại từ kênh Facebook được ưu tiên cho Nhóm Social Sales.
+[P0247 | STYLE=Normal] Tất cả hội thoại từ kênh Website được ưu tiên cho Nhóm Tư vấn Online.
+[P0248 | STYLE=Normal] Tất cả hội thoại khiếu nại được ưu tiên cho Nhóm CSKH cấp 2.
+[P0249 | STYLE=Normal] Mục đích là giúp doanh nghiệp điều phối hội thoại đúng bộ phận phụ trách.
+[P0250 | STYLE=Normal] 
+[P0251 | STYLE=Normal] Cách hiểu tổng thể
+[P0252 | STYLE=Normal] Hạng mục này là phần thiết lập ưu tiên routing trước khi hệ thống chọn agent cụ thể. Luồng dễ hiểu:
+Khách hàng nhắn đến
+→ Hệ thống kiểm tra có agent từng xử lý trước đó không
+→ Kiểm tra khách có thuộc tính đặc biệt như VIP không
+→ Kiểm tra có cần ưu tiên về nhóm/phòng ban nào không
+→ Sau đó mới phân phối cho agent phù hợp trong nhóm
+[P0253 | STYLE=Normal] 
+[P0254 | STYLE=Normal] Ví dụ thực tế
+[P0255 | STYLE=Normal] Khách hàng B là khách VIP, từng được Agent Lan xử lý trước đó. Nếu bật cả 2 rule:
+[P0256 | STYLE=Normal] Ưu tiên nhân viên xử lý cuối cùng.
+[P0257 | STYLE=Normal] Ưu tiên khách VIP về Nhóm VIP.
+[P0258 | STYLE=Normal] Thì hệ thống có thể hiểu theo logic:
+[P0259 | STYLE=Normal] Nếu Agent Lan còn phù hợp/đang online/còn khả năng nhận hội thoại → ưu tiên giao cho Agent Lan.
+[P0260 | STYLE=Normal] Nếu không giao được cho Agent Lan → chuyển về Nhóm VIP.
+[P0261 | STYLE=Normal] Trong Nhóm VIP, hệ thống tiếp tục chọn agent phù hợp theo các rule phân phối phía sau.
+[P0262 | STYLE=Normal] Thứ tự ưu tiên chính xác cần kiểm tra thêm theo thiết kế hệ thống, nhưng về nghiệp vụ nên hiểu đây là các rule giúp hệ thống giữ đúng người, đúng nhóm, đúng loại khách hàng.
+[P0263 | STYLE=Normal] Kết luận ngắn gọn
+[P0264 | STYLE=Normal] Ưu tiên phân phối cuộc hội thoại là cấu hình giúp hệ thống tự động xác định nơi nhận hội thoại phù hợp nhất trước khi giao cho nhân viên. Nó giúp giữ khách với agent quen thuộc, đưa khách đặc biệt như VIP về đúng nhóm chăm sóc, và điều phối hội thoại theo phòng ban/phụ trách nghiệp vụ.
+[P0265 | STYLE=Normal] 2. Ưu tiên phân bố hội thoại (NHÓM 2)
+[P0266 | STYLE=Normal] Nhóm này dùng để quyết định trong danh sách nhân viên đủ điều kiện nhận hội thoại, hệ thống sẽ chọn nhân viên nào để giao cuộc hội thoại mới.
+[P0267 | STYLE=Normal] Có thể hiểu:
+Nhóm quy tắc 1 xác định nên ưu tiên về ai/nhóm nào.
+Nhóm quy tắc 2 xác định trong nhóm đó, agent nào sẽ nhận hội thoại.
+[P0268 | STYLE=Normal] 2.1. Phân phối tới nhân viên có số cuộc hội thoại Mở là ít nhất
+[P0269 | STYLE=Normal] Ý nghĩa: hệ thống ưu tiên giao hội thoại mới cho nhân viên đang online và đang có ít cuộc hội thoại mở nhất. Ví dụ:
+
+===== TABLE 12 =====
+ROW 001: Nhân viên || Trạng thái || Số hội thoại mở
+ROW 002: Agent A || Online || 5
+ROW 003: Agent B || Online || 2
+ROW 004: Agent C || Online || 4
+[P0270 | STYLE=Normal] Hệ thống sẽ ưu tiên giao cho Agent B vì người này đang xử lý ít hội thoại nhất.
+[P0271 | STYLE=Normal] Mục đích: tránh tình trạng một nhân viên bị quá tải trong khi người khác rảnh hơn.
+[P0272 | STYLE=Normal] 
+[P0273 | STYLE=Normal] 2.2. Phân phối ưu tiên cho nhân viên có thời gian trả lời nhanh
+[P0274 | STYLE=Normal] Ý nghĩa: hệ thống ưu tiên giao hội thoại cho nhân viên có tốc độ phản hồi khách hàng tốt hơn. Ví dụ:
+
+===== TABLE 13 =====
+ROW 001: Nhân viên || Thời gian phản hồi trung bình
+ROW 002: Agent A || 1 phút
+ROW 003: Agent B || 5 phút
+ROW 004: Agent C || 3 phút
+[P0275 | STYLE=Normal] Hệ thống có thể ưu tiên Agent A vì người này phản hồi khách nhanh nhất.
+[P0276 | STYLE=Normal] Mục đích: tăng tốc độ chăm sóc khách hàng, phù hợp với các kênh cần phản hồi nhanh như live chat, Facebook, Zalo, livestream.
+[P0277 | STYLE=Normal] 2.3. Phân phối cân bằng công việc giữa các nhân viên
+[P0278 | STYLE=Normal] Ý nghĩa: hệ thống phân phối theo hướng xoay vòng công bằng. Nhân viên nào đã chờ lâu hơn, lâu chưa được nhận hội thoại mới, thì sẽ được ưu tiên nhận trước. Ví dụ:
+
+===== TABLE 14 =====
+ROW 001: Nhân viên || Lần cuối nhận hội thoại
+ROW 002: Agent A || 2 phút trước
+ROW 003: Agent B || 15 phút trước
+ROW 004: Agent C || 6 phút trước
+[P0279 | STYLE=Normal] Hệ thống sẽ ưu tiên Agent B vì người này đã chờ lâu nhất.
+[P0280 | STYLE=Normal] Mục đích: đảm bảo công bằng giữa các nhân viên, tránh việc hệ thống liên tục giao cho một vài người.
+[P0281 | STYLE=Normal] 
+[P0282 | STYLE=Normal] So sánh nhanh 3 kiểu phân phối
+
+===== TABLE 15 =====
+ROW 001: Quy tắc || Ưu tiên theo || Phù hợp khi
+ROW 002: Ít hội thoại mở nhất || Tải công việc hiện tại || Muốn tránh quá tải
+ROW 003: Trả lời nhanh nhất || Hiệu suất phản hồi || Muốn tối ưu tốc độ CSKH
+ROW 004: Cân bằng công việc || Công bằng xoay vòng || Muốn chia đều cơ hội nhận việc
+[P0283 | STYLE=Normal] 
+[P0284 | STYLE=Normal] Kết luận ngắn gọn
+Nhóm quy tắc 2 là cơ chế chọn agent nhận hội thoại sau khi hệ thống đã xác định phạm vi phân phối. Doanh nghiệp có thể chọn cách phân phối theo tải công việc, hiệu suất phản hồi, hoặc cân bằng công bằng giữa nhân viên.
+[P0285 | STYLE=Normal] 
+[P0286 | STYLE=Normal] 3. Giới hạn cuộc hội thoại tới nhân viên
+[P0287 | STYLE=Normal] Đây là cấu hình dùng để giới hạn số lượng cuộc hội thoại tối đa mà một nhân viên có thể được phân phối tại cùng một thời điểm, theo từng loại hội thoại. 
+Nói đơn giản: Hệ thống không giao quá nhiều hội thoại cho một nhân viên. Khi nhân viên đã đạt giới hạn, hệ thống sẽ không tiếp tục phân phối thêm loại hội thoại đó cho người này.
+[P0288 | STYLE=Normal] Ý nghĩa từng cột
+
+===== TABLE 16 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Loại cuộc hội thoại || Loại tương tác khách hàng: Tin nhắn, Bình luận, Email
+ROW 003: Số cuộc hội thoại || Số lượng tối đa mà một nhân viên được nhận/xử lý cùng lúc
+ROW 004: Trạng thái || Bật/tắt giới hạn cho từng loại hội thoại
+[P0289 | STYLE=Normal] 
+[P0290 | STYLE=Normal] Ví dụ theo cấu hình bạn đưa
+
+===== TABLE 17 =====
+ROW 001: Loại cuộc hội thoại || Giới hạn
+ROW 002: Tin nhắn || 1
+ROW 003: Bình luận || 1
+ROW 004: Email || 10
+[P0291 | STYLE=Normal] Có thể hiểu là:
+[P0292 | STYLE=Normal] Mỗi nhân viên chỉ được nhận tối đa 1 cuộc hội thoại dạng Tin nhắn.
+[P0293 | STYLE=Normal] Mỗi nhân viên chỉ được nhận tối đa 1 cuộc hội thoại dạng Bình luận.
+[P0294 | STYLE=Normal] Mỗi nhân viên có thể nhận tối đa 10 cuộc hội thoại dạng Email.
+[P0295 | STYLE=Normal] Tại sao Email được đặt cao hơn Tin nhắn/Bình luận?
+[P0296 | STYLE=Normal] Vì đặc thù xử lý khác nhau:
+
+===== TABLE 18 =====
+ROW 001: Loại || Đặc điểm
+ROW 002: Tin nhắn || Cần phản hồi nhanh, gần thời gian thực
+ROW 003: Bình luận || Cũng cần xử lý nhanh, đặc biệt khi liên quan bài đăng/livestream
+ROW 004: Email || Thường không cần phản hồi tức thì như chat, có thể xử lý theo hàng đợi
+[P0297 | STYLE=Normal] Vì vậy, hệ thống có thể giới hạn Tin nhắn/Bình luận thấp hơn để tránh agent bị quá tải trong các kênh cần phản hồi nhanh.
+[P0298 | STYLE=Normal] Luồng hoạt động dễ hiểu
+[P0299 | STYLE=Normal] Ví dụ giới hạn Tin nhắn = 1.
+[P0300 | STYLE=Normal] Agent A đang có 1 cuộc hội thoại Tin nhắn đang mở.
+[P0301 | STYLE=Normal] Khách hàng mới nhắn đến.
+[P0302 | STYLE=Normal] Hệ thống kiểm tra Agent A đã đạt giới hạn Tin nhắn.
+[P0303 | STYLE=Normal] Hệ thống sẽ không giao thêm Tin nhắn mới cho Agent A.
+[P0304 | STYLE=Normal] Cuộc hội thoại mới sẽ được chuyển cho agent khác còn khả năng nhận, hoặc đưa vào hàng chờ tùy cấu hình phân phối phía sau.
+[P0305 | STYLE=Normal] Mục đích chức năng
+[P0306 | STYLE=Normal] Tính năng này giúp:
+[P0307 | STYLE=Normal] Tránh quá tải cho nhân viên.
+[P0308 | STYLE=Normal] Đảm bảo mỗi nhân viên chỉ nhận số lượng hội thoại phù hợp.
+[P0309 | STYLE=Normal] Tăng chất lượng phản hồi khách hàng.
+[P0310 | STYLE=Normal] Hỗ trợ phân phối công việc công bằng hơn.
+[P0311 | STYLE=Normal] Giảm tình trạng một agent nhận quá nhiều chat nhưng không xử lý kịp.
+[P0312 | STYLE=Normal] Cho phép doanh nghiệp đặt giới hạn khác nhau theo từng loại kênh/tương tác.
+[P0313 | STYLE=Normal] Kết luận ngắn gọn
+[P0314 | STYLE=Normal] Giới hạn cuộc hội thoại tới nhân viên là cấu hình kiểm soát tải công việc của agent. Hệ thống sẽ giới hạn số lượng hội thoại mà mỗi nhân viên có thể nhận theo từng loại như Tin nhắn, Bình luận, Email, từ đó giúp phân phối công việc hợp lý và tránh quá tải trong quá trình chăm sóc khách hàng.
+[P0315 | STYLE=Normal] 
+[P0316 | STYLE=Normal] 4. Lựa chọn giải pháp khi không phân phối được cuộc hội thoại tới nhân viên
+[P0317 | STYLE=Normal] Đây là cấu hình quy định hệ thống sẽ làm gì khi có cuộc hội thoại mới nhưng không thể giao cho nhân viên nào. Ví dụ không phân phối được có thể do:
+
+===== TABLE 19 =====
+ROW 001: Nguyên nhân || Ví dụ
+ROW 002: Không có nhân viên online || Tất cả agent đang offline
+ROW 003: Nhân viên đã đạt giới hạn hội thoại || Agent đã đủ số lượng Tin nhắn/Bình luận/Email được nhận
+ROW 004: Không có nhân viên thuộc nhóm phù hợp || Khách VIP cần chuyển nhóm VIP nhưng nhóm không có ai khả dụng
+ROW 005: Ngoài giờ làm việc || Kênh đang ngoài khung giờ hỗ trợ
+ROW 006: Rule phân phối không tìm được người phù hợp || Không thỏa điều kiện routing
+[P0318 | STYLE=Normal] 
+[P0319 | STYLE=Normal] 4.1. Không sử dụng hỗ trợ tự động
+[P0320 | STYLE=Normal] Checkbox: Không sử dụng hỗ trợ tự động
+[P0321 | STYLE=Normal] Ý nghĩa: nếu hệ thống không phân phối được cuộc hội thoại cho nhân viên, hệ thống không tự gửi tin nhắn phản hồi cho khách. Khi đó, cuộc hội thoại có thể được giữ ở trạng thái chờ, chưa phân công, hoặc nằm trong hàng đợi để nhân viên giám sát viên xử lý sau.
+[P0322 | STYLE=Normal] Khi nào dùng? Phù hợp khi doanh nghiệp không muốn hệ thống tự nói thay nhân viên, hoặc muốn tất cả phản hồi đều do người thật xử lý.
+[P0323 | STYLE=Normal] Ví dụ: Khách nhắn đến ngoài giờ, hệ thống không tự trả lời. Hội thoại được lưu lại để agent xử lý vào ngày hôm sau.
+[P0324 | STYLE=Normal] 4.2. Gửi tin nhắn tự động
+[P0325 | STYLE=Normal] Checkbox: Gửi tin nhắn tự động
+[P0326 | STYLE=Normal] Ý nghĩa: nếu hệ thống không phân phối được cuộc hội thoại cho nhân viên, hệ thống sẽ tự động gửi một tin nhắn phản hồi cho khách hàng.
+[P0327 | STYLE=Normal] Tin nhắn này thường dùng để thông báo rằng doanh nghiệp đã ghi nhận yêu cầu nhưng hiện chưa có nhân viên hỗ trợ ngay.
+[P0328 | STYLE=Normal] Ví dụ nội dung: Cảm ơn anh/chị đã liên hệ. Hiện tại tư vấn viên đang bận hoặc ngoài giờ làm việc, chúng tôi sẽ phản hồi trong thời gian sớm nhất.
+[P0329 | STYLE=Normal] Khi nào dùng? Phù hợp khi doanh nghiệp muốn khách hàng biết rằng yêu cầu đã được ghi nhận, tránh cảm giác bị bỏ quên.
+[P0330 | STYLE=Normal] So sánh nhanh
+
+===== TABLE 20 =====
+ROW 001: Lựa chọn || Ý nghĩa || Phù hợp khi
+ROW 002: Không sử dụng hỗ trợ tự động || Không gửi phản hồi tự động khi chưa phân phối được || Muốn nhân viên xử lý thủ công, tránh auto reply
+ROW 003: Gửi tin nhắn tự động || Gửi tin nhắn thông báo cho khách khi chưa có agent nhận || Muốn giữ trải nghiệm khách hàng, tránh im lặng
+[P0331 | STYLE=Normal] 
+[P0332 | STYLE=Normal] Luồng xử lý dễ hiểu
+[P0333 | STYLE=Normal] Khách hàng nhắn đến
+→ Hệ thống tìm nhân viên phù hợp
+→ Không có nhân viên nào nhận được
+→ Hệ thống kiểm tra cấu hình phần 4
+→ Nếu chọn “Không sử dụng hỗ trợ tự động” thì không gửi gì
+→ Nếu chọn “Gửi tin nhắn tự động” thì gửi nội dung phản hồi đã cấu hình cho khách
+[P0334 | STYLE=Normal] Kết luận ngắn gọn
+[P0335 | STYLE=Normal] Lựa chọn giải pháp khi không phân phối được cuộc hội thoại tới nhân viên là cơ chế xử lý dự phòng khi hệ thống không tìm được agent phù hợp. Doanh nghiệp có thể chọn không tự động phản hồi hoặc gửi tin nhắn tự động để thông báo cho khách hàng, giúp tránh bỏ sót và cải thiện trải nghiệm khách trong trường hợp chưa có nhân viên tiếp nhận.
+[P0336 | STYLE=Normal] 
+[P0337 | STYLE=Normal] 
+[P0338 | STYLE=Normal] 
+[P0339 | STYLE=Normal] 5. Tự động phân phối lại các cuộc hội thoại
+[P0340 | STYLE=Normal] Đây là chức năng giúp hệ thống tự động chuyển lại cuộc hội thoại cho nhân viên khác khi nhân viên đang phụ trách không còn xử lý hiệu quả.
+[P0341 | STYLE=Normal] Nói đơn giản: Nếu một cuộc hội thoại đã được giao cho nhân viên A nhưng A không phản hồi khách trong thời gian quy định, hoặc A offline quá lâu, hệ thống sẽ tự động thu hồi/cuốn lại hội thoại đó và phân phối cho nhân viên khác phù hợp.
+[P0342 | STYLE=Normal] 
+[P0343 | STYLE=Normal] Ý nghĩa nghiệp vụ
+[P0344 | STYLE=Normal] Chức năng này dùng để tránh tình trạng:
+[P0345 | STYLE=Normal] Khách hàng bị bỏ quên.
+[P0346 | STYLE=Normal] Hội thoại đã được giao nhưng nhân viên không xử lý.
+[P0347 | STYLE=Normal] Nhân viên offline nhưng hội thoại vẫn bị “kẹt” ở người đó.
+[P0348 | STYLE=Normal] Supervisor phải theo dõi và chuyển tay thủ công.
+[P0349 | STYLE=Normal] SLA phản hồi bị vi phạm do không ai tiếp nhận lại.
+[P0350 | STYLE=Normal] Các điều kiện cấu hình
+
+===== TABLE 21 =====
+ROW 001: Điều kiện || Thời gian || Ý nghĩa
+ROW 002: Nhân viên không phản hồi khách hàng || 60 phút || Nếu agent đã nhận hội thoại nhưng không trả lời khách trong 60 phút, hệ thống sẽ tự động phân phối lại
+ROW 003: Tự động phân phối lại sau khi nhân viên offline || 30 phút || Nếu agent đang phụ trách bị offline quá 30 phút, hệ thống sẽ chuyển hội thoại sang người khác
+[P0351 | STYLE=Normal] 
+[P0352 | STYLE=Normal] 5.1. Nhân viên không phản hồi khách hàng
+[P0353 | STYLE=Normal] Điều kiện: Nhân viên không phản hồi khách hàng – 60 phút
+[P0354 | STYLE=Normal] Ý nghĩa: sau khi cuộc hội thoại được giao cho agent, nếu khách đã nhắn nhưng agent không phản hồi trong vòng 60 phút, hệ thống sẽ coi cuộc hội thoại này có nguy cơ bị bỏ sót. Khi đó, hệ thống có thể tự động phân phối lại cho agent khác hoặc nhóm khác theo rule phân phối đang cấu hình. Ví dụ:
+[P0355 | STYLE=Normal] Khách hàng nhắn tin.
+[P0356 | STYLE=Normal] Hệ thống giao hội thoại cho Agent A.
+[P0357 | STYLE=Normal] Sau 60 phút, Agent A vẫn chưa phản hồi.
+[P0358 | STYLE=Normal] Hệ thống tự động lấy lại hội thoại.
+[P0359 | STYLE=Normal] Hội thoại được phân phối lại cho Agent B đang online/còn khả năng nhận.
+[P0360 | STYLE=Normal] Mục đích là đảm bảo khách không phải chờ quá lâu.
+[P0361 | STYLE=Normal] 
+[P0362 | STYLE=Normal] 5.2. Phân phối lại sau khi nhân viên offline
+[P0363 | STYLE=Normal] Điều kiện: Tự động phân phối lại các cuộc hội thoại sau khi nhân viên offline – 30 phút
+[P0364 | STYLE=Normal] Ý nghĩa: nếu agent đang phụ trách hội thoại nhưng chuyển sang trạng thái offline trong 30 phút, hệ thống sẽ tự động chuyển hội thoại cho người khác. Ví dụ:
+[P0365 | STYLE=Normal] Agent A đang xử lý hội thoại.
+[P0366 | STYLE=Normal] Agent A offline.
+[P0367 | STYLE=Normal] Sau 30 phút, Agent A vẫn chưa online lại.
+[P0368 | STYLE=Normal] Hệ thống tự động phân phối lại hội thoại cho agent khác.
+[P0369 | STYLE=Normal] Mục đích là tránh việc hội thoại bị giữ bởi một nhân viên không còn khả dụng.
+[P0370 | STYLE=Normal] Cách hệ thống phân phối lại
+[P0371 | STYLE=Normal] Khi đủ điều kiện phân phối lại, cuộc hội thoại thường sẽ được đưa lại vào luồng routing và áp dụng tiếp các quy tắc trước đó, ví dụ:
+[P0372 | STYLE=Normal] Ưu tiên nhân viên tiếp nhận cuối cùng.
+[P0373 | STYLE=Normal] Ưu tiên theo thuộc tính khách hàng.
+[P0374 | STYLE=Normal] Ưu tiên theo nhóm/phòng ban.
+[P0375 | STYLE=Normal] Chọn agent có ít hội thoại mở nhất.
+[P0376 | STYLE=Normal] Chọn agent trả lời nhanh.
+[P0377 | STYLE=Normal] Chọn agent theo cơ chế cân bằng công việc.
+[P0378 | STYLE=Normal] Kiểm tra giới hạn số hội thoại của từng agent.
+[P0379 | STYLE=Normal] Tức là rule 5 không tự quyết định người nhận cuối cùng, mà nó kích hoạt việc phân phối lại. Sau đó hệ thống sẽ dùng các rule phân phối khác để chọn agent phù hợp.
+[P0380 | STYLE=Normal] 
+[P0381 | STYLE=Normal] 
+[P0382 | STYLE=Normal] 
+[P0383 | STYLE=Normal] 
+[P0384 | STYLE=Normal] Ý nghĩa cột “Trạng thái”
+[P0385 | STYLE=Normal] Cột Trạng thái dùng để bật/tắt từng điều kiện tự động phân phối lại.
+
+===== TABLE 22 =====
+ROW 001: Trạng thái || Ý nghĩa
+ROW 002: Bật || Điều kiện có hiệu lực, hệ thống sẽ tự động phân phối lại khi quá thời gian
+ROW 003: Tắt || Điều kiện không áp dụng, hội thoại vẫn giữ ở agent cũ cho đến khi có thao tác khác
+[P0386 | STYLE=Normal] 
+[P0387 | STYLE=Normal] Kết luận ngắn gọn
+[P0388 | STYLE=Normal] Tự động phân phối lại các cuộc hội thoại là cơ chế chống bỏ sót khách hàng. Khi agent không phản hồi quá lâu hoặc offline quá thời gian cấu hình, hệ thống sẽ tự động chuyển hội thoại sang người khác để đảm bảo khách được tiếp tục chăm sóc, giảm rủi ro trễ SLA và giảm thao tác điều phối thủ công cho quản lý.
+[P0389 | STYLE=Normal] 
+[P0390 | STYLE=Normal] 6. Phân phối cuộc hội thoại ở danh sách chờ khi có nhân viên mới online
+[P0391 | STYLE=Normal] Đây là cấu hình dùng để xử lý các cuộc hội thoại đang bị chờ phân phối khi có nhân viên vừa chuyển sang trạng thái online.
+[P0392 | STYLE=Normal] Nói đơn giản: Khi có agent mới online, hệ thống sẽ bắt đầu lấy các hội thoại trong danh sách chờ để giao cho agent đó. Tuy nhiên, hệ thống không giao dồn tất cả cùng lúc mà có thể giãn cách thời gian giữa mỗi lần phân phối.
+[P0393 | STYLE=Normal] Ý nghĩa nghiệp vụ: Chức năng này giúp tránh tình trạng:
+[P0394 | STYLE=Normal] Agent vừa online đã bị giao quá nhiều hội thoại cùng lúc.
+[P0395 | STYLE=Normal] Nhân viên bị quá tải ngay khi bắt đầu ca làm.
+[P0396 | STYLE=Normal] Hệ thống phân phối ồ ạt, gây mất kiểm soát.
+[P0397 | STYLE=Normal] Các hội thoại trong hàng chờ bị bỏ quên khi có nhân viên quay lại online.
+[P0398 | STYLE=Normal] 
+[P0399 | STYLE=Normal] 
+[P0400 | STYLE=Normal] 
+[P0401 | STYLE=Normal] 
+[P0402 | STYLE=Normal] Ý nghĩa cấu hình thời gian
+
+===== TABLE 23 =====
+ROW 001: Mô tả || Thời gian
+ROW 002: Khoảng thời gian giữa 2 cuộc hội thoại liên tiếp được phân phối cho 1 nhân viên vừa online || 0 phút 30 giây
+[P0403 | STYLE=Normal] Có nghĩa là: Khi một nhân viên vừa online, hệ thống sẽ phân phối từng cuộc hội thoại trong danh sách chờ cho nhân viên đó, mỗi lần cách nhau 30 giây.
+[P0404 | STYLE=Normal] 
+[P0405 | STYLE=Normal] Ví dụ dễ hiểu
+[P0406 | STYLE=Normal] Giả sử ngoài giờ hoặc lúc thiếu nhân sự, hệ thống có 5 cuộc hội thoại đang nằm trong danh sách chờ.
+[P0407 | STYLE=Normal] Agent A vừa online.
+[P0408 | STYLE=Normal] Nếu cấu hình là 30 giây, hệ thống có thể xử lý như sau:
+
+===== TABLE 24 =====
+ROW 001: Thời điểm || Hành động
+ROW 002: 08:00:00 || Giao hội thoại số 1 cho Agent A
+ROW 003: 08:00:30 || Giao hội thoại số 2 cho Agent A
+ROW 004: 08:01:00 || Giao hội thoại số 3 cho Agent A
+ROW 005: 08:01:30 || Giao hội thoại số 4 cho Agent A
+[P0409 | STYLE=Normal] Tất nhiên, hệ thống vẫn có thể kiểm tra thêm các rule khác như giới hạn số hội thoại, trạng thái agent, nhóm/phòng ban, số cuộc hội thoại đang mở.
+[P0410 | STYLE=Normal] 
+[P0411 | STYLE=Normal] Vì sao cần giãn cách 30 giây?
+[P0412 | STYLE=Normal] Vì nếu giao quá nhanh, agent có thể bị quá tải. Khoảng cách 30 giây giúp hệ thống phân phối mềm hơn, cho agent có thời gian nhìn thấy hội thoại mới, bắt đầu xử lý hoặc để hệ thống kịp kiểm tra trạng thái tải hiện tại.
+[P0413 | STYLE=Normal] 
+[P0414 | STYLE=Normal] Kết luận ngắn gọn
+[P0415 | STYLE=Normal] Phân phối cuộc hội thoại ở danh sách chờ khi có nhân viên mới online là cơ chế tự động lấy các hội thoại đang chờ và giao lại cho nhân viên vừa online. Cấu hình thời gian, ví dụ 30 giây, giúp hệ thống giãn cách việc giao hội thoại, tránh dồn quá nhiều việc cho agent cùng lúc và đảm bảo các hội thoại chờ được tiếp tục xử lý.
+[P0416 | STYLE=Normal] 
+[P0417 | STYLE=Normal] XIV. Quản lý thuộc tính tùy chỉnh
+[P0418 | STYLE=Normal] Thuộc tính tùy chỉnh theo dõi thông tin thực tế về các địa chỉ liên hệ/cuộc hội thoại của bạn - như gói đăng ký hoặc khi họ đặt hàng mặt hàng đầu tiên, v. v.
+
+Để tạo một Thuộc tính Tùy chỉnh, chỉ cần nhấp vào Thêm Thuộc tính Tùy chỉnh. Bạn cũng có thể chỉnh sửa hoặc xóa Thuộc tính Tùy chỉnh hiện có bằng cách nhấp vào nút Chỉnh sửa hoặc Xóa.
+[P0419 | STYLE=Normal] + Tên
++ Mô tả
++ Loại: text, checkbox, number…
++ Khóa
+[P0420 | STYLE=Normal] XV. Cấu hình tự động
+[P0421 | STYLE=Normal] Cấu hình tự động là nhóm chức năng cho phép hệ thống tự động thực hiện một số thao tác lặp lại trong quá trình chăm sóc khách hàng, thay vì để agent xử lý thủ công.
+[P0422 | STYLE=Normal] Nói đơn giản: Khi có điều kiện xảy ra, hệ thống sẽ tự động gửi tin nhắn, tự động tạm dừng hoặc tự động hoàn thành cuộc hội thoại theo cấu hình có sẵn.
+[P0423 | STYLE=Normal] Mục đích chính là giảm thao tác thủ công cho agent, đảm bảo hội thoại được xử lý nhất quán, không bị tồn đọng quá lâu và hỗ trợ quy trình phân phối hội thoại hoạt động hiệu quả hơn.
+[P0424 | STYLE=Normal] Các trường cấu hình chính
+
+===== TABLE 25 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Chế độ tự động || Loại hành động tự động mà hệ thống sẽ thực hiện
+ROW 003: Thời gian || Khoảng thời gian chờ trước khi hệ thống tự động thực hiện hành động
+ROW 004: Nội dung tin nhắn tự động || Nội dung hệ thống gửi cho khách nếu chế độ đó có yêu cầu gửi tin nhắn
+ROW 005: Trạng thái || Bật/tắt chế độ tự động
+[P0425 | STYLE=Normal] 
+[P0426 | STYLE=Normal] 1. Tự động gửi tin nhắn chào khách hàng
+[P0427 | STYLE=Normal] Chức năng này dùng để hệ thống tự động gửi lời chào khi khách hàng bắt đầu cuộc hội thoại. Ví dụ nội dung: “Xin chào anh/chị, Viettel Store có thể hỗ trợ gì cho mình hôm nay ạ?”
+[P0428 | STYLE=Normal] Ý nghĩa nghiệp vụ:
+[P0429 | STYLE=Normal] Giúp khách hàng nhận được phản hồi ngay lập tức.
+[P0430 | STYLE=Normal] Tránh cảm giác “nhắn vào nhưng không ai trả lời”.
+[P0431 | STYLE=Normal] Tạo trải nghiệm chuyên nghiệp ngay từ đầu.
+[P0432 | STYLE=Normal] Hỗ trợ agent trong trường hợp chưa kịp phản hồi.
+[P0433 | STYLE=Normal] Chức năng này đặc biệt hữu ích với các kênh cần phản hồi nhanh như Website chat, Facebook, Zalo.
+[P0434 | STYLE=Normal] 2. Tự động hoàn thành cuộc hội thoại
+[P0435 | STYLE=Normal] Chức năng này dùng để hệ thống tự động đóng/hoàn thành cuộc hội thoại sau một khoảng thời gian không còn hoạt động. Ví dụ cấu hình:
+
+===== TABLE 26 =====
+ROW 001: Chế độ || Thời gian
+ROW 002: Tự động hoàn thành cuộc hội thoại || 120 phút
+[P0436 | STYLE=Normal] Có nghĩa là: “Nếu cuộc hội thoại không còn phát sinh tương tác trong 120 phút, hệ thống có thể tự động chuyển cuộc hội thoại sang trạng thái hoàn thành.”
+[P0437 | STYLE=Normal] Ý nghĩa nghiệp vụ:
+[P0438 | STYLE=Normal] Tránh để quá nhiều hội thoại cũ vẫn ở trạng thái mở.
+[P0439 | STYLE=Normal] Giúp danh sách hội thoại của agent gọn hơn.
+[P0440 | STYLE=Normal] Làm sạch hàng đợi xử lý.
+[P0441 | STYLE=Normal] Giúp báo cáo số lượng hội thoại mở/đã giải quyết chính xác hơn.
+[P0442 | STYLE=Normal] Hỗ trợ quy trình phân phối, vì agent không bị giữ quá nhiều hội thoại không còn hoạt động.
+[P0443 | STYLE=Normal] 3. Tự động tạm dừng cuộc hội thoại
+[P0444 | STYLE=Normal] Trong phần mô tả có nhắc tới tự động tạm dừng, dù bảng bạn đưa hiện chưa thấy rõ dòng này. Về ý nghĩa, tự động tạm dừng thường dùng khi khách hàng chưa phản hồi lại trong một khoảng thời gian nhất định.
+[P0445 | STYLE=Normal] Ví dụ: Agent đã trả lời khách, nhưng khách không phản hồi trong 30 phút. Hệ thống tự động chuyển hội thoại sang trạng thái tạm dừng.
+[P0446 | STYLE=Normal] Mục đích là phân biệt giữa:
+[P0447 | STYLE=Normal] Hội thoại đang cần agent xử lý ngay.
+[P0448 | STYLE=Normal] Hội thoại đang chờ khách phản hồi.
+[P0449 | STYLE=Normal] Hội thoại đã kết thúc và có thể hoàn thành.
+[P0450 | STYLE=Normal] Kết luận ngắn gọn
+[P0451 | STYLE=Normal] Cấu hình tự động giúp hệ thống tự động xử lý các thao tác lặp lại như gửi lời chào, tạm dừng hoặc hoàn thành hội thoại. Chức năng này giúp agent giảm việc thủ công, tránh tồn đọng hội thoại, cải thiện tốc độ phản hồi và đảm bảo quy trình chăm sóc khách hàng vận hành ổn định hơn.
+[P0452 | STYLE=Normal] Có thể mô tả ngắn trong tài liệu BA như sau: Cấu hình tự động cho phép thiết lập các hành động hệ thống tự thực hiện trong quá trình xử lý hội thoại, bao gồm gửi tin nhắn chào khách hàng, tạm dừng hoặc hoàn thành hội thoại theo thời gian cấu hình. Chức năng này giúp giảm thao tác thủ công cho agent, chuẩn hóa quy trình xử lý và đảm bảo hiệu quả vận hành chăm sóc khách hàng.
+[P0453 | STYLE=Normal] 
+[P0454 | STYLE=Normal] XVI. Thiết lập SLA
+[P0455 | STYLE=Normal] Thiết lập SLA là chức năng cấu hình thời gian cam kết xử lý cuộc hội thoại cho từng loại tương tác: Tin nhắn, Bình luận, Email.
+[P0456 | STYLE=Normal] Nói đơn giản: SLA giúp hệ thống kiểm soát việc nhân viên có phản hồi và hoàn thành cuộc hội thoại đúng thời gian quy định hay không. Mỗi loại hội thoại có thể có SLA riêng vì đặc thù xử lý khác nhau. Ví dụ: tin nhắn và bình luận thường cần phản hồi nhanh hơn email.
+[P0457 | STYLE=Normal] 3 giai đoạn SLA chính
+
+===== TABLE 27 =====
+ROW 001: Giai đoạn || Ý nghĩa || Cách tính
+ROW 002: 1. Tiếp nhận yêu cầu || Đo tốc độ phản hồi đầu tiên của nhân viên || Tính từ lúc cuộc hội thoại được phân phối cho nhân viên đến lúc nhân viên trả lời khách lần đầu
+ROW 003: 2. Giải đáp thông tin || Đo tốc độ phản hồi trong quá trình trao đổi || Tính cho các lần nhân viên trả lời tiếp theo sau tin nhắn mới của khách, không tính tin nhắn đầu tiên
+ROW 004: 3. Hoàn thành cuộc hội thoại || Đo thời gian xử lý xong toàn bộ cuộc hội thoại || Tính từ lúc cuộc hội thoại được phân phối đến lúc nhân viên hoàn thành/đóng cuộc hội thoại
+[P0458 | STYLE=Normal] 
+[P0459 | STYLE=Normal] Giải thích từng giai đoạn
+[P0460 | STYLE=Normal] 1. Tiếp nhận yêu cầu
+[P0461 | STYLE=Normal] Ví dụ cấu hình: 5 phút 0 giây
+[P0462 | STYLE=Normal] Có nghĩa là sau khi hệ thống phân phối cuộc hội thoại cho nhân viên, nhân viên phải có phản hồi đầu tiên cho khách trong vòng 5 phút. Mục đích là đảm bảo khách hàng không phải chờ quá lâu sau khi bắt đầu liên hệ.
+[P0463 | STYLE=Normal] 2. Giải đáp thông tin
+[P0464 | STYLE=Normal] Ví dụ cấu hình: 5 phút 5 giây
+[P0465 | STYLE=Normal] Có nghĩa là trong quá trình trao đổi, mỗi khi khách hàng gửi thêm tin nhắn, nhân viên cần phản hồi lại trong giới hạn thời gian đã cấu hình. Điểm quan trọng: Giai đoạn này không tính tin nhắn trả lời đầu tiên, vì tin nhắn đầu tiên đã thuộc SLA “Tiếp nhận yêu cầu”.
+[P0466 | STYLE=Normal] Mục đích là kiểm soát chất lượng phản hồi xuyên suốt cuộc hội thoại, không chỉ phản hồi ban đầu.
+[P0467 | STYLE=Normal] 3. Hoàn thành cuộc hội thoại
+[P0468 | STYLE=Normal] Ví dụ cấu hình: 5 phút 10 giây
+[P0469 | STYLE=Normal] Có nghĩa là kể từ khi cuộc hội thoại được phân phối, nhân viên cần xử lý xong và chuyển cuộc hội thoại sang trạng thái hoàn thành trong giới hạn thời gian này. Mục đích là đảm bảo cuộc hội thoại không bị treo quá lâu ở trạng thái mở.
+[P0470 | STYLE=Normal] Ý nghĩa các trường cấu hình
+
+===== TABLE 28 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Giai đoạn || Mốc SLA cần kiểm soát
+ROW 003: Giới hạn || Thời gian tối đa cho phép
+ROW 004: Công việc cần làm || Mô tả hành động nhân viên cần thực hiện
+ROW 005: Trạng thái || Bật/tắt SLA cho từng giai đoạn
+ROW 006: Cảnh báo SLA || Cảnh báo khi cuộc hội thoại sắp vi phạm hoặc đã vi phạm SLA
+[P0471 | STYLE=Normal] 
+[P0472 | STYLE=Normal] Mục đích nghiệp vụ
+[P0473 | STYLE=Normal] Thiết lập SLA giúp doanh nghiệp:
+[P0474 | STYLE=Normal] Kiểm soát tốc độ phản hồi khách hàng.
+[P0475 | STYLE=Normal] Đảm bảo nhân viên xử lý hội thoại đúng cam kết.
+[P0476 | STYLE=Normal] Phát hiện các cuộc hội thoại bị chậm xử lý.
+[P0477 | STYLE=Normal] Hỗ trợ quản lý đánh giá hiệu suất agent.
+[P0478 | STYLE=Normal] Làm dữ liệu đầu vào cho báo cáo SLA.
+[P0479 | STYLE=Normal] Nâng cao chất lượng chăm sóc khách hàng.
+[P0480 | STYLE=Normal] 
+[P0481 | STYLE=Normal] Kết luận ngắn gọn
+[P0482 | STYLE=Normal] Thiết lập SLA là chức năng đặt giới hạn thời gian xử lý cho từng loại hội thoại như Tin nhắn, Bình luận, Email. Hệ thống theo dõi 3 giai đoạn chính: tiếp nhận yêu cầu, giải đáp thông tin và hoàn thành cuộc hội thoại. Khi nhân viên phản hồi hoặc xử lý quá thời gian cấu hình, hệ thống có thể cảnh báo và ghi nhận vi phạm SLA để phục vụ giám sát, báo cáo và cải thiện chất lượng chăm sóc khách hàng.
+[P0483 | STYLE=Normal] 
+[P0484 | STYLE=Normal] 
+[P0485 | STYLE=Normal] 
+[P0486 | STYLE=Normal] 
+[P0487 | STYLE=Normal] 
+[P0488 | STYLE=Normal] 
+[P0489 | STYLE=Normal] 
+[P0490 | STYLE=Normal] 
+[P0491 | STYLE=Normal] XVII. KÍCH HOẠT NGƯỜI DÙNG
+[P0492 | STYLE=Normal] Chức năng Kích hoạt dùng để kiểm soát phòng ban nào và nhân viên nào được phép sử dụng VSS Chat Platform.
+[P0493 | STYLE=Normal] Nói đơn giản: Hệ thống có thể lấy danh sách nhân sự từ dữ liệu nội bộ, nhưng không phải toàn bộ nhân sự đều được dùng VSS Chat. Vì vậy cần có chức năng kích hoạt để chọn đúng phòng ban và đúng người được đưa vào hệ thống.
+[P0494 | STYLE=Normal] 1. Kích hoạt phòng ban
+[P0495 | STYLE=Normal] Kích hoạt phòng ban là bước chọn các phòng ban được phép sử dụng hệ thống.
+[P0496 | STYLE=Normal] Trong màn hình có 2 loại:
+
+===== TABLE 29 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Phòng ban sử dụng chính || Phòng ban chính đang được cấu hình sử dụng hệ thống
+ROW 003: Phòng ban sử dụng khác || Các phòng ban bổ sung cũng được phép dùng hệ thống
+[P0497 | STYLE=Normal] Ví dụ:
+[P0498 | STYLE=Normal] Phòng ban chính: KOL - Phòng Kênh Online
+[P0499 | STYLE=Normal] Phòng ban khác: Phòng Chất Lượng Dịch Vụ
+[P0500 | STYLE=Normal] Khi một phòng ban được kích hoạt, nhân viên thuộc phòng ban đó mới có thể được chọn/kích hoạt để tham gia hệ thống.
+[P0501 | STYLE=Normal] Mục đích
+[P0502 | STYLE=Normal] Chức năng này giúp doanh nghiệp giới hạn phạm vi sử dụng VSS Chat theo đơn vị tổ chức.
+[P0503 | STYLE=Normal] Ví dụ VSS Chat chỉ phục vụ các bộ phận:
+[P0504 | STYLE=Normal] Chăm sóc khách hàng
+[P0505 | STYLE=Normal] Bán hàng online
+[P0506 | STYLE=Normal] Kênh Online
+[P0507 | STYLE=Normal] Chất lượng dịch vụ
+[P0508 | STYLE=Normal] Social Commerce
+[P0509 | STYLE=Normal] Livestream / Fanpage
+[P0510 | STYLE=Normal] Thì admin chỉ cần kích hoạt các phòng ban liên quan, không cần mở quyền cho toàn bộ công ty.
+[P0511 | STYLE=Normal] 
+[P0512 | STYLE=Normal] 2. Kích hoạt người dùng
+[P0513 | STYLE=Normal] Kích hoạt người dùng là bước bật/tắt quyền sử dụng hệ thống cho từng nhân viên cụ thể.
+[P0514 | STYLE=Normal] Trong bảng danh sách có các thông tin:
+
+===== TABLE 30 =====
+ROW 001: Trường || Ý nghĩa
+ROW 002: Mã nhân viên || Mã định danh nhân sự
+ROW 003: Nhân viên || Họ tên nhân viên
+ROW 004: Chức danh || Vị trí công việc
+ROW 005: Phòng ban || Đơn vị/phòng ban của nhân viên
+ROW 006: Kích hoạt || Trạng thái người dùng có được phép sử dụng hệ thống hay không
+[P0515 | STYLE=Normal] Nếu nhân viên được kích hoạt, họ có thể được đưa vào hệ thống để sử dụng các chức năng phù hợp như xử lý hội thoại, nhận phân phối, xem báo cáo hoặc cấu hình tùy theo quyền được gán. Nếu bị hủy kích hoạt, nhân viên không còn được xem là người dùng hoạt động trong hệ thống.
+[P0516 | STYLE=Normal] 3. Ý nghĩa các nút thao tác
+
+===== TABLE 31 =====
+ROW 001: Nút || Ý nghĩa
+ROW 002: Kích hoạt đã chọn || Bật quyền sử dụng hệ thống cho các nhân viên đã tick chọn
+ROW 003: Hủy kích hoạt đã chọn || Tắt quyền sử dụng hệ thống của các nhân viên đã tick chọn
+ROW 004: Tìm kiếm / lọc || Tìm nhân viên theo mã, tên, chức danh, phòng ban, trạng thái
+ROW 005: Cập nhật || Lưu lại cấu hình phòng ban/người dùng
+[P0517 | STYLE=Normal] 
+[P0518 | STYLE=Normal] 4. Vì sao cần chức năng này?
+[P0519 | STYLE=Normal] Chức năng này quan trọng vì danh sách nhân viên có thể rất lớn, ví dụ màn hình có tổng cộng hơn 600 nhân sự. Không phải ai cũng là agent hoặc người dùng của VSS Chat.
+[P0520 | STYLE=Normal] Do đó, hệ thống cần một lớp quản lý để:
+[P0521 | STYLE=Normal] Chỉ cho phép đúng phòng ban được sử dụng hệ thống.
+[P0522 | STYLE=Normal] Chỉ kích hoạt đúng nhân viên cần tham gia vận hành.
+[P0523 | STYLE=Normal] Dễ dàng thêm/bớt nhân sự khi thay đổi tổ chức.
+[P0524 | STYLE=Normal] Kiểm soát số lượng người dùng đang hoạt động.
+[P0525 | STYLE=Normal] Tránh cấp quyền nhầm cho nhân sự không liên quan.
+[P0526 | STYLE=Normal] Hỗ trợ quản lý user theo dữ liệu nhân sự nội bộ.
+[P0527 | STYLE=Normal] 5. Phân biệt với “Quản lý người dùng”
+[P0528 | STYLE=Normal] Hai chức năng này có thể dễ bị nhầm:
+
+===== TABLE 32 =====
+ROW 001: Chức năng || Ý nghĩa
+ROW 002: Kích hoạt người dùng || Chọn nhân viên nào được phép tham gia/sử dụng hệ thống
+ROW 003: Quản lý người dùng || Cấu hình chi tiết người dùng sau khi đã được kích hoạt, ví dụ vai trò, nhóm, kênh, quyền xử lý
+[P0529 | STYLE=Normal] Có thể hiểu: Kích hoạt người dùng là bước “mở quyền tham gia hệ thống”.
+Quản lý người dùng là bước “thiết lập người đó làm gì trong hệ thống”.
+[P0530 | STYLE=Normal] Ví dụ:
+[P0531 | STYLE=Normal] Kích hoạt nhân viên Nguyễn Văn A.
+[P0532 | STYLE=Normal] Sau đó vào Quản lý người dùng để gán A là Agent.
+[P0533 | STYLE=Normal] Gán A vào nhóm Kênh Online.
+[P0534 | STYLE=Normal] Gán A phụ trách kênh Facebook/Zalo/Website.
+[P0535 | STYLE=Normal] 
+[P0536 | STYLE=Normal] Kết luận ngắn gọn
+[P0537 | STYLE=Normal] Kích hoạt phòng ban/người dùng là chức năng quản lý phạm vi sử dụng VSS Chat Platform theo tổ chức và nhân sự. Admin có thể chọn phòng ban được sử dụng hệ thống, sau đó kích hoạt hoặc hủy kích hoạt từng nhân viên thuộc các phòng ban đó. Chức năng này giúp kiểm soát ai được phép tham gia vận hành hệ thống, tránh cấp quyền tràn lan và hỗ trợ quản lý nhân sự sử dụng VSS Chat một cách tập trung.
+[P0538 | STYLE=Normal] 
+[P0539 | STYLE=Normal] 
+[P0540 | STYLE=Normal] 
+[P0541 | STYLE=Normal] 
+[P0542 | STYLE=Normal] 
+[P0543 | STYLE=Normal] XVIII. Tích hợp kênh tương tác
+[P0544 | STYLE=Normal] XVIII.1. Tích hợp Zalo
+[P0545 | STYLE=Normal] Click chọn biểu tượng Zalo để bắt đầu kết nối. Tiếp tục chọn Kết nối Zalo OfficalAccount
+[P0546 | STYLE=Normal] 
+[P0547 | STYLE=Normal] Để có thể tiếp tục, bạn cần có sẵn 1 tài khoản Zalo AO. Nếu bạn chưa cótài khoản Zalo OA, vui lòng truy cập Xây dựng thương hiệu doanh nghiệp bạn trên Zalo | Zalo Official Account để biết thêm chi tiết. Sau khi đã có tài khoản Zalo OA, trong phần lựa chọn bên dưới sẽ hiển thị lên màn hình để bạn lựa chọn.
+[P0548 | STYLE=Normal] 
+[P0549 | STYLE=Normal] XVIII.2. Tích hợp Facebook
+[P0550 | STYLE=Normal] Tích hợp Facebook là chức năng dùng để kết nối một Fanpage Facebook với VSS Chat Platform. Sau khi kết nối thành công, các tin nhắn/bình luận từ Fanpage có thể được đồng bộ về VSS Chat để agent quản lý và phản hồi tập trung.
+[P0551 | STYLE=Normal] Nói đơn giản: Kết nối Fanpage Facebook → thêm agent phụ trách → khách nhắn/comment trên Facebook → hội thoại đổ về VSS Chat → agent xử lý trong hệ thống.
+[P0552 | STYLE=Normal] Mục đích chức năng
+[P0553 | STYLE=Normal] Quản lý tin nhắn và bình luận Facebook trong cùng hệ thống VSS Chat.
+[P0554 | STYLE=Normal] Không cần mở trực tiếp Facebook để xử lý từng cuộc hội thoại.
+[P0555 | STYLE=Normal] Phân công agent phụ trách Fanpage.
+[P0556 | STYLE=Normal] Theo dõi, lọc, gắn nhãn, xử lý và báo cáo hiệu quả hội thoại từ Facebook.
+[P0557 | STYLE=Normal] Phục vụ các nghiệp vụ như bán hàng online, chăm sóc khách hàng, xử lý comment bài đăng, livestream hoặc minigame.
+[P0558 | STYLE=Normal] Điều kiện trước khi kết nối
+[P0559 | STYLE=Normal] Để kết nối được Facebook với VSS Chat, người dùng cần:
+
+===== TABLE 33 =====
+ROW 001: Điều kiện || Ý nghĩa
+ROW 002: Tài khoản Facebook hợp lệ || Dùng để đăng nhập và cấp quyền kết nối
+ROW 003: Quyền quản trị Fanpage || Chỉ tài khoản có quyền phù hợp mới chọn được trang để kết nối
+ROW 004: Kích hoạt Facebook Developers || Cho phép tài khoản sử dụng cơ chế tích hợp ứng dụng/API của Facebook
+ROW 005: Fanpage cần kết nối || Trang Facebook sẽ trở thành một kênh tương tác trong VSS Chat
+[P0560 | STYLE=Normal] Luồng tích hợp chi tiết
+[P0561 | STYLE=Normal] Bước 1: Kích hoạt Facebook Developers
+[P0562 | STYLE=Normal] Người dùng truy cập Facebook Developers và đăng nhập bằng tài khoản Facebook muốn dùng để kết nối với VSS Chat.
+[P0563 | STYLE=Normal] Sau đó thực hiện các bước xác minh:
+[P0564 | STYLE=Normal] Bấm Bắt đầu.
+[P0565 | STYLE=Normal] Nhập mã xác nhận được gửi về số điện thoại đăng ký Facebook.
+[P0566 | STYLE=Normal] Xác nhận email.
+[P0567 | STYLE=Normal] Chọn vai trò Nhà phát triển.
+[P0568 | STYLE=Normal] Hoàn tất đăng ký.
+[P0569 | STYLE=Normal] Ý nghĩa của bước này là tài khoản Facebook được mở quyền để thực hiện tích hợp với hệ thống bên ngoài như VSS Chat Platform.\
+[P0570 | STYLE=Normal] Bước 2: Quay lại VSS Chat Platform
+[P0571 | STYLE=Normal] Người dùng vào: Cài đặt → Kênh tương tác → Chọn biểu tượng Facebook
+[P0572 | STYLE=Normal] Đây là bước bắt đầu tạo một kênh Facebook mới trong VSS Chat.
+[P0573 | STYLE=Normal] Bước 3: Đăng nhập qua Facebook
+[P0574 | STYLE=Normal] Người dùng bấm: Continue with Facebook
+[P0575 | STYLE=Normal] Sau đó hệ thống chuyển sang màn hình xác thực Facebook để người dùng cấp quyền kết nối. Ý nghĩa: Facebook cần xác nhận tài khoản nào đang cho phép VSS Chat truy cập Fanpage.
+[P0576 | STYLE=Normal] Bước 4: Chọn trang Facebook cần kết nối
+[P0577 | STYLE=Normal] Sau khi xác thực, hệ thống hiển thị danh sách các Fanpage mà tài khoản Facebook có quyền quản lý. Người dùng chọn Fanpage muốn kết nối với VSS Chat.
+[P0578 | STYLE=Normal] Ví dụ:
+
+===== TABLE 34 =====
+ROW 001: Fanpage || Mục đích
+ROW 002: Viettel Store || Bán hàng, tư vấn sản phẩm
+ROW 003: CSKH Viettel || Chăm sóc khách hàng
+ROW 004: Fanpage chiến dịch || Xử lý comment/minigame/livestream
+[P0579 | STYLE=Normal] Sau khi chọn, Fanpage này sẽ trở thành một kênh tương tác Facebook trong VSS Chat.
+[P0580 | STYLE=Normal] Bước 5: Thêm agent phụ trách kênh
+[P0581 | STYLE=Normal] Người dùng thêm các agent/nhân viên phụ trách kênh Facebook.
+[P0582 | STYLE=Normal] Ý nghĩa: Chỉ những agent được thêm vào kênh này mới có thể được phân phối hoặc xử lý hội thoại phát sinh từ Fanpage đó. Có thể thêm một hoặc nhiều agent vào cùng một kênh Facebook.
+[P0583 | STYLE=Normal] Ví dụ:
+
+===== TABLE 35 =====
+ROW 001: Kênh Facebook || Agent/Nhóm phụ trách
+ROW 002: Fanpage Viettel Store || Nhóm Kênh Online
+ROW 003: Fanpage CSKH || Nhóm Chăm sóc khách hàng
+ROW 004: Fanpage livestream || Nhóm Social Commerce
+[P0584 | STYLE=Normal] 
+[P0585 | STYLE=Normal] Bước 6: Hoàn tất kết nối
+[P0586 | STYLE=Normal] Sau khi thêm đủ agent, người dùng bấm Thêm các nhà cung cấp để hoàn tất quá trình kết nối. Ở đây, cụm “nhà cung cấp” có thể hiểu là agent/nhân viên phụ trách kênh. Nếu viết tài liệu BA, nên dùng từ rõ hơn là: Thêm agent phụ trách kênh tương tác.
+[P0587 | STYLE=Normal] Luồng nghiệp vụ sau khi kết nối thành công
+[P0588 | STYLE=Normal] Sau khi Fanpage được kết nối:
+[P0589 | STYLE=Normal] Khách hàng nhắn tin hoặc bình luận trên Fanpage.
+[P0590 | STYLE=Normal] Facebook gửi dữ liệu tương tác về VSS Chat.
+[P0591 | STYLE=Normal] VSS Chat tạo hoặc cập nhật cuộc hội thoại.
+[P0592 | STYLE=Normal] Cuộc hội thoại được gắn nguồn là kênh Facebook.
+[P0593 | STYLE=Normal] Hệ thống phân phối cuộc hội thoại cho agent phụ trách.
+[P0594 | STYLE=Normal] Agent xử lý hội thoại ngay trong VSS Chat.
+[P0595 | STYLE=Normal] Phản hồi của agent được gửi ngược lại về Facebook cho khách hàng.
+[P0596 | STYLE=Normal] 
+[P0597 | STYLE=Normal] 
+[P0598 | STYLE=Normal] Giá trị nghiệp vụ
+[P0599 | STYLE=Normal] Tích hợp Facebook giúp doanh nghiệp biến Fanpage thành một kênh chăm sóc khách hàng tập trung trong VSS Chat. Nhân viên không cần xử lý rời rạc trên Facebook mà có thể tiếp nhận, phân phối, phản hồi, gắn nhãn, theo dõi SLA và báo cáo hiệu quả ngay trong một hệ thống chung.
+[P0600 | STYLE=Normal] Mô tả ngắn cho tài liệu BA
+[P0601 | STYLE=Normal] Chức năng Tích hợp Facebook cho phép người dùng kết nối Fanpage Facebook với VSS Chat Platform thông qua tài khoản Facebook có quyền quản trị và đã kích hoạt Facebook Developers. Sau khi chọn Fanpage và thêm agent phụ trách, các tin nhắn/bình luận phát sinh trên Fanpage sẽ được đồng bộ về VSS Chat để hệ thống phân phối và hỗ trợ agent xử lý tập trung.
+[P0602 | STYLE=Normal] XVIII.3. Tích hợp Web
+[P0603 | STYLE=Normal] Tích hợp Website là chức năng dùng để kết nối website của doanh nghiệp với VSS Chat Platform. Sau khi tích hợp thành công, khách truy cập website có thể nhắn tin qua widget/chatbox trên web, và các cuộc hội thoại đó sẽ được đưa về VSS Chat để agent tiếp nhận, phân phối và xử lý.
+[P0604 | STYLE=Normal] Nói đơn giản: Gắn VSS Chat vào website → khách nhắn trên website → hội thoại đổ về VSS Chat → agent xử lý trong hệ thống.
+[P0605 | STYLE=Normal] Mục đích chức năng
+[P0606 | STYLE=Normal] Tạo kênh chat trực tiếp trên website.
+[P0607 | STYLE=Normal] Thu nhận khách hàng tiềm năng từ website.
+[P0608 | STYLE=Normal] Cho phép khách truy cập đặt câu hỏi, yêu cầu tư vấn hoặc để lại thông tin.
+[P0609 | STYLE=Normal] Đưa toàn bộ hội thoại từ website về cùng một nền tảng quản lý.
+[P0610 | STYLE=Normal] Phân công agent phụ trách kênh website.
+[P0611 | STYLE=Normal] Hỗ trợ chăm sóc khách hàng ngay tại thời điểm khách đang truy cập trang.
+[P0612 | STYLE=Normal] Ví dụ: khách vào website Viettel Store, bấm vào biểu tượng chat ở góc màn hình và hỏi về sản phẩm. Tin nhắn đó sẽ được đưa vào VSS Chat Platform để nhân viên tư vấn trả lời.
+[P0613 | STYLE=Normal] Luồng tích hợp chi tiết
+[P0614 | STYLE=Normal] Bước 1: Chọn loại kênh Website
+[P0615 | STYLE=Normal] Người dùng vào phần Thêm kênh tương tác, sau đó chọn biểu tượng Website.
+[P0616 | STYLE=Normal] Ý nghĩa: hệ thống hiểu rằng người dùng đang muốn tạo một kênh chat mới gắn với website, không phải Facebook, Zalo hay kênh khác.
+[P0617 | STYLE=Normal] Bước 2: Nhập thông tin website cần kết nối
+[P0618 | STYLE=Normal] Người dùng cần nhập đầy đủ thông tin của website muốn tích hợp. Các thông tin này thường dùng để hệ thống nhận diện:
+
+===== TABLE 36 =====
+ROW 001: Thông tin || Ý nghĩa
+ROW 002: Tên website / tên kênh || Tên để quản lý trong VSS Chat
+ROW 003: URL website || Địa chỉ website sẽ gắn chat widget
+ROW 004: Thông tin mô tả / cấu hình || Các thiết lập liên quan đến kênh website
+[P0619 | STYLE=Normal] Mục đích của bước này là tạo hồ sơ cho kênh Website trong hệ thống.
+[P0620 | STYLE=Normal] Bước 3: Tạo kênh tương tác
+[P0621 | STYLE=Normal] Sau khi nhập đầy đủ thông tin, người dùng bấm Tạo kênh tương tác. Khi đó, hệ thống tạo một kênh Website mới trong VSS Chat Platform. Kênh này sẽ là nơi tiếp nhận các cuộc hội thoại phát sinh từ website sau khi được tích hợp.
+[P0622 | STYLE=Normal] Bước 4: Thêm Agent cho kênh tương tác
+[P0623 | STYLE=Normal] Sau khi tạo kênh, người dùng tiếp tục thêm các agent/nhân viên phụ trách kênh Website.
+[P0624 | STYLE=Normal] Ý nghĩa: không phải nhân viên nào cũng nhận hội thoại từ website. Chỉ những agent được thêm vào kênh này mới có thể được phân phối hoặc xử lý các cuộc hội thoại phát sinh từ website. Ví dụ:
+
+===== TABLE 37 =====
+ROW 001: Kênh || Agent phụ trách
+ROW 002: Website Viettel Store || Nhóm tư vấn online
+ROW 003: Website CSKH || Nhóm chăm sóc khách hàng
+ROW 004: Website tuyển dụng || Nhóm nhân sự
+[P0625 | STYLE=Normal] Bước này rất quan trọng vì nó liên quan đến quy tắc phân phối hội thoại sau này.
+[P0626 | STYLE=Normal] Bước 5: Hệ thống sinh đoạn script tích hợp
+[P0627 | STYLE=Normal] Sau khi thêm agent, hệ thống sẽ tự động tạo một đoạn script. Đây là đoạn mã dùng để gắn VSS Chat vào website.
+[P0628 | STYLE=Normal] Có thể hiểu: Script là cầu nối giữa website và VSS Chat Platform.
+[P0629 | STYLE=Normal] Khi đoạn script được gắn vào mã nguồn website, website sẽ hiển thị widget chat. Đồng thời, mọi tin nhắn khách gửi qua widget đó sẽ được chuyển về đúng kênh Website trong VSS Chat.
+[P0630 | STYLE=Normal] Bước 6: Sao chép script và gắn vào mã nguồn website
+[P0631 | STYLE=Normal] Người dùng bấm Sao chép để copy đoạn script, sau đó gắn đoạn script này vào mã nguồn website. Thông thường script sẽ được gắn vào phần HTML của website, thường gần cuối thẻ body hoặc theo hướng dẫn kỹ thuật của hệ thống. Sau khi website được cập nhật, khách truy cập sẽ thấy biểu tượng chat/widget trên website.
+[P0632 | STYLE=Normal] Bước 7: Hoàn tất hoặc cấu hình nâng cao
+[P0633 | STYLE=Normal] Sau khi gắn script, người dùng quay lại VSS Chat. Tại đây có 2 lựa chọn:
+
+===== TABLE 38 =====
+ROW 001: Lựa chọn || Ý nghĩa
+ROW 002: Nhiều tùy chọn hơn || Điều chỉnh thêm cấu hình của kênh Website
+ROW 003: Tiếp tục || Hoàn tất quá trình liên kết
+[P0634 | STYLE=Normal] Các tùy chọn nâng cao có thể liên quan đến giao diện widget, giờ làm việc, phân phối hội thoại, agent phụ trách hoặc các thiết lập vận hành khác.
+[P0635 | STYLE=Normal] Luồng nghiệp vụ sau khi tích hợp thành công
+[P0636 | STYLE=Normal] Khách hàng truy cập website.
+[P0637 | STYLE=Normal] Widget chat của VSS Chat hiển thị trên website.
+[P0638 | STYLE=Normal] Khách gửi tin nhắn qua widget.
+[P0639 | STYLE=Normal] Hệ thống tạo cuộc hội thoại mới trong VSS Chat.
+[P0640 | STYLE=Normal] Cuộc hội thoại được gắn nguồn là kênh Website.
+[P0641 | STYLE=Normal] Hệ thống phân phối hội thoại cho agent phụ trách.
+[P0642 | STYLE=Normal] Agent trả lời khách ngay trong VSS Chat Platform.
+[P0643 | STYLE=Normal] Khách nhận phản hồi trên widget chat của website.
+[P0644 | STYLE=Normal] Ý nghĩa với BA
+[P0645 | STYLE=Normal] Về mặt BA, có thể mô tả chức năng này như sau: Tích hợp Website cho phép người dùng tạo một kênh tương tác website trong VSS Chat Platform. Sau khi nhập thông tin website, thêm agent phụ trách và gắn đoạn script do hệ thống sinh ra vào mã nguồn website, khách truy cập có thể chat trực tiếp trên website. Các cuộc hội thoại phát sinh sẽ được đồng bộ về VSS Chat để hệ thống phân phối cho agent xử lý.
+[P0646 | STYLE=Normal] Kết luận ngắn gọn
+[P0647 | STYLE=Normal] Tích hợp Website là quá trình tạo kênh website trong VSS Chat, thêm agent phụ trách, lấy đoạn script do hệ thống tạo ra và gắn vào mã nguồn website. Sau khi hoàn tất, website sẽ có chat widget để khách hàng nhắn tin, còn doanh nghiệp có thể quản lý và trả lời toàn bộ hội thoại đó trong VSS Chat Platform.
+[P0648 | STYLE=Normal]

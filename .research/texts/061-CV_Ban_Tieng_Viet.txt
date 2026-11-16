@@ -1,0 +1,106 @@
+CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ CẤP CAO
+THIẾT KẾ UI/UX  |  VIBE CODER
+TÓM TẮT CHUYÊN MÔN
+Với 4 năm kinh nghiệm tại các tập đoàn công nghệ hàng đầu như Samsung R&D, Viettel và FPT, tôi là một chuyên gia đa năng, kết hợp nền tảng Phân tích Nghiệp vụ và Thiết kế UI/UX. Tôi có khả năng đóng góp xuyên suốt vòng đời sản phẩm - từ nghiên cứu thị trường và đối thủ, phân tích nghiệp vụ, thiết kế trải nghiệm người dùng đến thiết kế cơ sở dữ liệu, hỗ trợ phát triển, kiểm thử, vận hành hệ thống, triển khai và đưa sản phẩm vào hoạt động chính thức.
+Tôi có kinh nghiệm thực tế trong nhiều lĩnh vực, bao gồm Giám sát IoT, Nhà máy số, Thương mại điện tử, ERP Odoo, Ngân hàng (Backbase, Temenos), Logistics và các hệ thống ứng dụng AI. Bên cạnh năng lực cốt lõi về BA và UI/UX, tôi có nền tảng kỹ thuật vững, am hiểu thuật toán, kiến trúc hệ thống, kỹ thuật dữ liệu, quản trị dữ liệu, tích hợp API và khai thác tối đa AI để đạt năng suất vượt trội.
+Thế mạnh của tôi là kết hợp hiểu biết nghiệp vụ, tư duy sản phẩm, năng lực kỹ thuật và tư duy thiết kế để chuyển hóa các yêu cầu phức tạp thành giải pháp thực tế, có khả năng mở rộng và lấy người dùng làm trung tâm. Tôi đã dẫn dắt thành công nhiều dự án từ giai đoạn ý tưởng đến triển khai, tạo ra giá trị kinh doanh có thể đo lường và đảm bảo hệ thống được tiếp nhận, sử dụng thuận lợi. Với nền tảng đa ngành này, tôi tự tin đảm nhận vai trò Senior Business Analyst trong các môi trường công nghệ phức tạp.
+KINH NGHIỆM LÀM VIỆC & DỰ ÁN
+CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ & THIẾT KẾ UI01/2025 - Hiện tại
+Viettel Commerce
+Dự án: Smart Safe; HRAI One; mChat; RPA & OCR; E-commerce Omnichannel; Viettel Commerce CRM; VBOS; ERP Odoo.
+1. Smart Safe: Nền tảng giám sát an toàn và an ninh ứng dụng IoT để phát hiện cháy, nổ và xâm nhập. Hệ thống tích hợp thiết bị kết nối, cảm biến, cảnh báo và dashboard giám sát thời gian thực, giúp người dùng phát hiện sự cố sớm và phản ứng nhanh. Đồng thời, hệ thống theo dõi trạng thái thiết bị, kết nối, cảnh báo và điều kiện bất thường theo thời gian thực nhằm bảo đảm độ tin cậy và an toàn vận hành.
+2. HRAI One: Hệ thống quản trị nhân sự ứng dụng AI, phân tích dữ liệu nhân viên để hỗ trợ đánh giá nguồn nhân lực và dự báo rủi ro. Hệ thống phân loại hiệu suất và mô hình hành vi của nhân viên; phát hiện các nguy cơ như nghỉ việc, vi phạm kỷ luật, vấn đề tuân thủ tài chính, kiệt sức, năng suất thấp và mức độ gắn kết không ổn định. Hệ thống cũng hỗ trợ xếp hạng nhân viên, đánh giá mức độ sẵn sàng thăng tiến, ưu tiên xét nâng bậc lương và đề xuất lộ trình phát triển nghề nghiệp theo tiêu chí đánh giá nội bộ.
+3. mChat: Nền tảng chat đa kênh tập trung hội thoại khách hàng từ Facebook, Zalo OA, chatbot website, bình luận livestream và các kênh số khác vào một không gian làm việc thống nhất cho đội ngũ bán hàng và chăm sóc khách hàng. Hệ thống hỗ trợ quản lý tin nhắn, xem lịch sử hội thoại, phân công hội thoại, sử dụng câu trả lời mẫu, gắn nhãn, theo dõi SLA/CSAT và giám sát hiệu suất qua báo cáo thời gian thực. Nền tảng còn hỗ trợ chiến dịch website, kịch bản bình luận livestream, trả lời bình luận tự động và ứng dụng AI để phân tích ý định, nhu cầu, cảm xúc, mức độ quan tâm và tín hiệu đánh giá khách hàng tiềm năng; đồng thời tạo bản tóm tắt hội thoại và đề xuất hành động cho nhân viên.
+4. RPA & OCR: Sáng kiến tự động hóa nhằm số hóa và tự động xử lý khối lượng lớn chứng từ trong các nghiệp vụ xuất nhập khẩu, quản lý hợp đồng, mua sắm và logistics. Hệ thống kết hợp OCR/IDP để trích xuất dữ liệu có cấu trúc từ hóa đơn, packing list, vận đơn, hợp đồng, chứng từ thanh toán và biểu mẫu scan; các bot RPA thực hiện kiểm tra dữ liệu, tự động điền vào hệ thống nghiệp vụ, cập nhật bảng theo dõi và phát cảnh báo chênh lệch. Giải pháp giúp giảm nhập liệu thủ công, nâng cao độ chính xác, rút ngắn thời gian xử lý và tăng tính minh bạch vận hành giữa các phòng ban.
+Trách nhiệm chính:
+• Dẫn dắt hoạt động phân tích nghiệp vụ đầu-cuối, chuyển hóa nhu cầu kinh doanh thành BRD/SRS, user story, workflow, quy tắc nghiệp vụ, wireframe và tiêu chí chấp nhận.
+• Thiết kế mockup UI/UX cho các hệ thống web doanh nghiệp.
+• Xây dựng logic hệ thống tối ưu, mapping dữ liệu, luồng tích hợp và quy tắc nghiệp vụ cho đội phát triển; rà soát logic triển khai và mã nguồn để bảo đảm phù hợp với yêu cầu, hiệu năng và nhu cầu vận hành.
+• Quản lý và chuẩn hóa dữ liệu nghiệp vụ trên nhiều hệ thống, bao gồm quản trị cơ sở dữ liệu, truy vấn SQL, làm sạch dữ liệu, kiểm tra dữ liệu, di chuyển dữ liệu và chuẩn bị ETL cho báo cáo, phân tích AI, xử lý OCR/RPA và các module dashboard.
+• Tham gia phát triển phần mềm và sửa lỗi; hỗ trợ triển khai frontend/backend, xử lý sự cố kỹ thuật và nâng cao độ ổn định của hệ thống trong giai đoạn phát triển và vận hành production.
+• Thực hiện kiểm thử UAT, kiểm thử chức năng, kiểm thử hồi quy, kiểm tra dữ liệu và rà soát giao diện.
+• Hỗ trợ triển khai production, đào tạo người dùng, vận hành hệ thống, xử lý sự cố và rollout quy mô lớn tới nhiều đơn vị kinh doanh và người dùng cuối.
+CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ & THIẾT KẾ UI12/2024 - 01/2025
+Taki Group
+Dự án: FlowVid AI - Công cụ tự động hóa ứng dụng AI, tạo video ngắn từ các tài nguyên media và tự động đăng tải lên các nền tảng mạng xã hội kèm liên kết affiliate, giúp doanh nghiệp mở rộng quy mô sản xuất nội dung và quy trình kiếm tiền.
+Trách nhiệm chính: Nghiên cứu và thiết kế các luồng tự động tạo video trên nền tảng Make nhằm tối đa hóa chất lượng video và tối ưu chi phí sản xuất. Phát triển giao diện frontend và workflow ứng dụng bằng Bubble.
+CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ & THIẾT KẾ UI02/2023 - 11/2024
+Samsung R&D Vietnam
+Dự án: AI Hub; Samsung Smart Factory; Samsung Payroll & Contracts.
+1. AI Hub: Nền tảng nội bộ quản lý vòng đời tài sản AI dành cho các đội ngũ AI, hỗ trợ quản trị dataset và model, phân loại tài sản, quy trình mua/đề nghị sử dụng dựa trên phê duyệt, chia sẻ dataset và model an toàn, quản lý workflow huấn luyện, model registry, đánh giá, benchmark, theo dõi nguồn gốc dữ liệu/mô hình và tái sử dụng tài sản giữa các phòng ban.
+2. Samsung Smart Factory: Hệ thống sản xuất doanh nghiệp bao gồm các phân hệ sau:
+• Phân hệ Quản lý Thiết bị Sản xuất: quản lý dữ liệu chủ thiết bị, trạng thái thiết bị, giám sát thời gian thực, theo dõi cảnh báo/sự kiện, phân tích downtime, theo dõi OEE/hiệu suất, bảo trì phòng ngừa, quản lý recipe, phát hiện lỗi và cảnh báo điều kiện bất thường.
+• Phân hệ Quản lý Kho: quản lý dữ liệu chủ vật tư, nhập/xuất kho, vị trí kho, theo dõi tồn kho, truy xuất lot/batch, luân chuyển tồn kho, WIP, bán thành phẩm và thành phẩm.
+• Phân hệ Quản lý Chất lượng: hỗ trợ workflow kiểm tra chất lượng, phân loại lỗi, theo dõi kết quả chất lượng, giám sát SPC/control chart, xử lý không phù hợp và dashboard chất lượng.
+3. Samsung Payroll: Nền tảng HRM và tính lương nội bộ, hỗ trợ quản lý hợp đồng, cấu hình lương, tính lương hàng tháng, đối soát thanh toán, tạo phiếu lương và báo cáo tiền lương.
+Trách nhiệm chính:
+• Thu thập, phân tích và xác thực yêu cầu nghiệp vụ từ các bên liên quan thuộc đội AI, sản xuất, kho, chất lượng, nhân sự và vận hành thông qua phân tích tài liệu, phân tích workflow, use case và thảo luận quy trình nghiệp vụ.
+• Chuyển hóa nhu cầu kinh doanh phức tạp thành BRD/FRD/SRS, user story, tiêu chí chấp nhận, quy tắc nghiệp vụ, process flow, data flow, mockup giao diện và bộ tài liệu yêu cầu sẵn sàng cho phát triển/phát hành.
+• Phân tích quy trình và KPI doanh nghiệp liên quan đến vòng đời mô hình AI, quản trị dataset, giám sát thiết bị, downtime, OEE, tỷ lệ lỗi, luân chuyển tồn kho, truy xuất lot, tính lương và quản lý hợp đồng.
+• Thiết kế mockup sản phẩm.
+• Phối hợp với stakeholder, developer, tester và đội UI để làm rõ yêu cầu, đánh giá tính khả thi kỹ thuật, xử lý các trường hợp biên và cân bằng giữa tính dễ sử dụng, hiệu năng và ràng buộc kinh doanh; quản lý thay đổi tài liệu và điều phối kế hoạch phát triển.
+• Hỗ trợ UAT bằng cách chuẩn bị kịch bản kiểm thử và xác thực tính năng theo yêu cầu nghiệp vụ.
+• Đóng góp xây dựng tiêu chuẩn và phương pháp làm việc BA nội bộ.
+LẬP TRÌNH VIÊN ANDROID09/2022 - 02/2023
+FPT Software
+Dự án: Nền tảng Mobile Banking cho khách hàng fintech tại Singapore, được Standard Chartered hậu thuẫn.
+Phạm vi: Quản lý tài khoản; chuyển tiền; thanh toán hóa đơn/nạp tiền; quản lý thẻ và dịch vụ; xác thực bảo mật; thông báo thời gian thực trên ứng dụng Android Mobile Banking.
+Đóng góp chính: Phát triển các tính năng mobile banking trên Android, tích hợp API, triển khai luồng giao dịch an toàn, tối ưu độ ổn định của ứng dụng và hỗ trợ kiểm thử, sửa lỗi, phát hành phiên bản.
+LẬP TRÌNH VIÊN WEB & CHUYÊN VIÊN PHÂN TÍCH NGHIỆP VỤ02/2022 - 09/2022
+Just-In-Time-Solutions (JITS)
+Dự án: SHWE Bank (back-office; ngân hàng bán lẻ và doanh nghiệp); Kasikorn DigiBank (end-user và back-office; ngân hàng bán lẻ).
+Phạm vi: Approval Engine; thanh toán hàng loạt và đối soát; cấu hình phí và hạn mức; onboarding khách hàng và eKYC; giao dịch/FX; dashboard vận hành thanh toán...
+Đóng góp chính: Phát triển tính năng mới trên toàn bộ các module; xây dựng các module back-office tái sử dụng với feature flag cấu hình được và khả năng hiển thị theo vai trò; hoàn thiện cơ chế kiểm soát truy cập linh hoạt, tuân thủ (RBAC, ABAC, FAC, policy/data-scope) kèm audit trail; xây dựng và tối ưu SQL Stored Procedure (materialized view và tiền tổng hợp dữ liệu); tối ưu backend cho workflow ngân hàng có lưu lượng lớn thông qua tối ưu execution plan, thread pool, batch/parallelism, hàng đợi bất đồng bộ và streaming.
+Hiệu quả đạt được: Dashboard giao dịch theo ngày/trạng thái giảm từ 2,4 giây xuống 0,7 giây, CPU cơ sở dữ liệu giảm khoảng 35%; báo cáo đối soát giảm từ 90 giây xuống 28 giây, bộ nhớ đỉnh giảm khoảng 40%; chuyển tác vụ xuất lịch sử sang replica giúp thời gian chờ lock trên primary giảm khoảng 50% và giảm rõ rệt tình trạng timeout khi hạch toán.
+Giá trị mang lại: Rút ngắn thời gian triển khai module mới, tăng cường tuân thủ và kiểm soát, nâng cao hiệu quả vận hành, cải thiện UX/hiệu năng và gia tăng khả năng thu hút, duy trì khách hàng bán lẻ và doanh nghiệp.
+LẬP TRÌNH VIÊN WEB06/2020 - 08/2021
+Viettel Business Solutions
+Dự án: SafeOne (an toàn IoT, cảnh báo cháy thời gian thực); V-tracking (telematics phương tiện, theo dõi đội xe GPS); SMAS (EdTech - quản lý trường học và học phí).
+Đóng góp chính: Xây dựng và mở rộng tính năng; tích hợp API và dịch vụ Gateway của Viettel; đồng bộ dữ liệu chủ giữa các hệ thống; triển khai pipeline dữ liệu thời gian thực; tối ưu hiệu năng, giảm P95 latency 60-90%, tăng throughput tối đa 5 lần, giảm CPU/RAM cơ sở dữ liệu và tranh chấp lock 30-55% thông qua caching và I/O bất đồng bộ, chia nhỏ bundle, phân trang, tối ưu truy vấn và tách đọc/ghi.
+Giá trị mang lại: Hệ thống vững chắc và có khả năng mở rộng tốt hơn, trải nghiệm người dùng được cải thiện và tính khả thi thương mại cao hơn.
+KỸ NĂNG CHUYÊN MÔN
+QUẢN LÝ DỰ ÁN & PHÂN TÍCH NGHIỆP VỤ
+• Agile, Scrum, SDLC, Product Roadmap, Gantt Chart.
+• Khai thác yêu cầu; BRD, SRS, FSD, User Story, Use Case, Acceptance Criteria, Change Request, Requirement Traceability Matrix; AS-IS/TO-BE; Business Rules; Approval Workflow; Exception Flow; Pain Point; Bottleneck; Automation Opportunity.
+• Gap Analysis, Impact Analysis, Root Cause Analysis.
+• BPMN, Use Case Diagram, Activity Diagram, Sequence Diagram, State Diagram, ERD, DFD, Context Diagram, Wireflow.
+• Data Mapping, API Logic, Master Data, Migration, ETL.
+• UAT Testing, API Testing, Integration Testing.
+• Nền tảng/lĩnh vực: IoT Smart Factory; AI/ML Platform; hệ thống ngân hàng Backbase, Temenos; ERP Odoo; CRM/OMS/WMS/TMS; E-commerce, Retail, Omnichannel; Payroll.
+• Luồng nghiệp vụ: tích hợp cổng thanh toán, xử lý giao dịch, luồng đơn hàng, luồng tồn kho, vận hành kho, giao hàng, fulfillment và quy trình phê duyệt.
+Công cụ: Smartsheet, Confluence, Jira, PowerPoint, Word, Excel, draw.io, Camunda, dbdiagram.io.
+UI/UX
+• Wireframe, Mockup, Screen Flow.
+Công cụ: Figma, Visily.ai, Canva.
+CÁC KỸ NĂNG KỸ THUẬT VÀ NGHIỆP VỤ KHÁC
+• Cấu trúc dữ liệu & thuật toán, Design Pattern, kiến trúc hệ thống, Java/Spring Boot, Kotlin, C#/.NET, RESTful API.
+• Kiến trúc hệ thống: Client-server, Microservices, API Gateway, Load Balancer, Background Jobs, Batch Processing, kiến thức nền tảng về Distributed Systems.
+• Cache: Redis.
+• Message Queue / Event Streaming: Kafka, RabbitMQ.
+• Tích hợp và kiểm thử API: REST API, GraphQL API, Swagger/OpenAPI.
+• Cơ sở dữ liệu: SQL Query, Stored Procedure, Function/Trigger, nhập/xuất dữ liệu, PostgreSQL, Supabase, MySQL, Oracle, SQL Server, MongoDB, Elasticsearch, InfluxDB, TimescaleDB.
+• Xác thực & phân quyền: Session, Cookie, JWT, OAuth2, SSO, RBAC, ABAC, phân quyền theo chức năng và theo phòng ban.
+• DevOps & triển khai: Git, Docker.
+• Kỹ thuật dữ liệu: Python, thiết kế data pipeline, xử lý batch/thời gian thực, ETL/ELT bằng dbt, điều phối workflow bằng Airflow, mô hình dữ liệu (Star Schema, Snowflake Schema, Fact Table, Dimension Table), làm sạch/chuyển đổi dữ liệu, chất lượng dữ liệu, stream processing, xử lý dữ liệu lớn, quản trị dữ liệu và Master Data Management.
+• Kiến thức AI/ML: workflow AI/ML, quản lý dataset, gán nhãn dữ liệu, chuẩn bị dữ liệu huấn luyện, feature engineering, pipeline huấn luyện mô hình, đánh giá mô hình, versioning, triển khai mô hình, inference, prompt engineering, tích hợp LLM, RAG, vector database, embedding, workflow AI Agent và giám sát mô hình.
+Công cụ: Postman, IntelliJ, Visual Studio, DataGrip + dbForge, dbt, SQL Server, MongoDB, Supabase PostgreSQL, Docker, GitHub, Power BI + Copilot, Airflow.
+VIBE CODING & CÔNG CỤ AI
+• Năng suất với AI: Thành thạo các công cụ như ChatGPT Pro, Codex, Claude Code, Claude Design, Figma Make và Eraser.ai. Đã xây dựng các workflow hỗ trợ bởi AI được chuẩn hóa để nâng cao năng suất và nhanh chóng tạo ra đầu ra chất lượng cao trong phân tích nghiệp vụ, tài liệu hóa, tạo prototype, thiết kế, hỗ trợ lập trình và vẽ sơ đồ.
+• Tự động hóa workflow: Có kinh nghiệm với N8N và Make trong tự động hóa quy trình, tích hợp hệ thống, điều phối dữ liệu và tự động hóa quy trình ứng dụng AI.
+• Vibe Coding: Luôn cập nhật các xu hướng phát triển AI-native như vibe coding, agentic coding, MCP, AI agent, custom skills và context engineering. Có kinh nghiệm thiết lập môi trường lập trình hỗ trợ bởi AI với ChatGPT Codex, Claude, OpenClaw và Hermes; áp dụng workflow prompt-to-product để nhanh chóng xây dựng sản phẩm cá nhân và doanh nghiệp từ MVP đến giải pháp sẵn sàng production.
+KỸ NĂNG MỀM
+• Viết và giao tiếp tiếng Anh.
+• Tư duy hệ thống và tư duy phân tích.
+• Tư duy phản biện và ra quyết định.
+• Giải quyết vấn đề và làm rõ yêu cầu.
+• Đàm phán và giải quyết xung đột.
+• Thuyết trình và xây dựng tài liệu.
+• Quản lý công việc và lập kế hoạch.
+• Phối hợp liên chức năng.
+HỌC VẤN
+Kỹ sư Công nghệ Thông tin (2016 - 2022): Học viện Công nghệ Bưu chính Viễn thông - PTIT.
+CHỨNG CHỈ
+• Chứng chỉ Samsung - Trình độ Professional về Cấu trúc Dữ liệu & Thuật toán, SW Expert Academy (2023).
+• TOEIC 790 (2020).
+CÁC VỊ TRÍ PHÙ HỢP KHÁC
+Vibe Coder  |  Project Manager  |  Product Manager  |  Product Business Analyst  |  Enterprise Application Analyst  |  Digital Transformation Specialist  |  Enterprise Application Specialist  |  Application Administrator

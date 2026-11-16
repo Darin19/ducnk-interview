@@ -1,0 +1,303 @@
+
+--- PAGE 1 ---
+DanhTV1 - Công việc vận hành hệ thống
+Công việc của người vận hành hệ thống phần mềm
+Công việc của người vận hành hệ thống phần mềm là đảm bảo hệ thống hoạt động ổn định, hỗ trợ
+người dùng, theo dõi lỗi phát sinh và phối hợp với các bên liên quan để xử lý sự cố, nâng cấp hoặc tối ưu
+hệ thống.
+Có thể mô tả như sau:
+1. Theo dõi và giám sát hoạt động hệ thống
+Người vận hành cần thường xuyên kiểm tra tình trạng hoạt động của hệ thống phần mềm, bao gồm:
+Hệ thống có hoạt động ổn định hay không.
+Các chức năng chính có phát sinh lỗi không.
+Tốc độ xử lý, hiệu năng, thời gian phản hồi của hệ thống.
+Tình trạng kết nối với các hệ thống liên quan như SAP, VOﬃce, CRM, tổng đài, RPA, OCR, email,
+SMS...
+Theo dõi log hệ thống, cảnh báo lỗi, cảnh báo quá tải hoặc bất thường.
+2. Hỗ trợ người dùng trong quá trình sử dụng
+Đây là phần rất quan trọng, đặc biệt với các hệ thống nội bộ doanh nghiệp.
+Công việc gồm:
+Tiếp nhận yêu cầu hỗ trợ từ người dùng.
+Hướng dẫn người dùng thao tác đúng quy trình.
+Giải đáp các vướng mắc khi sử dụng phần mềm.
+Kiểm tra lỗi do người dùng thao tác sai hay do hệ thống.
+Ghi nhận các phản ánh, khó khăn, bất cập trong quá trình sử dụng.
+Tổng hợp các yêu cầu cải tiến, nâng cấp phần mềm.
+3. Xử lý lỗi phát sinh
+Người vận hành cần tiếp nhận, phân loại và xử lý các lỗi phát sinh trong quá trình sử dụng hệ thống.
+Ví dụ:
+Lỗi đăng nhập.
+Lỗi phân quyền.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/10
+
+--- PAGE 2 ---
+Lỗi không hiển thị dữ liệu.
+Lỗi sai dữ liệu.
+Lỗi không đồng bộ với hệ thống khác.
+Lỗi báo cáo, dashboard.
+Lỗi hiệu năng, hệ thống chậm.
+Lỗi quy trình xử lý nghiệp vụ.
+Với lỗi đơn giản, người vận hành có thể tự xử lý. Với lỗi phức tạp, cần chuyển cho đội phát triển phần
+mềm hoặc đối tác kỹ thuật.
+4. Quản trị người dùng và phân quyền
+Người vận hành thường thực hiện các công việc quản trị cơ bản như:
+Tạo mới tài khoản người dùng.
+Khóa, mở khóa tài khoản.
+Cấp quyền, điều chỉnh quyền truy cập.
+Phân quyền theo phòng ban, đơn vị, vai trò nghiệp vụ.
+Kiểm tra các trường hợp truy cập sai quyền hoặc thiếu quyền.
+Đảm bảo người dùng chỉ được truy cập đúng phạm vi dữ liệu được phép.
+5. Kiểm tra dữ liệu và hỗ trợ nghiệp vụ
+Người vận hành cần phối hợp với các phòng ban nghiệp vụ để kiểm tra tính đúng đắn của dữ liệu trên
+hệ thống.
+Ví dụ:
+Kiểm tra dữ liệu hợp đồng.
+Kiểm tra dữ liệu khách hàng.
+Kiểm tra dữ liệu báo cáo tài chính.
+Kiểm tra trạng thái phê duyệt, trình ký.
+Kiểm tra dữ liệu đồng bộ giữa các hệ thống.
+Hỗ trợ rà soát dữ liệu sai, thiếu hoặc trùng lặp.
+6. Sao lưu, phục hồi và đảm bảo an toàn dữ liệu
+Tùy phạm vi công việc, người vận hành có thể tham gia:
+Theo dõi việc sao lưu dữ liệu định kỳ.
+Kiểm tra trạng thái backup.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/10
+
+--- PAGE 3 ---
+Phối hợp phục hồi dữ liệu khi có sự cố.
+Đảm bảo dữ liệu không bị mất mát, sai lệch.
+Phối hợp với bộ phận an toàn thông tin để kiểm soát truy cập.
+7. Phối hợp nâng cấp, kiểm thử hệ thống
+Khi hệ thống có yêu cầu nâng cấp, người vận hành thường tham gia:
+Ghi nhận yêu cầu từ người dùng.
+Mô tả lỗi hoặc nhu cầu cải tiến.
+Phối hợp với đơn vị phát triển để làm rõ nghiệp vụ.
+Kiểm thử chức năng mới trước khi đưa vào sử dụng.
+Kiểm tra lại lỗi sau khi đối tác sửa.
+Hướng dẫn người dùng sử dụng chức năng mới.
+Cập nhật tài liệu hướng dẫn vận hành.
+8. Lập báo cáo vận hành
+Người vận hành cần tổng hợp tình hình hoạt động của hệ thống để báo cáo định kỳ hoặc đột xuất.
+Nội dung báo cáo có thể gồm:
+Số lượng người dùng đang sử dụng.
+Số lượng lỗi phát sinh.
+Các lỗi đã xử lý.
+Các lỗi còn tồn đọng.
+Các yêu cầu nâng cấp mới.
+Tình trạng hiệu năng hệ thống.
+Các rủi ro, bất cập cần xử lý.
+Đề xuất cải tiến hệ thống.
+9. Đảm bảo hệ thống vận hành đúng quy trình nghiệp vụ
+Người vận hành không chỉ xử lý kỹ thuật mà còn cần hiểu quy trình nghiệp vụ của hệ thống.
+Ví dụ với hệ thống quản lý hợp đồng:
+Theo dõi quy trình tạo hợp đồng.
+Theo dõi trình ký, phê duyệt.
+Theo dõi cảnh báo tiến độ thực hiện hợp đồng.
+Theo dõi thanh toán, nghiệm thu.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/10
+
+--- PAGE 4 ---
+Kiểm tra trạng thái hợp đồng.
+Hỗ trợ người dùng khi quy trình bị sai hoặc bị treo.
+Mô tả ngắn gọn để đưa vào văn bản
+Có thể viết trong tờ trình hoặc mô tả công việc như sau:
+Nhân sự vận hành hệ thống phần mềm có trách nhiệm theo dõi, giám sát hoạt động của hệ thống;
+tiếp nhận và xử lý các lỗi phát sinh; hỗ trợ, hướng dẫn người dùng trong quá trình sử dụng; quản
+trị tài khoản, phân quyền; kiểm tra dữ liệu, phối hợp với các đơn vị nghiệp vụ và đối tác kỹ thuật
+để xử lý sự cố, nâng cấp chức năng, kiểm thử hệ thống và lập báo cáo tình hình vận hành định kỳ.
+Mục tiêu là đảm bảo hệ thống phần mềm hoạt động ổn định, liên tục, an toàn và đáp ứng đúng
+yêu cầu nghiệp vụ của đơn vị.
+Gạch các đầu dòng ngắn gọn từng mảng, trong đó bao gồm các mảng quan trọng như giám sát tài 
+nguyên server, ứng dụng, database, tối ưu database, đảm bảo hiệu năng, đảm bảo cân bằng tải,...
+Dưới đây là các đầu việc ngắn gọn theo từng mảng của người vận hành hệ thống phần mềm:
+1. Giám sát tài nguyên server
+Theo dõi CPU, RAM, ổ cứng, network.
+Giám sát dung lượng lưu trữ, cảnh báo đầy disk.
+Theo dõi tải hệ thống theo thời gian thực.
+Kiểm tra tình trạng server vật lý/ảo/cloud.
+Phát hiện sớm nguy cơ quá tải tài nguyên.
+2. Giám sát ứng dụng
+Theo dõi trạng thái hoạt động của ứng dụng.
+Kiểm tra các dịch vụ, API, job nền.
+Giám sát lỗi phát sinh trên ứng dụng.
+Theo dõi log ứng dụng.
+Kiểm tra thời gian phản hồi của hệ thống.
+Đảm bảo các chức năng chính hoạt động ổn định.
+3. Giám sát database
+Theo dõi tình trạng hoạt động của database.
+Kiểm tra kết nối database.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/10
+
+--- PAGE 5 ---
+Giám sát dung lượng tablespace/dataﬁle.
+Theo dõi session, lock, deadlock.
+Giám sát các truy vấn chậm.
+Kiểm tra backup database định kỳ.
+4. Tối ưu database
+Phân tích và tối ưu câu lệnh SQL chậm.
+Tối ưu index, partition, statistics.
+Kiểm tra và xử lý lock dữ liệu.
+Tối ưu cấu trúc bảng khi cần thiết.
+Dọn dẹp dữ liệu rác, dữ liệu log lớn.
+Phối hợp tuning database theo tải thực tế.
+5. Đảm bảo hiệu năng hệ thống
+Theo dõi tốc độ xử lý của hệ thống.
+Giám sát thời gian phản hồi của các chức năng chính.
+Phân tích nguyên nhân hệ thống chậm.
+Tối ưu ứng dụng, database, server theo từng điểm nghẽn.
+Kiểm tra hiệu năng sau khi nâng cấp hoặc triển khai mới.
+Đề xuất mở rộng tài nguyên khi cần.
+6. Đảm bảo cân bằng tải
+Theo dõi trạng thái load balancer.
+Kiểm tra phân phối tải giữa các server.
+Phát hiện node lỗi hoặc quá tải.
+Đảm bảo ứng dụng vẫn hoạt động khi một node gặp sự cố.
+Phối hợp cấu hình HA/cluster nếu có.
+Kiểm tra cơ chế failover định kỳ.
+7. Quản trị tài khoản và phân quyền
+Tạo mới, khóa, mở khóa tài khoản.
+Cấp quyền theo vai trò, phòng ban, đơn vị.
+Kiểm tra lỗi thiếu quyền hoặc sai quyền.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/10
+
+--- PAGE 6 ---
+Rà soát tài khoản không còn sử dụng.
+Đảm bảo người dùng truy cập đúng phạm vi dữ liệu.
+8. Hỗ trợ người dùng
+Tiếp nhận yêu cầu hỗ trợ.
+Hướng dẫn người dùng sử dụng hệ thống.
+Kiểm tra lỗi do thao tác hay do hệ thống.
+Ghi nhận vướng mắc nghiệp vụ.
+Tổng hợp đề xuất cải tiến từ người dùng.
+9. Xử lý sự cố
+Tiếp nhận và phân loại lỗi phát sinh.
+Xử lý các lỗi vận hành thông thường.
+Phối hợp với đội phát triển/đối tác khi lỗi phức tạp.
+Theo dõi tiến độ xử lý sự cố.
+Kiểm tra lại sau khi khắc phục.
+Tổng hợp nguyên nhân và phương án phòng ngừa.
+10. Sao lưu và phục hồi dữ liệu
+Theo dõi lịch backup hệ thống.
+Kiểm tra trạng thái backup định kỳ.
+Phối hợp phục hồi dữ liệu khi có sự cố.
+Kiểm tra khả năng khôi phục dữ liệu.
+Đảm bảo dữ liệu an toàn, không mất mát.
+11. Kiểm thử và triển khai nâng cấp
+Tiếp nhận yêu cầu nâng cấp hệ thống.
+Phối hợp làm rõ nghiệp vụ với các đơn vị.
+Kiểm thử chức năng mới trước khi triển khai.
+Kiểm tra lỗi sau khi nâng cấp.
+Hỗ trợ người dùng sau triển khai.
+Cập nhật tài liệu vận hành.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/10
+
+--- PAGE 7 ---
+12. Báo cáo vận hành
+Báo cáo tình trạng hoạt động hệ thống.
+Tổng hợp lỗi phát sinh và kết quả xử lý.
+Báo cáo hiệu năng, tài nguyên, database.
+Tổng hợp yêu cầu nâng cấp, cải tiến.
+Đề xuất phương án tối ưu, mở rộng hệ thống.
+thêm nữa không
+Có. Có thể bổ sung thêm các mảng quan trọng sau:
+13. Giám sát log và cảnh báo
+Theo dõi log hệ thống, log ứng dụng, log database.
+Thiết lập cảnh báo lỗi bất thường.
+Giám sát lỗi 500, timeout, mất kết nối.
+Phân tích log để xác định nguyên nhân sự cố.
+Lưu trữ log phục vụ tra soát và kiểm toán.
+14. Đảm bảo an toàn bảo mật hệ thống
+Theo dõi truy cập bất thường.
+Rà soát tài khoản, phân quyền định kỳ.
+Kiểm tra lỗ hổng bảo mật cơ bản.
+Theo dõi cảnh báo từ ﬁrewall, WAF, antivirus.
+Phối hợp xử lý sự cố an toàn thông tin.
+Đảm bảo dữ liệu nhạy cảm được bảo vệ.
+15. Quản lý tích hợp hệ thống
+Giám sát kết nối API giữa các hệ thống.
+Theo dõi trạng thái đồng bộ dữ liệu.
+Kiểm tra lỗi tích hợp với SAP, VOﬃce, CRM, tổng đài...
+Xử lý lỗi mất kết nối, sai dữ liệu đồng bộ.
+Đối soát dữ liệu giữa các hệ thống.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/10
+
+--- PAGE 8 ---
+16. Quản lý job, batch, scheduler
+Theo dõi các job chạy định kỳ.
+Kiểm tra job thành công/thất bại.
+Xử lý job treo, job lỗi.
+Giám sát thời gian chạy job.
+Tối ưu các job xử lý dữ liệu lớn.
+17. Quản lý phiên bản và triển khai
+Theo dõi phiên bản phần mềm đang vận hành.
+Phối hợp triển khai bản vá, bản nâng cấp.
+Kiểm tra checklist trước và sau triển khai.
+Quản lý rollback khi triển khai lỗi.
+Lưu vết lịch sử thay đổi hệ thống.
+18. Quản lý cấu hình hệ thống
+Quản lý ﬁle cấu hình ứng dụng.
+Kiểm soát cấu hình môi trường dev/test/prod.
+Cập nhật tham số vận hành khi cần.
+Kiểm tra cấu hình kết nối database, API, email, SMS.
+Đảm bảo cấu hình đúng, đồng nhất và có lưu vết.
+19. Quản lý chứng thư số, domain, SSL
+Theo dõi thời hạn SSL certiﬁcate.
+Gia hạn chứng thư số đúng hạn.
+Kiểm tra domain, DNS, endpoint hệ thống.
+Xử lý lỗi HTTPS, lỗi chứng chỉ.
+Đảm bảo hệ thống không bị gián đoạn do hết hạn certiﬁcate.
+20. Quản lý dung lượng và lưu trữ
+Theo dõi dung lượng ﬁle upload.
+Quản lý thư mục lưu ﬁle, ảnh, tài liệu.
+Dọn dẹp ﬁle tạm, ﬁle rác, log cũ.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/10
+
+--- PAGE 9 ---
+Theo dõi tăng trưởng dữ liệu.
+Đề xuất mở rộng storage khi cần.
+21. Đảm bảo tính sẵn sàng cao
+Theo dõi HA, cluster, failover.
+Kiểm tra khả năng chuyển đổi dự phòng.
+Đảm bảo hệ thống hạn chế downtime.
+Phối hợp diễn tập khôi phục sự cố.
+Đánh giá rủi ro điểm lỗi đơn.
+22. Quản lý kế hoạch dự phòng thảm họa
+Xây dựng phương án DR.
+Kiểm tra dữ liệu backup tại site dự phòng.
+Định kỳ thử nghiệm phục hồi hệ thống.
+Xác định RTO, RPO cho hệ thống.
+Đảm bảo có phương án vận hành khi sự cố lớn xảy ra.
+23. Quản lý SLA và chất lượng dịch vụ
+Theo dõi thời gian uptime/downtime.
+Theo dõi thời gian xử lý yêu cầu hỗ trợ.
+Phân loại mức độ nghiêm trọng của sự cố.
+Báo cáo tỷ lệ đáp ứng SLA.
+Đề xuất cải thiện chất lượng dịch vụ.
+24. Quản lý tài liệu vận hành
+Xây dựng tài liệu hướng dẫn vận hành.
+Cập nhật quy trình xử lý sự cố.
+Lưu tài liệu cấu hình, tài khoản kỹ thuật.
+Xây dựng checklist vận hành định kỳ.
+Lưu bài học sau các sự cố lớn.
+25. Đào tạo và chuyển giao người dùng
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/10
+
+--- PAGE 10 ---
+Hướng dẫn người dùng mới.
+Đào tạo chức năng sau nâng cấp.
+Cập nhật tài liệu hướng dẫn sử dụng.
+Giải thích quy trình nghiệp vụ trên hệ thống.
+Ghi nhận phản hồi để cải tiến phần mềm.
+26. Quản lý rủi ro vận hành
+Nhận diện rủi ro hệ thống quá tải.
+Nhận diện rủi ro mất dữ liệu.
+Nhận diện rủi ro bảo mật.
+Nhận diện rủi ro phụ thuộc nhà cung cấp.
+Đề xuất phương án phòng ngừa.
+Có thể chốt thành nhóm lớn như sau: Hạ tầng – Ứng dụng – Database – Tích hợp – Bảo mật –
+Backup/DR – Hiệu năng – Hỗ trợ người dùng – Triển khai nâng cấp – Báo cáo vận hành.
+xuất ra ﬁle word
+Tôi sẽ tổng hợp các mảng công việc đã liệt kê thành một ﬁle Word bố cục gọn, dạng tiêu đề nhóm và
+gạch đầu dòng ngắn để dùng đưa vào mô tả công việc/tờ trình.
+Đã xuất ﬁle Word:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/10

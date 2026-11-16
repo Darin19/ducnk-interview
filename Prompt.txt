@@ -1,0 +1,39 @@
+Sắp tới tôi phỏng vấn Vin Dynamics, một trong những điều tôi kể cho họ là những công việc liên quan tới AI mà tôi tham gia trong các dự án đã làm. Gác việc sử dụng các AI Agents như Codex, Claude siêu thành thạo sang một bên, câu hỏi đặt ra là tôi đã làm gì trong các dự án xây dựng, AI, Machine Learning từ đầu hoặc tận dụng Open Source (BA + QC hybrid; training AI, Machine Learning)
+
+[Input tham khảo]
+1. https://vindynamics.net/vi/career/senior-business-analyst-001114.html => JD về vị trí, bạn cần quan tâm KEY RESPONSIBILITIES và QUALIFICATIONS để xây dựng câu trả lời phủ hết được mọi vấn đề nêu trong JD, chứng minh được tôi có kinh nghiệm và đã làm qua các vị trí Technical BA, QC, tham gia nhiều công đoạn phức tạp trong việc training, fine-tune...AI models
+2. C:\Users\nguye\OneDrive\Desktop\Phỏng vấn VinDynamics
+- Kim Đức CV full.pdf => khá chi tiết về từng dự án, công việc, kỹ năng của tôi
+- Kim Đức CV rút gọn.pdf => bản CV rút gọn hơn
+- C:\Users\nguye\OneDrive\Desktop\Phỏng vấn VinDynamics\Tori AI => Yêu cầu công việc ở TechcomBank về BA kiêm QC cho Tori AI; Bạn có thể tìm hiểu thêm trên mạng về Tori AI của TechcomLife => Đây là một nguồn quan trọng để bạn xây dựng tệp công việc mà tôi đã làm
+- C:\Users\nguye\OneDrive\Desktop\Phỏng vấn VinDynamics\ChatGPT => chứa những hỏi đáp quan trọng trong ngày hôm này về dự án Humanoid Robot của VinDynamics và một số vấn đề khác
+- C:\Users\nguye\OneDrive\Desktop\Phỏng vấn VinDynamics\Các dự án cũ => Chứa toàn bộ kho dữ liệu cũ tôi đã chuẩn bị cho các buổi phỏng vấn, có khá đầy đủ thông tin các dự án, các đầu việc chi tiết tôi từng đảm nhận...
+
+[Output]
+1 file .md có tên "Đức BA training AI, ML models" có nội dung
+- Với mỗi dự án tôi kể trong "Các dự án có AI tôi đã tham gia.txt", bạn phải chỉ ra 
+1. các usecases áp dụng
+2. công nghệ, kiến trúc chi tiết (nói rõ tên công nghệ nhé chứ đừng chung chung)
+3. các việc mà tôi đã làm, các tools mà tôi sử dụng để làm => cũng mô tả chi tiết
+- Dự án nào chưa có usecase liên quan AI, ML thì tự bạn nghĩ, sau đó bổ sung các công nghệ, kiến trúc để triển khai tương tự như trên rồi bổ sung việc BA, QC làm.
+
+1 file .md có tên "Đức PO làm dự án VinDynamics" có nội dung
+- Mô tả các việc mà một PO/BA mới sẽ tiếp cận, tìm hiểu; Xây dựng overview về hệ thống => tham khảo Tìm hiểu Robot VinDynamics.md và Mã nguồn robot hình người của các tập đoàn lớn.md
+- Đảm nhận những công việc cụ thể với vai trò BA, QC như thế nào (tương ứng với JD của VinDynamics) trong một dự án, giả sử là "Đội robots an ninh bảo vệ Vin University"
+- Chỉ rõ sự kế thừa kinh nghiệm từ các dự án cũ càng tốt, tôi có thể dùng kiến thức cũ như thế nào để giải quyết bài toán mới, không nhất thiết là liên quan AI nhé, ví dụ:
+=> Smart Safe cũng là hệ thống an ninh, có dàn AI Camera => dùng điều gì...
+=> Điều phối hội thoại trong mChat, điều phối thủ tục hành chính,... => điều phối đội robot
+=> Samsung Smart Factory mang tới fleet management 
+=> master Các dự án chính phủ vốn rất chặt chẽ và phải luôn tuân thủ các policies => dễ tiếp cận khi phân tích "Industry Solution Packs Security · Hospital · Hotel · Restaurant · Residential · Industrial
+Quy trình nghiệp vụ, bộ quy tắc, sự kiện, mẫu nhiệm vụ theo ngành"
+=> hardware–software, IoT, sensors, edge/cloud architecture, logging, monitoring, configuration, or release management...từ dự án Smart Safe và Samsung Smart Factory mang tới kinh nghiệm làm việc với các phần cứng, thiết bị iot, robots, đám mây...(hiển nhiên, ở Smart Factory, bạn phải xây dựng giải pháp đám mây cho tôi, ứng dụng Microsoft Cloud chẳng hạn, làm chi tiết nhé) => device health management..., error handling
+=> các dự án như HRAI, mchat, cổng một cửa, xử lý vi phạm hành chính, Tori AI, samsung AI Hub....mang tới kỹ năng training, fine-tune AI, nghiệm thu các kết quả output...(nói chung là QC, BA cho AI, ML models)
+=> các dự án chính phủ mang tới kiến thức về data governance và thiết kế workflow động kiểu Camunda
+=> Hiểu biết về Harness, AI Agents cũng mang tới hiểu biết về các gói skills, orchestration...có thể áp dụng tư tưởng, phương pháp luận vào các robot
+=> AI Hub cho kiến thức về quản lý luồng training AI và datasets
+=> Omnichannel cho kiến thức về thương mại, thậm chí là thương mại hóa robot
+=> BA vững + Tech vững cho khả năng viết usecases cho AI và ngoại lệ chính xác
+=> RPA & OCR cho kiến thức về tự động hóa, VLM, LLM...
+
+Như vậy, để làm được file .md thứ 2 thì trước đó bạn cần làm file .md thứ nhất rất kỹ. Lưu ý là tôi cần làm chi tiết kiến trúc và các công nghệ áp dụng để xây hệ tri thức và AI Agent chatbot (trợ lý AI) nhé.
+

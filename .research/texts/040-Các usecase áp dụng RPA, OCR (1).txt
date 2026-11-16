@@ -1,0 +1,196 @@
+TRUNG TÂM XUẤT NHẬP KHẨU
+I. NHÓM 1 – CHỨNG TỪ & KHAI BÁO HẢI QUAN
+UC1 – OCR bộ chứng từ xuất nhập khẩu & RPA Tự động lập form & hồ sơ khai báo hải quan
+Mục tiêu: Chuẩn hóa dữ liệu đầu vào cho toàn bộ quy trình XNK.
+Đầu vào
+Invoice
+Packing list
+Bill of Lading
+C/O
+Contract (PDF / scan / ảnh)
+Áp dụng OCR:
+Nhận dạng & trích dữ liệu:
+Seller / Buyer
+Invoice No, Date
+Tên hàng, mô tả
+Số lượng, trọng lượng
+Trị giá
+Điều kiện giao hàng.
+HS code (nếu có).
+RPA Tự động lập form & hồ sơ khai báo
+Lưu dữ liệu.
+Gắn dữ liệu theo từng lô hang.
+Mapping dữ liệu sang form khai.
+Tự điền các màn hình khai báo.
+Tạo bộ hồ sơ khai.
+Đầu ra:
+Tờ khai hải quan
+Báo cáo googlesheet.
+UC2 – Đối soát chứng từ (Contract – Invoice – PL – Tờ khai)
+Đầu vào
+Hợp đồng
+Invoice
+Packing List
+Tờ khai
+Áp dụng OCR:
+Trích các trường cần so khớp:
+Tên hàng
+Số lượng
+Trị giá
+Điều kiện giao hàng
+RPA làm gì
+Tự động so sánh dữ liệu giữa các chứng từ
+Phát hiện:
+lệch số lượng
+lệch trị giá
+sai mô tả
+sai điều kiện giao hàng
+Đầu ra
+Bảng chênh lệch chứng từ
+Danh sách cảnh báo
+
+II. NHÓM 2 – VẬN HÀNH LÔ HÀNG & DỊCH VỤ LOGISTICS
+UC3 – Theo dõi trạng thái lô hàng & lịch tàu
+Đầu vào
+Số vận đơn
+Số container
+Website hãng tàu / forwarder
+RPA làm gì
+Tự đăng nhập website tra cứu
+Lấy:
+ETD
+ETA
+Trạng thái container / BL
+Cập nhật về file / hệ thống
+Đầu ra
+Bảng theo dõi tiến độ lô hàng
+Báo cáo trạng thái cho khách / nội bộ
+
+III. NHÓM 3 – DỰ ÁN & SẢN PHẨM MỚI
+UC 11 – Lấy thông tin các gói thầu
+Đầu vào
+Website đấu thầu của Tập Đoàn
+Muasamcong
+Mail
+RPA làm gì
+Tự động:
+Lấy thông tin các gói thầu theo Link người dùng điền
+Lấy kết quả lựa chọn nhà thầu
+Cập nhật trạng thái gia hạn, làm rõ, ...
+Lấy trạng thái kết quả các gói thầu
+Gửi thông tin cho người dùng (Email, SMS).
+
+IV. NHÓM 4 – TÍCH HỢP & TỰ ĐỘNG HÓA CHO HỆ THỐNG QLHĐ
+UC9 – OCR hợp đồng → tự động nhập hợp đồng & mốc thanh toán vào QLHĐ
+Đầu vào
+Hợp đồng ủy thác
+Hợp đồng dự án
+Phụ lục hợp đồng (PDF / scan)
+Áp dụng OCR:
+Trích:
+số hợp đồng
+tên khách hàng / đối tác
+ngày hiệu lực
+ngày hết hạn
+giá trị hợp đồng
+các đợt thanh toán:
+tỷ lệ / số tiền
+hạn thanh toán
+RPA làm gì
+Tự đăng nhập hệ thống QLHĐ
+Tự nhập:
+thông tin hợp đồng
+các giai đoạn / đợt thanh toán
+Tự đính kèm file hợp đồng
+Đầu ra
+Hợp đồng và các mốc thanh toán đã có sẵn trên QLHĐ
+
+
+PHÒNG PHÁP CHẾ VÀ ĐẦU TƯ
+UC10 – OCR & tiếp nhận hồ sơ đề xuất đầu tư / mua sắm => OK
+Mục tiêu: Tự động hóa khâu tiếp nhận – nhập liệu hồ sơ đề xuất (CAPEX / mua sắm).
+Đầu vào
+Phiếu đề xuất đầu tư / mua sắm
+Thuyết minh dự án
+File scan, PDF, Word
+Áp dụng OCR:
+Trích:
+đơn vị đề xuất
+tên dự án / hạng mục mua sắm
+tổng mức đầu tư / giá trị dự kiến
+thời gian thực hiện
+mục tiêu đầu tư
+loại hình (đầu tư / mua sắm)
+RPA làm gì
+Tự tạo hồ sơ đề xuất trên hệ thống (phần mềm nội bộ)
+Tự điền các trường thông tin
+Đính kèm file gốc
+Đầu ra
+Hồ sơ đề xuất đầu tư / mua sắm đã được tạo trên hệ thống
+
+UC11 – OCR & tổng hợp hồ sơ chào giá / hồ sơ thầu mua sắm => Ok
+Mục tiêu: Tự động tổng hợp báo giá để phục vụ lựa chọn nhà cung cấp.
+Đầu vào
+Báo giá nhà cung cấp
+Hồ sơ chào hàng / hồ sơ dự thầu
+Áp dụng OCR:
+Trích:
+tên nhà cung cấp
+tên hàng / dịch vụ
+model / cấu hình
+đơn giá
+thời gian giao hàng
+bảo hành
+điều kiện thanh toán
+RPA làm gì
+Chuẩn hóa dữ liệu về 1 mẫu chuẩn
+Gộp nhiều báo giá thành bảng so sánh
+Đầu ra
+Bảng so sánh chào giá / hồ sơ mua sắm
+
+UC12 – Theo dõi tiến độ thực hiện gói mua sắm / dự án đầu tư => Ok
+Mục tiêu: Theo dõi giao hàng – nghiệm thu – bàn giao.
+Đầu vào
+PO / hợp đồng mua sắm
+Kế hoạch giao hàng
+Website / email NCC
+Áp dụng OCR:
+Trích tiến độ từ biên bản giao hàng / nghiệm thu (file scan)
+RPA làm gì
+Lấy thông tin tiến độ từ:
+email
+portal NCC
+file cập nhật
+Cập nhật trạng thái:
+đang giao hàng
+đã giao
+đã nghiệm thu
+chậm tiến độ
+Đầu ra
+Bảng theo dõi tiến độ mua sắm / đầu tư
+
+UC13 – Đối soát nghiệm thu – hóa đơn – thanh toán cho gói mua sắm / đầu tư => Ok
+Mục tiêu: Đảm bảo chỉ thanh toán khi đã nghiệm thu đúng khối lượng.
+Đầu vào
+Biên bản nghiệm thu
+Hóa đơn nhà cung cấp
+Kế hoạch thanh toán trong QLHĐ
+Áp dụng OCR:
+Trích:
+giá trị nghiệm thu
+hạng mục nghiệm thu
+ngày nghiệm thu
+số hóa đơn
+số tiền hóa đơn
+RPA làm gì
+Lấy kế hoạch thanh toán từ QLHĐ
+So khớp:
+giá trị nghiệm thu
+giá trị hóa đơn
+giá trị theo hợp đồng
+Tự cập nhật trạng thái đợt thanh toán trên QLHĐ
+Đầu ra
+Danh sách:
+đủ điều kiện thanh toán
+chênh lệch nghiệm thu – hóa đơn – hợp đồng
+Trạng thái thanh toán được cập nhật trên QLHĐ

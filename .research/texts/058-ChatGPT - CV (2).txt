@@ -1,0 +1,56 @@
+
+--- PAGE 1 ---
+1/2
+ChatGPT - CV
+Tóm tắt các chức năng tôi làm với CRM - quản lý ticket
+Tóm tắt chức năng CRM – Quản lý Ticket
+Tôi tham gia phân tích và thiết kế phân hệ CRM Ticket Management, phục vụ tiếp nhận
+phản ánh, khiếu nại và yêu cầu hỗ trợ của khách hàng; sau đó chuyển thành quy trình xử lý
+nội bộ có phân công, SLA, phối hợp liên đơn vị và khả năng truy vết đầy đủ.
+Phạm vi chức năng
+Quản lý vòng đời ticket: tạo mới, cập nhật, tra cứu, lọc, xuất danh sách và theo dõi
+ticket từ khi tiếp nhận đến khi hoàn thành.
+Thiết kế thông tin ticket động: quản lý thông tin người phản ánh, nội dung yêu cầu,
+loại phản ánh, mức độ ưu tiên, đơn vị tiếp nhận, đơn vị phối hợp, ý kiến trao đổi và
+file đính kèm. Form ticket được sinh động theo template và các trường dữ liệu đã cấu
+hình.
+Quản lý trường dữ liệu tùy chỉnh: cho phép tạo các trường text, số, ngày, dropdown;
+thiết lập bắt buộc, validation, khả năng tìm kiếm, hiển thị trong báo cáo và quyền truy
+cập.
+Quản lý template: xây dựng mẫu ticket theo từng nghiệp vụ hoặc phòng ban; cấu
+hình bộ trường, giá trị mặc định, thời gian hiệu lực, quyền sửa, quyền duyệt và quyền
+gia hạn template.
+Quản lý luồng xử lý: cấu hình các bước như tiếp nhận, phân loại, xử lý, chờ duyệt và
+hoàn tất; định nghĩa điều kiện chuyển bước, người hoặc đơn vị chịu trách nhiệm và
+các trường hợp xử lý ngoại lệ.
+Quản lý SLA: thiết lập thời gian xử lý cho từng bước và tổng SLA của ticket; cảnh báo
+sắp quá hạn hoặc vi phạm SLA, phục vụ đánh giá KPI.
+Quản lý Task gắn với Ticket: tách một ticket thành các công việc cụ thể, phân công
+cho cá nhân hoặc phòng ban, đặt deadline, trạng thái và theo dõi kết quả thực hiện.
+Phối hợp và trao đổi: ghi nhận các đơn vị cùng tham gia, ý kiến xử lý, phản hồi khách
+hàng và cập nhật tiến độ xuyên suốt ticket.
+Phân quyền: kiểm soát quyền tạo, xem, sửa, xử lý, duyệt, gia hạn hoặc bỏ qua luồng;
+đồng thời phân quyền dữ liệu theo đơn vị, phòng ban, vai trò và người phụ trách.
+CRM.docx
+Document
+
+--- PAGE 2 ---
+2/2
+Đồng bộ dữ liệu tổ chức: đồng bộ phòng ban, nhân viên, vị trí và đơn vị kinh doanh
+từ ERP để phục vụ phân công và phân quyền.
+Thông báo và email template: cấu hình nội dung thông báo theo sự kiện như tạo
+ticket, chuyển xử lý, sắp quá hạn, hoàn thành hoặc yêu cầu bổ sung thông tin.
+Audit log và báo cáo: lưu lịch sử tạo, sửa, chuyển trạng thái, phân công và phê duyệt;
+thống kê ticket theo trạng thái, loại phản ánh, đơn vị, nhân viên và mức độ tuân thủ
+SLA.    
+Cách mô tả ngắn trong CV
+Viettel Commerce CRM – Ticket Management: Analyzed and designed a configurable
+ticket management module covering dynamic ticket forms, custom fields, templates,
+multi-step workflows, SLA monitoring, task assignment, cross-department collaboration,
+data permissions, ERP master-data synchronization, notifications, audit logs, and
+operational reports.
+Hoặc bằng tiếng Việt:
+Phân tích và thiết kế phân hệ quản lý Ticket CRM, bao gồm biểu mẫu động, trường dữ
+liệu tùy chỉnh, template nghiệp vụ, luồng xử lý nhiều bước, SLA, phân công Task, phối
+hợp liên phòng ban, phân quyền dữ liệu, đồng bộ ERP, thông báo, lịch sử tác động và
+báo cáo vận hành.

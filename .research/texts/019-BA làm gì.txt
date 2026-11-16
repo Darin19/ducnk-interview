@@ -1,0 +1,55 @@
+The key responsibilities of a Business Analyst in the AI Hub project included:
+Working with customers and stakeholders to elicit, analyze, and clarify requirements, then transforming vague and fragmented needs into structured, logical, and feasible solutions that could be developed, tested, deployed, and operated.
+Analyzing the business context, identifying pain points, and proposing practical solutions, instead of simply documenting customer requests. As a BA, I also challenged unreasonable requirements that did not align with technical standards, operational processes, or user experience principles.
+Defining the feature list, prioritizing requirements, and building the product roadmap, ensuring that the system was developed with the right focus, business value, and resource allocation.
+Writing BRD/SRS/FRD documents, user stories, acceptance criteria, business rules, and exception flows for key modules such as Dataset Management, Data Source Management, Model Management, Approval Workflow, Permission Management, and Lifecycle Status.
+Modeling business processes and system logic using diagrams, including Context Diagrams, Data Flow Diagrams, Business Process Diagrams, Activity Diagrams, ERD, and lifecycle/status flow diagrams.
+Designing mockups, wireframes, and screen flows for dataset management, model management, data source management, approval requests, permission matrix, catalog/search, dashboards, and asset detail pages.
+Performing API mapping based on Swagger/API documentation, including mapping APIs to each feature and screen, defining request/response structures, parameters, data fields, processing rules, error codes, and identifying gaps between existing APIs and business requirements.
+Designing Dataset Templates and Model Templates, defining required and optional metadata fields, data types, validation rules, dependencies between fields, and their impact on workflow logic, permission control, and lifecycle status.
+Designing the Permission Management module, including a permission matrix based on roles, departments, owners, sponsors, contributors, sensitivity levels, usage scopes, and business statuses; combining both function-level permission and data-level permission.
+Designing standardized and reusable approval workflows, including asset purchase/request approval, dataset/model registration approval, sharing approval, edit/delete approval, data source approval, training job approval, and model deployment/promotion approval.
+Designing lifecycle statuses for datasets and models, such as Draft, Submitted, Under Review, Approved, Published, In Use, Deprecated, Archived, Staging, and Production; and defining which actions are allowed at each status.
+Analyzing Data Source Management requirements, including how to manage data origins, data source types, uploaded files, API/database connections, and permissions such as view, edit, upload, update, download, and delete.
+Designing Dataset Catalog and Search/Filter logic, including search criteria, filters, sorting, tags, bookmarks, recently viewed datasets, access requests, and visibility rules based on user permissions.
+Analyzing Training Job, Evaluation, and Model Deployment workflows, including training requests, dataset version selection, parameter configuration, job monitoring, model artifact storage, evaluation metrics, and model promotion to staging or production.
+Designing audit trail, notification, and dashboard requirements, ensuring the system could track who created, edited, deleted, shared, downloaded, or approved an asset; which approvals were pending; and how datasets and models were governed across the platform.
+In addition, five other critical BA responsibilities were:
+Designing data governance rulesDefining rules for metadata, ownership, sensitivity level, usage scope, data lineage, retention, sharing, download, and audit control.
+Designing a dynamic permission matrix based on asset statusNot only listing roles and permissions, but also defining how permissions change when a dataset or model moves across statuses such as Draft, Approved, Published, In Use, or Archived.
+Standardizing the end-to-end AI asset lifecycleDesigning the complete flow from registration, approval, publishing, sharing, usage, training, evaluation, deployment, deprecation, to archival.
+Designing traceability across Dataset – Model – Training Job – Evaluation – DeploymentEnsuring the system could trace which model was trained using which dataset version, through which training job, with which metrics, approved by whom, and deployed to which environment.
+Defining risk control rules for sensitive actionsDistinguishing normal metadata updates from high-risk actions such as downloading raw data, changing data sources, deleting assets, sharing restricted datasets, or deploying models to production, then applying the appropriate approval workflow.
+
+
+Bản Việt
+Những việc BA làm trong dự án AI Hub gồm:
+Làm việc với khách hàng/stakeholders để khai thác, phân tích và làm rõ yêu cầu, từ đó biến các yêu cầu mơ hồ, rời rạc thành giải pháp có cấu trúc, logic, khả thi để phát triển, kiểm thử, triển khai và vận hành.
+Phân tích bối cảnh nghiệp vụ, nhận diện pain point và đề xuất giải pháp, không chỉ ghi nhận yêu cầu mà còn phản biện các yêu cầu chưa hợp lý, chưa phù hợp với tiêu chuẩn công nghệ, quy trình vận hành hoặc trải nghiệm người dùng.
+Lên danh sách tính năng, xác định mức độ ưu tiên và xây dựng roadmap phát triển, đảm bảo hệ thống được phát triển theo đúng trọng tâm, đúng giá trị nghiệp vụ và phù hợp nguồn lực dự án.
+Viết tài liệu BRD/SRS/FRD, user stories, acceptance criteria, business rules và exception flows cho các module chính như Dataset Management, Data Source Management, Model Management, Approval Workflow, Permission và Lifecycle Status.
+Mô hình hóa nghiệp vụ và hệ thống bằng các sơ đồ phân tích, bao gồm Context Diagram, Data Flow Diagram, Business Process Diagram, Activity Diagram, ERD và các luồng trạng thái nghiệp vụ.
+Thiết kế mockup/wireframe và screen flow cho các màn hình quản lý dataset, model, datasource, approval request, permission matrix, catalog/search, dashboard và các màn hình chi tiết asset.
+Thực hiện API Mapping từ Swagger/API Document, bao gồm mapping API với từng chức năng/màn hình, xác định request/response, parameter, field dữ liệu, rule xử lý, mã lỗi và gap giữa API hiện có với yêu cầu nghiệp vụ.
+Thiết kế Dataset Template và Model Template, xác định các trường metadata bắt buộc/tùy chọn, kiểu dữ liệu, validation rules, ràng buộc giữa các trường, logic ảnh hưởng đến workflow, permission và lifecycle status.
+Thiết kế module phân quyền, xây dựng ma trận quyền theo role, phòng ban, owner, sponsor, contributor, sensitivity level, usage scope và trạng thái nghiệp vụ; kết hợp function-level permission và data-level permission.
+Thiết kế các approval workflow chuẩn hóa và tái sử dụng được, bao gồm luồng mua/yêu cầu asset, đăng ký dataset/model, chia sẻ, sửa/xóa, phê duyệt datasource, phê duyệt training job và phê duyệt deploy/promote model.
+Thiết kế lifecycle status cho Dataset và Model, xác định các trạng thái như Draft, Submitted, Under Review, Approved, Published, In Use, Deprecated, Archived, Staging, Production; đồng thời xác định hành động nào được phép thực hiện tại từng trạng thái.
+Phân tích Data Source Management, xác định cách quản lý nguồn dữ liệu, loại datasource, file upload, kết nối API/database, quyền view/edit/upload/update/download/delete và các hành động cần kiểm soát bằng approval.
+Thiết kế Dataset Catalog và Search/Filter, xác định tiêu chí tìm kiếm, bộ lọc, sorting, tag, bookmark, recently viewed, request access và logic hiển thị dataset theo quyền người dùng.
+Phân tích Training Job, Evaluation và Model Deployment, xác định luồng request training, chọn dataset version, cấu hình tham số, theo dõi job, lưu model artifact, ghi nhận evaluation metrics và promote model lên staging/production.
+Thiết kế audit trail, notification và dashboard, đảm bảo hệ thống có thể truy vết ai tạo/sửa/xóa/chia sẻ/download asset, ai phê duyệt, asset đang ở trạng thái nào, approval nào đang pending và các chỉ số quản trị dữ liệu/model.
+
+Đầu việc bổ sung
+BA cần làm gì tương ứng với tính năng hệ thống
+1. Thiết kế data governance rules
+Xác định rule cho metadata, ownership, sensitivity level, usage scope, data lineage, retention, sharing, download và audit.
+2. Thiết kế permission matrix động theo trạng thái
+Không chỉ liệt kê role/quyền, mà còn xác định quyền thay đổi thế nào khi dataset/model ở Draft, Approved, Published, In Use, Archived.
+3. Chuẩn hóa asset lifecycle end-to-end
+Thiết kế vòng đời từ register → approve → publish/share/use → train/evaluate/deploy → deprecate/archive.
+4. Thiết kế traceability giữa Dataset – Model – Training Job – Evaluation – Deployment
+Đảm bảo truy vết được model nào train từ dataset version nào, job nào, metric nào, được ai approve và deploy ở đâu.
+5. Xác định rule kiểm soát rủi ro cho sensitive actions
+Phân biệt metadata thường với hành động rủi ro như download raw data, change datasource, delete asset, deploy model production để đưa vào approval phù hợp.
+

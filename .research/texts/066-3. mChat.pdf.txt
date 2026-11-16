@@ -1,0 +1,3574 @@
+
+===== PAGE 1 =====
+Vai trò BA và AI QA
+
+
+   Dự án ứng dụng AI vào Omnichat Platform
+
+   3. mChat is an Omnichannel Chat platform that brings customer
+   conversations from Facebook, Zalo OA, Website chatbot, livestream
+   comments, and other digital channels into one centralized workspace for
+   sales and customer service teams. The system helps agents manage
+   customer messages, view conversation history, assign conversations, use
+   canned responses, apply labels, track SLA/CSAT, and monitor performance
+   through real-time reports. It also supports website campaigns, livestream
+   comment scripts, automated comment replies.  It also applies AI to analyze
+   customer conversations, extract customer intent, needs, sentiment, interest
+   level, and lead quali cation signals, while generating conversation
+   summaries, recommended action for agents.
+
+
+
+
+   Vai trò của BA và AI QA trong dự án là gì - liệt kê chi tiết các đầu việc, kể cả các task có liên quan tới
+   Database, kiểm thử dữ liệu...
+   Show moreShow less
+
+
+
+
+Trong dự án này, BA không chỉ phân tích chức năng chat, mà thực tế là AI/Data Business Analyst:
+xác định AI phải “hiểu” điều gì từ hội thoại, dữ liệu nào được sử dụng, kết quả AI lưu ở đâu, hiển thị thế
+nào và tác động ra sao đến quy trình bán hàng/CSKH.
+
+AI QA cũng không chỉ nhập vài câu chat để xem AI trả lời đúng hay sai, mà phải kiểm thử toàn bộ chuỗi:
+
+Dữ liệu hội thoại → tiền xử lý → mô hình AI → API → Database → giao diện mChat → phản hồi của
+Agent → báo cáo.
+mChat hiện đã có nền tảng nghiệp vụ gồm quản lý hội thoại đa kênh, hồ sơ khách hàng, phân công
+Agent, nhãn, SLA, automation và báo cáo. Lớp AI được bổ sung để chuyển nội dung chat thô thành dữ
+liệu có cấu trúc như ý định, nhu cầu, cảm xúc, mức độ quan tâm, chất lượng lead, tóm tắt và hành động
+được đề xuất.
+                 mchat-ba-analysismChat_Dương đăng ký sáng kiến ý…
+
+I. Phạm vi AI trong dự án mChat
+
+Một cuộc hội thoại có thể được AI phân tích thành các đầu ra sau:
+
+      Nhóm kết quả AI                                                        Ví dụ
+
+  Ý định khách hàng                Hỏi giá, hỏi tồn kho, tư vấn sản phẩm, bảo hành, khiếu nại, tra cứu đơn hàng
+  Nhu cầu                          Điện thoại dưới 10 triệu, pin tốt, chụp ảnh đẹp, dùng cho người lớn tuổi
+  Thực thể được trích xuất         Tên sản phẩm, model, màu sắc, ngân sách, địa chỉ, số điện thoại, mã đơn hàng
+
+  Cảm xúc                          Tích cực, trung tính, tiêu cực, tức giận, thất vọng
+  Mức độ quan tâm                  Thấp, trung bình, cao
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                         1/60
+
+===== PAGE 2 =====
+      Nhóm kết quả AI                                                       Ví dụ
+  Lead qualiﬁcation               Không phải lead, lead tiềm năng, lead nóng, cần chăm sóc lại
+
+  Tóm tắt hội thoại               Khách cần iPhone 16 màu đen, muốn trả góp, dự kiến mua trong tuần
+  Hành động đề xuất               Gửi bảng giá, kiểm tra tồn kho, gọi lại, chuyển cửa hàng, ưu tiên Supervisor
+  Nhãn/phân loại tự động          IPHONE, TRA_GOP, LEAD_HOT, COMPLAINT
+
+  Điều phối tự động               Chuyển nhóm bán hàng, bảo hành, khiếu nại hoặc Agent chuyên môn
+
+
+Hệ thống mChat vốn đã quản lý hội thoại theo kênh, trạng thái, nhãn, nhóm và Agent; đồng thời có
+automation, SLA và báo cáo. Vì vậy, kết quả AI không nên chỉ “để xem”, mà phải được thiết kế để tham
+gia trực tiếp vào phân phối hội thoại, lọc danh sách, cảnh báo, chăm sóc lead và báo cáo quản trị.
+
+
+VSS mChat SRS
+
+II. Vai trò chi tiết của Business Analyst
+
+1. Khảo sát hiện trạng và xác định bài toán
+
+BA làm việc với đội CSKH, bán hàng online, marketing, vận hành, quản lý chất lượng, Data/AI và đội phát
+triển để làm rõ:
+
+      Agent hiện đọc và đánh giá hội thoại như thế nào.
+
+      Những thông tin nào Agent thường phải tự ghi chú.
+      Hội thoại nào thường bị bỏ sót.
+
+      Thế nào là một khách hàng “có nhu cầu thật”.
+
+      Những trường hợp nào phải chuyển Supervisor.
+      Việc phân loại sai gây hậu quả gì.
+
+      Dữ liệu AI sẽ phục vụ Agent, quản lý, marketing hay CRM.
+      Chức năng nào cần AI realtime và chức năng nào có thể chạy batch.
+
+BA xây dựng quy trình As-is và To-be.
+
+Ví dụ:
+
+      Hiện tại Agent đọc toàn bộ cuộc hội thoại, tự ghi nhu cầu, tự đánh giá mức độ quan tâm và tự
+      gắn nhãn.
+      Sau triển khai, AI tự động phân tích, điền sẵn kết quả; Agent chỉ xác nhận hoặc chỉnh sửa.
+
+
+2. Xác định use case và phạm vi AI
+
+BA cần tách rõ từng use case, không viết chung chung là “AI phân tích hội thoại”.
+
+Ví dụ:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                       2/60
+
+===== PAGE 3 =====
+UC-AI-01: Nhận diện ý định
+
+      Đầu vào: toàn bộ tin nhắn khách hàng trong conversation.
+
+      Đầu ra: một hoặc nhiều intent.
+
+      Thời điểm chạy: sau mỗi tin nhắn khách hoặc khi conversation kết thúc.
+      Người sử dụng: Agent, Supervisor, hệ thống routing.
+
+      Trường hợp ngoại lệ: chưa đủ thông tin, nhiều ý định, khách đổi nhu cầu giữa hội thoại.
+
+UC-AI-02: Tóm tắt hội thoại
+
+      Đầu vào: lịch sử message theo đúng thứ tự thời gian.
+      Đầu ra: tóm tắt ngắn, nhu cầu chính, thông tin đã cung cấp, vấn đề chưa giải quyết.
+
+      Thời điểm chạy: khi chuyển Agent, đóng hội thoại hoặc Agent yêu cầu.
+      Quy tắc: không được tạo thêm thông tin không có trong hội thoại.
+
+UC-AI-03: Chấm chất lượng lead
+
+      Đầu vào: nội dung chat, sản phẩm quan tâm, thời điểm dự kiến mua, ngân sách, thông tin liên hệ.
+
+      Đầu ra: COLD, WARM, HOT và lý do.
+      Hành động sau đó: gắn nhãn, ưu tiên queue, tạo task gọi lại.
+
+
+3. Xây dựng taxonomy và business rules
+
+Đây là một trong những nhiệm vụ quan trọng nhất của BA.
+
+BA phải định nghĩa rõ từng nhãn, tránh để mỗi người hiểu một kiểu.
+
+Ví dụ taxonomy Intent
+
+
+        Mã intent                  Tên                        Định nghĩa                                 Ví dụ
+
+  PRODUCT_CONSULTING          Tư vấn sản        Khách chưa chọn được sản phẩm và            “Máy nào chụp ảnh đẹp dưới
+                              phẩm              muốn được tư vấn                            10 triệu?”
+  PRICE_INQUIRY               Hỏi giá           Khách hỏi giá của sản phẩm xác định         “iPhone 16 giá bao nhiêu?”
+
+  STOCK_CHECK                 Kiểm tra tồn      Khách muốn biết sản phẩm còn hàng           “Chi nhánh Cầu Giấy còn màu
+                              kho               hay không                                   đen không?”
+  ORDER_TRACKING              Tra cứu đơn       Khách muốn biết tình trạng giao             “Đơn 12345 giao tới đâu rồi?”
+                              hàng              hàng
+
+  COMPLAINT                   Khiếu nại         Khách phản ánh dịch vụ hoặc sản             “Tôi chờ ba ngày vẫn chưa
+                                                phẩm                                        được xử lý.”
+
+
+BA cũng phải quy định:
+
+      Một hội thoại được có một intent hay nhiều intent.
+
+      Intent nào là chính, intent nào là phụ.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                       3/60
+
+===== PAGE 4 =====
+      Khi nào trả về UNKNOWN.
+
+      Nếu conﬁdence thấp thì hiển thị thế nào.
+      Intent mới phát sinh được bổ sung vào taxonomy bằng quy trình nào.
+
+      Khi khách đổi nhu cầu, AI lưu intent cuối hay toàn bộ lịch sử intent.
+
+
+4. Định nghĩa đầu ra AI và acceptance criteria
+
+BA phải mô tả rõ từng trường kết quả.
+
+Ví dụ cấu trúc kết quả:
+
+
+ JSON
+ {
+   "conversation_id": "CV_120345",
+   "primary_intent": "PRODUCT_CONSULTING",
+   "secondary_intents": ["PRICE_INQUIRY", "STOCK_CHECK"],
+   "sentiment": "POSITIVE",
+   "interest_level": "HIGH",
+   "lead_status": "HOT",
+   "needs": {
+     "product_category": "SMARTPHONE",
+     "budget_min": 8000000,
+     "budget_max": 10000000,
+     "preferred_features": ["CAMERA", "BATTERY"]
+   },
+   "summary": "Khách cầ                   n điện thoại 8–10 triệu, ưu tiên camera và pin.",
+   "recommended_actions": [
+     "Gử  i ba sa             ̉n phẩ           m phù hợp",
+     "Kiể     m tra tồ                n kho tại Hà Nội"
+   ],
+   "confidence": 0.89
+ }
+
+BA cần giải thích ý nghĩa, kiểu dữ liệu, giá trị cho phép, trường bắt buộc, trường có thể null và quy tắc
+validate cho từng ﬁeld.
+
+
+5. Phân tích dữ liệu nguồn
+
+BA phối hợp với Data Engineer và Backend để xác định dữ liệu nào thực sự cần đưa vào AI.
+
+Các entity chính
+
+
+         Entity                                                      Dữ liệu tiêu biểu
+  Conversation              ID hội thoại, kênh, trạng thái, thời gian mở/đóng, Agent phụ trách
+
+  Message                   Người gửi, nội dung, thời gian, loại message, ﬁle đính kèm
+  Contact                   Customer ID, tên, số điện thoại, email, thuộc tính khách hàng
+  Channel                   Facebook, Zalo OA, Website, livestream
+
+  Agent                     Agent ID, nhóm, vai trò, trạng thái online
+  Label                     Nhãn thủ công hoặc nhãn AI
+
+  SLA                       Thời gian phản hồi, thời gian giải quyết, trạng thái vi phạm
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                            4/60
+
+===== PAGE 5 =====
+        Entity                                                 Dữ liệu tiêu biểu
+  Feedback                Agent đồng ý, sửa hoặc từ chối kết quả AI
+
+
+BA phải xử lý các tình huống dữ liệu đặc thù:
+
+      Tin nhắn bị trùng do webhook gửi lại.
+      Tin nhắn bị thu hồi hoặc chỉnh sửa.
+
+      Emoji, tiếng lóng, viết tắt, không dấu.
+      Khách gửi ảnh nhưng không có text.
+
+      Một Contact có nhiều tài khoản Facebook/Zalo.
+
+      Hội thoại bị merge.
+      Một hội thoại được chuyển qua nhiều Agent.
+
+      Tin nhắn của bot, Agent và khách phải được phân biệt.
+      Nội dung mẫu do Agent gửi không được hiểu nhầm là nhu cầu của khách.
+
+      Các message hệ thống như “Agent A đã nhận hội thoại” phải được loại khỏi dữ liệu AI.
+
+III. Các nhiệm vụ của BA liên quan đến Database
+
+BA không nhất thiết trực tiếp tạo toàn bộ bảng vật lý, nhưng phải tham gia sâu vào data model,
+mapping, validation và truy vấn nghiệp vụ.
+
+1. Khảo sát Database hiện tại
+
+BA cùng Backend/DBA xác định:
+
+      Bảng nào lưu conversation.
+      Bảng nào lưu message.
+
+      Contact được định danh bằng trường nào.
+
+      Quan hệ Contact – Conversation – Message.
+      Cách lưu nhãn và thuộc tính tùy chỉnh.
+
+      Timestamp dùng múi giờ nào.
+      Dữ liệu đã xóa có còn trong DB hay không.
+
+      Cách phân biệt message của khách, Agent, bot.
+
+      Có lưu đầy đủ lịch sử thay đổi hay chỉ lưu trạng thái cuối.
+      Dữ liệu lịch sử có đủ để tạo dataset hay không.
+
+2. Lập Data Dictionary
+
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   5/60
+
+===== PAGE 6 =====
+        Trường               Kiểu dữ                         Ý nghĩa                                  Quy tắc
+                                liệu
+  conversation_id          UUID/String      Khóa hội thoại                               Không null, duy nhất
+
+  sender_type              Enum             CUSTOMER/AGENT/BOT/SYSTEM                    Bắt buộc
+  message_content          Text             Nội dung tin nhắn                            Có thể null nếu là ảnh
+
+  sent_at                  Timestamp        Thời gian gửi                                Chuẩn UTC hoặc GMT+7 thống
+                                                                                         nhất
+  primary_intent           Varchar          Ý định chính                                 Thuộc taxonomy được phê
+                                                                                         duyệt
+
+  confidence_score         Decimal          Độ tin cậy của AI                            Từ 0 đến 1
+  model_version            Varchar          Phiên bản model                              Bắt buộc để truy vết
+
+  prompt_version           Varchar          Phiên bản prompt                             Bắt buộc với LLM
+  review_status            Enum             PENDING/ACCEPTED/EDITED/REJECTED             Phục vụ human review
+
+
+
+3. Đề xuất mô hình lưu kết quả AI
+
+Có thể bổ sung các bảng logic sau:
+
+AI_ANALYSIS
+
+Lưu kết quả phân tích tổng thể của một conversation:
+
+
+      analysis_id
+
+      conversation_id
+
+      analysis_status
+
+      primary_intent
+
+      sentiment
+
+      interest_level
+
+      lead_status
+
+      summary
+
+      overall_confidence
+
+      model_version
+
+      prompt_version
+
+      analyzed_at
+
+      source_message_from
+
+      source_message_to
+
+AI_EXTRACTED_ATTRIBUTE
+
+Lưu các thuộc tính động:
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      6/60
+
+===== PAGE 7 =====
+      analysis_id
+
+      attribute_code
+
+      attribute_value
+
+      confidence
+
+      source_message_id
+
+Ví dụ:
+
+                      attribute_code                                               attribute_value
+  PRODUCT_MODEL                                                iPhone 16
+
+  BUDGET_MAX                                                   20000000
+  PURCHASE_TIME                                                Trong tuần
+  LOCATION                                                     Hà Nội
+
+
+
+AI_RECOMMENDED_ACTION
+
+      Loại hành động.
+
+      Nội dung hành động.
+
+      Độ ưu tiên.
+      Agent đã thực hiện hay chưa.
+
+      Thời điểm thực hiện.
+
+AI_FEEDBACK
+
+      Kết quả gốc của AI.
+
+      Kết quả Agent chỉnh sửa.
+
+      Người chỉnh sửa.
+      Lý do từ chối.
+
+      Thời gian feedback.
+
+Bảng này rất quan trọng vì dữ liệu feedback có thể dùng làm dữ liệu cải tiến model sau này.
+
+
+4. Mapping dữ liệu và API
+
+BA lập tài liệu mapping:
+
+                                                                                                                     Trườn
+    Nguồn mChat                Trường gửi AI           Trường AI trả về                Trường lưu DB                   hiển
+                                                                                                                      thị U
+
+  conversations.id        conversation_id             conversation_id         ai_analysis.conversation_id            Hidde
+  messages.content        messages[].content          —                       —                                      Lịch sử
+                                                                                                                     chat
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   7/60
+
+===== PAGE 8 =====
+                                                                                                                      Trườn
+    Nguồn mChat                Trường gửi AI           Trường AI trả về                 Trường lưu DB                   hiển
+                                                                                                                       thị U
+
+                                                                                                                      Ý định
+  —                        —                          primary_intent          ai_analysis.primary_intent              khách
+                                                                                                                      hàng
+  —                        —                          summary                 ai_analysis.summary                     Tóm tắ
+                                                                                                                      AI
+  —                        —                          confidence              ai_analysis.confidence                  Độ tin
+                                                                                                                      cậy
+
+
+BA cũng làm rõ:
+
+      API được gọi sau mỗi message hay khi đóng conversation.
+      API đồng bộ hay bất đồng bộ.
+
+      Có retry khi timeout hay không.
+      Một conversation có thể được phân tích lại bao nhiêu lần.
+
+      Kết quả cũ có bị ghi đè hay lưu version.
+
+      Làm thế nào tránh xử lý trùng.
+      Khi message mới đến, AI phân tích toàn bộ hay chỉ phần phát sinh.
+
+      Nếu AI lỗi thì Agent có tiếp tục xử lý chat bình thường không.
+
+IV. Vai trò chi tiết của AI QA
+
+AI QA chịu trách nhiệm kiểm tra cả dữ liệu, mô hình, tích hợp và trải nghiệm nghiệp vụ.
+
+1. Lập chiến lược kiểm thử AI
+
+AI QA xác định:
+
+      Phạm vi model cần test.
+
+      Các loại dữ liệu cần test.
+
+      Môi trường và phiên bản model.
+      Bộ tiêu chí đánh giá.
+
+      Cách so sánh kết quả với ground truth.
+      Ngưỡng đạt cho từng loại output.
+
+      Quy tắc release hoặc rollback.
+
+      Test hồi quy khi đổi model, prompt hoặc taxonomy.
+
+Một test run phải ghi nhận tối thiểu:
+
+      Dataset version.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                    8/60
+
+===== PAGE 9 =====
+      Model version.
+
+      Prompt version.
+      Conﬁguration version.
+
+      Ngày chạy.
+
+      Kết quả metric.
+      Danh sách lỗi.
+
+      Người phê duyệt.
+
+
+2. Xây dựng bộ dữ liệu kiểm thử
+
+AI QA phối hợp với BA và nghiệp vụ để tạo golden test set.
+Bộ dữ liệu cần bao phủ:
+
+      Facebook, Zalo, Website, livestream.
+
+      Hội thoại ngắn và dài.
+
+      Có dấu, không dấu, viết tắt.
+      Tiếng Việt pha tiếng Anh.
+
+      Emoji và tiếng lóng.
+      Một intent và nhiều intent.
+
+      Khách đổi nhu cầu giữa cuộc trò chuyện.
+
+      Khách chỉ hỏi tham khảo.
+      Lead nóng nhưng biểu đạt gián tiếp.
+
+      Khiếu nại, châm biếm, mỉa mai.
+      Tin nhắn spam.
+
+      Hội thoại thiếu thông tin.
+
+      Tin nhắn có số điện thoại, địa chỉ, mã đơn hàng.
+      Tin nhắn có dữ liệu cá nhân cần bảo vệ.
+
+Dataset nên tách thành:
+
+      Training set.
+
+      Validation set.
+      Test set.
+
+      Regression set.
+
+      Adversarial/edge-case set.
+
+Không được để cùng một conversation hoặc các conversation gần như giống nhau xuất hiện ở cả train
+và test vì sẽ gây data leakage.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      9/60
+
+===== PAGE 10 =====
+3. Kiểm thử chất lượng dữ liệu đầu vào
+
+Trước khi đánh giá model, AI QA phải kiểm tra dữ liệu nguồn:
+
+         Nhóm kiểm tra                                                     Nội dung
+  Completeness                       Có thiếu message, sender, timestamp hay không
+
+  Uniqueness                         Có message/conversation trùng không
+  Consistency                        Trạng thái, channel, Agent có nhất quán không
+  Ordering                           Tin nhắn có đúng thứ tự thời gian không
+
+  Validity                           Enum, timestamp, encoding có hợp lệ không
+  Referential integrity              Message có conversation cha hay không
+
+  Privacy                            Dữ liệu cá nhân đã masking đúng chưa
+  Filtering                          Message hệ thống/bot có bị đưa nhầm vào input không
+
+
+Ví dụ lỗi dữ liệu có thể khiến AI sai:
+
+      Tin nhắn Agent được gắn nhầm là khách hàng.
+
+      Thứ tự message bị đảo.
+
+      Thiếu tin nhắn đầu cuộc hội thoại.
+      Cùng một message được gửi hai lần.
+
+      Nội dung HTML chưa được loại bỏ.
+      Emoji hoặc ký tự Unicode bị lỗi encoding.
+
+
+4. Kiểm thử từng chức năng AI
+
+Nhận diện intent
+
+Kiểm tra:
+
+      Intent đúng.
+      Intent chính và phụ đúng.
+
+      Trường hợp đa ý định.
+      Intent không thuộc taxonomy.
+
+      Không đủ dữ liệu phải trả UNKNOWN.
+
+      Không thiên lệch về intent phổ biến.
+
+Chỉ số phù hợp:
+
+      Precision.
+      Recall.
+
+      F1-score.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      10/60
+
+===== PAGE 11 =====
+      Macro F1.
+
+      Confusion matrix.
+
+Phân tích cảm xúc
+
+Kiểm tra riêng từng lớp:
+
+      Positive.
+      Neutral.
+
+      Negative.
+      Angry/urgent nếu có.
+
+Đặc biệt cần kiểm tra Recall của lớp tiêu cực, vì bỏ sót khách đang tức giận có thể gây hậu quả nghiệp vụ
+lớn.
+
+Trích xuất nhu cầu và thực thể
+
+Kiểm tra từng trường:
+
+      Tên sản phẩm.
+
+      Ngân sách.
+      Địa điểm.
+
+      Thời gian dự kiến mua.
+
+      Màu sắc.
+      Số điện thoại.
+
+      Mã đơn hàng.
+      Hình thức thanh toán.
+
+Không chỉ kiểm tra “output JSON có trả về”, mà phải đối chiếu với chính xác message nguồn.
+
+Lead qualiﬁcation
+
+Kiểm tra:
+
+      Lead nóng có bị đánh giá thành lạnh không.
+
+      Khách chỉ hỏi tham khảo có bị gắn HOT không.
+      Điểm lead có thay đổi hợp lý khi có thêm thông tin.
+
+      Kết quả có giải thích được bằng tín hiệu nào.
+
+      Rule nghiệp vụ và model có mâu thuẫn không.
+
+Tóm tắt hội thoại
+
+AI QA đánh giá:
+
+      Có đúng nhu cầu chính không.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                    11/60
+
+===== PAGE 12 =====
+      Có bỏ sót thông tin quan trọng không.
+
+      Có thêm thông tin không tồn tại không.
+      Có nhầm lời Agent thành lời khách không.
+
+      Có giữ đúng số tiền, model, địa điểm, thời gian không.
+
+      Có mô tả đúng vấn đề chưa được xử lý không.
+
+Recommended Action
+
+Kiểm tra:
+
+      Hành động có phù hợp intent không.
+
+      Không đề xuất hành động trái quy trình.
+
+      Không tự ý cam kết giảm giá hoặc chính sách.
+      Không yêu cầu Agent thu thập lại dữ liệu đã có.
+
+      Thứ tự ưu tiên hành động hợp lý.
+      Khiếu nại nghiêm trọng phải đề xuất escalation.
+
+V. Kiểm thử API, Database và pipeline dữ liệu
+
+1. Kiểm thử API AI
+
+AI QA kiểm tra:
+
+      Request đúng schema.
+      Thiếu trường bắt buộc.
+
+      Message rỗng.
+
+      Conversation quá dài.
+      Ký tự đặc biệt.
+
+      Timeout.
+      Model service trả lỗi 4xx/5xx.
+
+      Retry có gây xử lý trùng không.
+
+      Response sai JSON.
+      Response thiếu ﬁeld.
+
+      Conﬁdence ngoài khoảng 0–1.
+      Model version được trả đúng.
+
+      Thời gian xử lý đáp ứng SLA.
+
+
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                12/60
+
+===== PAGE 13 =====
+2. Kiểm thử dữ liệu được ghi vào Database
+
+AI QA cần đối chiếu ba lớp:
+
+ 1. Response thực tế từ AI API.
+ 2. Bản ghi lưu trong Database.
+
+ 3. Dữ liệu hiển thị trên giao diện mChat.
+
+Ví dụ:
+
+      API trả HOT, DB không được lưu thành WARM.
+      Summary chứa Unicode tiếng Việt phải lưu đầy đủ.
+
+      Trường null không được tự chuyển thành chuỗi "null".
+
+      Kết quả phân tích lại phải có version hoặc timestamp mới.
+      Không được tạo hai bản ghi active giống nhau.
+
+      Khi Agent chỉnh sửa, phải lưu cả kết quả AI ban đầu và kết quả đã hiệu chỉnh.
+      Không được mất dấu nguồn message mà AI sử dụng để kết luận.
+
+Một số truy vấn kiểm thử minh họa
+
+
+ SQL
+ -- Kiể           m tra kế                t qua        ̉ AI trùng cho cùng một lầ                                                                   n phân tích
+ SELECT conversation_id, model_version, prompt_version, analyzed_at, COUNT(*)
+ FROM ai_analysis
+ GROUP BY conversation_id, model_version, prompt_version, analyzed_at
+ HAVING COUNT(*) > 1;
+
+
+ SQL
+ -- Kiể           m tra ba                ̉n ghi AI không có conversation tương ứng
+ SELECT a.analysis_id, a.conversation_id
+ FROM ai_analysis a
+ LEFT JOIN conversations c
+     ON c.id = a.conversation_id
+ WHERE c.id IS NULL;
+
+
+ SQL
+ -- Kiể           m tra confidence không hợp lệ
+ SELECT analysis_id, confidence_score
+ FROM ai_analysis
+ WHERE confidence_score < 0
+    OR confidence_score > 1
+    OR confidence_score IS NULL;
+
+
+ SQL
+ -- Kiể           m tra giá trị ngoài danh mục
+ SELECT analysis_id, primary_intent
+ FROM ai_analysis
+ WHERE primary_intent NOT IN (
+     'PRODUCT_CONSULTING',
+     'PRICE_INQUIRY',
+     'STOCK_CHECK',
+     'ORDER_TRACKING',
+     'COMPLAINT',
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                          13/60
+
+===== PAGE 14 =====
+     'UNKNOWN'
+ );
+
+
+3. Kiểm thử end-to-end
+
+Một test case hoàn chỉnh nên đi qua toàn bộ luồng:
+
+ 1. Khách gửi tin nhắn từ Facebook/Zalo/Website.
+ 2. mChat nhận đúng message và Contact.
+
+ 3. Conversation được tạo hoặc cập nhật đúng.
+
+ 4. Trigger gọi AI được phát sinh.
+ 5. AI nhận đủ message theo đúng thứ tự.
+
+ 6. AI trả kết quả đúng schema.
+ 7. Backend ghi kết quả vào DB.
+
+ 8. Giao diện hiển thị intent, summary, lead status, action.
+
+ 9. Nhãn AI được gắn đúng.
+10. Rule routing hoặc cảnh báo được kích hoạt.
+
+11. Agent chỉnh sửa/xác nhận kết quả.
+12. Feedback được ghi vào DB.
+
+13. Báo cáo tổng hợp đúng dữ liệu AI.
+
+VI. Kiểm thử giao diện AI trên mChat
+
+AI QA và BA cùng kiểm tra:
+
+      Panel AI xuất hiện đúng conversation.
+
+      Hiển thị trạng thái “Đang phân tích”.
+      Hiển thị lỗi khi AI không khả dụng.
+
+      Có nút chạy lại.
+
+      Có nguồn giải thích cho kết quả quan trọng.
+      Conﬁdence thấp được cảnh báo.
+
+      Agent có thể sửa intent, nhu cầu, lead status.
+      Agent có thể chấp nhận hoặc từ chối summary.
+
+      Có phân quyền: Agent, Supervisor và Admin được làm gì.
+
+      Kết quả AI không che khuất nội dung chat.
+      Khi chuyển Agent, summary vẫn được giữ.
+
+      Khi merge Contact/conversation, dữ liệu AI được xử lý đúng.
+      Khi có message mới, giao diện thể hiện kết quả cũ hay kết quả đang cập nhật rõ ràng.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   14/60
+
+===== PAGE 15 =====
+VII. Kiểm thử phi chức năng và an toàn dữ liệu
+
+Hiệu năng
+
+      Thời gian phản hồi trung bình và P95/P99.
+      Số conversation xử lý đồng thời.
+
+      Khả năng xử lý giờ cao điểm.
+      Queue backlog.
+
+      Timeout và retry.
+
+      Chi phí xử lý trên mỗi conversation.
+
+Bảo mật và dữ liệu cá nhân
+
+      Mask số điện thoại, email, địa chỉ trong dataset test.
+
+      Kiểm soát quyền xem dữ liệu AI.
+      Không ghi prompt chứa dữ liệu nhạy cảm vào log không bảo vệ.
+
+      Không gửi dữ liệu sang model ngoài phạm vi được phê duyệt.
+      Có audit log khi người dùng chỉnh sửa kết quả AI.
+
+      Có chính sách lưu và xóa dữ liệu.
+
+      Dataset dùng để training phải được phê duyệt và ẩn danh.
+
+Khả năng phục hồi
+
+      AI service down thì mChat vẫn phải chat được.
+
+      Message không bị mất.
+      Job lỗi được đưa vào retry/dead-letter queue.
+
+      Có khả năng reprocess các conversation lỗi.
+      Không tạo nhãn hoặc task trùng sau retry.
+
+VIII. Phân chia trách nhiệm BA và AI QA
+
+
+               Hạng mục                                     BA                                    AI QA
+
+ Xác định bài toán kinh doanh               Chủ trì                                Tham gia
+ Định nghĩa intent, sentiment, lead         Chủ trì                                Review khả năng kiểm thử
+
+ Thiết kế business rule                     Chủ trì                                Kiểm tra rule
+ Data mapping                               Chủ trì cùng Data/Backend              Xác minh mapping
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                15/60
+
+===== PAGE 16 =====
+                Hạng mục                                        BA                                       AI QA
+  Data Dictionary                              Chủ trì                                   Dùng làm căn cứ test
+
+  Dataset labeling guideline                   Chủ trì nội dung nghiệp vụ                Kiểm tra tính nhất quán
+  Golden test set                              Cung cấp tình huống nghiệp vụ             Chủ trì xây dựng và quản lý
+  Test model                                   Xác nhận nghiệp vụ                        Chủ trì
+
+  Test API/DB/pipeline                         Hỗ trợ mapping                            Chủ trì
+  UAT                                          Chủ trì với người dùng                    Hỗ trợ và cung cấp bằng chứng
+
+  Theo dõi lỗi production                      Phân tích tác động nghiệp vụ              Phân tích lỗi dữ liệu/model
+  Cải tiến model                               Ưu tiên use case và taxonomy              Cung cấp regression result
+
+
+
+IX. Bộ đầu việc phù hợp để mô tả vai trò thực tế
+
+Business Analyst
+
+      Khảo sát quy trình CSKH và bán hàng đa kênh; xác định các điểm AI có thể hỗ trợ Agent và
+      Supervisor.
+      Phân tích và đặc tả các use case nhận diện intent, trích xuất nhu cầu, sentiment analysis, lead
+      qualiﬁcation, conversation summarization và recommended action.
+      Xây dựng taxonomy, label deﬁnition, business rules, decision table và acceptance criteria cho từng
+      đầu ra AI.
+
+      Phân tích cấu trúc Conversation, Message, Contact, Agent, Channel, Label, SLA và dữ liệu lịch sử
+      phục vụ AI.
+
+      Thiết kế data mapping giữa Database mChat, AI service, API response, bảng lưu kết quả và giao
+      diện Agent.
+
+      Tham gia thiết kế Database schema, data dictionary, versioning, audit log và cơ chế lưu feedback
+      của Agent.
+      Xác định trigger, workﬂow, retry, re-analysis, conﬁdence threshold và human-review ﬂow.
+
+      Thiết kế UI/UX cho AI insight panel, summary, recommended action, conﬁ      dence warning và chức
+      năng xác nhận/chỉnh sửa kết quả AI.
+
+      Phối hợp xây dựng guideline gán nhãn, bộ dữ liệu training/validation/test và ma trận tình huống
+      nghiệp vụ.
+
+      Viết BRD/SRS, API/data mapping speciﬁcation, user stories, acceptance criteria và UAT scenarios.
+      Phối hợp Dev, Data Engineer, AI Engineer và QA xử lý lỗi dữ liệu, lỗi logic và các edge case.
+
+      Theo dõi hiệu quả sau triển khai qua tỷ lệ Agent chấp nhận kết quả AI, tỷ lệ chỉnh sửa, thời gian xử
+      lý và tỷ lệ chuyển đổi lead.
+
+AI QA
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                         16/60
+
+===== PAGE 17 =====
+      Xây dựng AI test strategy, test plan, golden dataset, regression dataset và edge-case dataset.
+
+      Kiểm tra chất lượng dữ liệu hội thoại trước khi đưa vào model: thiếu, trùng, sai thứ tự, sai sender,
+      lỗi encoding và dữ liệu cá nhân.
+
+      Kiểm thử intent, sentiment, entity extraction, lead scoring, summary và recommended action bằng
+      ground truth.
+      Đánh giá model bằng Precision, Recall, F1, confusion matrix, exact match và rubric đánh giá nội
+      dung sinh.
+      Thực hiện hallucination test, ambiguity test, adversarial test, bias test và multilingual/noisy-text
+      test.
+
+      Kiểm thử API AI, JSON schema, timeout, retry, idempotency và error handling.
+
+      Kiểm thử dữ liệu ghi vào Database, khóa ngoại, dữ liệu trùng, null, enum, model version, prompt
+      version và audit history.
+      Đối soát dữ liệu giữa API response, Database và giao diện mChat.
+
+      Thực hiện functional test, integration test, end-to-end test, regression test và production smoke
+      test.
+
+      Kiểm thử quyền truy cập, masking dữ liệu cá nhân, log hệ thống và khả năng phục hồi khi AI
+      service lỗi.
+
+      Theo dõi production metrics, drift, tỷ lệ conﬁ      dence thấp, tỷ lệ Agent sửa kết quả và các nhóm lỗi
+      phổ biến.
+      Quản lý defect, phân tích nguyên nhân thuộc dữ liệu, prompt, model, API, Database hay business
+      rule trước khi chuyển đội xử lý.
+
+Điểm quan trọng nhất là: BA chịu trách nhiệm làm cho AI “hiểu đúng nghiệp vụ”, còn AI QA chịu
+trách nhiệm chứng minh rằng AI, dữ liệu và toàn bộ pipeline đang hoạt động đúng, ổn định và có
+thể nghiệm thu được.
+
+
+   Lead qualiﬁcation là gì?
+
+
+
+Lead qualiﬁcation là quá trình đánh giá và phân loại một khách hàng tiềm năng để xác định:
+
+      Khách có nhu cầu thật hay chỉ đang tham khảo.
+
+      Khả năng mua hàng cao hay thấp.
+      Có nên ưu tiên chăm sóc ngay không.
+
+      Nên chuyển khách cho bộ phận hoặc nhân viên nào.
+
+      Hành động tiếp theo phù hợp là gì.
+
+Trong dự án mChat, AI đọc nội dung hội thoại và biến các tín hiệu trong cuộc trò chuyện thành kết quả
+đánh giá lead.
+
+Ví dụ
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                       17/60
+
+===== PAGE 18 =====
+Khách nhắn:
+
+      “Mình cần mua iPhone 16 Pro Max 256GB màu đen, cửa hàng Cầu Giấy còn không? Có trả góp
+      không? Mình muốn lấy tối nay.”
+
+AI có thể đánh giá:
+
+
+ JSON
+ {
+   "lead_status": "HOT",
+   "interest_level": "HIGH",
+   "purchase_time": "TODAY",
+   "product": "iPhone 16 Pro Max 256GB",
+   "location": "Cầ  u Giấ        y",
+   "payment_method": "INSTALLMENT",
+   "recommended_action": "Kiể     m tra tồ                n kho và liên hệ khách ngay"
+ }
+
+Đây là lead nóng, vì khách đã xác định rõ sản phẩm, địa điểm, phương thức thanh toán và thời gian
+mua.
+
+Ngược lại:
+
+      “Bên mình có bán điện thoại không?”
+
+Khách này chưa cung cấp đủ thông tin, nên có thể được xếp là lead lạnh hoặc chưa đủ điều kiện đánh
+giá.
+
+Các mức phân loại phổ biến
+
+
+        Mức                                 Ý nghĩa                                               Ví dụ
+
+  HOT – Lead nóng      Có nhu cầu rõ, khả năng mua cao, cần chăm             Hỏi tồn kho, giá cuối, trả góp, muốn mua
+                       sóc ngay                                              hôm nay
+  WARM – Lead ấm       Có quan tâm nhưng chưa sẵn sàng mua ngay              Đang so sánh sản phẩm, dự kiến mua tháng
+                                                                             sau
+
+  COLD – Lead          Nhu cầu chưa rõ hoặc khả năng mua thấp                Chỉ hỏi thông tin chung, chưa có ngân sách
+  lạnh
+  UNQUALIFIED          Không phù hợp hoặc không phải khách tiềm              Spam, tuyển dụng, hỏi nhầm đơn vị
+                       năng
+  UNKNOWN              Chưa đủ dữ liệu để kết luận                           Hội thoại quá ngắn hoặc nội dung mơ hồ
+
+
+
+AI dựa vào tín hiệu nào?
+
+1. Nhu cầu sản phẩm
+
+      Đã xác định sản phẩm hay chưa.
+      Có nêu model, màu sắc, dung lượng, tính năng mong muốn không.
+
+      Nhu cầu có nằm trong phạm vi doanh nghiệp cung cấp không.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      18/60
+
+===== PAGE 19 =====
+2. Ngân sách
+
+      Có nêu ngân sách cụ thể không.
+
+      Ngân sách có phù hợp với sản phẩm không.
+
+      Có quan tâm trả góp hoặc phương thức thanh toán không.
+
+3. Thời gian dự kiến mua
+
+      “Mua ngay”, “lấy hôm nay” là tín hiệu mạnh.
+
+      “Đang tham khảo”, “vài tháng nữa” là tín hiệu yếu hơn.
+
+4. Mức độ chủ động
+
+      Hỏi tồn kho.
+      Hỏi địa chỉ cửa hàng.
+
+      Yêu cầu giữ hàng.
+      Để lại số điện thoại.
+
+      Hỏi thủ tục thanh toán hoặc giao hàng.
+
+5. Hành vi trong hội thoại
+
+      Số lần tương tác.
+      Mức độ chi tiết của câu hỏi.
+
+      Có phản hồi lại tư vấn của Agent không.
+
+      Có quay lại hỏi nhiều lần không.
+      Có chuyển từ hỏi chung sang hỏi mua cụ thể không.
+
+6. Các yếu tố loại trừ
+
+      Spam.
+
+      Khiếu nại không liên quan đến mua mới.
+      Tin tuyển dụng.
+
+      Hỏi hỗ trợ kỹ thuật đơn thuần.
+      Khách đã mua và chỉ tra cứu đơn hàng.
+
+Lead qualiﬁcation khác lead scoring thế nào?
+
+Lead qualiﬁcation là kết luận phân loại:
+
+      Khách có đủ điều kiện là lead không? Lead nóng, ấm hay lạnh?
+
+Lead scoring là chấm một điểm số cụ thể:
+
+      Khách được 82/100 điểm.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                19/60
+
+===== PAGE 20 =====
+Ví dụ:
+
+
+ JSON
+ {
+   "lead_score": 82,
+   "lead_status": "HOT"
+ }
+
+Trong đó:
+
+
+      lead_score là số điểm.
+
+      lead_status là nhóm được suy ra từ điểm và các business rule.
+
+Ví dụ quy tắc:
+
+      80–100 điểm: HOT
+
+      50–79 điểm: WARM
+
+      Dưới 50 điểm: COLD
+
+Tuy nhiên không nên chỉ dựa vào điểm. Một khách nói “giữ máy cho tôi, tối nay tôi qua lấy” phải được ưu
+tiên cao ngay cả khi còn thiếu một vài thông tin.
+
+Lead qualiﬁcation dùng để làm gì trong mChat?
+
+Kết quả có thể được dùng để:
+
+      Gắn nhãn LEAD_HOT, LEAD_WARM.
+
+      Đưa lead nóng lên đầu hàng đợi.
+
+      Chuyển cho nhóm bán hàng phù hợp.
+      Cảnh báo Agent liên hệ ngay.
+
+      Tạo task gọi lại.
+      Chuyển dữ liệu sang CRM.
+
+      Theo dõi tỷ lệ lead chuyển thành đơn hàng.
+
+      Đánh giá hiệu quả từng kênh Facebook, Zalo, Website hoặc livestream.
+
+Nói đơn giản, lead qualiﬁcation trả lời câu hỏi: “Khách này có khả năng mua hàng đến đâu và
+chúng ta nên làm gì tiếp theo?”
+
+
+   Tôi cho rằng AI ko được tự động trả lời, phân bổ hội thoại thì nên dựa theo rule base. AI chỉ nên có
+   tác dụng tóm tắt hội thoại và dự báo ý định khách hàng... + cung cấp gợi ý khơi gợi cho tổ CSKH,
+   sales
+
+   => Bạn thấy hợp lý ko, nếu hợp lý thì AI được trigger xử lý khi nào ? Luồng điều phối ?
+
+
+
+Quan điểm này hợp lý và an toàn cho mChat, đặc biệt ở giai đoạn đầu triển khai AI.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                    20/60
+
+===== PAGE 21 =====
+Nên tách hệ thống thành hai lớp rõ ràng:
+
+      Rule Engine quyết định vận hành: phân phối hội thoại, hàng đợi, ưu tiên, SLA, giờ làm việc,
+      chuyển nhóm, chuyển Agent.
+
+      AI Assistant hỗ trợ nhận thức: hiểu khách hàng, tóm tắt, dự báo ý định, phát hiện nhu cầu và gợi
+      ý cách khai thác tiếp.
+
+AI không tự gửi tin nhắn, không tự cam kết với khách, không tự chuyển Agent hoặc thay đổi
+trạng thái hội thoại. Mọi nội dung do AI sinh ra chỉ hiển thị cho nhân viên tham khảo, chỉnh sửa và
+quyết định.
+Cách này phù hợp với cấu trúc mChat hiện tại: hội thoại được tiếp nhận từ kênh, đưa vào queue, phân
+công theo quy tắc hoặc bởi giám sát viên, sau đó Agent trực tiếp xử lý; SLA và automation giám sát quá
+trình phản hồi.
+                   mchat-ba-analysis
+
+1. Vì sao không nên để AI trực tiếp phân phối hội thoại?
+
+Phân phối hội thoại là nghiệp vụ cần tính ổn định, dễ giải thích và kiểm soát được. Các điều kiện
+thường đã xác định rõ:
+
+      Kênh Facebook, Zalo, Website hay livestream.
+      Loại hội thoại: bán hàng, CSKH, bảo hành, khiếu nại.
+
+      Giờ làm việc.
+
+      Nhóm Agent phụ trách kênh.
+      Agent đang online hay oﬄine.
+
+      Số hội thoại Agent đang xử lý.
+      Khách đã từng làm việc với Agent nào.
+
+      Khách VIP hoặc thuộc nhóm đặc biệt.
+
+      Vùng miền, cửa hàng hoặc đơn vị phụ trách.
+      Mức ưu tiên nghiệp vụ.
+
+      SLA hiện tại.
+
+mChat đã có định hướng rule ưu tiên Agent tiếp nhận gần nhất, thuộc tính khách hàng, nhóm phụ trách
+và điều kiện giờ làm việc. Vì vậy, đây nên tiếp tục là trách nhiệm của Rule-based Routing Engine, không
+phải LLM.
+            VSS mChat SRSVSS mChat SRS
+Ví dụ rule:
+
+
+ Nếu Channel = Website Viettel Store
+ AND Customer Region = Hà Nội
+ AND Topic = Tư vấ                                         n điện thoại
+ THEN đưa vào Queue = Sales Mobile Hà Nội
+
+ Nếu khách đã từng được Agent A chăm sóc
+ AND Agent A đang online
+ AND số            hội thoại đang xử                                             lý < giới hạn
+ THEN ưu tiên Agent A
+
+ Nếu ngoài giờ làm việc
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                         21/60
+
+===== PAGE 22 =====
+ THEN đưa vào hàng chờ ngoài giờ
+ AND hiể             n thị thông báo giờ hỗ                                                        trợ
+
+Rule cho kết quả nhất quán, audit được và có thể giải thích chính xác vì sao cuộc hội thoại được chuyển
+cho một nhóm hoặc Agent.
+
+2. AI nên làm gì?
+
+AI nên đóng vai trò Agent Assist, gồm bốn nhóm chính.
+
+2.1. Hiểu khách hàng
+
+AI phân tích:
+
+      Ý định hiện tại.
+
+      Nhu cầu sản phẩm hoặc dịch vụ.
+      Vấn đề khách đang gặp.
+
+      Sản phẩm, model, ngân sách, địa điểm.
+
+      Thời gian dự kiến mua.
+      Mức độ quan tâm.
+
+      Cảm xúc và mức độ khẩn cấp.
+      Các thông tin còn thiếu.
+
+Ví dụ:
+
+
+ JSON
+ {
+   "primary_intent": "PRODUCT_CONSULTING",
+   "customer_need": "Điện thoại chụp a                                            ̉nh tố           t, pin lâu",
+   "budget": "8-10 triệu",
+   "purchase_time": "Trong tuầ                      n",
+   "sentiment": "NEUTRAL",
+   "interest_level": "HIGH",
+   "missing_information": [
+     "Thương hiệu ưu tiên",
+     "Khu vực nhận hàng"
+   ]
+ }
+
+
+2.2. Tóm tắt hội thoại
+
+AI tạo bản tóm tắt cho Agent:
+
+      Khách cần điện thoại khoảng 8–10 triệu, ưu tiên camera và pin. Khách dự kiến mua trong
+      tuần, chưa xác định thương hiệu và chưa cung cấp khu vực nhận hàng.
+
+Tóm tắt đặc biệt có giá trị khi:
+
+      Hội thoại dài.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                            22/60
+
+===== PAGE 23 =====
+      Chuyển từ Agent này sang Agent khác.
+
+      Supervisor cần xem nhanh.
+      Khách quay lại sau nhiều ngày.
+
+      Agent tiếp nhận nhiều hội thoại cùng lúc.
+
+2.3. Gợi ý cách khai thác tiếp
+
+Thay vì AI tự trả lời, hệ thống hiển thị:
+
+Thông tin cần hỏi thêm
+
+      Anh/chị ưu tiên thương hiệu nào?
+
+      Sản phẩm dùng chủ yếu để chụp ảnh, chơi game hay làm việc?
+      Anh/chị muốn nhận hàng tại khu vực nào?
+
+      Anh/chị cần mua ngay hay đang tham khảo?
+
+Hướng xử lý được đề xuất
+
+      Xác nhận ngân sách tối đa.
+      Gợi ý 2–3 sản phẩm phù hợp.
+
+      Kiểm tra tồn kho tại khu vực khách hàng.
+
+      Tư vấn thêm trả góp hoặc chương trình thu cũ đổi mới.
+
+2.4. Gợi ý câu trả lời dạng bản nháp
+
+Có thể cho AI tạo reply suggestion, nhưng không tự gửi:
+
+      “Dạ, với ngân sách 8–10 triệu và nhu cầu ưu tiên camera cùng thời lượng pin, em có thể gợi ý
+      một số mẫu phù hợp. Anh/chị có ưu tiên Samsung, Xiaomi, OPPO hay thương hiệu nào khác
+      không ạ?”
+
+Agent có thể:
+
+      Chèn vào ô nhập.
+
+      Chỉnh sửa.
+
+      Bỏ qua.
+      Gửi sau khi xác nhận.
+
+3. Khi nào AI nên được trigger?
+
+Không nên gọi full LLM sau mọi tin nhắn ngay lập tức, vì có thể:
+
+      Tốn tài nguyên.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                               23/60
+
+===== PAGE 24 =====
+      Kết quả thay đổi liên tục.
+
+      Phân tích khi chưa đủ ngữ cảnh.
+      Nhiều tin nhắn ngắn của khách thực tế thuộc cùng một câu.
+
+      Làm tăng số request và tạo dữ liệu phân tích trùng lặp.
+
+Nên sử dụng event-driven trigger kết hợp debounce và milestone.
+
+Trigger 1 — Sau khi khách bắt đầu hội thoại và có đủ ngữ cảnh
+
+Điều kiện đề xuất
+
+AI được chạy lần đầu khi xảy ra một trong các điều kiện:
+
+      Khách đã gửi ít nhất 2–3 tin nhắn.
+      Hoặc khách gửi một tin nhắn đủ dài, chẳng hạn trên 30–50 ký tự.
+
+      Hoặc không có tin nhắn mới trong 5–10 giây.
+      Hoặc Agent mở cuộc hội thoại trước khi AI đã phân tích.
+
+Ví dụ khách gửi liên tiếp:
+
+
+ “Shop ơi”
+ “iPhone 16 còn không”
+ “Ba  ̉n 256 màu đen nhé”
+ “Cầ  u Giấ        y có hàng không”
+
+Không nên gọi AI bốn lần. Hệ thống đợi khoảng 5–10 giây sau tin nhắn cuối rồi gom toàn bộ thành một
+lần phân tích.
+
+Kết quả
+
+      Ý định ban đầu.
+
+      Nhu cầu.
+      Thực thể được trích xuất.
+
+      Các câu hỏi nên khai thác.
+      Gợi ý phản hồi đầu tiên.
+
+
+Trigger 2 — Khi có tin nhắn mới làm thay đổi nội dung nghiệp vụ
+
+Sau lần phân tích đầu, mỗi tin nhắn khách mới có thể phát sinh sự thay đổi:
+
+
+ Ban đầ           u: “Tôi đang tham kha                                                     ̉o.”
+ Sau đó: “Giữ giúp tôi máy này, tố                                                                                      i nay tôi qua lấ                                       y.”
+
+Khi đó AI cần cập nhật:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                           24/60
+
+===== PAGE 25 =====
+      Interest level.
+
+      Purchase intent.
+      Thời gian mua.
+
+      Next best action.
+
+      Tóm tắt mới.
+
+Tuy nhiên vẫn nên áp dụng:
+
+      Debounce 5–10 giây.
+      Chỉ trigger từ tin nhắn của khách, không phải mọi message hệ thống.
+
+      Không chạy lại nếu nội dung mới chỉ là “ok”, “vâng”, sticker hoặc emoji không làm thay đổi ngữ
+      cảnh.
+
+      Giới hạn full analysis, chẳng hạn tối đa một lần trong 30–60 giây.
+      Có thể dùng incremental analysis thay vì gửi lại toàn bộ lịch sử dài.
+
+
+Trigger 3 — Khi Agent mở hoặc nhận cuộc hội thoại
+
+Nếu cuộc hội thoại đã nằm trong queue một thời gian, khi Agent bấm nhận hoặc mở hội thoại:
+
+
+ CONVERSATION_ASSIGNED
+ hoặc
+ CONVERSATION_OPENED_BY_AGENT
+
+Hệ thống kiểm tra:
+
+
+ AI analysis đã tồ                                         n tại chưa?
+ Kết qua        ̉ AI có bao phu                                    ̉ đế     n message mới nhấ                                         t không?
+ Kết qua        ̉ có quá cũ không?
+
+Nếu chưa có hoặc đã lỗi thời thì chạy phân tích.
+
+Mục tiêu là khi Agent mở màn hình, panel AI đã có:
+
+      Khách đang cần gì.
+
+      Lịch sử chính.
+      Thông tin còn thiếu.
+
+      Câu hỏi nên hỏi.
+      Bản nháp phản hồi.
+
+Phân phối hội thoại vẫn diễn ra trước bằng rule. AI xử lý bất đồng bộ và không làm Agent phải chờ nhận
+hội thoại.
+
+
+Trigger 4 — Khi chuyển Agent hoặc chuyển nhóm
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                          25/60
+
+===== PAGE 26 =====
+Đây là trigger rất quan trọng:
+
+
+ CONVERSATION_REASSIGNED
+ CONVERSATION_TRANSFERRED_TO_TEAM
+
+AI tạo lại handover summary:
+
+      Khách liên hệ vì vấn đề gì.
+      Agent trước đã tư vấn gì.
+
+      Khách đã cung cấp những thông tin nào.
+
+      Việc gì đã hoàn thành.
+      Việc gì còn chờ xử lý.
+
+      Có cam kết gọi lại hoặc kiểm tra gì không.
+      Cảm xúc hiện tại của khách.
+
+      Hành động tiếp theo.
+
+Ví dụ:
+
+      Khách cần iPhone 16 Pro 256GB màu đen tại Cầu Giấy. Agent trước đã báo giá nhưng chưa
+      xác nhận tồn kho. Khách muốn mua trong tối nay và đang chờ kết quả kiểm tra cửa hàng.
+      Cần ưu tiên kiểm tra tồn kho và phản hồi trong 5 phút.
+
+Điều này giúp Agent mới không phải đọc lại hàng chục tin nhắn.
+
+
+Trigger 5 — Khi hội thoại tạm dừng hoặc chờ xử lý
+
+Khi Agent chuyển trạng thái:
+
+      Chờ khách phản hồi.
+
+      Chờ bộ phận khác xử lý.
+
+      Tạm dừng.
+      Chờ kiểm tra tồn kho.
+
+      Chờ kỹ thuật.
+      Chờ khiếu nại.
+
+AI có thể tạo interim summary:
+
+
+ JSON
+ {
+   "current_status": "WAITING_INTERNAL",
+   "waiting_for": "Kiể     m tra tồ                n kho tại cử                           a hàng Cầ                   u Giấ        y",
+   "customer_commitment": "Khách sẽ mua nế                                       u còn màu đen",
+   "next_action": "Pha     ̉n hồ        i kế     t qua        ̉ trước 18:00"
+ }
+
+AI chỉ gợi ý trạng thái hoặc nội dung ghi chú. Agent vẫn là người xác nhận trạng thái thực tế.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                            26/60
+
+===== PAGE 27 =====
+Trigger 6 — Khi đóng hội thoại
+
+Khi chuyển sang RESOLVED hoặc COMPLETED, AI chạy ﬁnal analysis:
+
+      Tóm tắt kết quả cuối cùng.
+
+      Ý định cuối cùng.
+      Nhu cầu đã giải quyết hay chưa.
+
+      Kết quả: tư vấn thành công, chuyển cửa hàng, tạo đơn, khách chưa mua, khiếu nại đã xử lý.
+
+      Lý do chưa chuyển đổi.
+      Cơ hội follow-up.
+
+      Nhãn đề xuất.
+      Dữ liệu phục vụ báo cáo.
+
+Ví dụ:
+
+
+ JSON
+ {
+   "final_intent": "PURCHASE_PRODUCT",
+   "outcome": "STORE_VISIT_PLANNED",
+   "product": "iPhone 16 Pro 256GB",
+   "follow_up_required": true,
+   "follow_up_time": "2026-06-10T19:00:00+07:00",
+   "summary": "Khách đã được xác nhận còn hàng và dự kiế                                                                                                               n đế     n cử     a hàng tố                   i nay."
+ }
+
+Đây là kết quả dùng cho CRM, báo cáo và phân tích hành vi, nhưng không nhất thiết tự động cập nhật
+các trường quan trọng nếu chưa được Agent xác nhận.
+
+
+Trigger 7 — Người dùng chủ động yêu cầu
+
+Trên UI nên có các nút:
+
+      Tóm tắt hội thoại
+
+      Phân tích nhu cầu
+
+      Gợi ý câu hỏi tiếp theo
+      Gợi ý phản hồi
+
+      Phân tích lại
+
+Trigger thủ công hữu ích khi:
+
+      AI chưa tự chạy.
+      Agent thấy kết quả đã cũ.
+
+      Hội thoại quá dài.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                           27/60
+
+===== PAGE 28 =====
+       Agent cần một loại gợi ý cụ thể.
+
+       Kết quả trước chưa đúng.
+
+4. Trigger đề xuất theo từng mức độ
+
+
+                Sự kiện                                  Rule Engine                                       AI                         Mức ưu
+                                                                                                                                           tiên
+  Hội thoại mới được tạo                    Đưa vào queue, xác định                       Chưa nhất thiết chạy ngay                         Cao
+                                            nhóm/Agent
+
+  Khách gửi đủ nội dung                     Không đổi routing nếu không có                Phân tích intent, need,                           Cao
+                                            rule mới                                      sentiment
+  Agent nhận/mở hội thoại                   Ghi nhận assignment, bắt đầu                  Kiểm tra và làm mới AI                            Cao
+                                            SLA                                           insight
+  Khách gửi thêm thông tin                  Theo dõi SLA                                  Cập nhật insight và gợi ý                         Cao
+  quan trọng
+
+  Chuyển Agent/nhóm                         Chuyển theo rule hoặc                         Tạo handover summary                          Rất cao
+                                            Supervisor
+  Tạm dừng/chờ xử lý                        Đổi trạng thái theo thao tác                  Tạo interim summary                      Trung bình
+                                            Agent
+
+  Hoàn thành hội thoại                      Đóng SLA, cập nhật trạng thái                 Tạo ﬁnal summary/outcome                      Rất cao
+  Agent yêu cầu phân tích lại               Không tác động                                Chạy lại theo yêu cầu                    Trung bình
+
+  Batch cuối ngày                           Không tác động hội thoại                      Tổng hợp dữ liệu báo cáo                        Thấp
+
+
+
+5. Luồng điều phối tổng thể đề xuất
+
+
+ Khách hàng gử                              i tin nhắ                   n
+           │
+           ▼
+ Facebook/Zalo/Website Adapter
+           │
+           ▼
+ Tiế  p nhận webhook và chố                                                     ng trùng dữ liệu
+           │
+           ▼
+ Lưu Message + tạo/cập nhật Conversation
+           │
+           ├─────────────────────────────────────┐
+           │                                     │
+           ▼                                     ▼
+ Rule-based Routing Engine                 Event Bus / Message Queue
+           │                                     │
+           │                                     ▼
+ Kiể  m tra kênh, giờ làm việc,             AI Orchestrator
+ nhóm phụ trách, Agent online,                    │
+ tải Agent, khách cũ, SLA                         ▼
+           │                              Kiể                                                                                         m tra có đu                         ̉ điề        u kiện
+           ▼                              trigger AI hay chưa
+ Đưa vào queue / phân cho Agent                   │
+           │                              ┌───────┴────────┐
+           │                              │ Không đu                                                                                                             ̉        │ Đu                              ̉
+           │                              │ ngữ ca                                                                                                       ̉nh        │
+           │                              ▼                 ▼
+           │                           Chờ thêm       Lấ                                                                                                                        y context hội thoại
+           │                                               │
+Printed using │   ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                      28/60
+
+===== PAGE 29 =====
+           │                                               ▼
+           │                                      Tiề                                                                                                               n xử      lý dữ liệu
+           │                                               │
+           │                                               ▼
+           │                                      Gọi AI Model Service
+           │                                               │
+           │                                               ▼
+           │                                      Validate JSON/schema
+           │                                               │
+           │                                               ▼
+           │                                      Lưu kế                                                                                                                        t qua        ̉ AI vào DB
+           │                                               │
+           └───────────────────────────────┬───────────────┘
+                                           ▼
+                                Hiể  n thị trên Agent Workspace
+                                           │
+                                           ▼
+                            Agent xem, sử                              a, chấ           p nhận hoặc bo                                 ̉ qua
+                                           │
+                                           ▼
+                                   Agent tự gử                         i pha        ̉n hồ        i
+                                           │
+                                           ▼
+                                Lưu feedback để                                     ca  ̉i tiế           n AI
+
+6. Thứ tự xử lý phải được thiết kế thế nào?
+
+Điểm quan trọng là:
+
+Routing không chờ AI
+
+Ngay khi có hội thoại mới:
+
+ 1. Lưu hội thoại.
+
+ 2. Rule Engine phân phối.
+
+ 3. Bắt đầu SLA.
+ 4. Agent có thể nhận và xử lý ngay.
+
+ 5. AI chạy song song.
+ 6. Khi AI hoàn tất, insight xuất hiện trên giao diện.
+
+mChat hiện đã kiểm soát các SLA như phản hồi đầu tiên, giải đáp trong quá trình trao đổi và hoàn thành
+hội thoại. Vì vậy không nên để inference AI làm chậm việc đưa hội thoại đến Agent.
+                                                                                                                     VSS mChat SRS
+Ví dụ thời gian:
+
+
+ T+0 giây: Nhận tin nhắ                                                       n.
+ T+0,2 giây: Lưu DB.
+ T+0,5 giây: Phân phố                                                  i bằng rule.
+ T+1 giây: Agent thấ                                               y hội thoại.
+ T+5–10 giây: AI gom đu                                                       ̉ các tin nhắ                              n liên tiế                      p.
+ T+12 giây: Hiể                                 n thị intent, summary và suggested questions.
+
+Nếu AI lỗi hoặc timeout, quy trình chat vẫn hoạt động bình thường.
+
+7. Thiết kế AI Orchestrator
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                         29/60
+
+===== PAGE 30 =====
+AI Orchestrator là thành phần quyết định có gọi AI hay không, không phải thành phần phân phối
+Agent.
+
+Nó nhận các event:
+
+
+ conversation.created
+ customer_message.created
+ conversation.assigned
+ conversation.reassigned
+ conversation.paused
+ conversation.resolved
+ ai.reanalyze_requested
+
+Sau đó kiểm tra:
+
+
+ Tin nhắ             n cuố        i có pha                ̉i từ khách không?
+ Có thêm nội dung mới kể                                                           từ lầ           n phân tích trước không?
+ Tin nhắ             n có đu             ̉ ý nghĩa không?
+ Có đang trong thời gian debounce không?
+ Có job AI nào đang chạy cho conversation này không?
+ Lần phân tích trước đã bao phu                                                                        ̉ đế     n message nào?
+ Đây là phân tích incremental hay final summary?
+
+Các trường quản lý nên có:
+
+
+ JSON
+ {
+   "conversation_id": "CONV-123",
+   "trigger_type": "CUSTOMER_MESSAGE_DEBOUNCED",
+   "from_message_id": "MSG-100",
+   "to_message_id": "MSG-108",
+   "analysis_type": "INCREMENTAL",
+   "analysis_version": 4,
+   "model_version": "MCHAT-AI-V2",
+   "status": "COMPLETED"
+ }
+
+8. AI có được tác động gián tiếp đến điều phối không?
+
+Có thể cho AI đề xuất, nhưng không tự quyết định.
+Ví dụ AI phát hiện:
+
+
+ Intent: COMPLAINT
+ Sentiment: VERY_NEGATIVE
+ Risk: CUSTOMER_ESCALATION
+ Suggested team: Complaint Resolution
+ Suggested priority: HIGH
+
+UI hiển thị:
+
+       “AI phát hiện dấu hiệu khiếu nại nghiêm trọng. Đề xuất chuyển Nhóm Xử lý khiếu nại.”
+
+Agent hoặc Supervisor bấm xác nhận chuyển.
+Ở phase sau, có thể cho AI signal làm đầu vào của Rule Engine:
+
+
+ Nếu AI intent = COMPLAINT
+ AND confidence >= 0.9
+ AND có từ khóa khiế                                               u nại thuộc danh sách kiể                                                                m soát
+ THEN ca             ̉nh báo Supervisor
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                   30/60
+
+===== PAGE 31 =====
+Nhưng ngay cả khi đó, Rule Engine mới là thành phần thực hiện hành động, còn AI chỉ cung cấp một
+thuộc tính đầu vào. Cách này giữ được khả năng audit:
+
+
+ Chuyể        n nhóm vì:
+ - AI intent = COMPLAINT, confidence 0.94
+ - Keyword rule matched = "khiế                                                                              u nại"
+ - Routing rule = ROUTE_COMPLAINT_03
+
+Giai đoạn đầu nên dừng ở mức cảnh báo và đề xuất, chưa tự chuyển.
+
+9. Mô hình phù hợp nhất cho mChat
+
+Tôi đề xuất kiến trúc ba lớp:
+
+Lớp 1 — Deterministic Operation
+
+      Nhận hội thoại.
+      Phân phối Agent.
+
+      Quản lý queue.
+      SLA.
+
+      Trạng thái.
+
+      Giờ làm việc.
+      Escalation theo rule.
+
+      Phân quyền.
+
+Lớp 2 — AI Understanding
+
+      Intent prediction.
+
+      Need extraction.
+      Sentiment.
+
+      Interest signals.
+
+      Conversation summary.
+      Missing-information detection.
+
+      Suggested next action.
+      Suggested questions.
+
+      Draft reply.
+
+Lớp 3 — Human Decision
+
+      Agent xác nhận.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   31/60
+
+===== PAGE 32 =====
+      Agent chỉnh sửa.
+
+      Agent gửi phản hồi.
+      Supervisor chuyển nhóm.
+
+      Agent xác nhận outcome.
+
+      Feedback được lưu để đánh giá AI.
+
+Nguyên tắc cốt lõi là:
+
+      Rule quyết định hội thoại đi đâu; AI giúp người nhận hội thoại hiểu nhanh và xử lý tốt
+      hơn; con người chịu trách nhiệm đối với phản hồi gửi cho khách hàng.
+
+Đây là thiết kế cân bằng nhất giữa khả năng khai thác AI, độ tin cậy nghiệp vụ, SLA và khả năng kiểm
+soát vận hành.
+
+
+   I. Đưa và Queue
+   1. AI phân tích sau 5p người dùng nhắn tin.
+   2. AI phân tích khi agent nhấn nút AI gợi ý
+   3. AI phân tích mỗi khi đổi chủ thể nhắn (giữa khách hàng và Agent)
+   => Hãy làm rõ luồng chi tiết
+
+   II. AI cần phân tích hội thoại và thông tin sản phẩm xuất hiện trong hội thoại (lấy từ ERP)
+   => Output là đánh giá Lead qualiﬁcation, điểm vướng mắc của khách hàng, mục đích-ý định của
+   khách hàng/Intent, nhu cầu, cảm xúc + mức độ quan tâm...
+   => Từ đó cung cấp Agent chiến lược khơi gợi khách hàng mua, cách chốt đơn, các mẫu tin nhắn
+   (tùy vào nhãn Ý định, nhãn Lead...), cung cấp thông tin giới thiệu sản phẩm ngắn gọn súc tích để
+   Agent dễ chốt đơn, gợi ý kênh phân phối...
+
+   => Hãy bổ sung
+
+   III. Chi tiết về chiến lược kiểm thử
+   1. Kiểm thử qua giao diện UI
+   2. (ý tưởng cơ bản) tạo ra các bộ testcase là các đoạn hội thoại (tương ứng với các nhãn) => đưa vào
+   AI để xem AI tóm tắt và gợi ý như thế nào
+   => Hãy cho biết những công cụ, tools gì được dùng để BA thực hiện chiến lược trên. Chi tiết hóa
+   nhé
+   Show moreShow less
+
+
+
+
+Thiết kế này hợp lý: hội thoại vẫn được phân phối cho Agent bằng rule, còn AI chạy qua một AI
+Processing Queue riêng để phân tích, tóm tắt và tạo gợi ý. AI không tự gửi tin, không tự đổi Agent và
+không tự cam kết thông tin với khách hàng.
+
+mChat hiện đã có dữ liệu hội thoại, khách hàng, Agent, nhóm, nhãn, trạng thái, SLA và lịch sử xử lý; đây
+là nguồn đầu vào phù hợp để xây lớp AI Agent Assist.                           AI được bổ sung để biến nội dung chat
+                                                                  mchat-ba-analysis
+thành dữ liệu có cấu trúc như ý định, nhu cầu, cảm xúc, mức độ quan tâm và hành động đề xuất.
+
+
+mChat_Dương đăng ký sáng kiến ý…
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                        32/60
+
+===== PAGE 33 =====
+I. Luồng đưa yêu cầu phân tích vào AI Queue
+
+1. Kiến trúc tổng thể
+
+Nên tách thành hai luồng chạy song song:
+
+
+ Khách hàng gử                              i tin nhắ                   n
+         │
+         ▼
+ mChat tiế                   p nhận và lưu Message
+         │
+         ├─────────────────────────────────┐
+         │                                 │
+         ▼                                 ▼
+ Rule-based Routing                 AI Trigger Service
+         │                                 │
+ Phân nhóm/Agent/SLA                Kiể                                                                                                    m tra điề                   u kiện trigger
+         │                                 │
+         ▼                                 ▼
+ Agent Workspace                    AI Processing Queue
+                                           │
+                                           ▼
+                                   AI Analysis Worker
+                                           │
+                           ┌───────────────┴───────────────┐
+                           ▼                               ▼
+                   Lấy hội thoại                    Lấ                                                                                      y sa     ̉n phẩ           m từ ERP
+                           │                               │
+                           └───────────────┬───────────────┘
+                                           ▼
+                                      Gọi AI model
+                                           │
+                                           ▼
+                                   Validate kế                         t qua        ̉
+                                           │
+                                           ▼
+                                Lưu AI Analysis Database
+                                           │
+                                           ▼
+                            Push kế             t qua        ̉ lên màn hình Agent
+
+Hệ thống tiếp nhận và phân phối hội thoại không phải chờ AI. Nếu AI bị lỗi, Agent vẫn chat và xử lý
+khách hàng bình thường.
+
+
+2. Thành phần của AI Queue
+
+Có thể sử dụng:
+
+      RabbitMQ nếu bài toán chủ yếu là task queue, cần priority, retry, dead-letter queue.
+      Kafka nếu số lượng sự kiện rất lớn, cần lưu event và replay.
+
+      Redis để lưu debounce timer, distributed lock và trạng thái job tạm thời.
+      WebSocket hoặc Server-Sent Events để đẩy kết quả AI lên giao diện Agent mà không cần refresh.
+
+Nên có ba mức ưu tiên:
+
+                Priority                          Trigger                                               Ý nghĩa
+          P1 – Cao nhất      Agent bấm “AI gợi ý”                                   Agent đang cần kết quả ngay
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                              33/60
+
+===== PAGE 34 =====
+                Priority                         Trigger                                            Ý nghĩa
+               P2 – Cao     Đổi chủ thể nhắn                                     Cập nhật sau một lượt hội thoại
+
+     P3 – Bình thường       Khách không nhắn thêm trong 5 phút                   Phân tích hội thoại đang tạm ngừng
+
+
+Mỗi job cần có:
+
+
+ JSON
+ {
+   "job_id": "AIJOB-20260610-000123",
+   "conversation_id": "CONV-10235",
+   "trigger_type": "MANUAL_SUGGESTION",
+   "priority": 1,
+   "target_message_id": "MSG-82913",
+   "analysis_type": "INCREMENTAL",
+   "requested_by": "AGENT-158114",
+   "created_at": "2026-06-10T14:20:12+07:00",
+   "idempotency_key": "CONV-10235-MSG-82913-INCREMENTAL"
+ }
+
+
+target_message_id cho biết AI phải phân tích đến tin nhắn nào. Nhờ đó hệ thống biết kết quả hiện tại đã
+bao phủ toàn bộ hội thoại hay đã lỗi thời.
+
+3. Trigger 1: AI phân tích sau 5 phút khách hàng nhắn tin
+
+Nên hiểu chính xác là:
+
+      AI chạy sau 5 phút kể từ tin nhắn cuối cùng của khách hàng mà không có thêm tin nhắn
+      mới.
+
+Không nên cố định 5 phút tính từ tin đầu tiên.
+
+Ví dụ khách nhắn:
+
+
+ 14:00:00 – Shop ơi
+ 14:00:20 – iPhone 16 còn hàng không?
+ 14:01:10 – Ba                              ̉n 256GB màu đen nhé
+ 14:02:00 – Em ở                                     Cầ  u Giấ        y
+
+Timer phải được reset sau mỗi tin nhắn:
+
+
+ Tin cuố             i: 14:02
+ Thời điể                m dự kiế                n trigger: 14:07
+
+
+Luồng chi tiết
+
+Bước 1 — Nhận tin nhắn
+
+Backend lưu:
+
+
+      message_id
+
+      conversation_id
+
+      sender_type = CUSTOMER
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                          34/60
+
+===== PAGE 35 =====
+      content
+
+      sent_at
+
+Bước 2 — Hủy timer cũ
+
+Nếu conversation đang có timer chờ phân tích:
+
+
+ AI_IDLE_TIMER:CONV-10235
+
+thì hủy hoặc cập nhật lại timer.
+
+Bước 3 — Tạo timer mới
+
+
+ Run at = sent_at + 5 phút
+ Target message = message vừa nhận
+
+Bước 4 — Kiểm tra tại thời điểm timer hết hạn
+
+AI Trigger Service kiểm tra:
+
+      Tin nhắn cuối hiện tại có còn là target_message_id không.
+
+      Có tin nhắn mới hơn không.
+      Đã có một job manual hoặc turn-boundary phân tích đến message này chưa.
+
+      Có job AI đang chạy cho conversation không.
+
+      Conversation đã đóng hay bị xóa chưa.
+
+Bước 5 — Đưa vào queue
+
+Nếu hợp lệ:
+
+
+ trigger_type = CUSTOMER_IDLE_5_MINUTES
+ priority = P3
+ analysis_type = INCREMENTAL hoặc FULL
+
+Bước 6 — Xử lý
+
+AI phân tích:
+
+      Nội dung mới kể từ lần phân tích trước.
+      Kết hợp với summary cũ.
+
+      Cập nhật intent, nhu cầu, cảm xúc, lead và gợi ý.
+
+Lưu ý
+
+Nếu mục tiêu là hỗ trợ Agent chốt sale trong thời gian thực, 5 phút khá dài. Trigger này phù hợp hơn
+cho:
+
+      Hội thoại đang dừng.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                  35/60
+
+===== PAGE 36 =====
+      Agent chưa bấm AI gợi ý.
+
+      Khách gửi nhiều message liên tiếp.
+      Tự động cập nhật summary mà không tạo quá nhiều request.
+
+Trigger chính để hỗ trợ Agent trước khi trả lời vẫn nên là nút AI gợi ý.
+
+4. Trigger 2: Agent nhấn nút “AI gợi ý”
+
+Đây là trigger quan trọng nhất vì Agent chủ động gọi AI đúng thời điểm cần hỗ trợ.
+
+Luồng giao diện
+
+Agent bấm:
+
+
+ AI gợi ý
+
+Có thể mở menu:
+
+      Tóm tắt hội thoại.
+      Phân tích nhu cầu khách hàng.
+
+      Gợi ý câu hỏi tiếp theo.
+      Gợi ý chiến lược chốt đơn.
+
+      Gợi ý tin nhắn trả lời.
+
+      Phân tích lại toàn bộ.
+
+Luồng kỹ thuật
+
+Bước 1 — UI gửi request
+
+
+ http
+ POST /api/conversations/{conversation_id}/ai-analysis
+
+
+ JSON
+ {
+   "analysis_type": "SALES_ASSIST",
+   "requested_to_message_id": "MSG-82913"
+ }
+
+Bước 2 — Backend tạo job ưu tiên cao
+
+
+ trigger_type = MANUAL_SUGGESTION
+ priority = P1
+
+Bước 3 — Xử lý job đang chờ
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                               36/60
+
+===== PAGE 37 =====
+Nếu đang tồn tại job P3 chưa chạy:
+
+      Hủy job P3.
+
+      Hoặc nâng cấp job đó thành P1.
+      Không tạo hai job phân tích cùng một phiên bản hội thoại.
+
+Nếu một job đang chạy nhưng hội thoại có message mới:
+
+      Để job hiện tại hoàn thành.
+
+      Đánh dấu conversation là dirty.
+
+      Chạy thêm một job cập nhật sau đó.
+
+Bước 4 — UI hiển thị trạng thái
+
+
+ Đang phân tích hội thoại...
+
+Nút nên tạm khóa để tránh Agent bấm liên tục.
+
+Bước 5 — AI xử lý và trả kết quả
+
+Kết quả được push lên bằng WebSocket:
+
+
+ ai.analysis.completed
+
+Bước 6 — Agent quyết định
+
+Agent có thể:
+
+      Chèn mẫu tin nhắn vào ô soạn thảo.
+
+      Chỉnh sửa trước khi gửi.
+      Bỏ qua gợi ý.
+
+      Đánh giá hữu ích/không hữu ích.
+      Chỉnh lại intent hoặc lead qualiﬁcation.
+
+AI tuyệt đối không tự bấm gửi.
+
+5. Trigger 3: AI phân tích mỗi khi đổi chủ thể nhắn
+
+Cần định nghĩa khái niệm lượt hội thoại – conversation turn.
+Một lượt là các message liên tiếp của cùng một chủ thể.
+
+Ví dụ:
+
+
+ CUSTOMER:
+ - Shop có Samsung S25 không?
+ - Ba     ̉n màu xanh nhé.
+ - Giá bao nhiêu?
+
+ AGENT:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                 37/60
+
+===== PAGE 38 =====
+ - Dạ bên em đang có hàng.
+ - Anh/chị muố                              n ba     ̉n 256GB hay 512GB?
+
+ CUSTOMER:
+ - 256GB.
+ - Có tra                ̉ góp không?
+
+Hội thoại trên có ba lượt:
+
+ 1. Customer turn.
+
+ 2. Agent turn.
+
+ 3. Customer turn.
+
+Khi nào được coi là đổi chủ thể?
+
+
+ previous_message.sender_type != current_message.sender_type
+
+Chỉ xét:
+
+
+      CUSTOMER
+
+      AGENT
+
+Không xét:
+
+
+      SYSTEM
+
+      BOT
+      Automation message.
+
+      Thông báo “Agent A đã nhận hội thoại”.
+
+      Thông báo đổi trạng thái.
+
+Luồng xử lý
+
+Trường hợp Agent → Customer
+
+Agent vừa gửi tin, sau đó khách trả lời.
+
+Khi message mới của khách đến:
+
+
+ Previous sender = AGENT
+ Current sender = CUSTOMER
+
+AI có thể phân tích ngay vì khách vừa cung cấp thông tin mới.
+
+Output có thể cập nhật:
+
+      Khách đã trả lời câu hỏi nào.
+
+      Nhu cầu đã rõ thêm chưa.
+      Mức độ quan tâm tăng hay giảm.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      38/60
+
+===== PAGE 39 =====
+      Điểm vướng mắc mới.
+
+      Câu tiếp theo Agent nên hỏi.
+
+Trường hợp Customer → Agent
+
+Trường hợp này chỉ được nhận biết khi Agent đã gửi tin.
+
+
+ Previous sender = CUSTOMER
+ Current sender = AGENT
+
+Lúc đó AI phân tích sau khi Agent đã trả lời, nên không giúp được cho chính tin nhắn vừa gửi. Trigger
+này vẫn hữu ích để:
+
+      Cập nhật summary.
+
+      Đánh giá Agent đã xử lý vấn đề nào.
+
+      Phát hiện nội dung còn thiếu.
+      Chuẩn bị cho lượt khách tiếp theo.
+
+Để hỗ trợ trước khi Agent gửi, cần dùng:
+
+      Nút AI gợi ý.
+
+      Hoặc trigger khi Agent mở conversation.
+      Hoặc debounce 15–30 giây sau lượt khách cuối.
+
+Chống trigger quá nhiều
+
+Không nên phân tích mỗi message riêng lẻ.
+Có thể áp dụng:
+
+      Gom các message cùng chủ thể thành một turn.
+
+      Chờ 5–10 giây để gom các tin nhắn liên tiếp.
+
+      Chỉ một job active cho mỗi conversation.
+      Không chạy lại nếu đã phân tích đến cùng target_message_id.
+
+      Bỏ qua tin nhắn chỉ gồm “ok”, “vâng”, sticker nếu không làm thay đổi nghiệp vụ.
+      Có cooldown, ví dụ tối đa một auto-analysis trong 30 giây.
+
+6. Quy tắc xử lý khi nhiều trigger xảy ra cùng lúc
+
+Ví dụ:
+
+ 1. Timer 5 phút chuẩn bị chạy.
+ 2. Đúng lúc đó Agent bấm AI gợi ý.
+
+ 3. Khách lại gửi thêm tin.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                  39/60
+
+===== PAGE 40 =====
+Quy tắc ưu tiên:
+
+
+ MANUAL > SPEAKER_CHANGED > CUSTOMER_IDLE
+
+
+                             Tình huống                                                      Cách xử lý
+
+  Manual và Idle cùng target message                                      Chỉ giữ Manual
+  Turn change đã phân tích xong                                           Idle không chạy lại
+
+  Khách có message mới trong lúc job chạy                                 Đánh dấu cần cập nhật
+  Agent bấm nhiều lần                                                     Trả về cùng job hiện tại
+  Job retry do timeout                                                    Giữ nguyên idempotency key
+
+  Job cũ hơn kết quả hiện tại                                             Bỏ qua, không ghi đè
+
+
+Nên lưu trạng thái job:
+
+
+ PENDING
+ PROCESSING
+ COMPLETED
+ FAILED
+ RETRYING
+ CANCELLED
+ STALE
+
+II. Bổ sung nội dung AI phân tích và gợi ý bán hàng
+
+1. Dữ liệu đầu vào
+
+Từ mChat
+
+      Toàn bộ message theo đúng thứ tự.
+      Người gửi: Customer/Agent.
+
+      Kênh: Facebook, Zalo, Website, livestream.
+
+      Thời gian gửi.
+      Thông tin khách hàng.
+
+      Nhãn hiện tại.
+      Lịch sử hội thoại.
+
+      Agent và nhóm đang xử lý.
+
+      Trạng thái conversation.
+      Kết quả AI trước đó.
+
+Từ ERP
+
+AI không nên dựa vào kiến thức chung để đoán thông tin sản phẩm. Phải lấy dữ liệu thực tế từ ERP hoặc
+Product Service:
+
+      Mã sản phẩm/SKU.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                     40/60
+
+===== PAGE 41 =====
+      Tên sản phẩm.
+
+      Thương hiệu.
+      Model.
+
+      Màu sắc, dung lượng, phiên bản.
+
+      Giá niêm yết.
+      Giá bán hiện tại.
+
+      Khuyến mại.
+      Quà tặng.
+
+      Trả góp.
+
+      Tồn kho theo cửa hàng.
+      Tồn kho online.
+
+      Chính sách bảo hành.
+      Thông số nổi bật.
+
+      Kênh bán khả dụng.
+
+      Ngày giờ cập nhật dữ liệu.
+
+mChat vốn đã có chức năng quản lý khách hàng, hội thoại, nhãn và chiến dịch; phần AI nên khai thác các
+dữ liệu đó nhưng không thay thế logic vận hành hiện tại.
+                                                                   VSS mChat SRS
+
+
+2. Luồng phân tích sản phẩm
+
+Bước 1 — Trích xuất sản phẩm được nhắc đến
+
+Ví dụ:
+
+      “S25 Ultra 256 màu xám giá bao nhiêu, Cầu Giấy còn không?”
+
+AI hoặc NER service trích:
+
+
+ JSON
+ {
+   "brand": "Samsung",
+   "model": "Galaxy S25 Ultra",
+   "storage": "256GB",
+   "color": "Xám",
+   "location": "Cầ  u Giấ        y"
+ }
+
+Bước 2 — Chuẩn hóa và tìm kiếm ERP
+
+
+ Samsung S25 Ultra
+ → Galaxy S25 Ultra
+ → Danh sách SKU theo dung lượng và màu
+
+Nếu có nhiều kết quả, Product Matching Service trả top candidates.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                  41/60
+
+===== PAGE 42 =====
+Bước 3 — Lấy dữ liệu thực tế
+
+
+ JSON
+ {
+   "sku": "SS-S25U-256-TG",
+   "product_name": "Samsung Galaxy S25 Ultra 256GB",
+   "price": 28990000,
+   "promotion_price": 26990000,
+   "stock": {
+     "Cau_Giay": 3,
+     "Online": 12
+   },
+   "installment_available": true,
+   "last_updated_at": "2026-06-10T14:20:00+07:00"
+ }
+
+Bước 4 — Đưa dữ liệu ERP cùng hội thoại vào AI
+
+AI được yêu cầu:
+
+       Chỉ sử dụng giá, tồn kho, khuyến mại do ERP cung cấp.
+       Không tự tạo thông số chưa có.
+
+       Nếu không tìm thấy sản phẩm thì ghi “Chưa xác minh”.
+
+       Không nói “còn hàng” nếu dữ liệu tồn kho đã quá cũ.
+
+3. Output phân tích đề xuất
+
+3.1. Tóm tắt hội thoại
+
+
+ Khách quan tâm Samsung Galaxy S25 Ultra 256GB màu xám, muố                                                                                                                                                            n kiể        m tra giá,
+ tra  ̉ góp và tồ                         n kho tại Cầ                           u Giấ        y. Khách chưa xác nhận thời điể                                                                                 m mua.
+
+
+3.2. Intent
+
+Có thể gồm:
+
+
+       PRODUCT_CONSULTING
+
+       PRICE_INQUIRY
+
+       STOCK_CHECK
+
+       PROMOTION_INQUIRY
+
+       INSTALLMENT_INQUIRY
+
+       COMPARE_PRODUCT
+
+       PURCHASE_PRODUCT
+
+       ORDER_TRACKING
+
+       WARRANTY_SUPPORT
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                     42/60
+
+===== PAGE 43 =====
+      COMPLAINT
+
+      UNKNOWN
+
+Nên có:
+
+
+ JSON
+ {
+   "primary_intent": "STOCK_CHECK",
+   "secondary_intents": [
+     "PRICE_INQUIRY",
+     "INSTALLMENT_INQUIRY"
+   ]
+ }
+
+
+3.3. Nhu cầu khách hàng
+
+      Sản phẩm mong muốn.
+
+      Ngân sách.
+      Tính năng ưu tiên.
+
+      Dung lượng/màu sắc.
+      Địa điểm nhận hàng.
+
+      Hình thức thanh toán.
+
+      Thời điểm mua.
+      Nhu cầu giao hàng hay nhận tại cửa hàng.
+
+3.4. Điểm vướng mắc
+
+Ví dụ:
+
+      Giá vượt ngân sách.
+      Chưa tin tưởng sản phẩm.
+
+      Chưa rõ bảo hành.
+      Đang so sánh với đối thủ.
+
+      Không có màu mong muốn.
+
+      Cửa hàng gần khách hết hàng.
+      Lo ngại thủ tục trả góp.
+
+      Chưa quyết định giữa hai model.
+      Chưa có nhu cầu mua ngay.
+
+      Có trải nghiệm dịch vụ tiêu cực.
+
+Nên tách:
+
+
+ JSON
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                              43/60
+
+===== PAGE 44 =====
+ {
+   "blockers": [
+     {
+       "code": "PRICE_CONCERN",
+       "description": "Khách cho rằng giá đang cao",
+       "evidence_message_id": "MSG-82910",
+       "severity": "MEDIUM"
+     }
+   ]
+ }
+
+
+3.5. Lead qualiﬁcation
+
+Output nên gồm cả trạng thái và lý do:
+
+
+ JSON
+ {
+   "lead_score": 82,
+   "lead_status": "HOT",
+   "qualification_reasons": [
+     "Đã xác định sa                                    ̉n phẩ           m cụ thể                ",
+     "Đã ho           ̉i tồ        n kho",
+     "Quan tâm tra                              ̉ góp",
+     "Có địa điể                         m mua cụ thể                           "
+   ],
+   "missing_signals": [
+     "Chưa xác nhận thời gian mua"
+   ]
+ }
+
+Không nên để AI chỉ trả HOT mà không giải thích.
+
+3.6. Cảm xúc
+
+
+ JSON
+ {
+   "sentiment": "NEUTRAL",
+   "emotion": "INTERESTED",
+   "sentiment_trend": "IMPROVING",
+   "negative_risk": "LOW"
+ }
+
+
+3.7. Mức độ quan tâm
+
+Có thể dùng:
+
+
+ LOW
+ MEDIUM
+ HIGH
+ VERY_HIGH
+
+Dựa vào các tín hiệu:
+
+      Đã hỏi model cụ thể.
+      Đã hỏi tồn kho.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                               44/60
+
+===== PAGE 45 =====
+       Đã hỏi giá cuối.
+
+       Đã hỏi trả góp.
+       Đã để số điện thoại.
+
+       Đã chọn cửa hàng.
+
+       Đã đề nghị giữ hàng.
+       Đã hỏi thời gian giao.
+
+4. Gợi ý chiến lược cho Agent
+
+4.1. Next Best Action
+
+Ví dụ:
+
+
+ JSON
+ {
+   "next_best_actions": [
+     {
+       "priority": 1,
+       "action": "Xác nhận thời điể                                            m dự kiế                n mua",
+       "reason": "Đã đu           ̉ thông tin sa                                 ̉n phẩ           m nhưng chưa rõ thời gian mua"
+     },
+     {
+       "priority": 2,
+       "action": "Thông báo tồ                              n kho tại Cầ                           u Giấ        y",
+       "reason": "ERP ghi nhận còn 3 sa                                                       ̉n phẩ           m"
+     },
+     {
+       "priority": 3,
+       "action": "Giới thiệu phương án tra                                                                ̉ góp",
+       "reason": "Khách đã ho                           ̉i về         tra     ̉ góp"
+     }
+   ]
+ }
+
+
+4.2. Câu hỏi khơi gợi
+
+AI gợi ý:
+
+       Anh/chị dự kiến lấy máy hôm nay hay trong tuần này ạ?
+       Anh/chị muốn nhận tại cửa hàng Cầu Giấy hay giao tận nơi?
+
+       Anh/chị ưu tiên mức trả trước thấp hay thời gian trả góp ngắn?
+
+       Anh/chị có máy cũ cần định giá thu cũ đổi mới không?
+
+Câu hỏi phải bám vào thông tin còn thiếu, không hỏi lại dữ liệu khách đã cung cấp.
+
+4.3. Chiến lược theo Lead và Intent
+
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                       45/60
+
+===== PAGE 46 =====
+            Lead/Intent                                                Chiến lược đề xuất
+  HOT + hỏi tồn kho                     Xác nhận tồn, thời gian nhận và đề nghị giữ hàng
+
+  HOT + hỏi giá                         Báo giá chính xác, ưu đãi hiện có và dẫn tới hành động mua
+  WARM + so sánh                        Làm rõ 2–3 tiêu chí ưu tiên rồi so sánh ngắn gọn
+  WARM + chưa rõ nhu cầu                Hỏi ngân sách, mục đích sử dụng, thương hiệu
+
+  COLD + tham khảo                      Cung cấp thông tin cô đọng, xin phép lưu nhu cầu follow-up
+  Giá là vướng mắc                      Gợi ý trả góp, trade-in, model thay thế phù hợp
+
+  Hết hàng                              Gợi ý cửa hàng khác, giao online hoặc phiên bản tương đương
+  Cảm xúc tiêu cực                      Ưu tiên giải quyết vấn đề, không ép upsell
+  Khiếu nại                             Xác nhận sự cố, xin thông tin cần thiết, đề xuất escalation
+
+
+
+4.4. Cách chốt đơn
+
+AI có thể gợi ý chiến thuật nhưng không tự cam kết:
+
+Chốt theo tồn kho
+
+      Sản phẩm hiện còn số lượng giới hạn tại cửa hàng phù hợp. Agent nên xác nhận thời gian
+      khách có thể nhận và đề nghị hỗ trợ giữ hàng.
+
+Chốt theo lựa chọn
+
+      Thay vì hỏi “Anh/chị có mua không?”, nên hỏi “Anh/chị muốn nhận tại cửa hàng hay giao tận
+      nơi?”
+
+Chốt theo rào cản
+
+      Khách quan tâm nhưng lo ngại chi phí ban đầu. Nên làm rõ mức trả trước và tư vấn phương
+      án trả góp.
+
+Chốt theo nhu cầu
+
+      Nhấn mạnh đúng hai lợi ích khách ưu tiên, không giới thiệu quá nhiều thông số.
+
+5. Mẫu tin nhắn theo nhãn
+
+HOT + STOCK_CHECK
+
+      Dạ mẫu này hiện vẫn còn tại cửa hàng Cầu Giấy. Anh/chị dự kiến qua nhận trong hôm nay
+      hay muốn bên em hỗ trợ giao tận nơi ạ?
+
+WARM + COMPARE_PRODUCT
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                     46/60
+
+===== PAGE 47 =====
+      Dạ để em tư vấn chính xác hơn, anh/chị ưu tiên camera, hiệu năng hay thời lượng pin hơn ạ?
+      Em sẽ chọn hai mẫu phù hợp nhất để mình dễ so sánh.
+
+PRICE_CONCERN
+
+      Dạ em hiểu anh/chị đang cân nhắc về giá. Mẫu này hiện có chương trình ưu đãi và hỗ trợ trả
+      góp. Anh/chị muốn em tính thử phương án trả trước phù hợp không ạ?
+
+LOW_INTEREST
+
+      Dạ em gửi anh/chị thông tin ngắn gọn để tham khảo trước. Khi anh/chị xác định thêm ngân
+      sách hoặc nhu cầu sử dụng, bên em sẽ hỗ trợ chọn mẫu phù hợp hơn.
+
+Các mẫu chỉ được đưa vào ô soạn thảo, Agent chỉnh sửa và chủ động gửi.
+
+6. Giới thiệu sản phẩm ngắn gọn cho Agent
+
+AI nên tạo product card dạng:
+
+
+ Samsung Galaxy S25 Ultra 256GB
+
+ • Phù hợp: khách ưu tiên camera, hiệu năng và dùng lâu dài.
+ • Điể        m nổ     i bật: camera zoom tố                                                     t, màn hình lớn, hiệu năng cao.
+ • Giá hiện tại: 26.990.000 VNĐ.
+ • Tra        ̉ góp: Có.
+ • Tồ     n kho Cầ                u Giấ        y: 3.
+ • Gợi ý chố                         t: ho        ̉i thời điể                         m nhận và nhu cầ                                       u tra        ̉ góp.
+ • Dữ liệu ERP cập nhật: 14:20 ngày 10/06/2026.
+
+Các trường giá, tồn kho, khuyến mại phải đến từ ERP. Phần “phù hợp” và “gợi ý chốt” mới là phần AI diễn
+giải.
+
+7. Gợi ý kênh phân phối
+
+AI có thể đề xuất kênh hoàn tất bán hàng, không phải tự điều phối Agent:
+
+      Nhận tại cửa hàng.
+
+      Giao hàng online.
+      Đặt giữ hàng.
+
+      Nhân viên cửa hàng gọi lại.
+      Follow-up qua Zalo OA.
+
+      Gửi link sản phẩm website.
+
+      Đặt lịch trải nghiệm.
+      Chuyển tiếp yêu cầu cho cửa hàng còn tồn kho.
+
+Ví dụ:
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                           47/60
+
+===== PAGE 48 =====
+ JSON
+ {
+   "recommended_channels": [
+     {
+       "channel": "STORE_PICKUP",
+       "location": "Cầ  u Giấ        y",
+       "reason": "Khách ở                 Cầ  u Giấ        y và cử             a hàng còn tồ                              n kho"
+     },
+     {
+       "channel": "ONLINE_DELIVERY",
+       "reason": "Tồ  n kho online còn và khách chưa xác nhận thời gian đế                                                                                                                                           n cử     a hàng"
+     }
+   ]
+ }
+
+Agent hoặc Supervisor là người quyết định thực hiện.
+
+III. Chiến lược kiểm thử AI chi tiết
+
+Cần tách thành năm lớp:
+
+ 1. Kiểm thử dữ liệu đầu vào.
+
+ 2. Kiểm thử model/API.
+ 3. Kiểm thử tích hợp ERP.
+
+ 4. Kiểm thử giao diện UI.
+
+ 5. Kiểm thử end-to-end và Database.
+
+1. Xây dựng bộ testcase hội thoại
+
+1.1. Không tạo testcase chỉ theo một nhãn
+
+Một hội thoại thực tế là tổ hợp nhiều feature.
+
+Ví dụ:
+
+
+ Intent: STOCK_CHECK
+ Lead: HOT
+ Sentiment: NEUTRAL
+ Product: Có trong ERP
+ Blocker: Giá
+ Channel: Zalo
+ Length: 12 messages
+ Noise: Có viế                              t tắ     t
+
+Do đó BA nên xây dựng Feature Matrix.
+
+           Nhóm feature                                                            Giá trị mẫu
+
+  Kênh                                     Facebook, Zalo, Website, Livestream
+  Intent                                   Hỏi giá, tồn kho, tư vấn, trả góp, so sánh, khiếu nại
+
+  Lead                                     HOT, WARM, COLD, UNQUALIFIED
+  Sentiment                                Positive, Neutral, Negative
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                  48/60
+
+===== PAGE 49 =====
+           Nhóm feature                                                          Giá trị mẫu
+  Interest                                Low, Medium, High
+
+  Product                                 Chính xác, sai chính tả, nhiều sản phẩm, không có ERP
+  Blocker                                 Giá, tồn kho, bảo hành, trả góp, chưa tin tưởng
+  Conversation length                     Ngắn, trung bình, dài
+
+  Language                                Có dấu, không dấu, viết tắt, pha tiếng Anh
+  Turn pattern                            Một lượt, nhiều lượt, đổi nhu cầu
+
+  Expected action                         Hỏi thêm, báo giá, kiểm tra tồn, escalation
+
+
+BA tạo các tổ hợp có chủ đích thay vì random toàn bộ.
+
+
+1.2. Cấu trúc một testcase
+
+Mỗi testcase nên có:
+
+                              Trường                                                              Ý nghĩa
+
+  test_case_id                                                         Mã testcase
+  scenario_name                                                        Tên tình huống
+  messages                                                             Danh sách message
+
+  erp_snapshot                                                         Dữ liệu sản phẩm giả lập
+  expected_primary_intent                                              Intent mong đợi
+
+  expected_secondary_intent                                            Intent phụ
+  expected_lead_status                                                 Lead mong đợi
+  expected_entities                                                    Product, budget, location...
+
+  expected_blockers                                                    Điểm vướng mắc
+  expected_summary_facts                                               Các ý bắt buộc trong summary
+
+  forbidden_facts                                                      Nội dung AI không được tạo
+  expected_strategy                                                    Nhóm chiến lược hợp lệ
+  expected_channel                                                     Kênh phân phối phù hợp
+
+  review_score                                                         Điểm chuyên gia
+
+
+Ví dụ:
+
+
+ JSON
+ {
+   "test_case_id": "TC-AI-LEAD-001",
+   "messages": [
+     {
+       "sender": "CUSTOMER",
+       "content": "S25 Ultra 256 màu xám Cầ                                                                u Giấ        y còn không?"
+     },
+     {
+       "sender": "AGENT",
+       "content": "Dạ anh/chị dự kiế                                            n mua khi nào ạ?"
+     },
+     {
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                               49/60
+
+===== PAGE 50 =====
+       "sender": "CUSTOMER",
+       "content": "Tố  i nay, nế                   u tra        ̉ góp được thì giữ giúp tôi."
+     }
+   ],
+   "expected_primary_intent": "STOCK_CHECK",
+   "expected_secondary_intents": [
+     "INSTALLMENT_INQUIRY",
+     "PURCHASE_PRODUCT"
+   ],
+   "expected_lead_status": "HOT",
+   "expected_entities": {
+     "product": "Galaxy S25 Ultra",
+     "storage": "256GB",
+     "color": "Xám",
+     "location": "Cầ  u Giấ        y",
+     "purchase_time": "Tố  i nay"
+   },
+   "expected_blockers": [
+     "INSTALLMENT_CONDITION"
+   ],
+   "forbidden_facts": [
+     "Không được tự tạo giá",
+     "Không được nói còn hàng nế                                                                     u ERP không tra                                    ̉ tồ     n kho"
+   ]
+ }
+
+2. Công cụ BA dùng để tạo testcase
+
+2.1. Excel hoặc Google Sheets
+
+Phù hợp nhất ở giai đoạn đầu.
+
+Các sheet nên có:
+
+01_Taxonomy
+
+      Intent code.
+      Lead label.
+
+      Sentiment label.
+      Blocker code.
+
+      Định nghĩa.
+
+      Ví dụ đúng/sai.
+
+02_Feature_Matrix
+
+      Kênh.
+
+      Intent.
+      Lead.
+
+      Sentiment.
+
+      Product.
+      Blocker.
+
+      Độ dài.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                            50/60
+
+===== PAGE 51 =====
+       Ngôn ngữ.
+
+03_Test_Conversation
+
+       Mỗi dòng là một message.
+
+       test_case_id.
+
+       sequence_no.
+
+       sender.
+
+       message_content.
+
+04_Expected_Result
+
+       Nhãn mong đợi.
+
+       Entity mong đợi.
+       Các ý summary bắt buộc.
+
+       Nội dung cấm hallucinate.
+
+05_Test_Result
+
+       Actual output.
+       Pass/Fail.
+
+       Nhận xét.
+       Model version.
+
+       Prompt version.
+
+BA có thể dùng Data Validation để tạo dropdown và Pivot Table để tổng hợp tỷ lệ pass theo nhãn.
+
+
+2.2. ChatGPT hoặc Claude để sinh hội thoại giả lập
+
+Có thể dùng AI để tạo synthetic conversation từ Feature Matrix.
+
+Ví dụ yêu cầu:
+
+
+ Tạo một đoạn hội thoại bán hàng gồ                                                                                         m 10–15 tin nhắ                                    n.
+
+ Feature:
+ - Kênh: Zalo
+ - Intent chính: kiể                                               m tra tồ                n kho
+ - Intent phụ: tra                                         ̉ góp
+ - Lead: HOT
+ - Ca     ̉m xúc: trung tính
+ - Sa     ̉n phẩ           m: Samsung Galaxy S25 Ultra 256GB
+ - Điể        m vướng mắ                      c: mức tra                      ̉ trước
+ - Khách viế                         t không dấ                      u và dùng từ viế                                       t tắ     t
+ - Kế     t thúc bằng việc khách muố                                                                   n giữ hàng
+
+Lưu ý:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                  51/60
+
+===== PAGE 52 =====
+      AI sinh testcase không được tự coi là ground truth.
+
+      BA hoặc SME phải kiểm duyệt lại.
+      Nên dùng một model khác với model đang được kiểm thử để giảm thiên lệch.
+
+      Dữ liệu lịch sử thực tế vẫn có giá trị cao hơn dữ liệu synthetic.
+
+
+2.3. Python, pandas, Faker và Jinja2
+
+Dùng khi cần tạo hàng trăm hoặc hàng nghìn tổ hợp.
+
+      pandas: đọc Feature Matrix và xuất CSV/JSONL.
+
+      Faker: sinh tên, số điện thoại, địa điểm giả.
+      Jinja2: tạo đoạn hội thoại từ template.
+
+      allpairspy hoặc PICT: tạo tổ hợp pairwise, tránh phải kiểm thử toàn bộ tích Descartes.
+
+Ví dụ các dimension:
+
+
+ 4 channels
+ 10 intents
+ 4 lead levels
+ 3 sentiments
+ 5 blockers
+ 4 product states
+
+Nếu tạo toàn bộ:
+
+
+ 4 × 10 × 4 × 3 × 5 × 4 = 9.600 tổ                                                                                       hợp
+
+Pairwise có thể giảm xuống vài chục hoặc vài trăm testcase nhưng vẫn bao phủ các cặp điều kiện quan
+trọng.
+
+BA không nhất thiết tự viết toàn bộ script, nhưng cần thiết kế Feature Matrix và logic tổ hợp; Data
+Engineer hoặc QA Automation hỗ trợ chạy.
+
+
+2.4. Label Studio hoặc Doccano
+
+Dùng để gán nhãn hội thoại thực tế.
+
+Label Studio
+
+Phù hợp khi cần:
+
+      Gán intent.
+      Sentiment.
+
+      Lead status.
+
+      Entity trong đoạn text.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                         52/60
+
+===== PAGE 53 =====
+      Chấm summary.
+
+      Chấm gợi ý hành động.
+
+Doccano
+
+Phù hợp với:
+
+      Text classiﬁcation.
+      Sequence labeling.
+
+      Named Entity Recognition.
+
+Quy trình:
+
+ 1. Export hội thoại đã ẩn danh.
+ 2. Import JSONL/CSV.
+
+ 3. Hai người gán nhãn độc lập.
+
+ 4. So sánh nhãn.
+ 5. Trường hợp bất đồng chuyển SME quyết định.
+
+ 6. Chốt golden dataset.
+
+3. Công cụ kiểm thử API và model
+
+3.1. Postman
+
+BA có thể trực tiếp dùng Postman để:
+
+      Gửi một conversation vào AI API.
+
+      Thay đổi message.
+      Kiểm tra JSON response.
+
+      Tạo Collection theo từng nhãn.
+
+      Viết assertion cơ bản.
+      Lưu environment Dev/UAT.
+
+Ví dụ kiểm tra:
+
+
+ JavaScript
+ pm.test("Lead status hợp lệ", function () {
+     pm.expect(["HOT", "WARM", "COLD", "UNKNOWN"])
+       .to.include(pm.response.json().lead_status);
+ });
+
+ pm.test("Confidence trong khoa                                                       ̉ng hợp lệ", function () {
+     const score = pm.response.json().confidence;
+     pm.expect(score).to.be.at.least(0);
+     pm.expect(score).to.be.at.most(1);
+ });
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      53/60
+
+===== PAGE 54 =====
+3.2. Newman
+
+Chạy toàn bộ Postman Collection theo batch:
+
+
+ 500 conversation test cases
+ → gọi API
+ → xuấ        t HTML/JSON report
+
+Có thể tích hợp CI/CD.
+
+3.3. Swagger/OpenAPI
+
+Dùng để:
+
+     Đọc request/response schema.
+     Hiểu enum.
+
+     Kiểm tra ﬁeld bắt buộc.
+     Test nhanh endpoint.
+
+     Đồng bộ đặc tả API giữa BA, Backend và AI team.
+
+4. Công cụ đánh giá chất lượng AI
+
+4.1. promptfoo
+
+Phù hợp để:
+
+     Chạy một prompt trên nhiều testcase.
+
+     So sánh nhiều model.
+
+     So sánh prompt version.
+     Tạo assertion.
+
+     Chạy regression.
+
+Ví dụ so sánh:
+
+
+ Prompt V1 + Model A
+ Prompt V2 + Model A
+ Prompt V2 + Model B
+
+
+4.2. DeepEval
+
+Dùng để đánh giá:
+
+     Relevancy.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                            54/60
+
+===== PAGE 55 =====
+      Faithfulness.
+
+      Hallucination.
+      Contextual correctness.
+
+      Answer completeness.
+
+4.3. Ragas
+
+Hữu ích khi AI có dùng dữ liệu ERP/RAG:
+
+      Product facts có bám đúng dữ liệu ERP không.
+
+      Gợi ý có sử dụng đúng context không.
+
+      Có thêm dữ liệu ngoài nguồn không.
+
+4.4. Langfuse hoặc LangSmith
+
+Dùng để theo dõi:
+
+      Prompt thực tế.
+
+      Input context.
+      Output.
+
+      Token usage.
+      Latency.
+
+      Lỗi.
+
+      Model version.
+      Trace theo conversation.
+
+Langfuse phù hợp khi muốn triển khai self-hosted và theo dõi production.
+
+4.5. MLﬂow
+
+Dùng để quản lý:
+
+      Model version.
+      Dataset version.
+
+      Metric.
+      Experiment.
+
+      So sánh lần chạy.
+
+      Điều kiện release model.
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                55/60
+
+===== PAGE 56 =====
+5. Kiểm thử qua giao diện UI
+
+5.1. Các testcase UI chính
+
+Trạng thái xử lý
+
+      Agent bấm AI gợi ý.
+
+      Nút chuyển sang loading.
+      Không cho bấm lặp.
+
+      Có timeout message.
+      Có retry.
+
+      Có thông báo kết quả đã lỗi thời.
+
+Hiển thị kết quả
+
+      Summary không bị cắt sai.
+      Intent và Lead hiển thị đúng.
+
+      Có conﬁdence hoặc cảnh báo thấp.
+
+      Product card đúng ERP.
+      Giá và tồn kho có thời điểm cập nhật.
+
+      Blocker được hiển thị rõ.
+      Gợi ý hành động đúng thứ tự.
+
+Tương tác của Agent
+
+      Chèn mẫu tin vào textbox.
+
+      Chỉnh sửa được.
+      Không tự gửi.
+
+      Bỏ qua được.
+      Đánh giá hữu ích/không hữu ích.
+
+      Phân tích lại.
+
+      Chỉnh intent/lead nếu có quyền.
+
+Trường hợp lỗi
+
+      ERP timeout.
+
+      AI timeout.
+
+      Sản phẩm không tìm thấy.
+      Hội thoại rỗng.
+
+      Hội thoại quá dài.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                               56/60
+
+===== PAGE 57 =====
+      Kết quả AI sai schema.
+
+      User không có quyền dùng AI.
+
+
+5.2. Công cụ UI
+
+Chrome DevTools
+
+BA có thể dùng để:
+
+      Kiểm tra request API.
+
+      Xem payload.
+      Xem response.
+
+      Kiểm tra thời gian xử lý.
+      Xem lỗi JavaScript.
+
+      Mô phỏng mạng chậm.
+
+Playwright
+
+Phù hợp để tự động hóa end-to-end:
+
+
+ Mở conversation
+ → bấ     m AI gợi ý
+ → chờ kế                t qua        ̉
+ → kiể        m tra Intent
+ → kiể        m tra Product Card
+ → chèn suggested message
+ → xác nhận chưa tự gử                                                     i
+
+Cypress
+
+Tương tự Playwright, phù hợp với kiểm thử frontend web.
+
+Figma
+
+BA dùng Figma để xác định expected UI:
+
+      Loading state.
+      Empty state.
+
+      Low-conﬁdence warning.
+
+      ERP unavailable state.
+      AI error state.
+
+      Result stale state.
+
+6. Kiểm thử Database và dữ liệu
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                         57/60
+
+===== PAGE 58 =====
+Công cụ
+
+     DBeaver: đa hệ quản trị, dễ dùng.
+     Oracle SQL Developer: nếu mChat dùng Oracle.
+
+     DataGrip: kiểm tra DB nâng cao.
+     pgAdmin: nếu dùng PostgreSQL.
+
+Các kiểm tra cần thực hiện
+
+Kiểm tra job trùng
+
+
+ SQL
+ SELECT idempotency_key, COUNT(*)
+ FROM ai_job
+ GROUP BY idempotency_key
+ HAVING COUNT(*) > 1;
+
+Kiểm tra result không khớp conversation
+
+
+ SQL
+ SELECT a.analysis_id, a.conversation_id
+ FROM ai_analysis a
+ LEFT JOIN conversation c
+     ON c.id = a.conversation_id
+ WHERE c.id IS NULL;
+
+Kiểm tra kết quả cũ ghi đè kết quả mới
+
+
+ SQL
+ SELECT conversation_id,
+        MAX(target_message_id) AS latest_analyzed_message
+ FROM ai_analysis
+ GROUP BY conversation_id;
+
+Kiểm tra product fact
+
+     SKU trong AI result phải tồn tại ở ERP snapshot.
+
+     Giá AI hiển thị phải bằng giá ERP.
+     Thời gian lấy tồn kho phải được lưu.
+
+     Không có product card khi ERP không tìm thấy kết quả xác thực.
+
+7. Cách chấm Pass/Fail
+
+Không thể đánh giá mọi output AI bằng exact match.
+
+Nhãn cấu trúc
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                             58/60
+
+===== PAGE 59 =====
+Dùng exact match hoặc metric:
+
+      Intent: Precision, Recall, F1.
+
+      Sentiment: F1.
+      Entity: Precision/Recall.
+
+      Product matching: Accuracy.
+
+      Lead classiﬁcation: Accuracy, Macro-F1.
+      Lead score: sai số trung bình hoặc khoảng chấp nhận.
+
+Summary
+
+Dùng rubric:
+
+                                          Tiêu chí                                                                   Điểm
+  Nêu đúng nhu cầu chính                                                                                               0–2
+
+  Nêu đúng sản phẩm                                                                                                    0–2
+  Nêu đúng blocker                                                                                                     0–2
+  Nêu đúng việc còn chờ                                                                                                0–2
+
+  Không hallucinate                                                                                                    0–2
+
+
+Tổng 10 điểm.
+
+Suggested Strategy
+
+
+                                            Tiêu chí                                                                 Điểm
+
+  Phù hợp intent                                                                                                       0–2
+  Phù hợp lead level                                                                                                   0–2
+  Giải quyết blocker                                                                                                   0–2
+
+  Không hỏi lại dữ liệu đã có                                                                                          0–2
+  Không cam kết sai chính sách                                                                                         0–2
+
+
+
+Product Information
+
+Nên đặt yêu cầu nghiêm ngặt:
+
+      Giá: phải khớp ERP.
+      SKU: phải khớp ERP.
+
+      Tồn kho: phải khớp snapshot.
+
+      Không tự tạo khuyến mại.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                     59/60
+
+===== PAGE 60 =====
+      Không tự tạo chính sách.
+
+Đối với các trường này, sai một giá trị quan trọng nên tính là fail.
+
+8. Bộ công cụ đề xuất theo mức độ BA có thể sử dụng
+
+
+                     Công việc                                                 Công cụ BA trực tiếp dùng
+  Viết taxonomy, rule                                  Excel, Google Sheets, Conﬂuence
+
+  Thiết kế luồng                                       Draw.io, Miro, BPMN, Eraser
+  Thiết kế UI                                          Figma
+
+  Quản lý testcase                                     Excel, TestRail, Jira Xray/Zephyr
+  Sinh hội thoại mẫu                                   ChatGPT, Claude
+  Gán nhãn                                             Label Studio, Doccano
+
+  Test API                                             Postman, Swagger
+  Test batch                                           Newman
+
+  Kiểm tra Database                                    DBeaver, SQL Developer
+  So sánh model/prompt                                 promptfoo
+  Đánh giá LLM                                         DeepEval, Ragas
+
+  Theo dõi trace                                       Langfuse, LangSmith
+  Test UI tự động                                      Playwright, Cypress
+
+  Test hiệu năng                                       k6, JMeter
+  Báo cáo metric                                       Python, pandas, scikit-learn, Power BI
+
+
+Quy trình phù hợp nhất là:
+
+
+ BA định nghĩa taxonomy và feature matrix
+ → tạo/gán nhãn hội thoại
+ → chố        t golden dataset
+ → chạy batch qua Postman/Newman hoặc promptfoo
+ → tính metric
+ → chuyên gia chấ                                       m summary và sales suggestion
+ → test UI bằng Playwright/manual
+ → đố     i soát API–DB–UI–ERP
+ → chạy regression trước mỗ                                                                   i lầ     n đổ     i model/prompt
+
+Như vậy BA không chỉ “đưa vài đoạn chat vào AI để xem kết quả”, mà xây được một hệ thống kiểm thử
+có dataset version, expected result, metric, evidence, model version và điều kiện nghiệm thu rõ
+ràng.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                               60/60

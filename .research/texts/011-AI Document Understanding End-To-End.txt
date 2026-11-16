@@ -1,0 +1,120 @@
+Phần 1:
+PROJECT DOCUMENT UNDERSTANDING — BANKING
+(Góc nhìn từ một project thực tế)
+Trong các bài toán phát triển hệ thống cho lĩnh vực Ngân hàng, hai yếu tố cốt lõi luôn được đặt lên hàng đầu là: Bảo mật và Độ chính xác.
+Tính bảo mật tuyệt đối: Dữ liệu phải được bảo vệ nghiêm ngặt. Toàn bộ quy trình từ phát triển (Develop), triển khai (Deploy), bảo trì (Maintain) cho đến giám sát (Monitor) đều phải được thực hiện khép kín trong hạ tầng Cloud riêng biệt của ngân hàng.
+Độ chính xác và Hiệu năng cao: Hệ thống yêu cầu độ chính xác tuyệt đối trong xử lý dữ liệu, đồng thời phải đảm bảo tốc độ phản hồi nhanh chóng và khả năng chịu tải cao (High Scalability/Load Capacity) để phục vụ lượng giao dịch lớn liên tục.
+
+Một số bài toán phổ biến trong enterprise Document AI hiện nay là OCR hợp đồng và biểu mẫu, trích xuất thông tin từ hóa đơn/chứng từ, tự động nhập liệu, table extraction, KYC document processing hoặc intelligent document routing.
+Khi nhìn vào một project Document AI như hệ thống OCR + Key Information Extraction cho hóa đơn/tài liệu, phần lớn mọi người thường tập trung vào model:
+- Dùng OCR gì?
+- LayoutLM hay Qwen?
+- Fine-tune bao nhiêu epoch?
+- F1 đạt bao nhiêu?
+Nhưng còn một vấn đề là làm sao để biến một pipeline AI nhiều stage thành một hệ thống có thể serve ổn định trong production.
+Trong project này, pipeline thực tế gồm rất nhiều bước:
+Image
+→ Layout Analysis
+→ Text Detection
+→ OCR Recognition
+→ KIE
+→ API Response
+Nhìn qua thì pipeline có vẻ khá straightforward. Nhưng trong thực tế, mỗi stage đều có thể trở thành bottleneck của toàn hệ thống.
+Ví dụ, OCR có thể đạt accuracy rất cao trong notebook. Tuy nhiên khi đưa vào pipeline thật, chỉ cần text detection lệch bbox một chút, crop sai region hoặc resize khác distribution lúc training thì chất lượng OCR output đã giảm đáng kể. Chưa kể các trường hợp ảnh scan bị noise, méo hoặc gãy dòng cũng ảnh hưởng rất lớn đến downstream pipeline.
+Và khi OCR sai, toàn bộ downstream phía sau như LayoutLM hoặc Qwen extraction cũng sai theo. Đây là một vấn đề rất thực tế trong Document AI: sai số thường mang tính cascading error. Model cuối chưa chắc là nơi gây lỗi, đôi khi lỗi nằm ở một stage rất sớm trong pipeline.
+Một điểm khác mà nhiều người chỉ làm research thường ít để ý là Document AI không đơn thuần là “một model inference”. Nó là bài toán orchestration của rất nhiều model và processing stage khác nhau. Trong cùng một request, hệ thống có thể phải chạy detection model, OCR model, KIE model, preprocessing, post-processing, validation rules và JSON formatting.
+Khi deploy thực tế, chúng ta không thể load từng model riêng lẻ bằng notebook inference. Hệ thống cần giải quyết rất nhiều bài toán engineering như batching, async processing, concurrent requests, model warmup, memory management, GPU utilization hay latency optimization.
+Ví dụ rất thực tế là Qwen2.5-3B có thể extract rất tốt. Nhưng nếu latency quá cao hoặc VRAM usage quá lớn thì production cost sẽ tăng rất mạnh. Ngược lại, LayoutLM có thể accuracy thấp hơn một chút nhưng inference ổn định hơn, nhẹ hơn và dễ scale hơn nhiều.
+Đây mới là trade-off thực sự trong AI production. Không phải model tốt nhất, mà là hệ thống phù hợp nhất.
+Một điều khá thú vị trong Document AI là output “trông có vẻ đúng” chưa chắc thực sự đúng. LLM extraction có thể hallucinate field, tự sinh ra company name, normalize sai date, format total không đúng hoặc merge nhầm address.
+Vì vậy trong production, chúng ta không chỉ evaluate bằng accuracy hay F1-score. Hệ thống còn cần thêm validation rules, schema constraints, confidence score, anomaly detection, post-processing và monitoring output quality để đảm bảo dữ liệu đầu ra đủ tin cậy cho business sử dụng
+Lúc này, câu hỏi quan trọng không còn là “Model nào accuracy cao nhất?” mà là “Pipeline nào đủ ổn định, đủ nhanh và đủ maintainable để deploy production?”
+Đó cũng là lý do trong project có thêm các layer serving và orchestration như Triton Ensemble Serving, vLLM Serving, FastAPI orchestration và Docker deployment.
+Đây cũng là lý do vì sao nhiều hệ thống enterprise Document AI luôn có thêm business rule layer phía sau model inference.
+Một insight khá thú vị khi làm các bài toán Document Understanding là khoảng cách giữa “Fine-tune được OCR/KIE model” và “Build được một Document AI system chạy production” là một khoảng cách rất lớn.
+Phần lớn giá trị thực tế không nằm ở việc bạn biết train transformer. Mà nằm ở việc bạn có thể ghép nhiều model thành một pipeline ổn định, optimize latency/cost, serve hệ thống ở scale lớn, monitor output quality, xử lý failure cases và maintain hệ thống lâu dài.
+Vì vậy nếu chỉ dừng ở notebook training, bạn mới đi được khoảng một nửa chặng đường.
+Phần còn lại là serving, orchestration, optimization, deployment, monitoring và production engineering.
+Đó cũng là lý do chương trình MasterClass AI Document Understanding không chỉ dừng ở việc train OCR hay fine-tune LayoutLM. Chương trình được xây dựng theo hướng full production pipeline, đi từ document preprocessing, OCR, KIE, VLM serving cho tới deployment và system orchestration thực tế.
+Thay vì chỉ tập trung vào notebook experimentation, chương trình hướng tới mindset xây dựng một hệ thống Document AI có thể chạy production:
+xử lý pipeline nhiều stage
+tối ưu latency và serving
+orchestration nhiều model
+validation & business rules
+Triton/vLLM serving
+FastAPI deployment
+production optimization & monitoring
+Đây cũng là hướng tiếp cận đang được sử dụng rất nhiều trong các hệ thống enterprise Document AI hiện nay.
+
+
+PHẦN 2:
+📍Final Project – Xây dựng hệ thống AI Document Understanding end-to-end
+Khi nhắc đến Document AI, phần lớn mọi người thường nghĩ đến OCR. Nhưng trong thực tế doanh nghiệp, đặc biệt là các lĩnh vực như Ngân hàng, Tài chính, Bảo hiểm hay Kiểm toán, OCR chỉ là bước đầu tiên của bài toán.
+Điều doanh nghiệp thực sự cần không phải là "đọc được văn bản", mà là "biến tài liệu thành dữ liệu có thể sử dụng được".
+Ví dụ với một báo cáo tài chính dài hàng trăm trang, việc nhận diện được từng dòng chữ gần như không tạo ra nhiều giá trị nếu hệ thống vẫn không thể trả lời các câu hỏi như:
+Tổng tài sản là bao nhiêu?
+Doanh thu thuần nằm ở đâu?
+Lợi nhuận sau thuế là bao nhiêu?
+Các chỉ số này thuộc năm tài chính nào?
+Bảng số liệu này thuộc Báo cáo kết quả kinh doanh hay Bảng cân đối kế toán?
+Đó là lúc bài toán chuyển từ OCR sang Document Understanding.
+Một trong những thách thức lớn nhất của Document Understanding là làm sao để hệ thống hiểu được cấu trúc và ngữ cảnh của tài liệu thay vì chỉ đọc được văn bản.
+Trong thực tế, không tồn tại một mẫu báo cáo tài chính chuẩn cho tất cả doanh nghiệp. Mỗi đơn vị có thể sử dụng template khác nhau, cách trình bày khác nhau, số lượng bảng biểu khác nhau và thậm chí cùng một chỉ tiêu tài chính nhưng lại xuất hiện ở những vị trí hoàn toàn khác nhau.
+Điều này đặt ra một câu hỏi rất khó: Làm sao để hệ thống vẫn có thể trích xuất đúng thông tin ngay cả khi gặp một layout chưa từng xuất hiện trong quá trình huấn luyện?
+Đây cũng là lý do vì sao các hệ thống Document AI hiện đại không còn chỉ sử dụng OCR truyền thống mà phải kết hợp nhiều thành phần khác nhau như Layout Analysis, Key Information Extraction (KIE) và Vision-Language Models (VLM).
+📌 Trong Final Project, học viên sẽ tiếp cận bài toán dưới góc nhìn của một AI Engineer đang xây dựng sản phẩm thực tế cho doanh nghiệp.
+Quy trình triển khai bao gồm:
+Document Upload
+→ Layout Detection
+→ OCR
+→ Information Extraction
+→ Validation
+→ API Serving
+→ Monitoring
+Trong quá trình xây dựng hệ thống, học viên sẽ liên tục phải đối mặt với các bài toán rất thực tế.
+OCR có thể hoạt động rất tốt trên notebook nhưng khi gặp file scan mờ, tài liệu nhiều cột hoặc bảng biểu phức tạp thì chất lượng suy giảm đáng kể.
+Một bounding box bị lệch nhẹ có thể khiến giá trị tài chính bị đọc sai.
+Một lỗi OCR ở giai đoạn đầu có thể lan truyền sang toàn bộ pipeline extraction phía sau.
+Đây là hiện tượng cascading error mà hầu như mọi hệ thống Document AI production đều phải xử lý.
+Bên cạnh đó, học viên cũng sẽ tiếp cận một câu hỏi rất phổ biến trong doanh nghiệp: "Nên sử dụng OCR + LayoutLM hay Vision-Language Model?"
+Các VLM hiện đại như Qwen2.5-VL cho thấy khả năng xử lý rất tốt đối với những tài liệu có cấu trúc phức tạp hoặc các layout chưa từng xuất hiện trong dữ liệu huấn luyện.
+Tuy nhiên trong production, bài toán không chỉ là độ chính xác.
+Doanh nghiệp còn phải cân nhắc:
+Latency
+GPU Cost
+Throughput
+Khả năng mở rộng hệ thống
+Độ ổn định khi vận hành
+Một mô hình tốt hơn chưa chắc là lựa chọn phù hợp hơn.
+Đây cũng là lý do project được thiết kế theo hướng so sánh và kết hợp cả hai cách tiếp cận:
+OCR-based Pipeline
+VLM-based Pipeline
+để học viên hiểu rõ các trade-off thực tế khi triển khai AI trong doanh nghiệp.
+⚙️ Về mặt hệ thống, project không chỉ dừng ở model training.
+Học viên sẽ được tiếp cận các thành phần thường xuất hiện trong một hệ thống AI production hiện đại:
+DocLayout-YOLO cho Layout Detection
+DBNet + PARSeq cho OCR Pipeline
+LayoutLMv3 cho Document Understanding & Information Extraction
+Qwen2.5-VL cho Vision-Language Understanding
+FastAPI Gateway
+MLflow Model Registry
+Docker Deployment
+GitHub Actions CI/CD
+Monitoring với Prometheus, Grafana và Loki
+Quan trọng hơn, học viên sẽ hiểu được cách các thành phần này phối hợp với nhau để tạo thành một hệ thống hoàn chỉnh thay vì chỉ là những mô hình hoạt động độc lập trong notebook.
+💡 Một khía cạnh khác thường bị bỏ qua khi học AI là các yêu cầu của doanh nghiệp sau khi mô hình được triển khai.
+Trong các lĩnh vực như Ngân hàng hay Tài chính, hệ thống không chỉ cần chính xác mà còn phải đáp ứng các yêu cầu về:
+Bảo mật dữ liệu
+Khả năng audit và truy vết kết quả
+Kiểm soát hallucination
+Validation theo business rules
+Tích hợp với các hệ thống nghiệp vụ hiện hữu
+Đây là những yêu cầu ít khi xuất hiện trong các benchmark nghiên cứu nhưng lại đóng vai trò quyết định trong quá trình triển khai thực tế.
+Giá trị lớn nhất của Final Project không nằm ở việc fine-tune thêm một mô hình OCR hay đạt thêm vài điểm F1 Score. Giá trị lớn nhất nằm ở việc hiểu cách xây dựng một hệ thống AI Document Understanding có thể vận hành trong môi trường doanh nghiệp thực tế.
+Trong doanh nghiệp, giá trị của một giải pháp AI không được đo bằng vài điểm Accuracy hay F1 Score cao hơn trên benchmark.
+Điều quan trọng hơn là liệu hệ thống có thể vận hành ổn định, xử lý được khối lượng tài liệu thực tế, đáp ứng yêu cầu về tốc độ và tạo ra kết quả đủ tin cậy để hỗ trợ các quy trình nghiệp vụ hay không.
+Đó cũng chính là tư duy và kỹ năng mà Final Project hướng tới: giúp học viên chuyển từ việc xây dựng mô hình trong notebook sang thiết kế và triển khai các hệ thống AI có khả năng ứng dụng thực tế.
+📩 Nếu bạn muốn trải nghiệm toàn bộ quy trình xây dựng một hệ thống AI Document Understanding end-to-end, có thể đăng ký khóa học tại: https://forms.gle/YHyRn84QSCmBdb448
+
+
+

@@ -1,0 +1,42 @@
+RPA & OCR is an automation initiative that digitizes and automates high volume document processing workflows across import-export, contract management, procurement, and logistics operations. The system combines OCR/IDP to extract structured data from invoices, packing lists, bills of lading, contracts, payment documents, and scanned forms, while RPA bots validate data, auto-ll business systems, update tracking sheets, and generate discrepancy alerts. It helps reduce manual data entry, improve data accuracy, shorten processing time, and enhance operational transparency across departments.
+
+Dự án 1: OCR quét các hợp đồng, trích xuất thông tin, điền vào hệ thống quản lý hợp đồng qua API
++ Số hợp đồng + Ngày ký hợp đồng + Loại hợp đồng + Thông tin Bên A => Tên đơn vị, mã số thuế, địa chỉ, người đại diện. + Thông tin Bên B => Tên đối tác, mã số thuế, địa chỉ, người đại diện. + Nội dung hoặc phạm vi hợp đồng => Hàng hóa, dịch vụ, công việc cần cung cấp. + Giá trị hợp đồng => Giá trị trước thuế, thuế VAT và tổng giá trị thanh toán. + Thời hạn thực hiện hợp đồng => Ngày hiệu lực, ngày hết hạn, thời gian giao hàng hoặc triển khai. + Điều khoản thanh toán => Hình thức thanh toán, số tài khoản, tiến độ và thời hạn thanh toán. + Thông tin ký kết và phê duyệt => Người đại diện, chức vụ, chữ ký, con dấu và thông tin ủy quyền nếu có.
+
+UC1 - Tạo hồ sơ khai báo hải quan.
+Đầu vào: Invoice, Packing list, Bill of Lading (B/L), C/O, Hợp đồng (PDF/scan/ảnh).
+Đầu ra:
++ Bản nháp tờ khai hải quan
++ Dữ liệu theo dõi tập trung và báo cáo Google Sheet
+Mục tiêu: Từ bộ chứng từ, tạo draft tờ khai gần đầy đủ, nhân viên chủ yếu review nhấn gửi. Chuẩn hóa dữ liệu đầu vào cho toàn bộ quy trình XNK.
+OCR thực thi:
+• Nhận file từ email/thư mục rồi phân loại chứng từ.
+• Trích xuất trường chính: người bán/mua, số invoice, mô tả hàng, số lượng, trị giá, gross/net, điều kiện giao hàng, HS code… 
+• Chuẩn hóa định dạng dữ liệu
+• Gộp line-item.
+RPA thực thi:
+• Mapping dữ liệu, tự điền form trên hệ thống khai báo, lưu bản nháp. 
+• Tạo checklist thiếu chứng từ/thiếu trường bắt buộc.
+• Validate nhanh: Kiểm tra độ chính xác dữ liệu trước khi nộp tờ khai (rule kiểm tra chéo, highlight trường và ảnh scan hỗ trợ đối chiếu nhanh…)
+
+UC2 - Đối soát chứng từ trước khai báo hải quan.
+Đầu vào: Hợp đồng, Invoice, Packing List, (có thể gồm tờ khai nháp). 
+Đầu ra: Bảng chênh lệch và danh sách ticket xử lý. 
+Mục tiêu: Phát hiện lệch số lượng/trị giá/mô tả/điều kiện giao hàng trước khi truyền tờ khai.
+OCR thực thi:
+Trích các trường cần so khớp từ từng chứng từ: tên hàng, số lượng, trị giá, điều kiện giao hàng, HS (nếu có).
+RPA thực thi:
+• Tự so sánh giữa chứng từ (Invoice ↔ PL ↔ Hợp đồng ↔ tờ khai nháp).
+• Sinh “cảnh báo lệch” theo mức độ (lệch lớn ưu tiên trước).
+• Validate nhanh: Màn hình 1 trang hiển thị các chứng từ cạnh nhau, highlight chỗ lệch.
+
+UC4 - Tra cứu HS code mới nhất và so khớp với dữ liệu nội bộ
+Đầu vào: Mô tả hàng, mã hàng nội bộ, HS code đang dùng và nguồn tra cứu (web tổng cục hải quan…).
+Đầu ra: HS code gợi ý/khớp, cảnh báo sai khác, danh sách mặt hàng cần xác nhận.
+Mục tiêu: Giảm rủi ro khai sai HS dẫn đến sai thuế/sai chính sách.
+OCR thực thi:
+• Trích HS code từ Invoice, PL, Hợp đồng; chuẩn hóa HS code.
+• Trích mô tả hàng, mã hàng.
+RPA thực thi:
+• Tự tra cứu HS theo mô tả hàng trên nguồn được cấu hình (web/biểu thuế/DB nội bộ), sau đó so khớp với HS đang dùng trong dữ liệu nội bộ/chứng từ. 
+• Validate nhanh: Nếu phát hiện không khớp, hệ thống hiển thị top gợi ý HS code + lý do gợi ý (dựa trên từ khóa/mô tả), đồng thời đánh dấu “Cần kiểm tra” và yêu cầu người dùng xác nhận/chọn trước khi dùng để điền tờ khai.

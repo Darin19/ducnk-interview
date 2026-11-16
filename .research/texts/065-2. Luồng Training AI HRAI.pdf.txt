@@ -1,0 +1,2325 @@
+
+===== PAGE 1 =====
+Luồng Training AI HRAI
+
+
+   Vẽ luồng training AI bằng cách chấm điểm đầu ra. Ví dụ với hệ thống HRAI => sau khi Airﬂow điều
+   phối AI trả về kết quả vào DB => Load lên UI. Tôi là AI QA và sẽ chấm điểm từng kết quả.
+
+   PASS + comment
+   50% PASS + comment
+   FAIL + loại cảnh báo đúng + mẫu suy luận + comment
+
+   => Tôi muốn dữ liệu feedback này quay trở lại training AI để cải thiện
+
+   Công nghệ, tool, luồng ???
+   Show moreShow less
+
+
+
+Luồng đúng: Human-in-the-loop Continuous Learning
+
+Với HRAI, luồng này không nên hiểu là “AI QA bấm FAIL thì mô hình học ngay”. Cách an toàn và đúng kỹ
+thuật là:
+
+       AI chạy production → AI QA chấm và sửa kết quả → feedback được chuẩn hóa thành
+       ground truth → tạo phiên bản dataset mới → train model candidate → đánh giá → phê
+       duyệt → triển khai model mới.
+
+Điều này phù hợp với phạm vi HRAI One: phân tích dữ liệu nhân sự, phân loại trạng thái và dự báo các
+cảnh báo như nghỉ việc, kỷ luật, burnout, năng suất thấp, mức độ gắn kết…
+                                                                                                              Nguyen-Kim-Duc-TopCV.vn-050626.…
+
+   Mermaid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                PASS Chấp nhận đầu ra                               MLflow Tracking &Đạt Quality Gate?Không đạt
+                                                                                                     Evaluation
+
+                              AI_PREDICTIONHRAI Review UIAI QA đánh giá                                               Phân tích lỗi
+                                                50% PASSSửa các trường saiAirflow Dataset BuilderValidate / DeduplicateTrain Candidate ModelSửa dữ liệu / prompt /
+                                                            AI_FEEDBACK    Mask PII / Resolve ConflictVersioned Gold Datasetmodel
+
+
+
+
+         Airflow DAGFeature EngineeringAI Inference ServiceFAILChọn cảnh báo đúng
+   HR Database Input Snapshot                       Nhập lý do và bằng chứng
+                                                      đúng                                                        Đạt
+                                                                                                                      Model RegistryHuman Approval
+
+                                                                                                                                     Deploy Canary / Shadow
+
+
+Airﬂow phù hợp để điều phối các luồng batch hữu hạn bằng DAG và các task có quan hệ phụ thuộc;
+không nên dùng Airﬂow làm API suy luận thời gian thực. API inference nên là một service riêng, còn
+Airﬂow gọi service đó theo batch hoặc lịch định kỳ.                         Apache Airﬂow+1
+
+1. Luồng production hiện tại
+
+Bước 1 — Airﬂow lấy dữ liệu nhân sự
+
+Airﬂow chạy theo lịch hoặc theo trigger:
+
+
+ extract_employee_data
+ → validate_source_data
+ → build_features
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                1/35
+
+===== PAGE 2 =====
+ → call_ai_inference
+ → save_prediction
+ → publish_to_ui
+
+Ví dụ dữ liệu đầu vào của một nhân viên:
+
+      Thâm niên.
+
+      Lịch sử điều chuyển.
+
+      Hiệu suất công việc.
+      Số ngày nghỉ.
+
+      Đánh giá quản lý.
+      Biến động thu nhập.
+
+      Lịch sử vi phạm.
+
+      Mức độ hoàn thành KPI.
+      Các feature đã được tính toán.
+
+Tại bước build_features, cần tạo một input snapshot bất biến. Không được chỉ lưu employee_id, vì sau
+vài tuần dữ liệu nhân viên có thể thay đổi và không thể biết chính xác model đã nhìn thấy dữ liệu gì tại
+thời điểm dự đoán.
+
+Bước 2 — AI trả kết quả
+
+Kết quả cần được lưu vào bảng AI_PREDICTION, không ghi đè trực tiếp lên bảng nhân sự.
+
+Các trường quan trọng:
+
+                    Trường                                                          Ý nghĩa
+
+  prediction_id                                     ID duy nhất của lần AI phân tích
+  employee_id                                       Nhân viên được phân tích
+  input_snapshot_id                                 Phiên bản dữ liệu đầu vào
+
+  model_version                                     Model nào đã sinh kết quả
+  prompt_version                                    Prompt nào được dùng nếu có LLM
+
+  feature_version                                   Bộ logic tạo feature
+  predicted_alerts                                  Danh sách cảnh báo AI dự đoán
+  risk_scores                                       Điểm rủi ro từng loại
+
+  reasoning_summary                                 Lý do ngắn gọn, có cấu trúc
+  evidence_refs                                     Các feature/bằng chứng làm căn cứ
+
+  confidence                                        Độ tin cậy
+  created_at                                        Thời điểm dự đoán
+
+
+Bước 3 — UI hiển thị cho AI QA
+
+AI QA cần nhìn thấy đồng thời:
+
+      Kết quả AI.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                        2/35
+
+===== PAGE 3 =====
+      Dữ liệu đầu vào quan trọng.
+
+      Bằng chứng AI đã sử dụng.
+      Model version.
+
+      Thời điểm dữ liệu.
+
+      Các cảnh báo trước đây của cùng nhân viên.
+      Nút PASS, 50% PASS, FAIL.
+
+      Form chỉnh sửa kết quả.
+
+2. Thiết kế feedback của AI QA
+
+Không nên chỉ lưu PASS/50%/FAIL + comment
+
+Ba mức này chỉ phản ánh chất lượng tổng quát, chưa đủ làm dữ liệu training.
+
+Ví dụ AI dự đoán sai, nhưng comment chỉ ghi:
+
+      “Phân tích chưa đúng.”
+
+Mô hình không biết:
+
+      Sai cảnh báo nào.
+      Cảnh báo đúng là gì.
+
+      Điểm đúng phải là bao nhiêu.
+
+      Bằng chứng nào bị bỏ sót.
+      Logic nào cần thay đổi.
+
+Vì vậy feedback phải gồm hai lớp:
+
+Lớp 1 — Kết quả chấm
+
+
+ PASS
+ PARTIAL_PASS
+ FAIL
+
+Lớp 2 — Ground truth đã sửa
+
+
+ Cảnh báo đúng
+ Điể  m ru     ̉i ro đúng
+ Feature/bằng chứng đúng
+ Mẫu gia        ̉i thích đúng
+ Các trường AI làm đúng
+ Các trường AI làm sai
+ Mã nguyên nhân lỗ                                         i
+ Comment bổ                       sung
+
+
+Quy tắc chuyển đổi feedback thành dữ liệu training
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   3/35
+
+===== PAGE 4 =====
+    AI QA                            Cách lưu                                             Cách dùng để train
+    chọn
+  PASS          Chấp nhận toàn bộ kết quả AI                            Đầu ra AI trở thành positive sample
+
+  50%           Bắt buộc sửa các trường sai                             Dùng kết quả đã sửa làm ground truth; không
+  PASS                                                                  dùng nguyên bản đầu ra AI
+  FAIL          Chọn cảnh báo đúng, sửa điểm, nhập bằng                 Đầu ra AI là rejected output; đầu ra QA sửa là
+                chứng và giải thích đúng                                chosen/gold output
+
+
+Điểm đặc biệt:
+
+      50% PASS không phải là một nhãn training.
+
+Nó chỉ là trạng thái QA. Muốn đưa vào training, AI QA phải sửa thành một đầu ra hoàn chỉnh và đúng.
+
+Nếu AI QA chỉ ghi comment nhưng không cung cấp kết quả đúng, bản ghi đó chỉ nên dùng để:
+
+      Phân tích lỗi.
+      Thống kê chất lượng.
+
+      Tạo backlog cải tiến.
+
+Không nên tự động đưa vào training dataset.
+
+3. Form chấm điểm đề xuất
+
+PASS
+
+AI QA chỉ cần:
+
+      Chọn PASS.
+
+      Comment tùy chọn.
+      Xác nhận cảnh báo, điểm và lý do đều đúng.
+
+50% PASS
+
+AI QA chọn cụ thể phần nào đúng/sai:
+
+
+ ☑ Loại ca                   ̉nh báo đúng
+ ☐ Điể        m ru     ̉i ro đúng
+ ☐ Bằng chứng đầ                                    y đu     ̉
+ ☑ Kế     t luận đúng
+ ☐ Khuyế             n nghị đúng
+
+Sau đó sửa:
+
+      Điểm cảnh báo.
+
+      Bằng chứng bị thiếu.
+
+      Giải thích.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                             4/35
+
+===== PAGE 5 =====
+       Khuyến nghị.
+
+FAIL
+
+AI QA bắt buộc nhập:
+
+       Loại cảnh báo đúng.
+       Mức độ rủi ro đúng.
+
+       Cảnh báo AI đã dự đoán sai.
+       Feature hoặc bằng chứng đúng.
+
+       Mẫu giải thích đúng.
+
+       Mã nguyên nhân lỗi.
+       Comment.
+
+Các mã lỗi nên chuẩn hóa:
+
+
+ WRONG_ALERT_TYPE
+ MISSED_ALERT
+ FALSE_POSITIVE
+ WRONG_RISK_SCORE
+ MISSING_EVIDENCE
+ UNSUPPORTED_REASONING
+ STALE_INPUT_DATA
+ FEATURE_CALCULATION_ERROR
+ PROMPT_ERROR
+ BUSINESS_RULE_ERROR
+
+4. Không nên lưu “chain-of-thought” dài
+
+Trường “mẫu suy luận” nên được thiết kế thành giải thích nghiệp vụ có cấu trúc, không yêu cầu AI
+hoặc QA viết toàn bộ quá trình suy nghĩ nội bộ.
+Ví dụ:
+
+
+ JSON
+ {
+   "alert_type": "BURNOUT_RISK",
+   "risk_level": "HIGH",
+   "evidence": [
+     {
+       "feature": "overtime_hours_3m",
+       "value": 96,
+       "threshold": 60
+     },
+     {
+       "feature": "unused_leave_days",
+       "value": 18,
+       "threshold": 12
+     },
+     {
+       "feature": "performance_trend",
+       "value": "decreasing"
+     }
+   ],
+   "conclusion": "Có nhiề                u dấ     u hiệu cho thấ                                 y nguy cơ quá ta                                       ̉i công việc.",
+   "recommended_action": "Đề   nghị qua                   ̉n lý trực tiế                                 p rà soát khố                              i lượng công việc và trao đổ                                                                        i với
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                   5/35
+
+===== PAGE 6 =====
+ nhân viên."
+ }
+
+Cách này có ba lợi ích:
+
+      Dễ kiểm thử.
+
+      Dễ audit.
+
+      Có thể chuyển thẳng thành dữ liệu supervised training.
+
+5. Bảng lưu feedback
+
+
+ SQL
+ AI_FEEDBACK
+ -----------
+ feedback_id
+ prediction_id
+ reviewer_id
+ verdict
+ accepted_fields
+ corrected_alerts
+ corrected_risk_scores
+ corrected_evidence
+ corrected_reasoning
+ recommended_action
+ issue_codes
+ comment
+ review_status
+ reviewed_at
+
+Nên có thêm:
+
+
+ review_status:
+ - DRAFT
+ - SUBMITTED
+ - VERIFIED
+ - REJECTED
+ - INCLUDED_IN_DATASET
+
+Với các trường hợp nhạy cảm hoặc có tranh luận, một QA thứ hai hoặc chuyên gia HR cần xác nhận
+trước khi đưa vào dataset.
+
+6. Luồng tạo training dataset
+
+Airﬂow có thể chạy DAG riêng:
+
+
+ get_verified_feedback
+ → join_input_snapshot
+ → normalize_labels
+ → build_gold_output
+ → remove_duplicates
+ → detect_conflicting_reviews
+ → mask_sensitive_data
+ → check_class_balance
+ → split_train_validation_test
+ → publish_dataset_version
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                   6/35
+
+===== PAGE 7 =====
+Dataset đầu ra
+
+
+ dataset_version: HRAI_FEEDBACK_V12
+ created_at
+ source_model_version
+ total_samples
+ pass_samples
+ corrected_samples
+ failed_samples
+ label_distribution
+ reviewer_distribution
+ data_period
+ schema_version
+
+Dữ liệu nên lưu dạng:
+
+      Parquet hoặc JSONL.
+
+      MinIO/S3 hoặc data lake nội bộ.
+      Có manifest và checksum.
+
+      Không sửa dataset cũ.
+
+      Mỗi lần train phải biết chính xác sử dụng dataset version nào.
+
+Cách chia dữ liệu cần tránh việc cùng một nhân viên xuất hiện đồng thời trong train và test. Với HRAI,
+nên ưu tiên:
+
+
+ Split theo employee_id
+ +
+ Split theo thời gian
+
+Nếu không, mô hình có thể “nhớ nhân viên” thay vì học quy luật tổng quát.
+
+7. Feedback quay lại cải thiện AI theo ba hướng
+
+Hướng A — Cải thiện rule, prompt hoặc feature
+
+Không phải lỗi nào cũng cần train lại model.
+Ví dụ:
+
+      Thiếu dữ liệu KPI → sửa pipeline dữ liệu.
+
+      Công thức thâm niên sai → sửa feature engineering.
+
+      Quy định cảnh báo thay đổi → sửa business rule.
+      LLM hiểu sai định nghĩa “nguy cơ nghỉ việc” → sửa prompt.
+
+      Thiếu tài liệu nội bộ → bổ sung RAG/knowledge base.
+
+Đây thường là cách sửa nhanh và ít rủi ro nhất.
+
+Hướng B — Supervised Fine-Tuning
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                7/35
+
+===== PAGE 8 =====
+Áp dụng khi QA đã tạo được các cặp:
+
+
+ Input nhân sự
+ → Output chuẩ                              n đã được QA sử                                    a
+
+Phù hợp cho:
+
+      Phân loại loại cảnh báo.
+      Dự báo mức rủi ro.
+
+      Sinh giải thích có cấu trúc.
+
+      Sinh khuyến nghị.
+
+Hướng C — Preference Training
+
+Với mỗi bản ghi FAIL hoặc 50% PASS đã sửa:
+
+
+ Rejected output = Kế                                                  t qua        ̉ AI cũ
+ Chosen output   = Kế                                                  t qua        ̉ QA đã sử                      a
+
+Có thể dùng làm dữ liệu preference cho DPO.
+Hugging Face TRL hỗ trợ cả Supervised Fine-Tuning và các phương pháp preference optimization như
+DPO; PEFT có thể được dùng để ﬁne-tune bằng adapter thay vì cập nhật toàn bộ trọng số model.
+
+  Hugging Face+2
+
+8. Training và đánh giá model candidate
+
+Mỗi lần training phải tạo một candidate model, chưa được thay production ngay.
+Ví dụ:
+
+
+ Production: hraiv1.8
+ Candidate:  hraiv1.9-rc1
+
+Các metric nên kiểm tra:
+
+Với phân loại cảnh báo
+
+      Precision từng loại cảnh báo.
+      Recall từng loại cảnh báo.
+
+      F1 từng loại.
+
+      Macro F1.
+      False positive rate.
+
+      False negative rate.
+      Confusion matrix.
+
+      Độ chính xác của risk level.
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                 8/35
+
+===== PAGE 9 =====
+       Calibration của risk score.
+
+Với phần giải thích
+
+       Tỷ lệ bằng chứng đúng.
+
+       Tỷ lệ kết luận có căn cứ.
+       Tỷ lệ sinh thông tin không tồn tại.
+
+       Mức đầy đủ của giải thích.
+       Mức đúng của khuyến nghị.
+
+       Điểm QA trung bình.
+
+       PASS rate.
+       50% PASS rate.
+
+       FAIL rate.
+
+Với từng nhóm dữ liệu
+
+Cần đánh giá riêng theo:
+
+       Loại cảnh báo.
+
+       Đơn vị.
+
+       Nguồn dữ liệu.
+       Mức thâm niên.
+
+       Khoảng thời gian.
+       Dữ liệu đầy đủ hoặc thiếu.
+
+       Model version.
+
+MLﬂow phù hợp để lưu experiment, parameter, metric, artifact và quản lý vòng đời model. Model
+Registry cung cấp lineage, version, alias, metadata và quản lý các model từ development đến
+production.       MLﬂow AI Platform+2
+
+9. Quality Gate trước khi deploy
+
+Ví dụ điều kiện:
+
+
+ Macro F1 không thấ                                            p hơn production
+ Recall ca                   ̉nh báo quan trọng đạt ngưỡng
+ False positive không tăng
+ PASS rate trên bộ QA tăng
+ Không gia                   ̉m mạnh ở                    bấ  t kỳ loại ca                           ̉nh báo nào
+ Không có lỗ                         i dữ liệu hoặc schema
+ Đã được AI Lead + HR nghiệp vụ phê duyệt
+
+Nếu candidate không đạt:
+
+
+ Không deploy
+ → phân tích lỗ                                 i
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                   9/35
+
+===== PAGE 10 =====
+ → sử     a dataset / feature / prompt / model
+ → train lại
+
+Nếu đạt:
+
+
+ Register model
+ → Shadow test
+ → Canary 5%
+ → Canary 20%
+ → Production 100%
+
+Luôn giữ model version trước để rollback.
+
+10. Bộ công nghệ đề xuất
+
+
+                  Lớp                                                        Công nghệ/tool
+  Workﬂow orchestration                    Apache Airﬂow
+
+  Nguồn dữ liệu                            Oracle/PostgreSQL/SQL Server
+  Feature processing                       Python, Pandas, Spark hoặc dbt
+  Inference service                        FastAPI hoặc Spring Boot service
+
+  Queue nếu xử lý lớn                      Kafka hoặc RabbitMQ
+  Prediction/feedback DB                   PostgreSQL hoặc Oracle
+
+  Review UI                                HRAI custom UI
+  Annotation tool tùy chọn                 Label Studio
+  Object storage                           MinIO hoặc S3-compatible storage
+
+  Dataset format                           Parquet, JSONL
+  Data quality                             dbt tests, Great Expectations hoặc custom validation
+
+  Training                                 PyTorch, scikit-learn, LightGBM, Hugging Face Transformers
+  LLM post-training                        Hugging Face TRL, PEFT/LoRA
+  Experiment tracking                      MLﬂow Tracking
+
+  Model registry                           MLﬂow Model Registry
+  Serving                                  Docker, Kubernetes, KServe hoặc service nội bộ
+
+  Monitoring                               Prometheus, Grafana, Evidently hoặc dashboard custom
+  Source/version control                   Git, GitLab CI/CD
+  Security                                 RBAC, audit log, secret manager, mã hóa dữ liệu
+
+
+Label Studio có thể dùng như công cụ annotation/evaluation để QA gán nhãn, chỉnh sửa, so sánh output
+và xuất dữ liệu phục vụ xây dựng dataset; tuy nhiên nếu HRAI đã có UI nghiệp vụ thì nên tích hợp form
+review trực tiếp trong HRAI để QA không phải chuyển hệ thống.                     Label Studio+2
+
+11. Stack MVP phù hợp với HRAI
+
+Không cần triển khai toàn bộ MLOps phức tạp ngay từ đầu. Một stack thực tế:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                           10/35
+
+===== PAGE 11 =====
+ Oracle/PostgreSQL
+         ↓
+ Apache Airflow
+         ↓
+ Python Feature Pipeline
+         ↓
+ AI Inference API
+         ↓
+ AI_PREDICTION table
+         ↓
+ HRAI Review UI
+         ↓
+ AI_FEEDBACK table
+         ↓
+ Airflow Dataset Builder
+         ↓
+ MinIO + Parquet
+         ↓
+ Python/Hugging Face Training
+         ↓
+ MLflow Evaluation + Registry
+         ↓
+ Docker Deployment
+
+
+Chu kỳ vận hành đề xuất
+
+
+ Hằng ngày:
+ - Chạy AI inference.
+ - QA review.
+ - Đồ     ng bộ feedback.
+
+ Hằng đêm:
+ - Validate feedback.
+ - Tạo dataset draft.
+ - Báo cáo lỗ                           i theo loại.
+
+ Hằng tuầ                n hoặc khi đu                              ̉ số      mẫ  u:
+ - Chố        t dataset version.
+ - Train candidate.
+ - Chạy evaluation.
+
+ Theo kỳ phát hành:
+ - Nghiệm thu model.
+ - Canary deployment.
+ - Theo dõi và rollback nế                                                                u cầ     n.
+
+Nguyên tắc quan trọng nhất:
+
+      Feedback phải quay lại thành dữ liệu chuẩn hóa và có kiểm duyệt, không được nối
+      thẳng nút PASS/FAIL vào quá trình cập nhật trọng số model production.
+
+We experienced an error when generating images.
+
+
+   nói rõ cách chuyển kết quả feedback thành bộ dataset mới => luồng ?
+
+
+
+Luồng chuyển feedback thành dataset mới
+
+Điểm quan trọng nhất:
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                          11/35
+
+===== PAGE 12 =====
+        Không lấy trực tiếp PASS / 50% PASS / FAIL làm nhãn để train.
+        Hệ thống phải chuyển feedback của AI QA thành một đầu ra chuẩn — Gold Label, sau đó
+        ghép Gold Label với đúng dữ liệu đầu vào mà AI đã sử dụng.
+
+1. Luồng tổng thể
+
+
+
+    Mermaid
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      KhôngĐưa về QA bổ sung
+                                                          Không cho vào training
+
+                       AI QA Review UIRaw Feedback DBFeedback ValidationĐủ dữ liệu sửa đúng?
+
+
+               AI Prediction                           Có  Gold Label BuilderGold Label Table
+     Input SnapshotKết quả AI ban đầu                                                                                                    Sửa dataset / feature /
+    Dữ liệu nhân sự tại thời                                                                                                         Không prompt
+     điểm phân tích
+                                                                                    Validate SchemaSplit Train / Validation /
+                                                                           Dataset BuilderDedupe / Conflict / MaskTestDataset Version mớiTrain Candidate ModelEvaluationĐạt Quality Gate?
+                                                                                      PII              Parquet / JSONL
+                                                                                                                                      ĐạtRegister & Deploy Model
+                                                                                                                                            mới
+
+2. Các dữ liệu phải được lưu từ đầu
+
+Mỗi lần AI phân tích một nhân viên, cần tạo ba nhóm dữ liệu tách biệt.
+
+2.1. Input Snapshot
+
+Đây là bản chụp dữ liệu AI đã nhìn thấy tại đúng thời điểm inference.
+
+
+ JSON
+ {
+   "snapshot_id": "SNP-20260610-0001",
+   "employee_id": "E00125",
+   "snapshot_time": "2026-06-10T08:30:00",
+   "feature_version": "HRAI_FEATURE_V5",
+   "features": {
+     "tenure_months": 18,
+     "kpi_score_3m": 72,
+     "kpi_trend": "DECREASING",
+     "overtime_hours_3m": 96,
+     "unused_leave_days": 18,
+     "manager_sentiment": "NEGATIVE",
+     "salary_change_12m": 0,
+     "discipline_count_12m": 0
+   }
+ }
+
+Không được tạo dataset mới bằng cách query lại dữ liệu nhân sự hiện tại, vì dữ liệu hiện tại có thể đã
+thay đổi so với lúc AI phân tích.
+
+
+2.2. AI Prediction
+
+
+ JSON
+ {
+   "prediction_id": "PRE-20260610-0098",
+   "snapshot_id": "SNP-20260610-0001",
+   "model_version": "HRAI_MODEL_V1.8",
+   "prompt_version": "PROMPT_V12",
+   "ai_output": {
+     "alert_type": "BURNOUT_RISK",
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                    12/35
+
+===== PAGE 13 =====
+     "risk_level": "HIGH",
+     "risk_score": 0.82,
+     "evidence": [
+       "overtime_hours_3m",
+       "unused_leave_days"
+     ],
+     "reasoning_summary": "Nhân viên có dấ                                       u hiệu làm thêm nhiề                                                  u và chưa sử                            dụng ngày phép.",
+     "recommended_action": "Qua     ̉n lý cầ                n trao đổ                   i về      khố     i lượng công việc."
+   }
+ }
+
+
+2.3. Raw Feedback của AI QA
+
+Đây là feedback gốc người QA nhập trên UI, chưa phải dataset training.
+
+
+ JSON
+ {
+   "feedback_id": "FDB-20260610-0025",
+   "prediction_id": "PRE-20260610-0098",
+   "reviewer_id": "QA001",
+   "verdict": "PARTIAL_PASS",
+   "field_reviews": {
+     "alert_type": "PASS",
+     "risk_level": "PASS",
+     "risk_score": "FAIL",
+     "evidence": "PARTIAL",
+     "reasoning_summary": "PARTIAL",
+     "recommended_action": "PASS"
+   },
+   "corrections": {
+     "risk_score": 0.68,
+     "evidence": [
+       "overtime_hours_3m",
+       "unused_leave_days",
+       "kpi_trend"
+     ],
+     "reasoning_summary": "Có nguy cơ quá ta                                            ̉i do thời gian làm thêm cao, số                                                                                    ngày phép chưa sử                                             dụng
+ lớn và hiệu suấ                                    t có xu hướng gia                                         ̉m."
+   },
+   "issue_codes": [
+     "WRONG_RISK_SCORE",
+     "MISSING_EVIDENCE"
+   ],
+   "comment": "Loại ca                ̉nh báo đúng nhưng điể                                                       m quá cao và thiế                                         u bằng chứng KPI gia                                                  ̉m.",
+   "review_status": "SUBMITTED"
+ }
+
+3. Chuyển từng loại feedback thành Gold Label
+
+Trường hợp PASS
+
+QA xác nhận toàn bộ kết quả đúng.
+
+
+ Gold Output = AI Output
+
+Ví dụ:
+
+
+ JSON
+ {
+   "gold_source": "AI_ACCEPTED_BY_QA",
+   "gold_output": {
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                           13/35
+
+===== PAGE 14 =====
+     "alert_type": "BURNOUT_RISK",
+     "risk_level": "HIGH",
+     "risk_score": 0.82,
+     "evidence": [
+       "overtime_hours_3m",
+       "unused_leave_days"
+     ],
+     "reasoning_summary": "Nhân viên có dấ                                       u hiệu làm thêm nhiề                                                  u và chưa sử                            dụng ngày phép.",
+     "recommended_action": "Qua     ̉n lý cầ                n trao đổ                   i về      khố     i lượng công việc."
+   }
+ }
+
+PASS chỉ được đưa vào dataset khi QA thực sự đã xem đủ dữ liệu, không nên có nút “PASS hàng loạt”
+thiếu kiểm soát.
+
+
+Trường hợp 50% PASS
+
+Không được biến thành nhãn 0.5.
+Hệ thống lấy AI Output làm nền, sau đó ghi đè các trường QA đã sửa:
+
+
+ Gold Output = merge(AI Output, QA Corrections)
+
+Ví dụ AI ban đầu:
+
+
+ JSON
+ {
+   "alert_type": "BURNOUT_RISK",
+   "risk_level": "HIGH",
+   "risk_score": 0.82,
+   "evidence": [
+     "overtime_hours_3m",
+     "unused_leave_days"
+   ]
+ }
+
+QA sửa:
+
+
+ JSON
+ {
+   "risk_score": 0.68,
+   "evidence": [
+     "overtime_hours_3m",
+     "unused_leave_days",
+     "kpi_trend"
+   ]
+ }
+
+Gold Label cuối cùng:
+
+
+ JSON
+ {
+   "alert_type": "BURNOUT_RISK",
+   "risk_level": "HIGH",
+   "risk_score": 0.68,
+   "evidence": [
+     "overtime_hours_3m",
+     "unused_leave_days",
+     "kpi_trend"
+   ],
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                              14/35
+
+===== PAGE 15 =====
+   "reasoning_summary": "Có nguy cơ quá ta                                            ̉i do thời gian làm thêm cao, ngày phép chưa sử                                                                                                                              dụng lớn
+ và hiệu suấ                         t có xu hướng gia                                         ̉m.",
+   "recommended_action": "Qua     ̉n lý cầ                n trao đổ                   i về      khố     i lượng công việc."
+ }
+
+Như vậy dataset chỉ nhìn thấy một đầu ra chuẩn hoàn chỉnh, không nhìn thấy khái niệm “50% đúng”.
+
+
+Trường hợp FAIL
+
+AI Output bị loại bỏ khỏi vai trò đáp án chuẩn.
+
+QA bắt buộc phải nhập một đầu ra đúng hoàn chỉnh:
+
+
+ Gold Output = Corrected Output do QA xác nhận
+ Rejected Output = AI Output cũ
+
+Ví dụ AI dự đoán:
+
+
+ JSON
+ {
+   "alert_type": "DISCIPLINE_RISK",
+   "risk_level": "HIGH",
+   "risk_score": 0.78
+ }
+
+QA sửa:
+
+
+ JSON
+ {
+   "alert_type": "LOW_ENGAGEMENT",
+   "risk_level": "MEDIUM",
+   "risk_score": 0.62,
+   "evidence": [
+     "kpi_trend",
+     "manager_sentiment",
+     "salary_change_12m"
+   ],
+   "reasoning_summary": "Hiệu suấ                   t gia        ̉m, đánh giá qua                                       ̉n lý tiêu cực và không có biế                                                                              n động thu nhập;
+ không có dữ liệu vi phạm ky                                                                     ̉ luật.",
+   "recommended_action": "Đề   nghị trao đổ                              i về      mức độ gắ                      n kế     t và định hướng phát triể                                                                n."
+ }
+
+Kết quả này có thể tạo được cả:
+
+       Dataset supervised: input → output đúng.
+
+       Dataset preference: output đúng tốt hơn output AI sai.
+
+4. Bảng Gold Label trung gian
+
+Không nên tạo dataset trực tiếp từ bảng feedback. Nên có một bảng chuẩn hóa riêng:
+
+
+ SQL
+ AI_GOLD_LABEL
+ -------------
+ gold_label_id
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                 15/35
+
+===== PAGE 16 =====
+ prediction_id
+ snapshot_id
+ verdict
+ gold_alert_type
+ gold_risk_level
+ gold_risk_score
+ gold_evidence_json
+ gold_reasoning_summary
+ gold_recommended_action
+ rejected_output_json
+ gold_source
+ reviewer_id
+ verifier_id
+ quality_status
+ schema_version
+ created_at
+ verified_at
+
+Trong đó:
+
+
+ gold_source:
+ - AI_ACCEPTED_BY_QA
+ - AI_CORRECTED_BY_QA
+ - REPLACED_BY_QA
+ - ADJUDICATED_BY_EXPERT
+
+
+ quality_status:
+ - DRAFT
+ - NEEDS_CORRECTION
+ - VERIFIED
+ - REJECTED
+ - INCLUDED_IN_DATASET
+
+Chỉ lấy bản ghi VERIFIED để xây dataset.
+
+5. DAG chuyển feedback thành dataset
+
+Airﬂow có thể có một DAG riêng, ví dụ:
+
+
+ hraI_feedback_to_dataset_dag
+
+Luồng task:
+
+
+   Mermaid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                  16/35
+
+===== PAGE 17 =====
+        extract_submitted_feedbac
+                        k
+
+
+
+
+
+         join_prediction_and_snaps
+                       hot
+
+
+
+
+
+        validate_feedback_complet
+                     eness
+
+
+
+
+
+              build_gold_output
+
+
+
+
+
+            validate_gold_schema
+
+
+
+
+
+        validate_evidence_against_
+                    features
+
+
+
+
+
+         detect_duplicate_samples
+
+
+
+
+
+         detect_conflicting_reviews
+
+
+
+
+
+
+
+
+                 Có xung đột?
+
+
+
+
+
+                                      Có
+
+
+     Không              Send  to Adjudication   Queue
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                      17/35
+
+===== PAGE 18 =====
+     Không             Send to Adjudication Queue
+
+
+
+
+
+             Mask Sensitive Data
+
+
+
+
+
+          Calculate Sample Quality
+                     Score
+
+
+
+
+
+           Select Eligible Samples
+
+
+
+
+
+                 Split Dataset
+
+
+
+
+
+          Export JSONL / Parquet
+
+
+
+
+
+          Register Dataset Version
+
+
+
+Tên task thực tế:
+
+
+ 01_extract_verified_feedback
+ 02_load_prediction_output
+ 03_load_input_snapshot
+ 04_join_feedback_prediction_snapshot
+ 05_build_canonical_gold_label
+ 06_validate_label_taxonomy
+ 07_validate_evidence_reference
+ 08_remove_duplicates
+ 09_detect_review_conflicts
+ 10_mask_personal_information
+ 11_split_train_validation_test
+ 12_export_dataset_artifacts
+ 13_create_dataset_manifest
+ 14_register_dataset_version
+
+6. Điều kiện một feedback được đưa vào dataset
+
+Một bản ghi chỉ đủ điều kiện khi:
+
+
+ Có prediction_id hợp lệ
+ Có input snapshot
+ Có model version
+ Có feature version
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                  18/35
+
+===== PAGE 19 =====
+ Gold output đúng schema
+ Loại ca             ̉nh báo thuộc danh mục chuẩ                                                                     n
+ Evidence tồ                         n tại trong input snapshot
+ Risk score nằm trong khoa                                                                ̉ng hợp lệ
+ PARTIAL_PASS đã sử                                            a đầ     y đu     ̉ các trường sai
+ FAIL đã cung cấ                                    p đáp án đúng hoàn chỉ                                                       nh
+ Không có tranh chấ                                            p giữa các QA
+ Đã được VERIFIED
+
+Ví dụ không đủ điều kiện:
+
+
+ JSON
+ {
+   "verdict": "FAIL",
+   "comment": "AI phân tích sai hoàn toàn."
+ }
+
+Bản ghi này chỉ dùng để thống kê lỗi, không dùng để train vì không có đáp án đúng.
+
+Hệ thống nên trả lại form:
+
+
+ Không thể                    gử  i feedback:
+ - Chưa chọn loại ca                                               ̉nh báo đúng.
+ - Chưa nhập bằng chứng đúng.
+ - Chưa nhập mức độ ru                                                     ̉i ro đúng.
+ - Chưa nhập gia                                    ̉i thích chuẩ                              n.
+
+7. Xử lý trường hợp hai QA chấm khác nhau
+
+Ví dụ cùng một prediction:
+
+
+ QA A: BURNOUT_RISK
+ QA B: LOW_ENGAGEMENT
+
+Không được tự chọn ngẫu nhiên hoặc lấy QA chấm sau cùng.
+Luồng:
+
+
+ Phát hiện conflict
+ → đưa vào Adjudication Queue
+ → HR Expert hoặc AI QA Lead xem lại
+ → tạo Final Gold Label
+ → lưu verifier_id và lý do quyế                                                                                 t định
+
+Có thể đặt quy tắc:
+
+
+ PASS: một QA xác nhận là đu                                                                     ̉ với mẫ                u thông thường.
+ PARTIAL_PASS: cầ                                       n QA sử             a đầ     y đu     ̉.
+ FAIL hoặc ca                           ̉nh báo nhạy ca                                    ̉m: cầ           n QA Lead/HR Expert xác nhận.
+ Hai QA không thố                                       ng nhấ           t: bắ        t buộc adjudication.
+
+8. Từ Gold Label tạo các loại dataset
+
+Không phải chỉ có một dataset duy nhất.
+
+8.1. Dataset phân loại cảnh báo
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                          19/35
+
+===== PAGE 20 =====
+ JSON
+ {
+   "features": {
+     "tenure_months": 18,
+     "kpi_score_3m": 72,
+     "overtime_hours_3m": 96,
+     "unused_leave_days": 18
+   },
+   "label": "BURNOUT_RISK"
+ }
+
+Dùng cho:
+
+      LightGBM.
+      XGBoost.
+
+      Random Forest.
+
+      Neural network classiﬁer.
+
+
+8.2. Dataset dự báo điểm rủi ro
+
+
+ JSON
+ {
+   "features": {
+     "tenure_months": 18,
+     "kpi_score_3m": 72,
+     "overtime_hours_3m": 96
+   },
+   "target_risk_score": 0.68
+ }
+
+
+8.3. Dataset SFT cho LLM
+
+
+ JSON
+ {
+   "messages": [
+     {
+       "role": "system",
+       "content": "Bạn là hệ thố                                 ng phân tích ru                                    ̉i ro nhân sự. Chỉ                                             sử   dụng các bằng chứng được cung
+ cấp."
+     },
+     {
+       "role": "user",
+       "content": {
+         "employee_features": {
+           "kpi_trend": "DECREASING",
+           "overtime_hours_3m": 96,
+           "unused_leave_days": 18
+         }
+       }
+     },
+     {
+       "role": "assistant",
+       "content": {
+         "alert_type": "BURNOUT_RISK",
+         "risk_level": "HIGH",
+         "risk_score": 0.68,
+         "evidence": [
+           "kpi_trend",
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                          20/35
+
+===== PAGE 21 =====
+           "overtime_hours_3m",
+           "unused_leave_days"
+         ],
+         "reasoning_summary": "Có nguy cơ quá ta                                            ̉i do thời gian làm thêm cao, ngày phép chưa sử                                                                                                                              dụng
+ lớn và hiệu suấ                                    t gia        ̉m."
+       }
+     }
+   ]
+ }
+
+
+8.4. Dataset Preference
+
+Đặc biệt hữu ích với PARTIAL_PASS và FAIL.
+
+
+ JSON
+ {
+   "prompt": {
+     "employee_features": {
+       "kpi_trend": "DECREASING",
+       "overtime_hours_3m": 96,
+       "unused_leave_days": 18
+     }
+   },
+   "chosen": {
+     "alert_type": "BURNOUT_RISK",
+     "risk_score": 0.68,
+     "evidence": [
+       "kpi_trend",
+       "overtime_hours_3m",
+       "unused_leave_days"
+     ]
+   },
+   "rejected": {
+     "alert_type": "BURNOUT_RISK",
+     "risk_score": 0.95,
+     "evidence": [
+       "unused_leave_days"
+     ]
+   }
+ }
+
+Ở đây:
+
+
+       chosen là Gold Output.
+
+       rejected là AI Output trước khi QA sửa.
+
+9. Chia Train, Validation, Test
+
+Không nên random từng dòng đơn giản.
+
+Với HRAI, cần tránh một nhân viên xuất hiện cả trong train và test.
+
+Ví dụ:
+
+
+ Train: 70% employee_id
+ Validation: 15% employee_id
+ Test: 15% employee_id
+
+Ngoài ra nên giữ một bộ test theo thời gian:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                 21/35
+
+===== PAGE 22 =====
+ Train: dữ liệu trước tháng 04/2026
+ Validation: tháng 04–05/2026
+ Test: tháng 06/2026
+
+Các bản ghi trong bộ test chuẩn không nên tự động chuyển sang train sau mỗi vòng, nếu không sẽ mất
+bộ chuẩn độc lập để so sánh các model version.
+
+10. Dataset version mới cần lưu gì?
+
+Ví dụ:
+
+
+ JSON
+ {
+   "dataset_version": "HRAI_GOLD_V12",
+   "created_at": "2026-06-15T02:00:00",
+   "schema_version": "HRAI_OUTPUT_SCHEMA_V4",
+   "feature_version": "HRAI_FEATURE_V5",
+   "source_model_versions": [
+     "HRAI_MODEL_V1.7",
+     "HRAI_MODEL_V1.8"
+   ],
+   "feedback_period": {
+     "from": "2026-06-01",
+     "to": "2026-06-14"
+   },
+   "sample_count": {
+     "total": 12500,
+     "pass": 8100,
+     "partial_corrected": 2900,
+     "fail_corrected": 1500
+   },
+   "label_distribution": {
+     "BURNOUT_RISK": 2200,
+     "RESIGNATION_RISK": 1700,
+     "LOW_ENGAGEMENT": 3100,
+     "DISCIPLINE_RISK": 800,
+     "NO_ALERT": 4700
+   },
+   "artifacts": {
+     "train": "s3://hrai-datasets/HRAI_GOLD_V12/train.parquet",
+     "validation": "s3://hrai-datasets/HRAI_GOLD_V12/validation.parquet",
+     "test": "s3://hrai-datasets/HRAI_GOLD_V12/test.parquet"
+   },
+   "checksum": "sha256:..."
+ }
+
+Dataset cũ không bị ghi đè:
+
+
+ HRAI_GOLD_V10
+ HRAI_GOLD_V11
+ HRAI_GOLD_V12
+
+Nhờ vậy có thể biết:
+
+
+ Model V1.9 được train từ dataset nào?
+ Dataset đó dùng feature version nào?
+ Gồm feedback cu                              ̉a những model nào?
+ Ai đã review?
+ Có bao nhiêu PASS/FAIL?
+
+11. Công nghệ đề xuất
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                    22/35
+
+===== PAGE 23 =====
+                        Thành phần                                                                    Công nghệ
+  Lưu prediction, feedback, gold label                             Oracle/PostgreSQL
+
+  Điều phối luồng                                                  Apache Airﬂow
+  Transform dữ liệu                                                Python, Pandas, Spark hoặc dbt
+  Kiểm tra chất lượng                                              Great Expectations, dbt tests hoặc custom validator
+
+  Lưu dataset ﬁle                                                  MinIO/S3
+  Định dạng                                                        Parquet cho ML truyền thống; JSONL cho LLM
+
+  Version dataset                                                  DVC, lakeFS, Delta Lake hoặc manifest tự xây
+  Tracking training                                                MLﬂow
+  Labeling/adjudication                                            HRAI UI custom hoặc Label Studio
+
+  Training                                                         scikit-learn, LightGBM, PyTorch, Hugging Face
+  CI/CD                                                            GitLab CI/CD, Docker, Kubernetes
+
+
+
+12. Luồng ngắn gọn để trình bày
+
+
+ 1. AI phân tích dữ liệu nhân viên.
+ 2. Hệ thố                   ng lưu Input Snapshot và AI Output.
+ 3. AI QA chấ                           m PASS, PARTIAL_PASS hoặc FAIL.
+ 4. PARTIAL_PASS/FAIL pha                                                             ̉i nhập kế                      t qua        ̉ sử     a đúng.
+ 5. Feedback được kiể                                                  m tra tính đầ                              y đu     ̉.
+ 6. Hệ thố                   ng tạo Gold Label:
+    - PASS: dùng AI Output.
+    - PARTIAL_PASS: merge AI Output với phầ                                                                                                       n QA sử             a.
+    - FAIL: dùng toàn bộ output do QA sử                                                                                               a.
+ 7. Gold Label được ghép lại với Input Snapshot.
+ 8. Loại dữ liệu thiế                                                  u, lỗ        i, trùng hoặc có tranh chấ                                                                   p.
+ 9. Ẩ     n dữ liệu cá nhân và chuẩ                                                                n hóa schema.
+ 10. Chia train, validation, test.
+ 11. Xuấ             t dataset version mới.
+ 12. Train model candidate.
+ 13. So sánh candidate với model production.
+ 14. Chỉ              deploy nế                      u model mới vượt quality gate.
+
+Cấu trúc cốt lõi nên là:
+
+
+ INPUT_SNAPSHOT
+       +
+ AI_PREDICTION
+       +
+ VERIFIED_GOLD_LABEL
+       =
+ DATASET_ITEM
+
+Trong đó comment chỉ là metadata phục vụ phân tích lỗi; phần thực sự giúp AI học là Gold Label có
+cấu trúc mà QA đã xác nhận hoặc sửa đúng.
+
+
+   Giả sử với một testcase Pass nhưng tôi chưa hài lòng về cách suy luận - câu từ của AI. Nên tôi có
+   comment, ví dụ: "đừng dùng các cụm từ kiểu "tổ hợp tín hiệu", ngôn ngữ tự nhiên, có nêu tên
+   Nhân viên để xác định cụ thể trường hợp"
+
+   => Làm sao để bổ sung dữ liệu này vào training vì nó không thuộc trường tiêu chuẩn nào cả. Phải
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                 23/35
+
+===== PAGE 24 =====
+   chăng những nhận xét như thế này sẽ được gom vào Added_Prompt ? (tức là phần Prompt phụ cho
+   AI cần lưu ý ngoài làm theo prompt chính) ????
+
+   Các cách làm hiệu quả ngoài Added_Prompt là gì ?
+   Show moreShow less
+
+
+
+
+Đúng là loại feedback này không thuộc nhãn nghiệp vụ chính như loại cảnh báo, risk score hay bằng
+chứng. Nó thuộc nhóm feedback về cách diễn đạt và hành vi sinh nội dung.
+
+Không nên chỉ gom nguyên comment vào một trường Added_Prompt rồi nối tất cả vào prompt. Cách đó
+dùng được ở giai đoạn đầu, nhưng càng về sau prompt càng dài, trùng lặp, mâu thuẫn và khó kiểm
+soát.
+
+Cách tốt hơn là biến comment tự do thành ba lớp dữ liệu:
+
+
+ Comment tự do
+ → Feedback có cấ                                       u trúc
+ → Quy tắ                c áp dụng hoặc cặp output được ưu tiên
+ → Prompt / evaluator / dataset training
+
+1. Trường hợp cụ thể của anh
+
+AI trả kết quả đúng về nội dung:
+
+      “Tổ hợp tín hiệu cho thấy nhân sự có nguy cơ giảm mức độ gắn kết.”
+
+Anh đánh giá:
+
+
+ Kết qua        ̉ nghiệp vụ: PASS
+ Cách diễ                n đạt: Chưa đạt
+ Comment:
+ - Không dùng cụm “tổ                                                   hợp tín hiệu”.
+ - Viế        t bằng ngôn ngữ tự nhiên.
+ - Nêu tên nhân viên để                                                        xác định cụ thể                                        trường hợp.
+
+Nên tách việc đánh giá thành hai chiều:
+
+
+ JSON
+ {
+   "business_verdict": "PASS",
+   "language_verdict": "NEEDS_REVISION"
+ }
+
+Không nên để một trường verdict = PASS duy nhất, vì hệ thống sẽ hiểu rằng toàn bộ output đã đạt.
+
+2. Thiết kế thêm nhóm feedback về ngôn ngữ
+
+Các trường đề xuất
+
+
+ JSON
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                            24/35
+
+===== PAGE 25 =====
+ {
+   "prediction_id": "PRE-00125",
+   "business_verdict": "PASS",
+   "language_verdict": "NEEDS_REVISION",
+
+   "style_issue_codes": [
+     "AVOID_TECHNICAL_JARGON",
+     "USE_NATURAL_LANGUAGE",
+     "MENTION_EMPLOYEE_NAME"
+   ],
+
+   "prohibited_phrases": [
+     "tổ   hợp tín hiệu"
+   ],
+
+   "required_elements": [
+     "employee_name"
+   ],
+
+   "reviewer_comment": "Không dùng cụm từ kiể                                                       u tổ      hợp tín hiệu; diễ                                            n đạt tự nhiên và nêu tên nhân
+ viên.",
+
+   "preferred_rewrite": "Nguyễ           n Văn A có dấ                              u hiệu gia                      ̉m mức độ gắ                           n kế     t do hiệu suấ                              t công việc đi
+ xuố  ng và pha                   ̉n hồ        i gầ     n đây từ qua                           ̉n lý chưa tích cực."
+ }
+
+Trong đó:
+
+                            Trường                                                                       Mục đích
+  business_verdict                                                   Nội dung nghiệp vụ đúng hay sai
+  language_verdict                                                   Câu chữ, giọng văn có đạt không
+
+  style_issue_codes                                                  Nhóm lỗi đã chuẩn hóa
+  prohibited_phrases                                                 Cụm từ cụ thể không được dùng
+
+  required_elements                                                  Thành phần bắt buộc phải có
+  reviewer_comment                                                   Ghi chú gốc của QA
+  preferred_rewrite                                                  Câu trả lời mà QA mong muốn
+
+
+
+preferred_rewrite là dữ liệu quan trọng nhất nếu muốn model thực sự học cách viết tốt hơn.
+
+3. Có nên dùng Added_Prompt không?
+
+Có, nhưng chỉ nên coi là một lớp cấu hình tạm thời
+
+Ví dụ:
+
+
+ PROMPT CHÍNH:
+ Phân tích dữ liệu nhân sự và tra                                                                                   ̉ về      loại ca                ̉nh báo, mức độ ru                                            ̉i ro, bằng chứng và khuyế                                                                   n nghị.
+
+ STYLE POLICY:
+ - Viế        t bằng ngôn ngữ tự nhiên, dễ                                                                         hiể     u.
+ - Không sử                       dụng cụm từ trừu tượng như “tổ                                                                                  hợp tín hiệu”.
+ - Khi mô ta                         ̉ một trường hợp cụ thể                                                          , pha        ̉i nêu tên nhân viên.
+ - Không dùng ngôn ngữ quá máy móc hoặc mang tính kỹ thuật.
+
+Tên hợp lý hơn Added_Prompt là:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                   25/35
+
+===== PAGE 26 =====
+ STYLE_INSTRUCTION
+ GENERATION_POLICY
+ OUTPUT_GUIDELINE
+ PROMPT_EXTENSION
+
+Không nên gọi đơn giản là Added_Prompt vì sau này có thể có nhiều loại bổ sung:
+
+
+ business_rule_prompt
+ style_prompt
+ safety_prompt
+ output_schema_prompt
+ department_specific_prompt
+
+
+Vấn đề nếu chỉ dùng Added Prompt
+
+       Prompt sẽ ngày càng dài.
+       Nhiều comment có thể trùng nhau.
+
+       Có thể xuất hiện hai nhận xét mâu thuẫn.
+
+       Model có thể bỏ qua hướng dẫn nằm cuối prompt.
+       Không biết quy tắc nào áp dụng toàn hệ thống, quy tắc nào chỉ áp dụng một trường hợp.
+
+       Khó đo xem thay đổi nào thực sự giúp chất lượng tăng.
+
+Vì vậy nên có một bước quản trị feedback trước khi thêm vào prompt.
+
+4. Luồng xử lý feedback ngôn ngữ
+
+
+
+   Mermaid
+
+
+
+
+
+
+
+                                                                    Phân loại issue code
+
+                                                                                                          Lỗi đơn lẻGiữ làm sample feedback
+
+
+                                                                    Trích prohibited phrase
+
+     AI Output đúng nghiệp vụAI QA chấm PASS nghiệp vụNhập commentFeedback Normalizer         Mức độ phổ biếnLặp lại nhiều lầnĐưa vào Style PolicyPrompt Version mới
+                     nhưng chưa đạt ngôn ngữvà sửa lại câu mong muốn              Style Feedback Store
+
+                                                                    Trích required element
+
+                                                                                                        Có nhiều cặp sửa tốtTạo SFT / PreferenceFine-tune / DPO
+                                                                                                                       Dataset
+
+                                                                    Lưu preferred rewrite
+
+
+5. Ba cấp độ áp dụng feedback
+
+Cấp 1 — Quy tắc riêng cho một output
+
+Ví dụ QA chỉ không thích câu này trong một tình huống riêng.
+
+
+ Không thêm vào prompt toàn hệ thố                                                                                      ng.
+ Chỉ   lưu comment và preferred rewrite vào dataset.
+
+Áp dụng khi:
+
+       Lỗi hiếm gặp.
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                26/35
+
+===== PAGE 27 =====
+       Có tính chủ quan.
+
+       Chỉ phù hợp với một loại cảnh báo.
+       Chưa đủ bằng chứng rằng đây là quy tắc chung.
+
+
+Cấp 2 — Quy tắc chung trong Style Policy
+
+Ví dụ đã có 30 feedback cùng nói:
+
+
+ Không dùng “tổ                                  hợp tín hiệu”.
+ Cần nêu rõ tên nhân viên.
+ Câu văn pha                         ̉i tự nhiên.
+
+Lúc này hệ thống tổng hợp thành rule:
+
+
+ JSON
+ {
+   "rule_id": "STYLE-012",
+   "scope": "HRAI_ALL_ALERTS",
+   "rule_type": "LANGUAGE_STYLE",
+   "instruction": "Không sử                    dụng cụm từ 'tổ                                        hợp tín hiệu'. Diễ                                               n đạt tự nhiên và nêu tên nhân viên
+ khi mô ta                   ̉ trường hợp cụ thể                                               .",
+   "priority": "HIGH",
+   "status": "ACTIVE",
+   "effective_from": "2026-06-15",
+   "source_feedback_count": 30
+ }
+
+Sau đó Prompt Builder lấy các rule đang active để tạo prompt:
+
+
+ System Prompt
+ + Business Prompt
+ + Output Schema
+ + Active Style Policy
+ + Employee Context
+
+Đây là cách dùng Added_Prompt có quản trị, thay vì nối trực tiếp comment thô.
+
+
+Cấp 3 — Đưa vào training dataset
+
+Muốn model học thực sự, cần cặp:
+
+
+ Input
+ + Output chưa tố                                       t
+ + Output đã sử                                 a tố     t
+
+Ví dụ:
+
+
+ JSON
+ {
+   "input": {
+     "employee_name": "Nguyễ           n Văn A",
+     "alert_type": "LOW_ENGAGEMENT",
+     "evidence": [
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                     27/35
+
+===== PAGE 28 =====
+       "KPI gia                ̉m trong 3 tháng"   ,
+       "Pha     ̉n hồ        i qua        ̉n lý tiêu cực"
+     ]
+   },
+
+   "rejected": "Tổ   hợp tín hiệu cho thấ                                                     y nhân sự có nguy cơ gia                                                             ̉m mức độ gắ                           n kế     t.",
+
+   "chosen": "Nguyễ           n Văn A có dấ                              u hiệu gia                      ̉m mức độ gắ                           n kế     t do kế             t qua        ̉ KPI gia                   ̉m trong ba tháng gầ                                                  n
+ đây và pha                      ̉n hồ        i từ qua                ̉n lý chưa tích cực.",
+
+   "style_issues": [
+     "AVOID_TECHNICAL_JARGON",
+     "USE_NATURAL_LANGUAGE",
+     "MENTION_EMPLOYEE_NAME"
+   ]
+ }
+
+Dữ liệu này dùng được cho:
+
+        Supervised Fine-Tuning.
+
+        Preference Training/DPO.
+
+        Huấn luyện evaluator chấm văn phong.
+        Kiểm thử regression về ngôn ngữ.
+
+6. Nếu QA chỉ comment mà không viết lại câu
+
+Comment vẫn có giá trị, nhưng yếu hơn.
+
+Ví dụ chỉ có:
+
+
+ Không dùng “tổ                                  hợp tín hiệu”, viế                                               t tự nhiên hơn.
+
+Hệ thống có thể dùng một model phụ để tạo bản sửa:
+
+
+ Original output
+ + QA comment
+ → Rewrite Model
+ → Proposed rewrite
+
+Sau đó QA chỉ cần:
+
+
+ Approve
+ Edit
+ Reject
+
+Luồng:
+
+
+    Mermaid
+
+
+
+
+
+                                                                                                  Approve       Chosen Output
+
+
+                                                                                                                                       Preference Dataset
+
+      AI Output                           Rewrite Service      Bản viết lại đề xuất   QA xác nhận   Edit       Final Edited Output
+                       QA Comment
+
+
+
+                                                                                                   Reject     Không đưa vào dataset
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                          28/35
+
+===== PAGE 29 =====
+Cách này giảm công sức QA nhưng vẫn tạo được dữ liệu chuẩn.
+
+7. Các cách hiệu quả ngoài Added Prompt
+
+Cách 1 — Style Guide có version
+
+Tạo tài liệu quy chuẩn ngôn ngữ:
+
+
+ HRAI_STYLE_GUIDE_V3
+
+Nội dung:
+
+      Cách gọi tên nhân viên.
+
+      Cách mô tả cảnh báo.
+      Từ nên dùng.
+
+      Từ không nên dùng.
+
+      Độ dài câu.
+      Cách nêu bằng chứng.
+
+      Cách nêu khuyến nghị.
+      Mức độ chắc chắn.
+
+      Các mẫu câu tốt và không tốt.
+
+Ví dụ:
+
+                     Không nên                                                       Nên dùng
+
+  Tổ hợp tín hiệu cho thấy…                              Dữ liệu hiện tại cho thấy…
+  Đối tượng nhân sự có khả năng…                         Nguyễn Văn A có dấu hiệu…
+  Các vector đặc trưng biểu hiện…                        Kết quả KPI và phản hồi quản lý cho thấy…
+
+  Kích hoạt cảnh báo…                                    Hệ thống ghi nhận nguy cơ…
+
+
+Style guide được quản lý bằng version, không sửa trực tiếp prompt production mà không ghi nhận lịch
+sử.
+
+
+Cách 2 — Output template
+
+Thay vì để LLM tự viết hoàn toàn, định nghĩa cấu trúc:
+
+
+ {employee_name} có dấ                                                     u hiệu {risk_description}.
+
+ Căn cứ:
+ - {evidence_1}
+ - {evidence_2}
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                     29/35
+
+===== PAGE 30 =====
+ Đề xuấ     t:
+ {recommended_action}
+
+LLM chỉ sinh giá trị cho các biến.
+
+Ví dụ:
+
+
+ Nguyễ        n Văn A có dấ                              u hiệu gia                      ̉m mức độ gắ                           n kế     t.
+
+ Căn cứ:
+ - KPI gia                   ̉m liên tục trong ba tháng.
+ - Pha        ̉n hồ        i gầ     n đây từ qua                           ̉n lý chưa tích cực.
+
+ Đề xuấ     t:
+ Qua  ̉n lý trực tiế                                 p nên trao đổ                              i với Nguyễ                         n Văn A để                       làm rõ khó khăn và định hướng công việc.
+
+Ưu điểm:
+
+        Kiểm soát câu từ tốt.
+        Luôn có tên nhân viên.
+
+        Ít phát sinh văn phong lạ.
+        Dễ kiểm thử.
+
+Nhược điểm là giảm độ linh hoạt.
+
+
+Cách 3 — Deterministic linter
+
+Sau khi LLM sinh kết quả, chạy bộ kiểm tra rule-based:
+
+
+ Có chứa “tổ                          hợp tín hiệu” không?
+ Có chứa tên nhân viên không?
+ Có dùng cụm từ cấ                                         m không?
+ Có câu quá dài không?
+ Có sử         dụng thuật ngữ kỹ thuật không cầ                                                                                      n thiế           t không?
+
+Ví dụ:
+
+
+ Python
+ prohibited_phrases = [
+     "tổ   hợp tín hiệu",
+     "vector đặc trưng",
+     "đố  i tượng nhân sự"
+ ]
+
+ required_fields = [
+     "employee_name"
+ ]
+
+Nếu vi phạm:
+
+
+ Reject output
+ → yêu cầ                u LLM rewrite
+
+Luồng:
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                    30/35
+
+===== PAGE 31 =====
+ LLM Generate
+ → Style Linter
+ → PASS: hiể                         n thị
+ → FAIL: rewrite theo danh sách lỗ                                                                                      i
+
+Cách này hiệu quả với quy tắc rõ ràng như “không dùng cụm X” hoặc “bắt buộc có tên nhân viên”.
+
+
+Cách 4 — LLM-as-a-Judge / Style Evaluator
+
+Dùng một model thứ hai để chấm:
+
+
+ JSON
+ {
+   "natural_language": 3,
+   "employee_name_present": true,
+   "technical_jargon_present": true,
+   "clarity": 2,
+   "violations": [
+     "Sử   dụng cụm từ 'tổ                                        hợp tín hiệu'"
+   ]
+ }
+
+Nếu điểm dưới ngưỡng:
+
+
+ Evaluator feedback
+ → Generator rewrite
+ → Evaluator chấ                                    m lại
+
+Không nên dùng evaluator làm nguồn chân lý duy nhất; nó nên kết hợp rule-based check và sampling
+của QA.
+
+
+Cách 5 — Retrieval của rule liên quan
+
+Không cần đưa toàn bộ style guide vào mọi prompt.
+
+Ví dụ output đang là cảnh báo nghỉ việc thì chỉ lấy:
+
+
+ Global style rules
+ + Rules cho HRAI
+ + Rules cho ca                                 ̉nh báo nghỉ                            việc
+
+Có thể lưu rule trong DB hoặc vector database:
+
+
+ scope = GLOBAL
+ scope = HRAI
+ scope = RESIGNATION_RISK
+ scope = BURNOUT_RISK
+
+Prompt Builder chỉ retrieve rule phù hợp, giúp prompt ngắn hơn.
+
+
+Cách 6 — SFT từ các bản QA đã sửa
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                              31/35
+
+===== PAGE 32 =====
+Khi có đủ vài trăm hoặc vài nghìn output đã được sửa:
+
+
+ Input → Preferred Output
+
+Dùng supervised ﬁne-tuning để model học:
+
+       Nêu tên nhân viên.
+       Cách diễn đạt tự nhiên.
+
+       Cách dẫn bằng chứng.
+
+       Cách tránh ngôn ngữ máy móc.
+
+SFT phù hợp khi có một đáp án chuẩn rõ ràng.
+
+
+Cách 7 — Preference Training/DPO
+
+Khi có:
+
+
+ Rejected: câu AI ban đầ                                                          u
+ Chosen: câu QA sử                                         a
+
+Model học rằng:
+
+
+ “Nguyễ           n Văn A có dấ                              u hiệu...” tố                              t hơn
+ “Tổ   hợp tín hiệu cho thấ                                                     y đố     i tượng...”
+
+DPO phù hợp với khác biệt về:
+
+       Văn phong.
+       Tự nhiên.
+
+       Cách chọn từ.
+
+       Mức rõ ràng.
+       Cá nhân hóa.
+
+       Độ súc tích.
+
+
+Cách 8 — Huấn luyện reward/evaluator model
+
+Có thể dùng dữ liệu QA để huấn luyện một model nhỏ chấm chất lượng output:
+
+
+ Input:
+ - Output AI
+ - Style policy
+
+ Output:
+ - PASS
+ - NEEDS_REVISION
+ - Issue codes
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                 32/35
+
+===== PAGE 33 =====
+Sau này evaluator này có thể tự động lọc hàng nghìn output trước khi QA xem.
+
+8. Cách triển khai thực tế tốt nhất cho HRAI
+
+Không cần ﬁne-tune ngay. Nên làm theo các giai đoạn.
+
+Giai đoạn 1 — Có ít feedback
+
+Áp dụng:
+
+
+ Comment tự do
+ + Issue codes
+ + Preferred rewrite
+ + Style Policy
+ + Rule-based linter
+
+Đây là giai đoạn hiệu quả nhất về chi phí.
+
+Giai đoạn 2 — Feedback lặp lại nhiều
+
+Áp dụng thêm:
+
+
+ Rule aggregation
+ + Prompt versioning
+ + Rewrite loop
+ + Style evaluator
+
+
+Giai đoạn 3 — Có đủ dữ liệu đã sửa
+
+Áp dụng:
+
+
+ SFT
+ + DPO
+ + Automated evaluator
+
+9. Mô hình dữ liệu đề xuất
+
+
+ SQL
+ AI_LANGUAGE_FEEDBACK
+ --------------------
+ language_feedback_id
+ prediction_id
+ reviewer_id
+ language_verdict
+ style_issue_codes_json
+ prohibited_phrases_json
+ required_elements_json
+ reviewer_comment
+ original_text
+ preferred_rewrite
+ scope
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                         33/35
+
+===== PAGE 34 =====
+ status
+ created_at
+
+Bảng rule được tổng hợp:
+
+
+ SQL
+ AI_GENERATION_POLICY
+ --------------------
+ policy_id
+ policy_code
+ scope
+ policy_type
+ instruction
+ prohibited_phrases_json
+ required_elements_json
+ priority
+ source_feedback_count
+ prompt_version
+ status
+ effective_from
+ effective_to
+
+Trong đó:
+
+
+ scope:
+ - GLOBAL
+ - HRAI
+ - ALERT_TYPE
+ - DEPARTMENT
+ - SPECIFIC_OUTPUT_FIELD
+
+10. Quy tắc quyết định feedback đi đâu
+
+
+                         Feedback                                                        Xử lý phù hợp
+  “Không dùng cụm tổ hợp tín hiệu”                              Prohibited phrase + linter + style prompt
+
+  “Phải nêu tên nhân viên”                                      Required element + template validation
+  “Viết tự nhiên hơn”                                           Style rubric + preferred rewrite + DPO/SFT
+
+  “Câu quá dài”                                                 Length rule + linter
+  “Không dùng giọng kết luận chắc chắn”                         Tone policy + template
+  “Cần nêu rõ bằng chứng”                                       Output schema bắt buộc
+
+  “Đoạn này nên viết như…”                                      Chosen output cho SFT/DPO
+  Nhận xét chỉ phù hợp một trường hợp                           Lưu sample, không đưa thành global prompt
+
+  Nhận xét lặp lại nhiều lần                                    Nâng thành policy toàn hệ thống
+
+
+Kết luận
+
+
+Added_Prompt có thể sử dụng, nhưng chỉ nên là một đầu ra của quá trình tổng hợp feedback, không
+phải nơi đổ trực tiếp mọi comment.
+Luồng tốt nhất là:
+
+
+ QA comment
+ → chuẩ           n hóa thành style issue
+ → QA xác nhận câu viế                                                     t lại
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                             34/35
+
+===== PAGE 35 =====
+ → lưu original/chosen pair
+ → nế     u lặp lại nhiề                                 u: tạo generation policy
+ → áp dụng bằng prompt + template + linter
+ → khi đu                ̉ dữ liệu: SFT hoặc DPO
+
+Với ví dụ của anh, nên xử lý đồng thời theo ba cách:
+
+
+ 1. “tổ            hợp tín hiệu” → prohibited phrase trong Style Policy và linter.
+ 2. “pha             ̉i nêu tên nhân viên” → required field/template rule.
+ 3. “ngôn ngữ tự nhiên” → lưu câu QA viế                                                                                                       t lại thành chosen output để                                                                         SFT/DPO.
+
+Như vậy hệ thống vừa sửa được ngay ở runtime, vừa tích lũy dữ liệu để model học lâu dài.
+
+
+   Thiết kế UI popup để QA cho đánh giá, đầy đủ các trường
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API.                                                                                  35/35

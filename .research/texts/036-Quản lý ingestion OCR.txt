@@ -1,0 +1,466 @@
+
+--- PAGE 1 ---
+CV - Quản lý ingestion OCR
+trong các bài toán OCR, việc quản lý thư mục chứa ảnh, các ﬁle tài liệu, đặt tên..., chuẩn hóa sử 
+dụng công nghệ gì, thực hiện bằng cách nào (giai đoạn ingestion)?
+Trong bài toán OCR/IDP, ingestion không chỉ là “đưa ﬁle vào một thư mục” mà là một pipeline tiếp
+nhận, kiểm tra, chuẩn hóa, định danh, lưu trữ và chuyển tài liệu sang OCR.
+Với bài toán XNK của anh, nghiệp vụ đã xác định OCR nhận dạng loại chứng từ, lấy số lô/số
+invoice/khách hàng; sau đó hệ thống tự gom ﬁle theo lô, tạo folder, đặt lại tên và hình thành bộ hồ sơ
+hoàn chỉnh.  Tài liệu RPA cũng mô tả mục tiêu “audit-ready”: nhận dạng loại chứng từ và số
+Invoice/BL, gom theo lô, rename, tạo folder và checklist tài liệu thiếu. 
+1. Kiến trúc ingestion tiêu chuẩn
+Email / Upload Web / SFTP / Shared Folder / Scanner / API
+                         │
+                         ▼
+                Ingestion Service
+                         │
+         ┌───────────────┼────────────────┐
+         ▼               ▼                ▼
+  Kiểm tra file     Tạo metadata     Lưu file gốc
+  virus/MIME/hash   document_id      Raw Storage
+         │
+         ▼
+  Chuẩn hóa PDF/ảnh
+  rotate, deskew, DPI,
+  split page, denoise
+         │
+         ▼
+  Phân loại sơ bộ tài liệu
+         │
+         ▼
+  Lưu Normalized Storage
+         │
+         ▼
+  Đẩy event/job vào Queue
+         │
+         ▼
+     OCR/IDP Engine
+Một nguyên tắc quan trọng:
+File gốc phải được giữ nguyên. File đổi tên và ﬁle chuẩn hóa là các bản sinh ra, không
+ghi đè ﬁle ban đầu.
+2. Công nghệ sử dụng ở từng lớp
+Thành phần Công nghệ thường dùng Vai trò
+Nhận ﬁle REST API, SFTP, SMB/NFS Folder Watcher, IMAP, Microsoft Graph API, RPA UiPath/Power Automate Nhận ﬁle từ web, email, scanner, thư mục dùng chung
+RPA usecases
+Báo cáo RPA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/12
+
+--- PAGE 2 ---
+Thành phần Công nghệ thường dùng Vai trò
+Điều phối
+ingestion
+Apache NiFi, Airﬂow, Spring Batch, Celery, Temporal,
+Camunda Điều phối các bước xử lý
+Message
+Queue Kafka, RabbitMQ, AWS SQS Tách ingestion khỏi OCR, chống nghẽn và retry
+Lưu ﬁle S3, MinIO, Azure Blob, Google Cloud Storage Lưu ﬁle gốc, ﬁle chuẩn hóa, kết quả OCR
+Metadata PostgreSQL, Oracle, SQL Server, MongoDB Quản lý tên ﬁle, loại tài liệu, trạng thái, phiên bản
+Tìm kiếm tài
+liệu Elasticsearch, OpenSearch Tìm theo số hợp đồng, invoice, khách hàng, nội dung
+Tiền xử lý ảnh OpenCV, ImageMagick, Pillow Xoay, cắt, khử nhiễu, deskew, tăng tương phản
+Xử lý PDF PDFBox, Ghostscript, Poppler, PyMuPDF Split/merge PDF, rasterize, phát hiện text layer
+Kiểm tra an
+toàn ClamAV, MIME detection, antivirus gateway Chặn ﬁle độc hại, ﬁle giả định dạng
+OCR/IDP Tesseract, PaddleOCR, Viettel AI OCR, Azure Document Intelligence, Google Document AI, AWS Textract Nhận dạng và trích xuất dữ liệu
+Đối với hệ thống nội bộ Viettel hoặc môi trường on-premise, stack thực tế có thể là:
+Spring Boot Ingestion API
++ MinIO Object Storage
++ PostgreSQL/Oracle Metadata DB
++ RabbitMQ/Kafka
++ Airflow hoặc Spring Batch
++ OpenCV/Ghostscript
++ OCR/IDP Service
+3. Quy trình ingestion chi tiết
+Bước 1 — Tiếp nhận tài liệu
+Nguồn tài liệu có thể gồm:
+Người dùng upload trên web.
+Nhận từ email phòng ban.
+Scanner đẩy vào shared folder.
+NCC gửi qua SFTP.
+RPA tải tài liệu từ phần mềm hoặc website.
+Hệ thống khác gọi API.
+Ngay khi nhận ﬁle, hệ thống tạo một bản ghi ingestion_job.
+Ví dụ:
+JSON
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/12
+
+--- PAGE 3 ---
+{
+  "ingestion_job_id": "ING-20260610-000184",
+  "source": "EMAIL",
+  "received_at": "2026-06-10T09:15:31+07:00",
+  "sender": "supplier-a@example.com",
+  "status": "RECEIVED"
+}
+Bước 2 — Đưa vào vùng cách ly
+File chưa được chuyển thẳng vào OCR mà phải vào:
+/quarantine
+Tại đây hệ thống kiểm tra:
+Virus/malware.
+Dung lượng ﬁle.
+Định dạng được phép.
+File có bị hỏng hay không.
+PDF có password không.
+Số trang có vượt giới hạn không.
+Extension có đúng với nội dung thật không.
+Ví dụ ﬁle tên .pdf nhưng thực chất là .exe phải bị từ chối bằng cách kiểm tra MIME type/magic bytes,
+không chỉ dựa vào phần mở rộng.
+Bước 3 — Tạo mã định danh tài liệu
+Mỗi ﬁle được cấp một document_id, thường dùng UUID hoặc mã sinh theo sequence.
+DOC-20260610-8F31A792
+Không nên dùng tên ﬁle làm khóa chính vì:
+Người dùng có thể upload hai ﬁle cùng tên.
+Tên ﬁle có thể thay đổi.
+Tên có dấu hoặc ký tự đặc biệt gây lỗi.
+Một tài liệu có thể có nhiều phiên bản.
+Tên gốc vẫn được lưu trong metadata:
+original_filename = "Hóa đơn lô hàng tháng 6 bản sửa.pdf"
+document_id       = "DOC-20260610-8F31A792"
+Bước 4 — Tính checksum để chống trùng
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/12
+
+--- PAGE 4 ---
+Hệ thống tính SHA-256:
+sha256 = 90f3a6d7...
+Checksum dùng để:
+Phát hiện upload trùng ﬁle.
+Bảo đảm ﬁle không bị thay đổi.
+Hỗ trợ audit.
+Tránh OCR lại cùng một ﬁle.
+Đảm bảo tính idempotent khi retry.
+Logic:
+Nếu SHA-256 đã tồn tại:
+    Không tạo OCR job mới
+    Gắn file vào hồ sơ hiện có hoặc báo duplicate
+Ngược lại:
+    Tiếp tục ingestion
+Cần phân biệt:
+Trùng ﬁle vật lý: cùng checksum.
+Trùng chứng từ nghiệp vụ: khác ﬁle scan nhưng cùng số invoice/hợp đồng.
+Phiên bản mới: cùng chứng từ nhưng nội dung đã sửa.
+4. Cách tổ chức thư mục
+Không nên tổ chức chỉ bằng thư mục vật lý
+Trong hệ thống lớn, “folder” thường là logical preﬁx trên S3/MinIO chứ không phải thư mục Windows
+thực sự.
+Cấu trúc đề xuất:
+/{domain}/{year}/{month}/{case_id}/{document_type}/{document_id}/
+Ví dụ hồ sơ xuất nhập khẩu:
+/xnk/2026/06/SHIP-202606-00128/invoice/DOC-8F31A792/
+/xnk/2026/06/SHIP-202606-00128/packing-list/DOC-C24F7291/
+/xnk/2026/06/SHIP-202606-00128/bill-of-lading/DOC-A028CB41/
+/xnk/2026/06/SHIP-202606-00128/contract/DOC-F92204A8/
+Trong mỗi tài liệu:
+raw/
+normalized/
+pages/
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/12
+
+--- PAGE 5 ---
+ocr-output/
+reviewed/
+Ví dụ:
+/xnk/2026/06/SHIP-202606-00128/invoice/DOC-8F31A792/
+    raw/original.pdf
+    normalized/document.pdf
+    pages/page-0001.png
+    pages/page-0002.png
+    ocr-output/result.json
+    reviewed/result-v2.json
+Với hệ thống nhỏ dùng shared folder
+Có thể tổ chức:
+/OCR
+  /01_INBOX
+  /02_QUARANTINE
+  /03_RAW
+  /04_NORMALIZED
+  /05_READY_FOR_OCR
+  /06_PROCESSING
+  /07_PROCESSED
+  /08_NEEDS_REVIEW
+  /09_REJECTED
+  /10_ARCHIVE
+Bot hoặc ingestion service di chuyển ﬁle theo trạng thái, nhưng phải lưu lịch sử di chuyển.
+5. Quy tắc đặt tên ﬁle
+Không nên đặt tên quá phụ thuộc dữ liệu OCR
+Sai lầm phổ biến là chỉ sau khi OCR xong mới biết tên ﬁle, sau đó đổi tên dựa hoàn toàn vào kết quả
+OCR. Nếu OCR nhận sai số invoice, ﬁle sẽ bị đặt sai và đưa nhầm hồ sơ.
+Nên có hai tên:
+Tên kỹ thuật duy nhất
+{document_id}_v{version}.{extension}
+Ví dụ:
+DOC-20260610-8F31A792_v01.pdf
+Tên này dùng cho lưu trữ thật.
+Tên hiển thị nghiệp vụ
+{document_type}_{business_number}_{partner}_{date}_v{version}.pdf
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/12
+
+--- PAGE 6 ---
+Ví dụ:
+INV_INV-2458_SAMSUNG-ABC_20260608_v01.pdf
+BL_ONEYSGN123456_20260609_v01.pdf
+CONTRACT_12-2026-HDXNK_CTY-ABC_v02.pdf
+Tên hiển thị chỉ được tạo khi:
+Loại tài liệu đã được xác nhận.
+Trường khóa có conﬁdence đủ cao.
+Hoặc người dùng đã review.
+Quy tắc chuẩn hóa tên
+Nên quy định:
+Không dùng / \ : * ? " < > |.
+Không dùng khoảng trắng liên tiếp.
+Giới hạn độ dài, ví dụ 150 ký tự.
+Ngày theo YYYYMMDD.
+Phiên bản theo v01, v02.
+Mã loại tài liệu dùng danh mục cố định.
+Không dùng tên khách hàng tự do nếu đã có mã khách hàng.
+Danh mục loại tài liệu:
+INV   = Invoice
+PL    = Packing List
+BL    = Bill of Lading
+CO    = Certificate of Origin
+CTR   = Contract
+APP   = Contract Appendix
+PAY   = Payment Document
+CUS   = Customs Declaration
+Ví dụ:
+INV_INV2458_CUS001_20260608_v01.pdf
+6. Chuẩn hóa ﬁle trước OCR
+Đây là phần document normalization, khác với chuẩn hóa dữ liệu sau OCR.
+Với ảnh
+Hệ thống thực hiện:
+1. Auto-rotate dựa trên orientation hoặc text direction.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/12
+
+--- PAGE 7 ---
+2. Deskew ảnh bị nghiêng.
+3. Crop bỏ phần nền/thừa.
+4. Khử nhiễu.
+5. Tăng tương phản.
+6. Chuyển grayscale hoặc binarization khi cần.
+7. Chuẩn hóa DPI, thường khoảng 300 DPI.
+8. Chuẩn hóa kích thước trang.
+9. Phát hiện trang trắng.
+10. Phát hiện ảnh quá mờ và yêu cầu scan lại.
+Với PDF
+Cần xác định:
+PDF có text layer hay chỉ là scan.
+Có nhiều tài liệu ghép trong một PDF không.
+Có trang xoay ngược không.
+Có chữ ký số không.
+Có password không.
+Có trang bị hỏng không.
+Sau đó:
+PDF gốc
+  ├─ Có text layer → ưu tiên text extraction + OCR vùng ảnh
+  └─ PDF scan → rasterize từng trang → tiền xử lý → OCR
+Với Word/Excel
+OCR thường không cần áp dụng trực tiếp cho ﬁle có dữ liệu số.
+.docx: dùng parser hoặc chuyển PDF để giữ layout.
+.xlsx: đọc cell bằng Apache POI/openpyxl.
+Chỉ OCR khi tài liệu thực chất là ảnh được nhúng trong ﬁle.
+7. Chuẩn hóa metadata
+Ngoài ﬁle ảnh, ingestion phải chuẩn hóa thông tin đi kèm:
+Trường Chuẩn đề xuất
+Ngày ISO 8601: 2026-06-10
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/12
+
+--- PAGE 8 ---
+Trường Chuẩn đề xuất
+Thời gian Có timezone: 2026-06-10T09:30:00+07:00
+Tiền tệ ISO 4217: VND, USD, EUR
+Số tiền Decimal, không lưu dạng chuỗi có dấu phẩy
+Đơn vị đo Danh mục UOM: KG, PCS, BOX
+Mã khách hàng Dùng customer code/master data
+Loại tài liệu Dùng document type master
+Nguồn nhận EMAIL, WEB_UPLOAD, SFTP, RPA, SCANNER
+Trạng thái Dùng state machine cố định
+Tài liệu dự án cũng đã đề cập việc chuẩn hóa ngày, tiền tệ, đơn vị đo và gộp line-item trước khi mapping
+sang form nghiệp vụ. 
+8. Metadata cần lưu trong database
+Bảng DOCUMENT có thể gồm:
+document_id
+case_id
+business_key
+document_type
+original_filename
+display_filename
+raw_storage_uri
+normalized_storage_uri
+source_channel
+source_reference
+mime_type
+file_size
+sha256
+page_count
+version
+parent_document_id
+status
+ocr_status
+review_status
+received_at
+created_by
+retention_until
+error_code
+error_message
+Ví dụ:
+JSON
+{
+  "document_id": "DOC-20260610-8F31A792",
+  "case_id": "SHIP-202606-00128",
+  "document_type": "INVOICE",
+  "original_filename": "scan00012.pdf",
+  "display_filename": "INV_INV2458_CUS001_20260608_v01.pdf",
+  "sha256": "90f3a6d7...",
+  "version": 1,
+  "status": "READY_FOR_OCR",
+  "raw_storage_uri": "s3://ocr-raw/xnk/2026/06/...",
+  "normalized_storage_uri": "s3://ocr-normalized/xnk/2026/06/..."
+}
+Báo cáo RPA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/12
+
+--- PAGE 9 ---
+9. Trạng thái xử lý nên được quản lý bằng state machine
+RECEIVED
+    ↓
+QUARANTINED
+    ↓
+VALIDATED
+    ↓
+NORMALIZING
+    ↓
+NORMALIZED
+    ↓
+CLASSIFIED
+    ↓
+READY_FOR_OCR
+    ↓
+OCR_PROCESSING
+    ↓
+NEEDS_REVIEW / OCR_COMPLETED
+    ↓
+APPROVED
+    ↓
+ARCHIVED
+Các trạng thái lỗi:
+REJECTED_UNSUPPORTED_FORMAT
+REJECTED_VIRUS
+REJECTED_PASSWORD_PROTECTED
+FAILED_NORMALIZATION
+FAILED_CLASSIFICATION
+FAILED_OCR
+DUPLICATE
+Không nên chỉ dựa vào việc ﬁle đang nằm trong thư mục nào để suy luận trạng thái. Trạng thái chính
+thức phải nằm trong database.
+10. Gom tài liệu thành một hồ sơ nghiệp vụ
+Hệ thống cần một khóa hồ sơ, ví dụ:
+Xuất nhập khẩu: shipment_id, BL number, invoice number.
+Hợp đồng: contract_id.
+Mua sắm: procurement_case_id.
+Thanh toán: payment_request_id.
+Kho: PO, ASN, GRN.
+Ví dụ OCR nhẹ hoặc barcode đọc được:
+BL No = ONEYSGN123456
+Invoice No = INV-2458
+Rule gom hồ sơ:
+Nếu tìm thấy shipment có cùng BL:
+    Gắn tài liệu vào shipment đó
+Nếu chưa có:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/12
+
+--- PAGE 10 ---
+    Tạo hồ sơ tạm
+Nếu có nhiều shipment phù hợp:
+    Chuyển NEEDS_REVIEW
+Đây chính là phần “gắn dữ liệu theo từng lô hàng” và tạo bộ hồ sơ mà use case XNK yêu cầu. 
+11. RPA nên tham gia ở đâu?
+RPA phù hợp để:
+Đọc email cũ không có API.
+Tải ﬁle từ website đối tác.
+Theo dõi shared folder.
+Upload ﬁle vào phần mềm legacy.
+Di chuyển/rename ﬁle trong PoC.
+Đính kèm tài liệu vào QLHĐ/ERP.
+Nhưng với hệ thống lớn:
+Không nên dùng RPA làm lõi quản lý ﬁle.
+Lõi ingestion nên là API/service vì:
+Có transaction.
+Có retry.
+Có idempotency.
+Có checksum.
+Có log tập trung.
+Xử lý song song tốt hơn.
+Ít phụ thuộc giao diện máy tính.
+RPA chỉ nên là một connector ở đầu hoặc cuối pipeline.
+12. Hai phương án triển khai thực tế
+Phương án đơn giản/PoC
+Shared Folder
++ Python Folder Watcher
++ UiPath/Power Automate
++ OpenCV/ImageMagick
++ PostgreSQL
++ OCR API
+Phù hợp khi:
+RPA usecases
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/12
+
+--- PAGE 11 ---
+Vài trăm đến vài nghìn ﬁle/ngày.
+Ít nguồn nhận tài liệu.
+Chưa cần HA.
+Làm PoC nhanh.
+Phương án enterprise
+Upload API / Email Connector / SFTP
+          ↓
+Ingestion Microservice
+          ↓
+ClamAV + MIME Validator + SHA-256
+          ↓
+MinIO/S3 Raw Bucket
+          ↓
+Kafka/RabbitMQ
+          ↓
+Normalization Worker
+          ↓
+MinIO/S3 Normalized Bucket
+          ↓
+Document Classifier
+          ↓
+OCR/IDP Workers
+          ↓
+Validation UI
+          ↓
+QLHĐ/ERP/WMS/Google Sheet
+Phù hợp khi:
+Nhiều loại chứng từ.
+Nhiều phòng ban.
+Cần phân quyền dữ liệu.
+Cần lưu vết kiểm toán.
+Có nhu cầu xử lý lại.
+Khối lượng ﬁle lớn.
+13. Các tiêu chí nghiệm thu ingestion BA nên đưa vào SRS
+1. 100% ﬁle hợp lệ được cấp document_id.
+2. File gốc không bị thay đổi hoặc ghi đè.
+3. Hệ thống phát hiện ﬁle trùng bằng SHA-256.
+4. Mọi thao tác upload, đổi tên, di chuyển, phân loại đều có audit log.
+5. File lỗi phải vào khu vực rejected và có lý do rõ ràng.
+6. Có thể retry mà không tạo bản ghi hoặc OCR job trùng.
+7. Cho phép tải lại cả ﬁle gốc và ﬁle đã chuẩn hóa.
+8. Các tài liệu cùng lô/hợp đồng được liên kết qua case_id.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/12
+
+--- PAGE 12 ---
+9. Việc đổi tên sai không làm mất liên kết vì hệ thống dùng document_id.
+10. File conﬁdence thấp hoặc không xác định được hồ sơ phải chuyển NEEDS_REVIEW.
+11. Có versioning, không ghi đè phụ lục hoặc bản hợp đồng sửa đổi.
+12. Có retention, phân quyền xem/tải/xóa tài liệu.
+Tóm lại, cấu trúc tốt nhất là:
+Object Storage quản lý file
++ Database quản lý metadata/trạng thái
++ Ingestion Service quản lý quy trình
++ Queue điều phối job
++ RPA làm connector cho hệ thống cũ
++ OCR/IDP xử lý nội dung
+Thư mục và tên ﬁle chỉ là lớp trình bày/tổ chức, còn việc nhận diện và quản lý tài liệu thực sự phải dựa
+trên document_id, metadata, checksum, version và audit trail.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/12

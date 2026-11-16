@@ -1,0 +1,417 @@
+CÔNG TY TM&XNK VIETTEL
+PHÒNG CÔNG NGHỆ THÔNG TIN
+
+Số:/BC-CNTT
+CỘNGHOÀXÃHỘICHỦNGHĨAVIỆTNAM
+Độc lập - Tự do - Hạnh phúc
+
+Hà Nội, ngàythángnăm 2025
+
+BÁO CÁO
+Về việc đề xuất xây dựng và triển khai phần mềm RPA (kết hợp OCR) nhằm tự động hóa quy trình nghiệp vụ tại Viettel Commerce
+
+Kính gửi: Giám đốc Công ty.
+Căn cứ Kế hoạch số 1706/KH-PCNTT ngày 10/06/2025 về việc cải tiến quy trình, nâng cao năng suất lao động năm 2025 của Công ty…;
+Căn cứ Kế hoạch số 10405/KH-PKHKS ngày 10/10/2025 về nhu cầu tự động hóa các tác vụ lặp lại và chuẩn hóa dữ liệu chứng từ tại các đơn vị nghiệp vụ…;
+Căn cứ kết quả khảo sát hiện trạng quy trình và đề xuất use case tự động hóa của Phòng CNTT…,
+Phòng Công nghệ Thông tin (CNTT) báo cáo Giám đốc Công ty về việc đề xuất xây dựng và triển khai phần mềm RPA (kết hợp OCR) như sau:
+HIỆN TRẠNG QUY TRÌNH VÀ CÁC VƯỚNG MẮC TRONG XỬ LÝ NGHIỆP VỤ
+Hiện nay, khối lượng công việc tại một số đơn vị đã khảo sát (Trung tâm XNK, Phòng PCĐT-KCQ và Trung tâm Phân phối) có đặc thù xử lý nhiều chứng từ, dữ liệu từ nhiều nguồn/hệ thống và tần suất thao tác lặp lại cao, phụ thuộc đáng kể vào nhập liệu – đối chiếu thủ công. Tuy nhiên, thực tế vận hành còn tồn tại các vướng mắc gây chậm tiến độ, dễ sai sót và khó theo dõi tập trung; vì vậy cần ưu tiên chuẩn hóa và tự động hóa bước đầu bằng RPA kết hợp OCR.
+I.1. Trung tâm Xuất nhập khẩu - Hiện trạng quy trình
+Bất cập: Nhiều bước xử lý chứng từ XNK (tạo/kiểm tra bộ chứng từ, nhập liệu khai báo, đối chiếu thông tin) vẫn làm thủ công, copy–paste giữa email/PDF/Excel/hệ thống. Dễ thiếu chứng từ, nhập sai số liệu, sai định dạng, phải sửa nhiều vòng.
+Bất cập: Công tác tra cứu HS code/thuế suất và theo dõi các thay đổi của biểu thuế hiện vẫn thực hiện thủ công, phụ thuộc kinh nghiệm cá nhân và tra cứu rời rạc. Điều này tiềm ẩn rủi ro áp sai mã HS/thuế suất, dẫn đến phải sửa tờ khai, điều chỉnh nghĩa vụ thuế và có thể phát sinh xử phạt vi phạm hành chính.
+Bất cập: Theo dõi trạng thái lô hàng (ETD/ETA, trạng thái container/BL) thường dựa vào cá nhân tự nhắc, tra cứu website thủ công. Khó báo cáo cho nội bộ/khách hàng và tiềm ẩn nguy cơ trễ hạn, phát sinh chi phí lưu kho bãi.
+Bất cập: Bước đối soát chứng từ trước khai báo hiện phụ thuộc nhiều vào rà soát bằng mắt và đối chiếu rời rạc giữa các chứng từ. Đồng thời, công tác theo dõi lô hàng/tờ khai/trạng thái chứng từ đang phân tán trên nhiều kênh lưu trữ khác nhau; dữ liệu phải cập nhật thủ công, nhập lại nhiều lần cho các báo cáo/biểu mẫu, chưa có cơ chế dùng chung và đối soát theo thời gian thực. Việc lưu trữ hồ sơ XNK cũng chưa được chuẩn hóa (phân tán, đặt tên không thống nhất), thiếu checklist kiểm soát đủ/thiếu bộ chứng từ, dẫn đến tốn thời gian tìm kiếm, dễ sai sót và tiềm ẩn rủi ro thiếu hồ sơ khi cần kiểm tra/đối chiếu.
+I.2. Phòng Pháp chế và Đầu tư (KCQ) - Hiện trạng quy trình
+Bất cập: Thông tin hợp đồng/phụ lục và các mốc quan trọng (hiệu lực, gia hạn, đợt thanh toán…) hiện còn nhập tay từ PDF/scan và theo dõi bằng file rời (Excel/email), dẫn đến dễ sai dữ liệu, bỏ sót hạn, nhắc việc không kịp thời và khó có một “nguồn dữ liệu chuẩn” dùng chung.
+Bất cập: Khâu thu thập thông tin gói thầu và tổng hợp hồ sơ chào giá/báo giá hiện lấy từ nhiều nguồn (web/email/file) và so sánh thủ công. Gây mất thời gian, có nguy cơ thiếu cập nhật, sai tiêu chí khi copy-paste.
+Bất cập: Đối soát nghiệm thu – hóa đơn – kế hoạch thanh toán/giá trị hợp đồng thường dồn cuối kỳ và xử lý ngoại lệ bằng tay, nên dễ chậm thanh toán, thiếu hồ sơ chứng minh, phát sinh chênh lệch và khó truy vết nguyên nhân.
+I.3. Trung tâm phân phối - Hiện trạng quy trình
+Bất cập: Chứng từ kho/đơn hàng đến từ nhiều nguồn và nhiều định dạng (scan/PDF/ảnh/email/Excel) nên vẫn phải nhập tay lên WMS/ERP/Sheet; dễ sai SKU–số lượng–lô/serial, làm lệch tồn và chậm cập nhật trạng thái.
+Bất cập: Đối chiếu chứng từ giao/phiếu xuất với thực nhận–thực giao chủ yếu làm bằng Excel và xử lý ngoại lệ thủ công; dễ bỏ sót thiếu/dư/sai hàng, phát sinh tranh chấp và chậm chốt số liệu.
+Bất cập: Việc tạo và điều phối xử lý đơn (tạo đơn giao, phân bổ tồn, lập kế hoạch xuất kho, picking/packing) còn rời rạc, phụ thuộc thao tác thủ công; dễ nhầm ưu tiên/tuyến/kho xuất, làm chậm tiến độ soạn–xuất hàng.
+Bất cập: Khâu vận chuyển và hậu kiểm (tạo vận đơn, theo dõi giao/hoàn, thu thập POD) chưa tự động cập nhật đồng bộ; trạng thái thường cập nhật muộn/thiếu bằng chứng, gây khó đối soát bán hàng–xuất kho–giao hàng–hóa đơn với đại lý.
+Trước các vướng mắc nêu trên, các đơn vị đã khảo sát có nhu cầu ưu tiên triển khai tự động hóa để giảm thao tác thủ công, chuẩn hóa dữ liệu chứng từ và tăng khả năng theo dõi tập trung. Vì vậy, đề xuất áp dụng RPA kết hợp OCR nhằm tự động hóa các bước lặp lại, giảm sai sót và rút ngắn thời gian xử lý quy trình. Trên cơ sở đó, Phần II trình bày danh mục các use cases RPA/OCR đề xuất theo từng đơn vị để xem xét triển khai theo mức độ ưu tiên và hiệu quả mang lại.
+DANH MỤC KỊCH BẢN RPA/OCR ĐỀ XUẤT THEO ĐƠN VỊ
+Trên cơ sở khảo sát sơ bộ hiện trạng quy trình và nhu cầu tại các đơn vị, các kịch bản RPA/OCR tiềm năng đã được đề xuất nhằm chuẩn hóa dữ liệu và giảm thao tác thủ công. Danh mục dưới đây là tổng hợp bước đầu để làm cơ sở trao đổi và thống nhất phạm vi triển khai. Trong giai đoạn tiếp theo, các kịch bản sẽ được đánh giá chi tiết theo mức độ khả thi, hiệu quả mang lại và mức độ ưu tiên để lựa chọn triển khai trước những kịch bản tạo tác động cao nhất.
+
+
+
+TT
+Kịch bản
+Đầu vào - Đầu ra
+OCR thực thi
+RPA thực thi
+I
+CÁC KỊCH BẢN TỰ ĐỘNG HÓA TRUNG TÂM XUẤT NHẬP KHẨU ĐỀ XUẤT
+1
+UC1 - Tạo hồ sơ khai báo hải quan.
+Đầu vào: Invoice, Packing list, Bill of Lading (B/L), C/O, Hợp đồng (PDF/scan/ảnh).
+
+Đầu ra:
++ Bản nháp tờ khai hải quan
++ Dữ liệu theo dõi tập trung và báo cáo Google Sheet
+
+Mục tiêu: Từ bộ chứng từ, tạo draft tờ khai gần đầy đủ, nhân viên chủ yếu review nhấn gửi. Chuẩn hóa dữ liệu đầu vào cho toàn bộ quy trình XNK.
+• Nhận file từ email/thư mục rồi phân loại chứng từ.
+• Trích xuất trường chính: người bán/mua, số invoice, mô tả hàng, số lượng, trị giá, gross/net, điều kiện giao hàng, HS code… 
+• Chuẩn hóa định dạng dữ liệu• Gộp line-item.
+• Mapping dữ liệu, tự điền form trên hệ thống khai báo, lưu bản nháp. 
+• Tạo checklist thiếu chứng từ/thiếu trường bắt buộc.
+
+• Validate nhanh: Kiểm tra độ chính xác dữ liệu trước khi nộp tờ khai (rule kiểm tra chéo, highlight trường và ảnh scan hỗ trợ đối chiếu nhanh…)
+2
+UC2 - Đối soát chứng từ trước khai báo hải quan.
+Đầu vào: Hợp đồng, Invoice, Packing List, (có thể gồm tờ khai nháp). 
+
+Đầu ra: Bảng chênh lệch và danh sách ticket xử lý. 
+
+Mục tiêu: Phát hiện lệch số lượng/trị giá/mô tả/điều kiện giao hàng trước khi truyền tờ khai.
+Trích các trường cần so khớp từ từng chứng từ: tên hàng, số lượng, trị giá, điều kiện giao hàng, HS (nếu có).
+• Tự so sánh giữa chứng từ (Invoice ↔ PL ↔ Hợp đồng ↔ tờ khai nháp).
+• Sinh “cảnh báo lệch” theo mức độ (lệch lớn ưu tiên trước).
+
+• Validate nhanh: Màn hình 1 trang hiển thị các chứng từ cạnh nhau, highlight chỗ lệch.
+3
+UC3 - Xây dựng Google Sheets theo dõi tập trung lô hàng/tờ khai/chứng từ, chia sẻ cho các nhóm, cập nhật và tổng hợp báo cáo tức thời.
+Đầu vào: Dữ liệu trích xuất từ chứng từ/tờ khai và trạng thái xử lý.
+
+
+Đầu ra: Google Sheets tập trung, chia sẻ theo nhóm; báo cáo tổng hợp tức thời.
+
+Mục tiêu: 1 nguồn dữ liệu chung đồng bộ thời gian thực, hạn chế gửi file qua lại.
+OCR tái sử dụng dữ liệu đã trích xuất và chuẩn hóa.
+•  Tự tạo/ghi dòng vào Google Sheets theo khóa (Shipment/BL/Invoice/Tờ khai…).
+• Cập nhật khi có trạng thái mới; tạo cột “Cần kiểm tra” với các bản ghi có rủi ro sai.
+
+• Validate nhanh: Kiểm tra trùng khóa; cảnh báo thiếu trường bắt buộc; gắn link chứng từ gốc.
+
+4
+UC4 - Tra cứu HS code mới nhất và so khớp với dữ liệu nội bộ
+Đầu vào: Mô tả hàng, mã hàng nội bộ, HS code đang dùng và nguồn tra cứu (web tổng cục hải quan…).
+
+Đầu ra: HS code gợi ý/khớp, cảnh báo sai khác, danh sách mặt hàng cần xác nhận.
+
+Mục tiêu: Giảm rủi ro khai sai HS dẫn đến sai thuế/sai chính sách.
+• Trích HS code từ Invoice, PL, Hợp đồng; chuẩn hóa HS code.
+• Trích mô tả hàng, mã hàng.
+
+• Tự tra cứu HS theo mô tả hàng trên nguồn được cấu hình (web/biểu thuế/DB nội bộ), sau đó so khớp với HS đang dùng trong dữ liệu nội bộ/chứng từ. 
+
+• Validate nhanh: Nếu phát hiện không khớp, hệ thống hiển thị top gợi ý HS code + lý do gợi ý (dựa trên từ khóa/mô tả), đồng thời đánh dấu “Cần kiểm tra” và yêu cầu người dùng xác nhận/chọn trước khi dùng để điền tờ khai.
+
+5
+UC5 - Số hoá biểu thuế XNK để lập danh mục tra cứu nội bộ và đối chiếu dữ liệu
+Đầu vào: File biểu thuế XNK (PDF/scan/Word/Excel), các bản cập nhật theo kỳ, danh mục HS nội bộ hiện có. 
+
+Đầu ra: Danh mục tra cứu nội bộ (HS–mô tả–thuế suất–ghi chú–ngày hiệu lực) và báo cáo các dòng thay đổi so với bản trước. 
+
+Mục tiêu: Có “một nguồn chuẩn” để tra cứu thuế suất/chính sách, cập nhật nhanh và truy vết thay đổi.
+
+• Đọc biểu thuế dạng bảng, trích xuất các cột chính: HS code, mô tả, thuế suất, điều kiện áp dụng/ghi chú, thời điểm hiệu lực.
+• Chuẩn hóa dữ liệu (độ dài HS, dấu/phẩy thập phân, định dạng %), giữ cấu trúc chương/nhóm để dễ tra cứu.
+• Đổ dữ liệu vào kho tra cứu nội bộ/Sheet/DB; gắn phiên bản theo ngày hiệu lực.
+• Tự so sánh version mới vs version cũ để tạo “danh sách thay đổi” (thêm mới/sửa/xóa/đổi thuế suất).
+
+• Validate nhanh: đánh dấu các dòng OCR độ tin cậy thấp; kiểm tra trùng HS code; kiểm tra thuế suất ngoài ngưỡng bất thường; gắn link về file gốc để rà soát.
+
+6
+UC6 - Tạo bộ hồ sơ chứng từ và đặt tên file chuẩn, hỗ trợ kiểm tra
+Đầu vào: Bộ chứng từ theo lô (Invoice/PL/B/L/C/O/Hợp đồng…), file từ email, thư mục scan/drive. 
+
+Đầu ra: Thư mục hồ sơ theo lô + file được đặt tên theo chuẩn + checklist thiếu chứng từ/thiếu thông tin. 
+
+Mục tiêu: Hồ sơ đầy đủ, đúng chuẩn đặt tên, dễ tìm–dễ kiểm tra–dễ bàn giao/kiểm toán.
+• Nhận dạng loại chứng từ (Invoice/PL/B/L/C/O…), trích các khóa để quản lý và đặt tên: số chứng từ, ngày chứng từ, mã lô/Shipment, số B/L, số container…
+• Chuẩn hóa ký tự (loại bỏ ký tự đặc biệt, thống nhất định dạng ngày) để tên file đồng nhất.
+• Tự gom file theo khóa (B/L hoặc Shipment), tạo thư mục theo cấu trúc chuẩn; tự đổi tên file theo quy ước (ví dụ: Shipment_BL_InvoiceNo_YYYYMMDD.pdf).
+• Tự tạo checklist chứng từ bắt buộc theo loại lô hàng; đánh dấu thiếu và gửi thông báo.
+
+• Validate nhanh: phát hiện trùng file/trùng tên; phát hiện file sai loại (nhận dạng không khớp nội dung); gắn link/đường dẫn hồ sơ vào Sheet theo dõi để truy cập 1 chạm.
+7
+UC7 - Theo dõi trạng thái lô hàng và lịch tàu
+Đầu vào: Số B/L, số container (nếu có), danh sách lô hàng cần theo dõi; nguồn tra cứu trạng thái (website/portal hãng tàu, forwarder, email thông báo). 
+
+Đầu ra: Bảng theo dõi trạng thái lô hàng (ETD/ETA, cảng đi/đến, tàu/chuyến, trạng thái) + thông báo khi có thay đổi quan trọng. 
+
+Mục tiêu: Cập nhật tiến độ vận chuyển tập trung, chủ động kế hoạch làm chứng từ–kho–giao hàng, giảm tra cứu thủ công.
+• Không bắt buộc.
+• Nếu thông tin BL / container nằm trong file scan/email PDF: OCR trích số B/L, container, mốc thời gian, cảng đi/đến để đưa vào danh sách theo dõi.
+• Tự đăng nhập/tra cứu theo số B/L hoặc container; lấy ETD/ETA, tàu/chuyến, cảng đi/đến, trạng thái (đã xếp/đã chạy/đã đến/hold…). 
+• Tự cập nhật về Sheet/DB; lưu lịch sử thay đổi theo thời điểm để truy vết.
+
+• Validate nhanh: phát hiện ETA/ETD thay đổi lớn, trạng thái bất thường (hold/rollover/transshipment), link lỗi/không ra dữ liệu → đánh dấu “Cần kiểm tra” và lưu log/screenshot để rà soát nhanh.
+8
+UC8 - Thu thập và theo dõi trạng thái gói thầu
+Đầu vào: Danh sách gói thầu cần theo dõi (mã gói/link), nguồn công bố (cổng đấu thầu/website nội bộ, email thông báo). 
+
+Đầu ra: Bảng theo dõi trạng thái gói thầu (mốc thời gian, trạng thái, tài liệu đính kèm/kết quả) + cảnh báo thay đổi/mốc sắp đến hạn. 
+
+Mục tiêu: Theo dõi tập trung, không bỏ lỡ mốc quan trọng (gia hạn, làm rõ, đóng/mở thầu, công bố kết quả).
+• Không bắt buộc.
+• Nếu thông báo/tài liệu ở dạng scan/PDF ảnh: OCR trích mã gói, tên gói, hạn nộp, thời điểm mở thầu, nội dung làm rõ/kết quả để cập nhật bảng theo dõi.
+• Tự mở từng nguồn/link theo danh sách; đăng nhập nếu cần; lấy các thông tin chính: trạng thái hiện tại, các mốc thời gian, văn bản/tệp mới đăng, kết quả (nếu có). 
+• Tự so sánh với lần chạy trước để phát hiện “có thay đổi” → cập nhật bảng và gửi thông báo cho người phụ trách.
+
+• Validate nhanh: kiểm tra link hỏng/trùng; phát hiện thay đổi mốc thời gian hoặc nội dung quan trọng → tự gắn cờ “Cần kiểm tra”; lưu nguồn tham chiếu (link + thời điểm lấy) để đối chiếu.
+II
+CÁC KỊCH BẢN TỰ ĐỘNG HÓA PHÒNG PHÁP CHẾ VÀ ĐẦU TƯ ĐỀ XUẤT
+9
+UC1 - Tiếp nhận và số hóa hồ sơ đề xuất đầu tư/mua sắm lên
+Đầu vào: Phiếu đề xuất đầu tư/mua sắm, thuyết minh dự án, file scan/PDF/Word và các tài liệu đính kèm. 
+
+Đầu ra: Hồ sơ đề xuất đã được tạo trên hệ thống + mã hồ sơ + trạng thái xử lý. 
+
+Mục tiêu: Tiếp nhận nhanh, nhập liệu chuẩn, tránh thất lạc và dễ theo dõi luồng phê duyệt
+
+• Phân loại tài liệu
+• Trích các trường chính: đơn vị đề xuất, tên dự án/hạng mục, tổng mức đầu tư/giá trị dự kiến, thời gian thực hiện, mục tiêu, loại hình (đầu tư/mua sắm).
+• Tự tạo hồ sơ trên phần mềm nội bộ; tự điền trường thông tin; đính kèm file gốc; gán người xử lý theo rule. 
+
+• Validate nhanh: highlight trường quan trọng (giá trị, thời gian, loại hình); khi bấm/rê vào trường thì hiện ảnh scan tương ứng để NSD so mắt; thiếu trường bắt buộc → gắn “Cần kiểm tra” và không chuyển bước.
+10
+UC2 - Số hoá và tổng hợp báo giá/hồ sơ thầu để so sánh nhà cung cấp
+Đầu vào: Báo giá nhà cung cấp, hồ sơ chào hàng/hồ sơ dự thầu (PDF/scan/email đính kèm). 
+
+Đầu ra: Bảng so sánh theo tiêu chí + link chứng từ gốc để truy vết. 
+
+Mục tiêu: Chuẩn hóa dữ liệu báo giá, so sánh nhanh, minh bạch khi lựa chọn NCC.
+Trích: tên NCC, hàng/dịch vụ, model/cấu hình, đơn giá, thời gian giao hàng, bảo hành, điều kiện thanh toán, hiệu lực báo giá; trích bảng nhiều dòng và chuẩn hóa đơn vị tính.
+• Chuẩn hóa về 1 mẫu; gộp nhiều báo giá thành bảng so sánh theo hạng mục; tính tổng theo số lượng, chênh lệch %; xếp hạng theo rule (giá/leadtime/bảo hành…). 
+
+• Validate nhanh: kiểm tra tiền tệ thống nhất; đơn giá × số lượng = thành tiền; dòng OCR thấp → gắn “Cần kiểm tra” và mở ảnh scan tại dòng đó.
+11
+UC3 - Theo dõi tiến độ thực hiện gói mua sắm/dự án đầu tư
+Đầu vào: PO/hợp đồng mua sắm, kế hoạch giao hàng/tiến độ; email/portal NCC; (tuỳ chọn) biên bản giao hàng/nghiệm thu (scan/PDF). 
+
+Đầu ra: Bảng theo dõi tiến độ theo từng gói/PO/hợp đồng + cảnh báo chậm tiến độ. 
+
+Mục tiêu: Theo dõi tập trung “giao hàng–nghiệm thu–bàn giao”, chủ động xử lý điểm nghẽn.
+Trích ngày giao/ ngày nghiệm thu, hạng mục, khối lượng/giá trị, kết luận để cập nhật tiến độ.
+• Thu thập tiến độ từ email/portal/file cập nhật; cập nhật trạng thái theo rule: đang giao/đã giao/đã nghiệm thu/đã bàn giao/chậm tiến độ; gửi nhắc việc khi sắp đến hạn hoặc quá hạn. 
+
+• Validate nhanh: so khớp đúng PO/hợp đồng–hạng mục; cảnh báo “đã nghiệm thu” nhưng chưa có biên bản/thiếu bằng chứng.
+12
+UC4 - Đối soát nghiệm thu/hoá đơn/thanh toán cho gói mua sắm/đầu tư
+Đầu vào: Biên bản nghiệm thu, hóa đơn NCC, kế hoạch/mốc thanh toán trong QLHĐ. 
+
+Đầu ra: Danh sách đủ điều kiện thanh toán và danh sách chênh lệch + trạng thái thanh toán được cập nhật trên QLHĐ. 
+
+Mục tiêu: Chỉ thanh toán khi nghiệm thu đúng khối lượng/giá trị theo hợp đồng (đối soát “3 bên”).
+Trích: giá trị/ngày nghiệm thu, hạng mục nghiệm thu; số hóa đơn, ngày hóa đơn, số tiền hóa đơn (và mã PO/hợp đồng nếu có).
+• Lấy kế hoạch thanh toán từ QLHĐ; so khớp: nghiệm thu ↔ hóa đơn ↔ hợp đồng/kế hoạch thanh toán; tự cập nhật trạng thái đợt thanh toán: đủ điều kiện/chờ bổ sung/chênh lệch/đã thanh toán. 
+
+• Validate nhanh: đặt ngưỡng cảnh báo theo %/giá trị; highlight khoản lớn; bấm vào trường sẽ mở ảnh scan đúng đoạn để so mắt.
+13
+UC5 - Nhập thông tin hợp đồng, các mốc nghiệm thu/thanh toán vào hệ thống QLHĐ
+Đầu vào: Hợp đồng/phụ lục (PDF/scan) và tài liệu tiến độ/điều khoản thanh toán kèm theo (nếu có). 
+
+Đầu ra: Hợp đồng + các mốc nghiệm thu/thanh toán (milestones) đã có sẵn trên QLHĐ, kèm file đính kèm. 
+
+Mục tiêu: Tạo dữ liệu hợp đồng chuẩn, quản lý theo mốc để theo dõi và nhắc việc đúng hạn.
+Trích: số hợp đồng, đối tác, ngày hiệu lực/hết hạn, giá trị hợp đồng, các đợt thanh toán (tỷ lệ/số tiền, hạn thanh toán); phần mốc thường phức tạp → trích nháp và ưu tiên review.
+• Tự đăng nhập QLHĐ; tạo hồ sơ hợp đồng; nhập các trường; tạo các mốc nghiệm thu/thanh toán; đính kèm file và gán đơn vị phụ trách theo rule. 
+
+• Validate nhanh: highlight các trường rủi ro (giá trị, hiệu lực, mốc thanh toán); bấm/rê vào trường hiện ảnh scan để kiểm tra; thiếu mốc hoặc tổng % mốc ≠ 100% → gắn “Cần kiểm tra”.
+14
+UC6 - Đối soát thanh toán thực tế với kế hoạch thanh toán hợp đồng
+Đầu vào: Kế hoạch thanh toán trên QLHĐ; chứng từ thanh toán/sao kê (nếu chưa có dữ liệu số); thông tin hợp đồng/đối tác. 
+
+Đầu ra: Trạng thái từng mốc: đã trả/trả một phần/quá hạn/không khớp; danh sách “chưa gán được” để xử lý. 
+
+Mục tiêu: Đối soát công nợ theo hợp đồng liên tục, giảm dồn việc cuối kỳ.
+Trích số tiền, ngày thanh toán, nội dung chuyển khoản, người nhận/đối tác, số chứng từ để phục vụ đối sánh.
+• Tự khớp theo mã hợp đồng/đối tác/số tiền/cửa sổ ngày; cập nhật trạng thái mốc trên QLHĐ; tự nhắc việc khi “sắp đến hạn/quá hạn”. 
+
+• Validate nhanh: sinh danh sách “không khớp” (unmatched) để NSD chọn đúng hợp đồng/mốc; cảnh báo trùng giao dịch hoặc lệch lớn so với kế hoạch.
+III
+CÁC KỊCH BẢN TỰ ĐỘNG HÓA TRUNG TÂM PHÂN PHỐI ĐỀ XUẤT
+15
+UC1 - Nhập các loại chứng từ kho lên hệ thống WMS/ERP/Sheet
+Đầu vào: Phiếu giao hàng, packing list nội địa, phiếu xuất kho NCC, biên bản giao nhận (PDF/scan/ảnh). 
+
+Đầu ra: Chứng từ kho đã tạo trên WMS/ERP/Sheet + tồn kho được cập nhật + lưu file gốc. 
+
+Mục tiêu: Tiếp nhận chứng từ nhanh, nhập liệu chuẩn, giảm sai lệch tồn.
+
+Phân loại chứng từ; trích mã hàng, tên hàng, số lượng, số lô/serial (nếu có), ngày giao, nhà cung cấp. 
+
+• Tự tạo chứng từ nhập/xuất trên WMS/ERP; tự điền line-item; đính kèm chứng từ gốc. 
+
+• Validate nhanh: highlight dòng serial/lô hoặc số lượng có độ tin cậy thấp; bấm/rê vào trường hiện ảnh scan để NSD so mắt; cảnh báo trùng số phiếu/trùng serial.
+
+16
+UC2 - Đối chiếu chứng từ giao hàng với thực nhận tại kho
+Đầu vào: Phiếu giao hàng NCC + kết quả kiểm đếm thực tế tại kho. 
+
+Đầu ra: Báo cáo thiếu–thừa–sai hàng + biên bản chênh lệch/xác nhận nhập kho. 
+
+Mục tiêu: Giảm rủi ro nhận thiếu/nhầm/sai hàng.
+Trích mã hàng, số lượng từ phiếu giao hàng; chuẩn hóa theo mã SKU nội bộ.
+• So khớp chứng từ ↔ thực nhận theo SKU; tự sinh biên bản chênh lệch và danh sách xử lý. 
+
+• Validate nhanh: ưu tiên cảnh báo dòng lệch lớn/giá trị cao; highlight để NSD xác nhận nhanh.
+
+17
+UC3 - Số hoá đơn hàng và tự tạo đơn giao trên DC/WMS
+Đầu vào: Đơn hàng từ Excel/email/PDF/đơn giấy. 
+
+Đầu ra: Đơn giao hàng/đơn bán được tạo trên DC/WMS + dữ liệu khách/địa chỉ đã chuẩn hóa. 
+
+Mục tiêu: Tự tiếp nhận đơn từ nhiều nguồn, giảm gõ lại.
+Trích tên khách, địa chỉ, điện thoại, mã hàng, số lượng, COD/thu hộ (nếu có); chuẩn hóa định dạng địa chỉ/sđt.
+• Tự tạo đơn trên DC/WMS; mapping SKU; gắn tuyến/kho xử lý theo rule. 
+
+• Validate nhanh: cảnh báo địa chỉ thiếu (phường/quận/tỉnh), SKU không tồn tại, số lượng vượt ngưỡng; highlight + mở ảnh scan khi NSD bấm vào trường.
+
+UC4 - Tạo lệnh lấy hàng và đóng gói (Picking/Packing)
+Đầu vào: Danh sách đơn giao hàng đã sẵn sàng xử lý. 
+
+Đầu ra: Lệnh picking + lệnh packing + danh sách công việc đẩy xuống thiết bị/hệ thống kho. 
+
+Mục tiêu: Giảm thao tác thủ công cho kho, tăng tốc soạn hàng. (Picking là lấy hàng trong kho)
+Không sử dụng
+• Tự gom đơn theo tuyến/khu vực/kho; tạo lệnh picking–packing; phân công theo ca/nhân sự (nếu có rule). 
+
+• Validate nhanh: kiểm tra tồn khả dụng trước khi phát lệnh; cảnh báo SKU thiếu; chặn tạo lệnh nếu đơn chưa đủ điều kiện (chưa xác nhận/thiếu thông tin).
+
+UC5 - Tạo vận đơn và đẩy đơn sang hãng vận chuyển
+Đầu vào: Đơn giao hàng đã đóng gói xong + thông tin người nhận/thu hộ/khối lượng. 
+
+Đầu ra: Mã vận đơn + đơn đã gán hãng vận chuyển + nhãn vận đơn (nếu in). 
+
+Mục tiêu: Tự động hóa khâu tạo vận đơn, tránh nhập lại trên nhiều portal.
+Không sử dụng
+• Tự đăng nhập hệ thống hãng vận chuyển; tạo vận đơn; lấy mã vận đơn; cập nhật ngược về DC/WMS. 
+
+• Validate nhanh: kiểm tra địa chỉ/sđt hợp lệ; đối chiếu COD/khối lượng; nếu portal lỗi → retry + lưu log/screenshot để kiểm tra.
+
+
+
+
+UC6 - Theo dõi trạng thái giao hàng và hoàn hàng
+Đầu vào: Mã vận đơn + nguồn tra cứu trạng thái từ hãng vận chuyển. 
+
+Đầu ra: Bảng theo dõi giao–hoàn + trạng thái đơn cập nhật tự động trên hệ thống. 
+
+Mục tiêu: Theo dõi tiến độ giao hàng, chủ động xử lý giao thất bại/hoàn.
+Không sử dụng
+• Tự tra cứu trạng thái theo vận đơn; cập nhật các trạng thái: đã giao/giao thất bại/đang hoàn/đã hoàn; gửi cảnh báo theo mốc. 
+
+• Validate nhanh: phát hiện trạng thái “bất thường” (treo lâu, hoàn không rõ lý do) → gắn cờ “Cần kiểm tra”, lưu lịch sử thay đổi.
+
+UC7 - Số hoá đơn đặt hàng đại lý/kênh phân phối (B2B)
+Đầu vào: Đơn đặt hàng đại lý (PDF/email/scan). 
+
+Đầu ra: Đơn bán B2B đã tạo trên ERP + gắn đại lý/chính sách giá. 
+
+Mục tiêu: Tự tiếp nhận đơn B2B, giảm nhập lại.
+
+Trích tên đại lý/kênh, mã hàng, số lượng, giá bán (nếu có), điều kiện giao hàng; chuẩn hóa mã đại lý/SKU.
+• Tự tạo đơn bán trên ERP; gắn đại lý; áp chính sách giá/chiết khấu theo rule; đính kèm đơn gốc. 
+
+• Validate nhanh: cảnh báo SKU không tồn tại, giá lệch khung, vượt hạn mức công nợ (nếu có); highlight + mở ảnh scan khi NSD bấm vào dòng.
+
+UC8 - Phân bổ tồn kho và xác nhận khả năng giao cho đại lý
+Đầu vào: Đơn bán đại lý + dữ liệu tồn kho theo kho/vị trí. 
+
+Đầu ra: Kết quả phân bổ: đủ hàng/thiếu hàng/hẹn giao cho từng đơn. 
+
+Mục tiêu: Tránh overbooking tồn kho, phản hồi khả năng giao nhanh.
+
+Không sử dụng
+• Kiểm tra tồn theo vị trí; tự phân bổ số lượng theo rule ưu tiên (FIFO/kho gần/ưu tiên đại lý…); cập nhật kết quả vào ERP/DC. 
+
+• Validate nhanh: cảnh báo tồn âm/ràng buộc giữ hàng; chặn phân bổ nếu đơn thiếu thông tin hoặc SKU bị khóa.
+
+UC9 - Lập kế hoạch xuất kho và giao hàng cho đại lý
+Đầu vào: Danh sách đơn đã phân bổ tồn + thông tin tuyến/kho xuất/khu vực đại lý. 
+
+Đầu ra: Kế hoạch xuất kho–giao hàng + lệnh xuất kho + lịch giao theo tuyến. 
+
+Mục tiêu: Tự động điều phối xuất kho B2B, tối ưu tuyến và tải xe.
+
+Không sử dụng
+• Gom đơn theo tuyến/kho/khu vực; tạo lệnh xuất kho; tạo lịch giao; đẩy xuống kho và đội vận chuyển. 
+
+• Validate nhanh: kiểm tra cửa sổ giao hàng, năng lực kho/xe; cảnh báo đơn “giao gấp” hoặc thiếu điều kiện giao.
+
+UC10 - Số hoá biên bản giao nhận/ký nhận của đại lý (POD)
+Đầu vào: Biên bản giao nhận/phiếu ký nhận (scan/ảnh). 
+
+Đầu ra: Trạng thái “đã giao” + số lượng thực giao + ghi chú thiếu/hỏng; tạo yêu cầu xử lý nếu có. 
+
+Mục tiêu: Tự động xác nhận giao hàng B2B, có bằng chứng giao hàng (POD).
+
+Trích số đơn, ngày giao, người nhận, số lượng nhận, ghi chú thiếu/hư hỏng (và chữ ký nếu dạng rõ).
+• Cập nhật trạng thái giao hàng và số lượng thực giao về ERP/DC; tự tạo case xử lý thiếu/hỏng; đính kèm ảnh POD vào hồ sơ đơn. 
+
+• Validate nhanh: highlight các trường nhạy (số đơn, số lượng, ghi chú); bấm/rê hiện ảnh scan tại đúng vị trí để NSD so mắt; nếu không đọc được → gắn “Cần kiểm tra”.
+
+
+UC11 - Đối soát bán hàng – xuất kho – giao hàng – hoá đơn cho đại lý
+Đầu vào: Đơn bán đại lý, phiếu xuất kho, biên bản giao nhận, hóa đơn bán hàng (có thể scan). 
+
+Đầu ra: Báo cáo chênh lệch (bán–xuất–giao–hóa đơn) + danh sách cần xử lý. 
+
+Mục tiêu: Đảm bảo dữ liệu khớp nhau, phát hiện lệch để xử lý kịp thời.
+Trích dữ liệu từ biên bản giao nhận và hóa đơn scan (số đơn, số lượng, giá trị, ngày).
+• So khớp 4 nguồn: số lượng bán ↔ số lượng xuất kho ↔ số lượng thực giao ↔ số lượng/giá trị hóa đơn; tự phân loại nguyên nhân lệch (thiếu giao, giao thiếu, xuất dư, hóa đơn sai…). 
+
+• Validate nhanh: ưu tiên các lệch giá trị lớn; link mở chứng từ gốc; highlight dòng lệch để NSD xử lý theo checklist.
+
+
+II. HIỆU QUẢ DỰ KIẾN VÀ CHỈ SỐ ĐO LƯỜNG ĐỀ XUẤT (KPI) 
+1.  Hiệu quả chung
+Giảm thời gian xử lý nghiệp vụ và giảm khối lượng thao tác thủ công (nhập liệu/copy–paste/đối chiếu bằng mắt/điền form lặp lại), từ đó rút ngắn vòng xử lý và giảm phụ thuộc nhân sự.
+Giảm sai sót và tăng tính nhất quán dữ liệu nhờ cơ chế trích xuất – chuẩn hóa – kiểm tra chéo theo rule, đồng thời tập trung “một nguồn dữ liệu dùng chung” phục vụ quản trị và báo cáo.
+Tăng khả năng kiểm soát, truy vết và tuân thủ: tự động tạo checklist, lưu log xử lý, gắn liên kết chứng từ gốc, hỗ trợ kiểm tra nội bộ/kiểm toán và giảm rủi ro thiếu hồ sơ.
+2.  Hiệu quả dự kiến theo đơn vị
+2.1. Hiệu quả cho Trung tâm Xuất nhập khẩu
+Tăng tốc lập hồ sơ/tờ khai và giảm vòng sửa nhờ tự động trích xuất dữ liệu từ bộ chứng từ (Invoice/PL/B/L/C/O/Hợp đồng), tạo bản nháp tờ khai gần đầy đủ để nhân viên chủ yếu review và gửi.
+Giảm rủi ro sai lệch chứng từ trước khi khai báo: tự động đối soát giữa các chứng từ, phát hiện chênh lệch số lượng/trị giá/mô tả/điều kiện giao hàng, ưu tiên cảnh báo lệch lớn để xử lý sớm
+Theo dõi tập trung lô hàng/tờ khai/chứng từ và cập nhật thời gian thực trên Google Sheet/dashboard; giảm tình trạng dữ liệu phân tán, gửi file qua lại và nhập lặp nhiều nơi.
+Giảm rủi ro khai sai HS/thuế và chậm tiến độ vận chuyển thông qua tra cứu HS/so khớp, số hóa biểu thuế để có nguồn tra cứu chuẩn; tự động theo dõi lịch tàu/trạng thái BL–container, cảnh báo thay đổi bất thường (ETA/ETD, hold/rollover…).
+2.2. Hiệu quả cho Trung tâm Phân phối
+Tăng tốc tiếp nhận chứng từ kho và giảm sai lệch tồn: tự trích xuất dữ liệu từ phiếu giao/phiếu xuất/biên bản giao nhận để tạo chứng từ trên WMS/ERP/Sheet; giảm sai SKU–số lượng–serial/lô.
+Giảm tranh chấp và giảm thời gian đối chiếu thiếu–thừa–sai hàng: tự đối chiếu chứng từ giao hàng với kết quả kiểm đếm thực tế, sinh báo cáo chênh lệch/biên bản chênh lệch và danh sách xử lý ưu tiên theo giá trị.
+Tự động hóa tiếp nhận đơn và tạo đơn giao (từ Excel/email/PDF/đơn giấy): chuẩn hóa thông tin khách/địa chỉ/điện thoại, mapping SKU, giảm thời gian tạo đơn và giảm sai thông tin.
+Nâng cao khả năng truy vết giao hàng B2B: số hóa POD/biên bản ký nhận, cập nhật trạng thái “đã giao”, tạo case xử lý thiếu/hỏng; đồng thời đối soát bán hàng–xuất kho–giao hàng–hóa đơn để phát hiện lệch kịp thời.
+2.3. Hiệu quả cho Phòng Pháp chế và Đầu tư - KCQ
+Chuẩn hóa tiếp nhận hồ sơ đầu tư/mua sắm: tự tạo hồ sơ trên hệ thống, trích xuất các trường chính và gán luồng xử lý theo rule, giảm thất lạc và giảm thời gian nhập liệu ban đầu.
+Minh bạch hóa và tăng tốc so sánh báo giá/hồ sơ thầu: tự tổng hợp nhiều báo giá về một mẫu, tính toán chênh lệch, xếp hạng theo tiêu chí; giảm sai sót copy–paste và tăng tính minh bạch khi lựa chọn NCC.
+Theo dõi tiến độ gói mua sắm/dự án và đối soát nghiệm thu–hóa đơn–thanh toán: tự cập nhật trạng thái theo mốc, cảnh báo chậm tiến độ; tự đối soát “3 nguồn” để chỉ thanh toán khi đủ điều kiện, giảm dồn việc cuối kỳ và hạn chế chênh lệch.
+Tăng hiệu quả quản lý hợp đồng theo mốc (milestones): tự nhập hợp đồng, tạo mốc nghiệm thu/thanh toán trên QLHĐ, đối soát thanh toán thực tế với kế hoạch và nhắc việc sắp đến hạn/quá hạn; giảm bỏ sót hạn và tăng kiểm soát công nợ theo hợp đồng.
+3.  Chỉ số đo lường đề xuất (KPI) để đánh giá hiệu quả
+Tỷ lệ giảm thời gian xử lý mỗi quy trình (trước/sau) và tổng giờ công tiết kiệm theo tháng.
+Tỷ lệ giảm lỗi nhập liệu/đối soát (số trường sai, số case phải sửa).
+Tỷ lệ hồ sơ đầy đủ (đủ/thiếu chứng từ), tỷ lệ truy vết được chứng từ gốc khi kiểm tra.
+Tỷ lệ cập nhật trạng thái đúng hạn (XNK: ETA/ETD; PCĐT: mốc hợp đồng; Phân phối: POD/đối soát).
+Số lượng ngoại lệ phát hiện sớm (chênh lệch chứng từ, lệch nghiệm thu–hóa đơn–thanh toán, lệch bán–xuất–giao–hóa đơn) và thời gian xử lý ngoại lệ.
+IV.  ĐỀ XUẤT TỔ CHỨC THỰC HIỆN
+1.  Mô hình triển khai
+Thành lập Tổ triển khai RPA/OCR gồm Phòng CNTT và đại diện các đơn vị nghiệp vụ (Trung tâm XNK, Trung tâm Phân phối, Phòng PCĐT-KCQ).
+Triển khai theo nguyên tắc: ưu tiên lựa chọn các kịch bản dễ triển khai, mang lại hiệu quả sớm; tổ chức thí điểm để đánh giá và hoàn thiện, sau đó mở rộng áp dụng trên diện rộng. Các kịch bản được lựa chọn tập trung vào nhóm có tần suất thực hiện cao, dữ liệu đầu vào tương đối ổn định và hiệu quả mang lại rõ rệt.
+2.  Vai trò và trách nhiệm các đơn vị tham gia
+2.1. Phòng Công nghệ Thông tin 
+Chủ trì xây dựng kế hoạch triển khai tổng thể, điều phối nguồn lực, đảm bảo tiến độ và chất lượng theo phạm vi được phê duyệt.
+Thẩm định giải pháp kỹ thuật (RPA/OCR), thiết kế kiến trúc tích hợp, đảm bảo yêu cầu bảo mật, phân quyền, log/audit.
+Tổ chức phát triển/cấu hình bot, xây dựng quy tắc kiểm tra chéo, thiết lập môi trường (DEV/UAT/PROD), quản trị vận hành nền tảng RPA.
+Phối hợp kiểm thử, xử lý lỗi, tối ưu hiệu năng; hướng dẫn vận hành, xây dựng tài liệu kỹ thuật và quy trình hỗ trợ sau triển khai.
+2.2. Các đơn vị nghiệp vụ Trung tâm XNK, Trung tâm Phân phối, Phòng PCĐT
+Cung cấp mô tả quy trình, tài liệu/chứng từ mẫu, dữ liệu đầu vào–đầu ra và các quy tắc nghiệp vụ liên quan; thống nhất tiêu chuẩn dữ liệu và tiêu chí kiểm soát/đối soát phục vụ tự động hóa.
+Cử đầu mối phối hợp với Phòng CNTT trong quá trình phân tích, thiết kế kịch bản, kiểm thử, xác nhận kết quả và nghiệm thu theo từng kịch bản.
+Tổ chức triển khai áp dụng thực tế tại đơn vị, hướng dẫn người dùng sử dụng, tiếp nhận vận hành; tổng hợp phản hồi, vướng mắc phát sinh và đề xuất điều chỉnh/ mở rộng kịch bản sau thí điểm.
+Trên đây là đề xuất triển khai xây dựng phần mềm RPA (kết hợp OCR) phục vụ tự động hóa một số quy trình nghiệp vụ tại các đơn vị đã khảo sát. Kính trình Giám đốc xem xét, cho chủ trương và phê duyệt dự án theo nội dung Báo cáo./.
+TRUNG TÂM BÁN LẺ                        P.CÔNG NGHỆ THÔNG TIN 
+
+
+
+
+
+
+
+
+Nơi nhận:
+PCTr, VST;
+Lưu: VT, P.CNTT; Đức03.

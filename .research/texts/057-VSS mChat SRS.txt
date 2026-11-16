@@ -1,0 +1,1025 @@
+I. TỔNG QUANVSS Chat Platform – Nền tảng chat đa kênh cho bán hàng và chăm sóc khách hàng
+Trong bối cảnh doanh nghiệp phải tương tác với khách hàng trên nhiều nền tảng như Facebook, Zalo, TikTok, website và các kênh bán hàng khác, việc quản lý hội thoại phân tán trở nên phức tạp, dễ bỏ sót khách hàng và khó kiểm soát hiệu suất nhân viên. VSS Chat Platform được phát triển nhằm tập trung toàn bộ hội thoại đa kênh vào một hệ thống duy nhất, giúp doanh nghiệp chăm sóc khách hàng hiệu quả hơn, nâng cao chất lượng vận hành và tối ưu hoạt động kinh doanh.
+Sản phẩm cho phép người dùng quản lý tất cả cuộc hội thoại trên một màn hình tập trung, thay vì phải mở từng nền tảng riêng lẻ. Nhân viên có thể lọc hội thoại theo kênh, nhãn, trạng thái; đồng thời thu thập, cập nhật thông tin khách hàng ngay trong quá trình trao đổi để hỗ trợ chăm sóc và quản lý đơn hàng tốt hơn.
+Bên cạnh đó, hệ thống hỗ trợ quản lý nhân viên, phân quyền, theo dõi cuộc hội thoại và đánh giá hiệu quả làm việc. Quản trị viên có thể phân công hoặc chuyển tiếp hội thoại cho cá nhân/nhóm phù hợp, giúp kiểm soát luồng xử lý khách hàng rõ ràng và linh hoạt hơn.
+Điểm nổi bật của VSS Chat Platform là khả năng tự động hóa. Hệ thống có thể tự động phân phối hội thoại, gửi tin nhắn tự động, hỗ trợ các tác vụ lặp lại và giảm rủi ro do xử lý thủ công như sai sót, chậm phản hồi hoặc bỏ lỡ thông tin khách hàng.
+Ngoài ra, nền tảng còn cung cấp báo cáo theo thời gian thực, giúp doanh nghiệp theo dõi số lượng hội thoại, thời gian phản hồi, mức độ xử lý và hiệu suất nhân viên. Dữ liệu được trực quan hóa bằng biểu đồ và có thể xuất ra CSV để phân tích sâu hơn, phục vụ việc ra quyết định và xây dựng chiến lược kinh doanh.
+Tóm lại, VSS Chat Platform là giải pháp chat đa kênh giúp doanh nghiệp tập trung hội thoại, quản lý khách hàng, điều phối nhân viên, tự động hóa chăm sóc khách hàng và theo dõi hiệu quả vận hành. Đây là công cụ phù hợp cho các doanh nghiệp có lượng khách hàng online lớn và cần một hệ thống thống nhất để nâng cao trải nghiệm khách hàng cũng như tối ưu hoạt động bán hàng.
+
+
+
+
+
+II. Quản lý hội thoại
+Tạo bộ lọc tùy chỉnh
+
+
+Cây menu+ Tất cả cuộc hội thoại+ Nhắc tới+ Nhóm (+ Tạo nhóm)+ Loại hội thoại (Tin nhắn, Email, Bình luận)+ Kênh tương tác (+ Kênh mới Facebook, Zalo, WhatsApp)+ Nhãn (+ Nhãn mới)
+
+Trạng thái hội thoại
++ Mở => Hoàn thành, Đánh dấu chưa giải quyết, Tạm dừng đến khi (Phản hồi kế tiếp, Ngày mai, Tuần sau)+ Đã được giải quyết => Mở lại, Đánh dấu chưa giải quyết+ Chờ giải quyết+ Tạm dừng+ Tất cả
+
+Bộ lọc khác+ Của tôi+ Chưa được phân công+ Tất cả
+
+Chat
+Gõ “/”  => dùng tin nhắn mẫu
+
+Hành động của cuộc hội thoại
++ Admin có thể phân công lại cuộc hội thoại tới Agent hoặc Nhóm bất kỳ
+Lịch sử các cuộc hội thoại
++ Thấy được lịch sử các cuộc hội thoại trước đó liên quan đến khách hàng => Chỉnh sửa Thuộc tính của liên hệ
+
+II.2. Tính năng lưu ý
++ Gộp liên lạc sẽ gộp thông tin khách hàng về làm một hồ sơ. Người dùng lựa chọn Liên lạc chính ở phía bên trên là liên lạc sẽ được giữ lại sau khi gộp liên lạc với Liên lạc cần góp (liên lạc sẽ bị xóa). 
++ Ở phần Thuộc tính của liên hệ , người dùng có thể thêm thuộc tính để phân loại khách hàng sau đó thêm hoặc chọn giá trị cho thuộc tính, hệ thống sẽ dựa trên Thuộc tính của liên hệ để phục vụ cho một số tính năng khác của hệ thống (ví dụ khi đặt thuộc tính VIP cho khách hàng xong, có thể dựa trên đó để phân phối đến nhân viên mới hoặc nhân viên nhiều kinh nghiệm).
++ Người dùng có thể bấm Tạo thuộc tính mới để thêm thuộc tính khác ngoài những thuộc tính đã tạo, hệ thống sẽ chuyển người dùng sang màn hình Cài đặt dẫn đến mục Thuộc tính tùy chỉnh.
++ Nhãn danh bạ hỗ trợ người dùng đánh dấu khách hàng (có thể phục vụ cho nhiều mục đích như là khách hàng sẽ được giải quyết sau, khách hàng thân thiết...).
+
+III. Danh mục Khách hàng
++ Import file excel+ Thêm, sửa, xóa thông tin khách hàng+ Xem chi tiết lịch sử chat+ Thêm thuộc tính liên hệ
+
+IV. Báo cáo
+1. Báo cáo hiệu suất nhân viên dựa trên hội thoại
+
+
+
+Các loại báo cáo khác
+Loại báo cáo
+Mục đích chính
+Chỉ số nổi bật
+Báo cáo tổng quan
+Theo dõi hiệu quả vận hành toàn hệ thống
+Tổng hội thoại, tin nhắn nhận/gửi, thời gian phản hồi đầu tiên, thời gian giải quyết, số lượng đã giải quyết
+Báo cáo CSAT
+Đánh giá chất lượng cuộc hội thoại theo phản hồi của khách hàng
+Mức độ hài lòng, đánh giá, bình luận phản hồi, liên kết đến cuộc hội thoại
+Báo cáo Agent
+Đo hiệu suất xử lý của từng nhân viên
+Số hội thoại xử lý, tin nhắn gửi đi, thời gian phản hồi, thời gian giải quyết, số lượng hoàn thành
+Báo cáo nhãn cuộc hội thoại
+Phân tích hội thoại theo từng nhãn được gán
+Tổng hội thoại, tin nhắn, thời gian phản hồi/giải quyết, số lượng giải quyết theo nhãn
+Báo cáo hộp thư đến / kênh tương tác
+Đánh giá hiệu quả từng kênh như Facebook, Zalo, Website…
+Số hội thoại, tin nhắn nhận/gửi, tốc độ phản hồi, tốc độ giải quyết theo kênh
+Báo cáo nhóm Agent
+Theo dõi hiệu suất theo từng nhóm/phòng ban xử lý
+Tổng hội thoại, tin nhắn, thời gian phản hồi, thời gian giải quyết, số lượng giải quyết theo nhóm
+Báo cáo SLA
+Kiểm soát việc vi phạm cam kết thời gian xử lý
+Vi phạm SLA tiếp nhận yêu cầu, giải đáp thông tin, hoàn thành hội thoại
+Báo cáo Live stream
+Theo dõi hiệu quả tương tác từ các livestream
+Kênh livestream, kịch bản livestream, dữ liệu bình luận/tương tác theo thời gian
+Các báo cáo đều hỗ trợ lọc theo thời gian như hôm nay, 7 ngày cuối, 30 ngày cuối, 3 tháng, 6 tháng, năm ngoái hoặc phạm vi ngày tùy chỉnh. Một số báo cáo có thể xem bằng biểu đồ cột và hỗ trợ tải xuống báo cáo để phân tích thêm.
+
+V. Chiến dịch
+Chiến dịch là tính năng cho phép doanh nghiệp tạo các thông điệp chủ động hiển thị trên Website nhằm tương tác với khách hàng khi họ đang truy cập trang web.
+Tính năng này giống dạng proactive chat message hoặc website engagement campaign, tức là hệ thống tự hiện lời mời/tin nhắn để khuyến khích khách hàng bắt đầu hội thoại với nhân viên chăm sóc khách hàng.
+Ví dụ:
+Khi khách truy cập website Viettel Store và ở lại trang sản phẩm trong một khoảng thời gian nhất định, hệ thống có thể tự hiển thị tin nhắn như: “Bạn cần tư vấn thêm về sản phẩm này không?”
+
+V.1. Mục đích chức năng
+Chủ động tiếp cận khách hàng trên WebsiteThay vì chờ khách tự nhắn tin, hệ thống có thể tự hiển thị thông điệp gợi mở hội thoại.
+Tăng tỷ lệ tương tác và chuyển đổiKhách đang xem sản phẩm/dịch vụ có thể được mời tư vấn đúng thời điểm, giúp tăng khả năng mua hàng hoặc để lại thông tin.
+Hỗ trợ hoạt động bán hàng và chăm sóc khách hàngDoanh nghiệp có thể dùng chiến dịch để giới thiệu ưu đãi, hỗ trợ tư vấn, điều hướng khách hàng hoặc thu hút khách bắt đầu cuộc trò chuyện.
+Phân loại khách hàng theo hành vi tương tácVới chiến dịch một lần, hệ thống có thể gán nhãn cho khách hàng khi họ tương tác với thông điệp, giúp nhân viên dễ nhận biết nhóm khách hàng quan tâm.
+V.2. Phạm vi hoạt động
+Theo nội dung hiện tại, chiến dịch chỉ hoạt động trên kênh Website. Vì vậy, không nên hiểu đây là tính năng gửi tin nhắn marketing hàng loạt qua Facebook/Zalo. Facebook, Zalo có thể là kênh hội thoại trong hệ thống, nhưng phần Campaigns được mô tả ở đây là chiến dịch hiển thị thông điệp trên Website.
+V.3. Các loại chiến dịch
+1. Chiến dịch đang diễn ra
+Đây là loại chiến dịch có thể chạy liên tục và được sử dụng nhiều lần với nhiều khách hàng khác nhau. Người dùng có thể cấu hình:
+Thành phần
+Ý nghĩa
+Tiêu đề chiến dịch
+Tên chiến dịch để quản lý
+Thông điệp
+Nội dung tin nhắn hiển thị cho khách
+Hộp thư đến / kênh tương tác
+Kênh Website mà chiến dịch sẽ chạy
+URL Website
+Trang web cụ thể nơi chiến dịch được kích hoạt
+Thời gian trên trang
+Khoảng thời gian khách ở trên trang trước khi thông điệp hiển thị
+Vận hành chiến dịch
+Bật hoặc tắt chiến dịch
+Chỉ kích hoạt trong giờ làm việc
+Chỉ cho phép chiến dịch chạy trong thời gian làm việc
+Loại chiến dịch này phù hợp với các thông điệp thường xuyên như tư vấn sản phẩm, hỗ trợ mua hàng, nhắc ưu đãi hoặc mời khách chat với nhân viên.
+
+2. Chiến dịch một lần
+Đây là loại chiến dịch chạy theo một thời điểm/lịch dự kiến cụ thể. Người dùng có thể cấu hình:
+Thành phần
+Ý nghĩa
+Tiêu đề chiến dịch
+Tên chiến dịch
+Thông điệp
+Nội dung tin nhắn hiển thị
+Hộp thư đến / kênh tương tác
+Kênh Website áp dụng
+Khán giả / nhãn dán
+Nhãn được gán cho khách hàng khi họ tương tác với chiến dịch
+Thời gian dự kiến
+Thời điểm chiến dịch hoạt động
+Loại chiến dịch này phù hợp với các chương trình ngắn hạn như khuyến mãi, sự kiện, chiến dịch bán hàng theo đợt hoặc thông báo đặc biệt.
+
+V.4. Các thao tác chính
+Tạo mới chiến dịch
+Chỉnh sửa nội dung và cấu hình chiến dịch
+Bật/tắt vận hành chiến dịch
+Xóa chiến dịch khỏi hệ thống
+Thiết lập thời gian hoặc điều kiện hiển thị
+Gán nhãn khách hàng khi khách tương tác với chiến dịch
+
+V.5. Kết luận
+Campaigns trong VSS Chat Platform là tính năng tạo thông điệp chủ động trên Website, giúp doanh nghiệp tiếp cận khách hàng đúng thời điểm, tăng tương tác, hỗ trợ bán hàng và cải thiện hiệu quả chăm sóc khách hàng. Nói ngắn gọn hơn: Tính năng Chiến dịch giúp doanh nghiệp chủ động hiển thị tin nhắn trên Website để mời khách hàng tương tác, tư vấn hoặc nhận thông tin, từ đó tăng hiệu quả bán hàng và chăm sóc khách hàng.
+VI. Phân quyền
+Ngoài thêm, sửa, xóa thông tin người dùng (agent), còn cho phép phân quyền. Khi sửa có thể tái phân quyền, chọn kênh, chọn nhóm. Thậm chí là Đặt lại mật khẩu.
+
+Quyền của các vai trò+ Tư vấn viên có thể xem cuộc hội thoại của họ và danh sách khách hàng.+ Giám sát viên có quyền xem, trả lời cuộc hội thoại của các nhân viên dưới quyền và xem các báo cáo, cài đặt.+ Quản trị viên có quyền xem, trả lời của mọi cuộc hội thoại, xem các báo cáo và thực hiện các cài đặt.
+
+Thực hiện với một người:+ Chọn quyền (một trong 3: QTV; GSV; TVV)+ Thêm, xóa Kênh tương tác+ Chọn nhóm nhân viên
+
+Thực hiện với nhiều người: + Chọn thao tác: Phân quyền, Thêm vào Kênh, Xóa khỏi Kênh
+
+VII. Cấu hình Nhóm - Phòng ban
+Nhóm cho phép bạn tổ chức các nhân viên của mình thành các nhóm dựa trên trách nhiệm của họ. Một nhân viên có thể là một phần của nhiều nhóm. Bạn có thể chỉ định các cuộc hội thoại cho một nhóm khi bạn đang làm việc cộng tác.
+Cho phép chọn quản lý nhóm từ danh sách người dùng
+
+VIII. Kênh tương tác
+Khi bạn kết nối một trang web hoặc một Trang facebook với VSS Chat, nó được gọi là Kênh tương tác. Bạn có thể có kênh tương tác không giới hạn trong tài khoản VSS Chat của mình.
+Click vào Thêm kênh tương tác để kết nối một trang web hoặc một Trang Facebook.
+Trong Trang tổng quan, bạn có thể xem tất cả các cuộc hội thoại từ tất cả các kênh tương tác của mình ở một nơi duy nhất và trả lời chúng trong tab `Cuộc hội thoại`.
+Bạn cũng có thể xem các cuộc hội thoại dành riêng cho một kênh tương tác bằng cách nhấp vào tên kênh tương tác trên ngăn bên trái của trang tổng quan.
+
+VIII.1. Cài đặt kênh tương tác
++ Tin nhắn mở đầu: bật/tắt - đặt tin nhắn mở đầu+ Khảo sát mức hài lòng: bật/tắt+ Chọn cộng tác viên
+
+
+
+IX. Quản lý nhãn
+Thêm / Sửa / Xóa nhãn
+Nhãn giúp bạn phân loại các cuộc hội thoại và ưu tiên chúng. Bạn có thể gán nhãn cho một cuộc hội thoại từ bảng phụ.Nhãn được liên kết với tài khoản và có thể được sử dụng để tạo quy trình công việc tùy chỉnh trong tổ chức của bạn. Bạn có thể gán màu tùy chỉnh cho nhãn, điều này giúp bạn nhận dạng nhãn dễ dàng hơn. Bạn sẽ có thể hiển thị nhãn trên thanh bên để lọc các cuộc hội thoại một cách dễ dàng.
+
+X. Cấu hình Tin nhắn mẫu
+Tin nhắn mẫu là các mẫu trả lời đã lưu có thể được sử dụng để nhanh chóng gửi trả lời cho một cuộc hội thoại. Để tạo một Tin nhắn mẫu, chỉ cần ấn vào Thêm Tin nhắn mẫu. Bạn cũng có thể sửa hoặc xoá Tin nhắn mẫu bằng cách ấn nút Sửa hoặc Xoá. Tin nhắn mẫu được sử dụng với sự giúp đỡ của Mã Ngắn. Nhân viên có thể truy cập Tin nhắn mẫu khi nhập tin nhắn bằng cách nhập '/'.
+
+
+Thêm / Sửa / Xóa tin nhắn mẫu. 2 trường: Mã tin nhắn; Nội dung tin nhắn.
+
+
+
+
+
+XI. Quản lý kịch bản Livestream
+Quản lý kịch bản Livestream là chức năng dùng để thiết lập cách hệ thống theo dõi, nhận diện, phản hồi và phân phối bình luận của khách hàng trong livestream. Nói dễ hiểu: khi Viettel Store hoặc doanh nghiệp livestream bán hàng trên Facebook, khách hàng có thể bình luận theo cú pháp như:
+iPhone15 0987123654
+Hệ thống sẽ đọc bình luận đó, kiểm tra xem có đúng cú pháp không, nhận diện khách quan tâm sản phẩm nào, lấy số điện thoại, sau đó có thể tự động phản hồi và chuyển bình luận/cuộc hội thoại cho nhân viên phụ trách xử lý.
+Mục đích chức năng
+Tự động thu lead/đơn quan tâm từ livestreamKhách chỉ cần bình luận từ khóa sản phẩm và số điện thoại. Hệ thống ghi nhận thông tin để nhân viên chăm sóc tiếp.
+Không bỏ sót bình luận khi livestream đông kháchLivestream thường có nhiều comment, nhân viên khó đọc thủ công hết. Kịch bản giúp lọc và phân phối bình luận quan trọng.
+Chuẩn hóa cách khách đặt hàng/để lại thông tinHệ thống yêu cầu khách bình luận theo cú pháp rõ ràng:Từ khóa sản phẩm + dấu cách + số điện thoại.
+Tự động phản hồi khách hàngVí dụ khi khách bình luận đúng cú pháp, hệ thống có thể trả lời:“Mình đã ghi nhận đơn hàng, bạn kiểm tra tin nhắn giúp mình nhé!”
+Phân phối bình luận cho nhân viên xử lýCác bình luận có thể được chuyển cho toàn bộ nhân viên phụ trách kênh hoặc một nhóm/phòng ban cụ thể.
+
+Các thành phần chính của kịch bản Livestream
+Thành phần
+Ý nghĩa
+Chọn trang livestream
+Chọn fanpage/kênh đang phát livestream
+Tên kịch bản
+Tên cấu hình để quản lý, ví dụ: “Livestream iPhone 15 tháng 5”
+Từ khóa sản phẩm
+Khai báo từ khóa khách sẽ bình luận và sản phẩm tương ứng
+Lựa chọn cú pháp
+Quy định comment hợp lệ cần có những thành phần nào, ví dụ từ khóa + số điện thoại
+Phân phối bình luận
+Quy định loại bình luận nào sẽ được chuyển cho nhân viên
+Phân phối tới nhân viên
+Chọn chuyển cho tất cả nhân viên phụ trách kênh hoặc nhóm cụ thể
+Phản hồi tự động
+Cấu hình nội dung hệ thống tự trả lời theo từng điều kiện
+
+Luồng hoạt động nghiệp vụ
+Admin tạo một kịch bản livestream.
+Chọn trang livestream/fanpage áp dụng.
+Khai báo từ khóa sản phẩm, ví dụ:
+iPhone15 → iPhone 15
+S24Ultra → Samsung Galaxy S24 Ultra
+Cấu hình cú pháp bình luận hợp lệ.
+Khách hàng xem livestream và bình luận theo cú pháp.
+Hệ thống kiểm tra bình luận:
+Đúng cú pháp
+Sai cú pháp
+Sai từ khóa
+Có/không có số điện thoại
+Hệ thống tự động phản hồi theo điều kiện đã cấu hình.
+Bình luận được phân phối cho nhân viên hoặc nhóm phụ trách để chăm sóc tiếp.
+Sau khi livestream kết thúc, hệ thống có thể tiếp tục xử lý hoặc ngừng phân phối bình luận tùy cấu hình.
+
+
+
+
+Ví dụ thực tế
+Viettel Store livestream bán iPhone 15. Admin cấu hình:
+Từ khóa
+Sản phẩm
+iPhone15
+iPhone 15
+Cú pháp đúng: iPhone15 0987123654
+Khi khách bình luận đúng, hệ thống có thể tự động phản hồi: “Mình đã ghi nhận đơn hàng, bạn kiểm tra tin nhắn giúp mình nhé!”. Sau đó bình luận hoặc thông tin khách sẽ được chuyển cho nhân viên phụ trách để gọi điện, nhắn tin tư vấn hoặc chốt đơn.
+
+Giá trị nghiệp vụ
+Chức năng này đặc biệt hữu ích cho social commerce, tức là bán hàng qua livestream/social media. Nó giúp biến livestream từ một hoạt động tương tác thủ công thành một quy trình có hệ thống:
+Khách bình luận → hệ thống nhận diện nhu cầu → kiểm tra cú pháp → phản hồi tự động → phân phối cho nhân viên → chăm sóc/chốt đơn.
+Kết luận ngắn gọn
+Quản lý kịch bản Livestream là chức năng hỗ trợ doanh nghiệp tự động hóa việc bán hàng và chăm sóc khách hàng qua livestream. Hệ thống cho phép cấu hình từ khóa sản phẩm, cú pháp bình luận, phản hồi tự động và phân phối bình luận cho nhân viên, giúp doanh nghiệp ghi nhận khách hàng quan tâm nhanh hơn, giảm bỏ sót comment và tăng hiệu quả chốt đơn.
+
+XII. Bình luận tự động
+Các trường: + Trạng thái: Đang sử dụng/Không sử dụng (có thể bật tắt)+ Tên kịch bản+ Kênh (một kênh có thể có nhiều kịch bản)+ Chọn bài đăng+ Nội dung kịch bản, ví dụ “Cảm ơn anh/chị đã chơi minigame, chúc anh/chị may mắn!”+ Tickbox: Tự động phân phối
+
+Bình luận tự động là chức năng cấu hình để hệ thống tự động phản hồi comment của khách hàng trên một bài đăng cụ thể thuộc một kênh đã kết nối, thường là Facebook fanpage. Nó không phải là livestream, cũng không phải chiến dịch hiển thị trên website. Nó giống chức năng:
+Khách comment vào bài đăng → hệ thống tự reply comment theo nội dung đã cấu hình → nếu bật tự động phân phối thì chuyển comment/cuộc hội thoại cho nhân viên xử lý tiếp.
+Trong tài liệu hệ thống, module này được mô tả là chức năng tạo kịch bản tự động cho bình luận, thường gắn với các chiến dịch fanpage, minigame hoặc sản phẩm, đặc biệt khi có lượng comment lớn.
+Ý nghĩa nghiệp vụ
+Chức năng này dùng để giảm thao tác phản hồi thủ công trên các bài đăng có nhiều bình luận. Ví dụ Viettel Store đăng bài minigame trên fanpage:
+“Comment số may mắn để nhận voucher 500K.”
+Nếu có hàng trăm người comment, nhân viên không cần vào trả lời từng người. Hệ thống có thể tự động phản hồi: “Cảm ơn anh/chị đã chơi minigame, chúc anh/chị may mắn!”
+Nếu bật Tự động phân phối, các comment này còn có thể được đưa vào hệ thống để nhân viên phụ trách tiếp tục chăm sóc, nhắn tin hoặc xử lý sau đó.
+
+Ý nghĩa từng trường
+Trường
+Ý nghĩa
+Trạng thái
+Bật/tắt kịch bản. Nếu “Đang sử dụng” thì hệ thống mới tự động phản hồi comment
+Tên kịch bản
+Tên để quản lý, ví dụ: “Minigame tháng 6”, “Auto reply bài iPhone 15”
+Kênh
+Fanpage/kênh đã kết nối. Một kênh có thể có nhiều kịch bản cho nhiều bài đăng khác nhau
+Chọn bài đăng
+Chọn bài post cụ thể mà hệ thống sẽ theo dõi comment
+Nội dung kịch bản
+Nội dung hệ thống sẽ tự động trả lời dưới comment của khách
+Tự động phân phối
+Nếu bật, comment/cuộc hội thoại có thể được phân phối cho agent hoặc nhóm phụ trách để xử lý tiếp
+
+Luồng hoạt động dễ hiểu
+Admin chọn một kênh, ví dụ fanpage Viettel Store.
+Admin chọn một bài đăng cụ thể trên fanpage.
+Admin nhập nội dung phản hồi tự động.
+Admin bật trạng thái kịch bản.
+Khách hàng comment vào bài đăng đó.
+Hệ thống tự động phản hồi comment theo nội dung đã cấu hình.
+Nếu bật Tự động phân phối, hệ thống chuyển comment/cuộc hội thoại cho nhân viên phụ trách.
+
+Khác gì với kịch bản Livestream?
+Chức năng
+Dùng cho
+Cách hoạt động
+Livestream
+Bình luận trong phiên live
+Nhận diện từ khóa, cú pháp, số điện thoại, sản phẩm; phản hồi và phân phối theo kịch bản live
+Bình luận tự động
+Bình luận trên bài đăng cụ thể
+Khách comment vào post, hệ thống tự reply bằng nội dung đã cấu hình
+Campaigns
+Website
+Hiển thị tin nhắn chủ động cho khách truy cập website
+
+Kết luận ngắn gọn
+Bình luận tự động là chức năng giúp doanh nghiệp tự động trả lời comment của khách hàng trên các bài đăng đã chọn, thường dùng cho minigame, bài quảng cáo, bài giới thiệu sản phẩm hoặc bài có lượng tương tác cao.
+Nói ngắn hơn: Chọn kênh + chọn bài đăng + nhập nội dung phản hồi + bật kịch bản. Khi khách comment vào bài đó, hệ thống tự động reply và có thể phân phối comment cho nhân viên xử lý tiếp.
+
+
+
+
+
+
+XIII. Quy tắc phân phối
+XIII.1. Cấu hình giờ làm việc
+Quy tắc phân phối là nhóm cấu hình dùng để quyết định hội thoại/bình luận/tin nhắn của khách hàng sẽ được xử lý như thế nào và chuyển cho ai. Nói đơn giản: Khi khách hàng nhắn đến, hệ thống cần biết có đang trong giờ làm việc không, có agent online không, nên phân phối cho cá nhân nào, nhóm nào, hay đưa vào danh sách chờ. Chức năng này giúp doanh nghiệp tự động điều phối hội thoại, tránh việc phân công thủ công, giảm bỏ sót khách hàng và đảm bảo khách được xử lý đúng thời điểm.
+Tab Giờ làm việc dùng để cấu hình thời gian hoạt động chính thức của doanh nghiệp trên một kênh tương tác. Ví dụ trong màn hình: doanh nghiệp đang đặt giờ làm việc từ khoảng 07:29 đến 21:59 cho các ngày trong tuần.
+Mục đích của cấu hình giờ làm việc
+1. Xác định khi nào doanh nghiệp đang “sẵn sàng hỗ trợ”
+Khi bật tùy chọn cho tickbox: Kích hoạt tính khả dụng của doanh nghiệp cho kênh tương tác này
+Hệ thống sẽ hiểu rằng kênh này có khung giờ phục vụ chính thức. Khách truy cập có thể thấy giờ hoạt động trên tiện ích chat, kể cả khi toàn bộ nhân viên đang offline.
+2. Thông báo cho khách ngoài giờ làm việc
+Nếu khách truy cập ngoài khung giờ đã cấu hình, hệ thống có thể hiển thị thông báo hoặc biểu mẫu trước hội thoại. Ví dụ: “Hiện tại đã ngoài giờ làm việc. Vui lòng để lại thông tin, chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.”
+Ý nghĩa là khách vẫn có thể để lại nhu cầu, nhưng hệ thống không tạo kỳ vọng rằng sẽ có nhân viên phản hồi ngay.
+3. Hỗ trợ phân phối hội thoại hợp lý hơn
+Giờ làm việc có thể được dùng làm điều kiện cho các logic phân phối:
+Trường hợp
+Cách hiểu
+Trong giờ làm việc
+Hội thoại có thể được phân phối cho agent/nhóm xử lý
+Ngoài giờ làm việc
+Có thể hiển thị thông báo, form thu thập thông tin hoặc đưa hội thoại vào hàng chờ
+Agent offline nhưng vẫn trong giờ làm việc
+Hệ thống vẫn biết doanh nghiệp đang trong khung giờ hỗ trợ chính thức
+Tất cả agent offline ngoài giờ
+Hệ thống không cần cố phân phối ngay, tránh tạo kỳ vọng sai cho khách
+
+Ý nghĩa các trường cấu hình
+Thành phần
+Ý nghĩa
+Kích hoạt tính khả dụng của doanh nghiệp
+Bật/tắt việc áp dụng giờ làm việc cho kênh
+Thứ trong tuần
+Chọn ngày nào kênh được xem là hoạt động
+Cả ngày
+Nếu bật, kênh hoạt động 24 giờ trong ngày đó
+Giờ bắt đầu
+Thời điểm bắt đầu nhận/hỗ trợ khách
+Giờ kết thúc
+Thời điểm kết thúc giờ hỗ trợ
+Cập nhật cài đặt
+Lưu lại cấu hình giờ làm việc
+
+Kết luận ngắn gọn
+Cấu hình giờ làm việc trong Quy tắc phân phối giúp hệ thống biết khi nào doanh nghiệp đang hoạt động trên một kênh tương tác. Từ đó, hệ thống có thể hiển thị giờ hỗ trợ cho khách, cảnh báo khi ngoài giờ làm việc, thu thập thông tin trước hội thoại và hỗ trợ phân phối hội thoại hợp lý hơn cho nhân viên.
+Có thể mô tả ngắn trong tài liệu BA như sau: Chức năng Giờ làm việc cho phép doanh nghiệp thiết lập khung thời gian hỗ trợ chính thức theo từng kênh tương tác. Cấu hình này giúp hệ thống xác định trạng thái sẵn sàng phục vụ, hiển thị thông tin giờ hoạt động cho khách hàng và hỗ trợ xử lý/phân phối hội thoại phù hợp trong hoặc ngoài giờ làm việc.
+
+
+
+
+
+
+XIII.2. Cấu hình quy tắc phân phối
+1. Ưu tiên phân phối cuộc hội thoại (NHÓM 1)
+Đây là phần cấu hình để hệ thống quyết định cuộc hội thoại mới của khách hàng nên được ưu tiên chuyển cho ai trước.
+Nói đơn giản: Khi khách hàng nhắn đến, hệ thống không phân phối ngẫu nhiên ngay, mà kiểm tra các điều kiện ưu tiên trước: khách này đã từng gặp agent nào chưa, khách có thuộc tính đặc biệt không, có cần đưa về nhóm/phòng ban nào không.
+1.1. Ưu tiên tới nhân viên tiếp nhận cuộc hội thoại cuối cùng
+Checkbox: Ưu tiên phân phối cuộc hội thoại tới nhân viên tiếp nhận cuộc hội thoại cuối cùng của khách hàng
+Ý nghĩa: nếu khách hàng này trước đó từng được một nhân viên xử lý, lần sau khách nhắn lại thì hệ thống ưu tiên chuyển về đúng nhân viên đó.
+Ví dụ:
+Khách A trước đây được Agent Minh tư vấn.
+Hôm sau khách A nhắn lại.
+Nếu bật rule này, hệ thống sẽ ưu tiên phân phối cuộc hội thoại cho Agent Minh.
+Mục đích là giữ tính liên tục chăm sóc khách hàng, giúp agent đã biết lịch sử khách tiếp tục xử lý, tránh việc khách phải giải thích lại từ đầu.
+
+1.2. Ưu tiên theo thuộc tính liên hệ của khách hàng
+Checkbox: Ưu tiên phân phối cuộc hội thoại của khách hàng có thuộc tính liên hệ
+Ý nghĩa: nếu khách hàng có một thuộc tính đặc biệt trong hồ sơ liên hệ, hệ thống sẽ ưu tiên chuyển cuộc hội thoại tới nhóm/phòng ban tương ứng.
+Ví dụ trong màn hình:
+Thuộc tính liên hệ
+Giá trị thuộc tính
+Ưu tiên tới nhóm
+kh vip
+kh vip
+Lựa chọn nhóm
+vip
+vip
+Nhóm 1
+Có thể hiểu là: Nếu hồ sơ khách hàng có thuộc tính vip với giá trị vip, thì cuộc hội thoại của khách đó sẽ được ưu tiên chuyển tới Nhóm 1.
+Mục đích là phân loại khách hàng theo đặc điểm nghiệp vụ. Ví dụ:
+Loại khách
+Nhóm nên xử lý
+Khách VIP
+Nhóm chăm sóc khách hàng VIP
+Khách doanh nghiệp
+Nhóm B2B
+Khách khiếu nại
+Nhóm xử lý khiếu nại
+Khách có đơn hàng lớn
+Nhóm sales chuyên trách
+Trường Thêm thuộc tính dùng để thêm nhiều điều kiện khác nhau. Mỗi điều kiện là một cặp: Thuộc tính liên hệ + Giá trị thuộc tính → Nhóm/phòng ban ưu tiên nhận hội thoại
+
+1.3. Ưu tiên tới phòng ban / nhóm nhân viên
+Checkbox: Ưu tiên phân phối cuộc hội thoại tới phòng ban / nhóm nhân viên
+Ý nghĩa: hệ thống ưu tiên đưa cuộc hội thoại về một nhóm/phòng ban cụ thể thay vì phân phối tự do cho toàn bộ nhân viên. Ví dụ:
+Tất cả hội thoại từ kênh Facebook được ưu tiên cho Nhóm Social Sales.
+Tất cả hội thoại từ kênh Website được ưu tiên cho Nhóm Tư vấn Online.
+Tất cả hội thoại khiếu nại được ưu tiên cho Nhóm CSKH cấp 2.
+Mục đích là giúp doanh nghiệp điều phối hội thoại đúng bộ phận phụ trách.
+
+Cách hiểu tổng thể
+Hạng mục này là phần thiết lập ưu tiên routing trước khi hệ thống chọn agent cụ thể. Luồng dễ hiểu:Khách hàng nhắn đến→ Hệ thống kiểm tra có agent từng xử lý trước đó không→ Kiểm tra khách có thuộc tính đặc biệt như VIP không→ Kiểm tra có cần ưu tiên về nhóm/phòng ban nào không→ Sau đó mới phân phối cho agent phù hợp trong nhóm
+
+Ví dụ thực tế
+Khách hàng B là khách VIP, từng được Agent Lan xử lý trước đó. Nếu bật cả 2 rule:
+Ưu tiên nhân viên xử lý cuối cùng.
+Ưu tiên khách VIP về Nhóm VIP.
+Thì hệ thống có thể hiểu theo logic:
+Nếu Agent Lan còn phù hợp/đang online/còn khả năng nhận hội thoại → ưu tiên giao cho Agent Lan.
+Nếu không giao được cho Agent Lan → chuyển về Nhóm VIP.
+Trong Nhóm VIP, hệ thống tiếp tục chọn agent phù hợp theo các rule phân phối phía sau.
+Thứ tự ưu tiên chính xác cần kiểm tra thêm theo thiết kế hệ thống, nhưng về nghiệp vụ nên hiểu đây là các rule giúp hệ thống giữ đúng người, đúng nhóm, đúng loại khách hàng.
+Kết luận ngắn gọn
+Ưu tiên phân phối cuộc hội thoại là cấu hình giúp hệ thống tự động xác định nơi nhận hội thoại phù hợp nhất trước khi giao cho nhân viên. Nó giúp giữ khách với agent quen thuộc, đưa khách đặc biệt như VIP về đúng nhóm chăm sóc, và điều phối hội thoại theo phòng ban/phụ trách nghiệp vụ.
+2. Ưu tiên phân bố hội thoại (NHÓM 2)
+Nhóm này dùng để quyết định trong danh sách nhân viên đủ điều kiện nhận hội thoại, hệ thống sẽ chọn nhân viên nào để giao cuộc hội thoại mới.
+Có thể hiểu:Nhóm quy tắc 1 xác định nên ưu tiên về ai/nhóm nào.Nhóm quy tắc 2 xác định trong nhóm đó, agent nào sẽ nhận hội thoại.
+2.1. Phân phối tới nhân viên có số cuộc hội thoại Mở là ít nhất
+Ý nghĩa: hệ thống ưu tiên giao hội thoại mới cho nhân viên đang online và đang có ít cuộc hội thoại mở nhất. Ví dụ:
+Nhân viên
+Trạng thái
+Số hội thoại mở
+Agent A
+Online
+5
+Agent B
+Online
+2
+Agent C
+Online
+4
+Hệ thống sẽ ưu tiên giao cho Agent B vì người này đang xử lý ít hội thoại nhất.
+Mục đích: tránh tình trạng một nhân viên bị quá tải trong khi người khác rảnh hơn.
+
+2.2. Phân phối ưu tiên cho nhân viên có thời gian trả lời nhanh
+Ý nghĩa: hệ thống ưu tiên giao hội thoại cho nhân viên có tốc độ phản hồi khách hàng tốt hơn. Ví dụ:
+Nhân viên
+Thời gian phản hồi trung bình
+Agent A
+1 phút
+Agent B
+5 phút
+Agent C
+3 phút
+Hệ thống có thể ưu tiên Agent A vì người này phản hồi khách nhanh nhất.
+Mục đích: tăng tốc độ chăm sóc khách hàng, phù hợp với các kênh cần phản hồi nhanh như live chat, Facebook, Zalo, livestream.
+2.3. Phân phối cân bằng công việc giữa các nhân viên
+Ý nghĩa: hệ thống phân phối theo hướng xoay vòng công bằng. Nhân viên nào đã chờ lâu hơn, lâu chưa được nhận hội thoại mới, thì sẽ được ưu tiên nhận trước. Ví dụ:
+Nhân viên
+Lần cuối nhận hội thoại
+Agent A
+2 phút trước
+Agent B
+15 phút trước
+Agent C
+6 phút trước
+Hệ thống sẽ ưu tiên Agent B vì người này đã chờ lâu nhất.
+Mục đích: đảm bảo công bằng giữa các nhân viên, tránh việc hệ thống liên tục giao cho một vài người.
+
+So sánh nhanh 3 kiểu phân phối
+Quy tắc
+Ưu tiên theo
+Phù hợp khi
+Ít hội thoại mở nhất
+Tải công việc hiện tại
+Muốn tránh quá tải
+Trả lời nhanh nhất
+Hiệu suất phản hồi
+Muốn tối ưu tốc độ CSKH
+Cân bằng công việc
+Công bằng xoay vòng
+Muốn chia đều cơ hội nhận việc
+
+Kết luận ngắn gọnNhóm quy tắc 2 là cơ chế chọn agent nhận hội thoại sau khi hệ thống đã xác định phạm vi phân phối. Doanh nghiệp có thể chọn cách phân phối theo tải công việc, hiệu suất phản hồi, hoặc cân bằng công bằng giữa nhân viên.
+
+3. Giới hạn cuộc hội thoại tới nhân viên
+Đây là cấu hình dùng để giới hạn số lượng cuộc hội thoại tối đa mà một nhân viên có thể được phân phối tại cùng một thời điểm, theo từng loại hội thoại. Nói đơn giản: Hệ thống không giao quá nhiều hội thoại cho một nhân viên. Khi nhân viên đã đạt giới hạn, hệ thống sẽ không tiếp tục phân phối thêm loại hội thoại đó cho người này.
+Ý nghĩa từng cột
+Trường
+Ý nghĩa
+Loại cuộc hội thoại
+Loại tương tác khách hàng: Tin nhắn, Bình luận, Email
+Số cuộc hội thoại
+Số lượng tối đa mà một nhân viên được nhận/xử lý cùng lúc
+Trạng thái
+Bật/tắt giới hạn cho từng loại hội thoại
+
+Ví dụ theo cấu hình bạn đưa
+Loại cuộc hội thoại
+Giới hạn
+Tin nhắn
+1
+Bình luận
+1
+Email
+10
+Có thể hiểu là:
+Mỗi nhân viên chỉ được nhận tối đa 1 cuộc hội thoại dạng Tin nhắn.
+Mỗi nhân viên chỉ được nhận tối đa 1 cuộc hội thoại dạng Bình luận.
+Mỗi nhân viên có thể nhận tối đa 10 cuộc hội thoại dạng Email.
+Tại sao Email được đặt cao hơn Tin nhắn/Bình luận?
+Vì đặc thù xử lý khác nhau:
+Loại
+Đặc điểm
+Tin nhắn
+Cần phản hồi nhanh, gần thời gian thực
+Bình luận
+Cũng cần xử lý nhanh, đặc biệt khi liên quan bài đăng/livestream
+Email
+Thường không cần phản hồi tức thì như chat, có thể xử lý theo hàng đợi
+Vì vậy, hệ thống có thể giới hạn Tin nhắn/Bình luận thấp hơn để tránh agent bị quá tải trong các kênh cần phản hồi nhanh.
+Luồng hoạt động dễ hiểu
+Ví dụ giới hạn Tin nhắn = 1.
+Agent A đang có 1 cuộc hội thoại Tin nhắn đang mở.
+Khách hàng mới nhắn đến.
+Hệ thống kiểm tra Agent A đã đạt giới hạn Tin nhắn.
+Hệ thống sẽ không giao thêm Tin nhắn mới cho Agent A.
+Cuộc hội thoại mới sẽ được chuyển cho agent khác còn khả năng nhận, hoặc đưa vào hàng chờ tùy cấu hình phân phối phía sau.
+Mục đích chức năng
+Tính năng này giúp:
+Tránh quá tải cho nhân viên.
+Đảm bảo mỗi nhân viên chỉ nhận số lượng hội thoại phù hợp.
+Tăng chất lượng phản hồi khách hàng.
+Hỗ trợ phân phối công việc công bằng hơn.
+Giảm tình trạng một agent nhận quá nhiều chat nhưng không xử lý kịp.
+Cho phép doanh nghiệp đặt giới hạn khác nhau theo từng loại kênh/tương tác.
+Kết luận ngắn gọn
+Giới hạn cuộc hội thoại tới nhân viên là cấu hình kiểm soát tải công việc của agent. Hệ thống sẽ giới hạn số lượng hội thoại mà mỗi nhân viên có thể nhận theo từng loại như Tin nhắn, Bình luận, Email, từ đó giúp phân phối công việc hợp lý và tránh quá tải trong quá trình chăm sóc khách hàng.
+
+4. Lựa chọn giải pháp khi không phân phối được cuộc hội thoại tới nhân viên
+Đây là cấu hình quy định hệ thống sẽ làm gì khi có cuộc hội thoại mới nhưng không thể giao cho nhân viên nào. Ví dụ không phân phối được có thể do:
+Nguyên nhân
+Ví dụ
+Không có nhân viên online
+Tất cả agent đang offline
+Nhân viên đã đạt giới hạn hội thoại
+Agent đã đủ số lượng Tin nhắn/Bình luận/Email được nhận
+Không có nhân viên thuộc nhóm phù hợp
+Khách VIP cần chuyển nhóm VIP nhưng nhóm không có ai khả dụng
+Ngoài giờ làm việc
+Kênh đang ngoài khung giờ hỗ trợ
+Rule phân phối không tìm được người phù hợp
+Không thỏa điều kiện routing
+
+4.1. Không sử dụng hỗ trợ tự động
+Checkbox: Không sử dụng hỗ trợ tự động
+Ý nghĩa: nếu hệ thống không phân phối được cuộc hội thoại cho nhân viên, hệ thống không tự gửi tin nhắn phản hồi cho khách. Khi đó, cuộc hội thoại có thể được giữ ở trạng thái chờ, chưa phân công, hoặc nằm trong hàng đợi để nhân viên giám sát viên xử lý sau.
+Khi nào dùng? Phù hợp khi doanh nghiệp không muốn hệ thống tự nói thay nhân viên, hoặc muốn tất cả phản hồi đều do người thật xử lý.
+Ví dụ: Khách nhắn đến ngoài giờ, hệ thống không tự trả lời. Hội thoại được lưu lại để agent xử lý vào ngày hôm sau.
+4.2. Gửi tin nhắn tự động
+Checkbox: Gửi tin nhắn tự động
+Ý nghĩa: nếu hệ thống không phân phối được cuộc hội thoại cho nhân viên, hệ thống sẽ tự động gửi một tin nhắn phản hồi cho khách hàng.
+Tin nhắn này thường dùng để thông báo rằng doanh nghiệp đã ghi nhận yêu cầu nhưng hiện chưa có nhân viên hỗ trợ ngay.
+Ví dụ nội dung: Cảm ơn anh/chị đã liên hệ. Hiện tại tư vấn viên đang bận hoặc ngoài giờ làm việc, chúng tôi sẽ phản hồi trong thời gian sớm nhất.
+Khi nào dùng? Phù hợp khi doanh nghiệp muốn khách hàng biết rằng yêu cầu đã được ghi nhận, tránh cảm giác bị bỏ quên.
+So sánh nhanh
+Lựa chọn
+Ý nghĩa
+Phù hợp khi
+Không sử dụng hỗ trợ tự động
+Không gửi phản hồi tự động khi chưa phân phối được
+Muốn nhân viên xử lý thủ công, tránh auto reply
+Gửi tin nhắn tự động
+Gửi tin nhắn thông báo cho khách khi chưa có agent nhận
+Muốn giữ trải nghiệm khách hàng, tránh im lặng
+
+Luồng xử lý dễ hiểu
+Khách hàng nhắn đến→ Hệ thống tìm nhân viên phù hợp→ Không có nhân viên nào nhận được→ Hệ thống kiểm tra cấu hình phần 4→ Nếu chọn “Không sử dụng hỗ trợ tự động” thì không gửi gì→ Nếu chọn “Gửi tin nhắn tự động” thì gửi nội dung phản hồi đã cấu hình cho khách
+Kết luận ngắn gọn
+Lựa chọn giải pháp khi không phân phối được cuộc hội thoại tới nhân viên là cơ chế xử lý dự phòng khi hệ thống không tìm được agent phù hợp. Doanh nghiệp có thể chọn không tự động phản hồi hoặc gửi tin nhắn tự động để thông báo cho khách hàng, giúp tránh bỏ sót và cải thiện trải nghiệm khách trong trường hợp chưa có nhân viên tiếp nhận.
+
+
+
+5. Tự động phân phối lại các cuộc hội thoại
+Đây là chức năng giúp hệ thống tự động chuyển lại cuộc hội thoại cho nhân viên khác khi nhân viên đang phụ trách không còn xử lý hiệu quả.
+Nói đơn giản: Nếu một cuộc hội thoại đã được giao cho nhân viên A nhưng A không phản hồi khách trong thời gian quy định, hoặc A offline quá lâu, hệ thống sẽ tự động thu hồi/cuốn lại hội thoại đó và phân phối cho nhân viên khác phù hợp.
+
+Ý nghĩa nghiệp vụ
+Chức năng này dùng để tránh tình trạng:
+Khách hàng bị bỏ quên.
+Hội thoại đã được giao nhưng nhân viên không xử lý.
+Nhân viên offline nhưng hội thoại vẫn bị “kẹt” ở người đó.
+Supervisor phải theo dõi và chuyển tay thủ công.
+SLA phản hồi bị vi phạm do không ai tiếp nhận lại.
+Các điều kiện cấu hình
+Điều kiện
+Thời gian
+Ý nghĩa
+Nhân viên không phản hồi khách hàng
+60 phút
+Nếu agent đã nhận hội thoại nhưng không trả lời khách trong 60 phút, hệ thống sẽ tự động phân phối lại
+Tự động phân phối lại sau khi nhân viên offline
+30 phút
+Nếu agent đang phụ trách bị offline quá 30 phút, hệ thống sẽ chuyển hội thoại sang người khác
+
+5.1. Nhân viên không phản hồi khách hàng
+Điều kiện: Nhân viên không phản hồi khách hàng – 60 phút
+Ý nghĩa: sau khi cuộc hội thoại được giao cho agent, nếu khách đã nhắn nhưng agent không phản hồi trong vòng 60 phút, hệ thống sẽ coi cuộc hội thoại này có nguy cơ bị bỏ sót. Khi đó, hệ thống có thể tự động phân phối lại cho agent khác hoặc nhóm khác theo rule phân phối đang cấu hình. Ví dụ:
+Khách hàng nhắn tin.
+Hệ thống giao hội thoại cho Agent A.
+Sau 60 phút, Agent A vẫn chưa phản hồi.
+Hệ thống tự động lấy lại hội thoại.
+Hội thoại được phân phối lại cho Agent B đang online/còn khả năng nhận.
+Mục đích là đảm bảo khách không phải chờ quá lâu.
+
+5.2. Phân phối lại sau khi nhân viên offline
+Điều kiện: Tự động phân phối lại các cuộc hội thoại sau khi nhân viên offline – 30 phút
+Ý nghĩa: nếu agent đang phụ trách hội thoại nhưng chuyển sang trạng thái offline trong 30 phút, hệ thống sẽ tự động chuyển hội thoại cho người khác. Ví dụ:
+Agent A đang xử lý hội thoại.
+Agent A offline.
+Sau 30 phút, Agent A vẫn chưa online lại.
+Hệ thống tự động phân phối lại hội thoại cho agent khác.
+Mục đích là tránh việc hội thoại bị giữ bởi một nhân viên không còn khả dụng.
+Cách hệ thống phân phối lại
+Khi đủ điều kiện phân phối lại, cuộc hội thoại thường sẽ được đưa lại vào luồng routing và áp dụng tiếp các quy tắc trước đó, ví dụ:
+Ưu tiên nhân viên tiếp nhận cuối cùng.
+Ưu tiên theo thuộc tính khách hàng.
+Ưu tiên theo nhóm/phòng ban.
+Chọn agent có ít hội thoại mở nhất.
+Chọn agent trả lời nhanh.
+Chọn agent theo cơ chế cân bằng công việc.
+Kiểm tra giới hạn số hội thoại của từng agent.
+Tức là rule 5 không tự quyết định người nhận cuối cùng, mà nó kích hoạt việc phân phối lại. Sau đó hệ thống sẽ dùng các rule phân phối khác để chọn agent phù hợp.
+
+
+
+
+Ý nghĩa cột “Trạng thái”
+Cột Trạng thái dùng để bật/tắt từng điều kiện tự động phân phối lại.
+Trạng thái
+Ý nghĩa
+Bật
+Điều kiện có hiệu lực, hệ thống sẽ tự động phân phối lại khi quá thời gian
+Tắt
+Điều kiện không áp dụng, hội thoại vẫn giữ ở agent cũ cho đến khi có thao tác khác
+
+Kết luận ngắn gọn
+Tự động phân phối lại các cuộc hội thoại là cơ chế chống bỏ sót khách hàng. Khi agent không phản hồi quá lâu hoặc offline quá thời gian cấu hình, hệ thống sẽ tự động chuyển hội thoại sang người khác để đảm bảo khách được tiếp tục chăm sóc, giảm rủi ro trễ SLA và giảm thao tác điều phối thủ công cho quản lý.
+
+6. Phân phối cuộc hội thoại ở danh sách chờ khi có nhân viên mới online
+Đây là cấu hình dùng để xử lý các cuộc hội thoại đang bị chờ phân phối khi có nhân viên vừa chuyển sang trạng thái online.
+Nói đơn giản: Khi có agent mới online, hệ thống sẽ bắt đầu lấy các hội thoại trong danh sách chờ để giao cho agent đó. Tuy nhiên, hệ thống không giao dồn tất cả cùng lúc mà có thể giãn cách thời gian giữa mỗi lần phân phối.
+Ý nghĩa nghiệp vụ: Chức năng này giúp tránh tình trạng:
+Agent vừa online đã bị giao quá nhiều hội thoại cùng lúc.
+Nhân viên bị quá tải ngay khi bắt đầu ca làm.
+Hệ thống phân phối ồ ạt, gây mất kiểm soát.
+Các hội thoại trong hàng chờ bị bỏ quên khi có nhân viên quay lại online.
+
+
+
+
+Ý nghĩa cấu hình thời gian
+Mô tả
+Thời gian
+Khoảng thời gian giữa 2 cuộc hội thoại liên tiếp được phân phối cho 1 nhân viên vừa online
+0 phút 30 giây
+Có nghĩa là: Khi một nhân viên vừa online, hệ thống sẽ phân phối từng cuộc hội thoại trong danh sách chờ cho nhân viên đó, mỗi lần cách nhau 30 giây.
+
+Ví dụ dễ hiểu
+Giả sử ngoài giờ hoặc lúc thiếu nhân sự, hệ thống có 5 cuộc hội thoại đang nằm trong danh sách chờ.
+Agent A vừa online.
+Nếu cấu hình là 30 giây, hệ thống có thể xử lý như sau:
+Thời điểm
+Hành động
+08:00:00
+Giao hội thoại số 1 cho Agent A
+08:00:30
+Giao hội thoại số 2 cho Agent A
+08:01:00
+Giao hội thoại số 3 cho Agent A
+08:01:30
+Giao hội thoại số 4 cho Agent A
+Tất nhiên, hệ thống vẫn có thể kiểm tra thêm các rule khác như giới hạn số hội thoại, trạng thái agent, nhóm/phòng ban, số cuộc hội thoại đang mở.
+
+Vì sao cần giãn cách 30 giây?
+Vì nếu giao quá nhanh, agent có thể bị quá tải. Khoảng cách 30 giây giúp hệ thống phân phối mềm hơn, cho agent có thời gian nhìn thấy hội thoại mới, bắt đầu xử lý hoặc để hệ thống kịp kiểm tra trạng thái tải hiện tại.
+
+Kết luận ngắn gọn
+Phân phối cuộc hội thoại ở danh sách chờ khi có nhân viên mới online là cơ chế tự động lấy các hội thoại đang chờ và giao lại cho nhân viên vừa online. Cấu hình thời gian, ví dụ 30 giây, giúp hệ thống giãn cách việc giao hội thoại, tránh dồn quá nhiều việc cho agent cùng lúc và đảm bảo các hội thoại chờ được tiếp tục xử lý.
+
+XIV. Quản lý thuộc tính tùy chỉnh
+Thuộc tính tùy chỉnh theo dõi thông tin thực tế về các địa chỉ liên hệ/cuộc hội thoại của bạn - như gói đăng ký hoặc khi họ đặt hàng mặt hàng đầu tiên, v. v.Để tạo một Thuộc tính Tùy chỉnh, chỉ cần nhấp vào Thêm Thuộc tính Tùy chỉnh. Bạn cũng có thể chỉnh sửa hoặc xóa Thuộc tính Tùy chỉnh hiện có bằng cách nhấp vào nút Chỉnh sửa hoặc Xóa.
++ Tên+ Mô tả+ Loại: text, checkbox, number…+ Khóa
+XV. Cấu hình tự động
+Cấu hình tự động là nhóm chức năng cho phép hệ thống tự động thực hiện một số thao tác lặp lại trong quá trình chăm sóc khách hàng, thay vì để agent xử lý thủ công.
+Nói đơn giản: Khi có điều kiện xảy ra, hệ thống sẽ tự động gửi tin nhắn, tự động tạm dừng hoặc tự động hoàn thành cuộc hội thoại theo cấu hình có sẵn.
+Mục đích chính là giảm thao tác thủ công cho agent, đảm bảo hội thoại được xử lý nhất quán, không bị tồn đọng quá lâu và hỗ trợ quy trình phân phối hội thoại hoạt động hiệu quả hơn.
+Các trường cấu hình chính
+Trường
+Ý nghĩa
+Chế độ tự động
+Loại hành động tự động mà hệ thống sẽ thực hiện
+Thời gian
+Khoảng thời gian chờ trước khi hệ thống tự động thực hiện hành động
+Nội dung tin nhắn tự động
+Nội dung hệ thống gửi cho khách nếu chế độ đó có yêu cầu gửi tin nhắn
+Trạng thái
+Bật/tắt chế độ tự động
+
+1. Tự động gửi tin nhắn chào khách hàng
+Chức năng này dùng để hệ thống tự động gửi lời chào khi khách hàng bắt đầu cuộc hội thoại. Ví dụ nội dung: “Xin chào anh/chị, Viettel Store có thể hỗ trợ gì cho mình hôm nay ạ?”
+Ý nghĩa nghiệp vụ:
+Giúp khách hàng nhận được phản hồi ngay lập tức.
+Tránh cảm giác “nhắn vào nhưng không ai trả lời”.
+Tạo trải nghiệm chuyên nghiệp ngay từ đầu.
+Hỗ trợ agent trong trường hợp chưa kịp phản hồi.
+Chức năng này đặc biệt hữu ích với các kênh cần phản hồi nhanh như Website chat, Facebook, Zalo.
+2. Tự động hoàn thành cuộc hội thoại
+Chức năng này dùng để hệ thống tự động đóng/hoàn thành cuộc hội thoại sau một khoảng thời gian không còn hoạt động. Ví dụ cấu hình:
+Chế độ
+Thời gian
+Tự động hoàn thành cuộc hội thoại
+120 phút
+Có nghĩa là: “Nếu cuộc hội thoại không còn phát sinh tương tác trong 120 phút, hệ thống có thể tự động chuyển cuộc hội thoại sang trạng thái hoàn thành.”
+Ý nghĩa nghiệp vụ:
+Tránh để quá nhiều hội thoại cũ vẫn ở trạng thái mở.
+Giúp danh sách hội thoại của agent gọn hơn.
+Làm sạch hàng đợi xử lý.
+Giúp báo cáo số lượng hội thoại mở/đã giải quyết chính xác hơn.
+Hỗ trợ quy trình phân phối, vì agent không bị giữ quá nhiều hội thoại không còn hoạt động.
+3. Tự động tạm dừng cuộc hội thoại
+Trong phần mô tả có nhắc tới tự động tạm dừng, dù bảng bạn đưa hiện chưa thấy rõ dòng này. Về ý nghĩa, tự động tạm dừng thường dùng khi khách hàng chưa phản hồi lại trong một khoảng thời gian nhất định.
+Ví dụ: Agent đã trả lời khách, nhưng khách không phản hồi trong 30 phút. Hệ thống tự động chuyển hội thoại sang trạng thái tạm dừng.
+Mục đích là phân biệt giữa:
+Hội thoại đang cần agent xử lý ngay.
+Hội thoại đang chờ khách phản hồi.
+Hội thoại đã kết thúc và có thể hoàn thành.
+Kết luận ngắn gọn
+Cấu hình tự động giúp hệ thống tự động xử lý các thao tác lặp lại như gửi lời chào, tạm dừng hoặc hoàn thành hội thoại. Chức năng này giúp agent giảm việc thủ công, tránh tồn đọng hội thoại, cải thiện tốc độ phản hồi và đảm bảo quy trình chăm sóc khách hàng vận hành ổn định hơn.
+Có thể mô tả ngắn trong tài liệu BA như sau: Cấu hình tự động cho phép thiết lập các hành động hệ thống tự thực hiện trong quá trình xử lý hội thoại, bao gồm gửi tin nhắn chào khách hàng, tạm dừng hoặc hoàn thành hội thoại theo thời gian cấu hình. Chức năng này giúp giảm thao tác thủ công cho agent, chuẩn hóa quy trình xử lý và đảm bảo hiệu quả vận hành chăm sóc khách hàng.
+
+XVI. Thiết lập SLA
+Thiết lập SLA là chức năng cấu hình thời gian cam kết xử lý cuộc hội thoại cho từng loại tương tác: Tin nhắn, Bình luận, Email.
+Nói đơn giản: SLA giúp hệ thống kiểm soát việc nhân viên có phản hồi và hoàn thành cuộc hội thoại đúng thời gian quy định hay không. Mỗi loại hội thoại có thể có SLA riêng vì đặc thù xử lý khác nhau. Ví dụ: tin nhắn và bình luận thường cần phản hồi nhanh hơn email.
+3 giai đoạn SLA chính
+Giai đoạn
+Ý nghĩa
+Cách tính
+1. Tiếp nhận yêu cầu
+Đo tốc độ phản hồi đầu tiên của nhân viên
+Tính từ lúc cuộc hội thoại được phân phối cho nhân viên đến lúc nhân viên trả lời khách lần đầu
+2. Giải đáp thông tin
+Đo tốc độ phản hồi trong quá trình trao đổi
+Tính cho các lần nhân viên trả lời tiếp theo sau tin nhắn mới của khách, không tính tin nhắn đầu tiên
+3. Hoàn thành cuộc hội thoại
+Đo thời gian xử lý xong toàn bộ cuộc hội thoại
+Tính từ lúc cuộc hội thoại được phân phối đến lúc nhân viên hoàn thành/đóng cuộc hội thoại
+
+Giải thích từng giai đoạn
+1. Tiếp nhận yêu cầu
+Ví dụ cấu hình: 5 phút 0 giây
+Có nghĩa là sau khi hệ thống phân phối cuộc hội thoại cho nhân viên, nhân viên phải có phản hồi đầu tiên cho khách trong vòng 5 phút. Mục đích là đảm bảo khách hàng không phải chờ quá lâu sau khi bắt đầu liên hệ.
+2. Giải đáp thông tin
+Ví dụ cấu hình: 5 phút 5 giây
+Có nghĩa là trong quá trình trao đổi, mỗi khi khách hàng gửi thêm tin nhắn, nhân viên cần phản hồi lại trong giới hạn thời gian đã cấu hình. Điểm quan trọng: Giai đoạn này không tính tin nhắn trả lời đầu tiên, vì tin nhắn đầu tiên đã thuộc SLA “Tiếp nhận yêu cầu”.
+Mục đích là kiểm soát chất lượng phản hồi xuyên suốt cuộc hội thoại, không chỉ phản hồi ban đầu.
+3. Hoàn thành cuộc hội thoại
+Ví dụ cấu hình: 5 phút 10 giây
+Có nghĩa là kể từ khi cuộc hội thoại được phân phối, nhân viên cần xử lý xong và chuyển cuộc hội thoại sang trạng thái hoàn thành trong giới hạn thời gian này. Mục đích là đảm bảo cuộc hội thoại không bị treo quá lâu ở trạng thái mở.
+Ý nghĩa các trường cấu hình
+Trường
+Ý nghĩa
+Giai đoạn
+Mốc SLA cần kiểm soát
+Giới hạn
+Thời gian tối đa cho phép
+Công việc cần làm
+Mô tả hành động nhân viên cần thực hiện
+Trạng thái
+Bật/tắt SLA cho từng giai đoạn
+Cảnh báo SLA
+Cảnh báo khi cuộc hội thoại sắp vi phạm hoặc đã vi phạm SLA
+
+Mục đích nghiệp vụ
+Thiết lập SLA giúp doanh nghiệp:
+Kiểm soát tốc độ phản hồi khách hàng.
+Đảm bảo nhân viên xử lý hội thoại đúng cam kết.
+Phát hiện các cuộc hội thoại bị chậm xử lý.
+Hỗ trợ quản lý đánh giá hiệu suất agent.
+Làm dữ liệu đầu vào cho báo cáo SLA.
+Nâng cao chất lượng chăm sóc khách hàng.
+
+Kết luận ngắn gọn
+Thiết lập SLA là chức năng đặt giới hạn thời gian xử lý cho từng loại hội thoại như Tin nhắn, Bình luận, Email. Hệ thống theo dõi 3 giai đoạn chính: tiếp nhận yêu cầu, giải đáp thông tin và hoàn thành cuộc hội thoại. Khi nhân viên phản hồi hoặc xử lý quá thời gian cấu hình, hệ thống có thể cảnh báo và ghi nhận vi phạm SLA để phục vụ giám sát, báo cáo và cải thiện chất lượng chăm sóc khách hàng.
+
+
+
+
+
+
+
+
+XVII. KÍCH HOẠT NGƯỜI DÙNG
+Chức năng Kích hoạt dùng để kiểm soát phòng ban nào và nhân viên nào được phép sử dụng VSS Chat Platform.
+Nói đơn giản: Hệ thống có thể lấy danh sách nhân sự từ dữ liệu nội bộ, nhưng không phải toàn bộ nhân sự đều được dùng VSS Chat. Vì vậy cần có chức năng kích hoạt để chọn đúng phòng ban và đúng người được đưa vào hệ thống.
+1. Kích hoạt phòng ban
+Kích hoạt phòng ban là bước chọn các phòng ban được phép sử dụng hệ thống.
+Trong màn hình có 2 loại:
+Trường
+Ý nghĩa
+Phòng ban sử dụng chính
+Phòng ban chính đang được cấu hình sử dụng hệ thống
+Phòng ban sử dụng khác
+Các phòng ban bổ sung cũng được phép dùng hệ thống
+Ví dụ:
+Phòng ban chính: KOL - Phòng Kênh Online
+Phòng ban khác: Phòng Chất Lượng Dịch Vụ
+Khi một phòng ban được kích hoạt, nhân viên thuộc phòng ban đó mới có thể được chọn/kích hoạt để tham gia hệ thống.
+Mục đích
+Chức năng này giúp doanh nghiệp giới hạn phạm vi sử dụng VSS Chat theo đơn vị tổ chức.
+Ví dụ VSS Chat chỉ phục vụ các bộ phận:
+Chăm sóc khách hàng
+Bán hàng online
+Kênh Online
+Chất lượng dịch vụ
+Social Commerce
+Livestream / Fanpage
+Thì admin chỉ cần kích hoạt các phòng ban liên quan, không cần mở quyền cho toàn bộ công ty.
+
+2. Kích hoạt người dùng
+Kích hoạt người dùng là bước bật/tắt quyền sử dụng hệ thống cho từng nhân viên cụ thể.
+Trong bảng danh sách có các thông tin:
+Trường
+Ý nghĩa
+Mã nhân viên
+Mã định danh nhân sự
+Nhân viên
+Họ tên nhân viên
+Chức danh
+Vị trí công việc
+Phòng ban
+Đơn vị/phòng ban của nhân viên
+Kích hoạt
+Trạng thái người dùng có được phép sử dụng hệ thống hay không
+Nếu nhân viên được kích hoạt, họ có thể được đưa vào hệ thống để sử dụng các chức năng phù hợp như xử lý hội thoại, nhận phân phối, xem báo cáo hoặc cấu hình tùy theo quyền được gán. Nếu bị hủy kích hoạt, nhân viên không còn được xem là người dùng hoạt động trong hệ thống.
+3. Ý nghĩa các nút thao tác
+Nút
+Ý nghĩa
+Kích hoạt đã chọn
+Bật quyền sử dụng hệ thống cho các nhân viên đã tick chọn
+Hủy kích hoạt đã chọn
+Tắt quyền sử dụng hệ thống của các nhân viên đã tick chọn
+Tìm kiếm / lọc
+Tìm nhân viên theo mã, tên, chức danh, phòng ban, trạng thái
+Cập nhật
+Lưu lại cấu hình phòng ban/người dùng
+
+4. Vì sao cần chức năng này?
+Chức năng này quan trọng vì danh sách nhân viên có thể rất lớn, ví dụ màn hình có tổng cộng hơn 600 nhân sự. Không phải ai cũng là agent hoặc người dùng của VSS Chat.
+Do đó, hệ thống cần một lớp quản lý để:
+Chỉ cho phép đúng phòng ban được sử dụng hệ thống.
+Chỉ kích hoạt đúng nhân viên cần tham gia vận hành.
+Dễ dàng thêm/bớt nhân sự khi thay đổi tổ chức.
+Kiểm soát số lượng người dùng đang hoạt động.
+Tránh cấp quyền nhầm cho nhân sự không liên quan.
+Hỗ trợ quản lý user theo dữ liệu nhân sự nội bộ.
+5. Phân biệt với “Quản lý người dùng”
+Hai chức năng này có thể dễ bị nhầm:
+Chức năng
+Ý nghĩa
+Kích hoạt người dùng
+Chọn nhân viên nào được phép tham gia/sử dụng hệ thống
+Quản lý người dùng
+Cấu hình chi tiết người dùng sau khi đã được kích hoạt, ví dụ vai trò, nhóm, kênh, quyền xử lý
+Có thể hiểu: Kích hoạt người dùng là bước “mở quyền tham gia hệ thống”.Quản lý người dùng là bước “thiết lập người đó làm gì trong hệ thống”.
+Ví dụ:
+Kích hoạt nhân viên Nguyễn Văn A.
+Sau đó vào Quản lý người dùng để gán A là Agent.
+Gán A vào nhóm Kênh Online.
+Gán A phụ trách kênh Facebook/Zalo/Website.
+
+Kết luận ngắn gọn
+Kích hoạt phòng ban/người dùng là chức năng quản lý phạm vi sử dụng VSS Chat Platform theo tổ chức và nhân sự. Admin có thể chọn phòng ban được sử dụng hệ thống, sau đó kích hoạt hoặc hủy kích hoạt từng nhân viên thuộc các phòng ban đó. Chức năng này giúp kiểm soát ai được phép tham gia vận hành hệ thống, tránh cấp quyền tràn lan và hỗ trợ quản lý nhân sự sử dụng VSS Chat một cách tập trung.
+
+
+
+
+
+XVIII. Tích hợp kênh tương tác
+XVIII.1. Tích hợp Zalo
+Click chọn biểu tượng Zalo để bắt đầu kết nối. Tiếp tục chọn Kết nối Zalo OfficalAccount
+
+Để có thể tiếp tục, bạn cần có sẵn 1 tài khoản Zalo AO. Nếu bạn chưa cótài khoản Zalo OA, vui lòng truy cập Xây dựng thương hiệu doanh nghiệp bạn trên Zalo | Zalo Official Account để biết thêm chi tiết. Sau khi đã có tài khoản Zalo OA, trong phần lựa chọn bên dưới sẽ hiển thị lên màn hình để bạn lựa chọn.
+
+XVIII.2. Tích hợp Facebook
+Tích hợp Facebook là chức năng dùng để kết nối một Fanpage Facebook với VSS Chat Platform. Sau khi kết nối thành công, các tin nhắn/bình luận từ Fanpage có thể được đồng bộ về VSS Chat để agent quản lý và phản hồi tập trung.
+Nói đơn giản: Kết nối Fanpage Facebook → thêm agent phụ trách → khách nhắn/comment trên Facebook → hội thoại đổ về VSS Chat → agent xử lý trong hệ thống.
+Mục đích chức năng
+Quản lý tin nhắn và bình luận Facebook trong cùng hệ thống VSS Chat.
+Không cần mở trực tiếp Facebook để xử lý từng cuộc hội thoại.
+Phân công agent phụ trách Fanpage.
+Theo dõi, lọc, gắn nhãn, xử lý và báo cáo hiệu quả hội thoại từ Facebook.
+Phục vụ các nghiệp vụ như bán hàng online, chăm sóc khách hàng, xử lý comment bài đăng, livestream hoặc minigame.
+Điều kiện trước khi kết nối
+Để kết nối được Facebook với VSS Chat, người dùng cần:
+Điều kiện
+Ý nghĩa
+Tài khoản Facebook hợp lệ
+Dùng để đăng nhập và cấp quyền kết nối
+Quyền quản trị Fanpage
+Chỉ tài khoản có quyền phù hợp mới chọn được trang để kết nối
+Kích hoạt Facebook Developers
+Cho phép tài khoản sử dụng cơ chế tích hợp ứng dụng/API của Facebook
+Fanpage cần kết nối
+Trang Facebook sẽ trở thành một kênh tương tác trong VSS Chat
+Luồng tích hợp chi tiết
+Bước 1: Kích hoạt Facebook Developers
+Người dùng truy cập Facebook Developers và đăng nhập bằng tài khoản Facebook muốn dùng để kết nối với VSS Chat.
+Sau đó thực hiện các bước xác minh:
+Bấm Bắt đầu.
+Nhập mã xác nhận được gửi về số điện thoại đăng ký Facebook.
+Xác nhận email.
+Chọn vai trò Nhà phát triển.
+Hoàn tất đăng ký.
+Ý nghĩa của bước này là tài khoản Facebook được mở quyền để thực hiện tích hợp với hệ thống bên ngoài như VSS Chat Platform.\
+Bước 2: Quay lại VSS Chat Platform
+Người dùng vào: Cài đặt → Kênh tương tác → Chọn biểu tượng Facebook
+Đây là bước bắt đầu tạo một kênh Facebook mới trong VSS Chat.
+Bước 3: Đăng nhập qua Facebook
+Người dùng bấm: Continue with Facebook
+Sau đó hệ thống chuyển sang màn hình xác thực Facebook để người dùng cấp quyền kết nối. Ý nghĩa: Facebook cần xác nhận tài khoản nào đang cho phép VSS Chat truy cập Fanpage.
+Bước 4: Chọn trang Facebook cần kết nối
+Sau khi xác thực, hệ thống hiển thị danh sách các Fanpage mà tài khoản Facebook có quyền quản lý. Người dùng chọn Fanpage muốn kết nối với VSS Chat.
+Ví dụ:
+Fanpage
+Mục đích
+Viettel Store
+Bán hàng, tư vấn sản phẩm
+CSKH Viettel
+Chăm sóc khách hàng
+Fanpage chiến dịch
+Xử lý comment/minigame/livestream
+Sau khi chọn, Fanpage này sẽ trở thành một kênh tương tác Facebook trong VSS Chat.
+Bước 5: Thêm agent phụ trách kênh
+Người dùng thêm các agent/nhân viên phụ trách kênh Facebook.
+Ý nghĩa: Chỉ những agent được thêm vào kênh này mới có thể được phân phối hoặc xử lý hội thoại phát sinh từ Fanpage đó. Có thể thêm một hoặc nhiều agent vào cùng một kênh Facebook.
+Ví dụ:
+Kênh Facebook
+Agent/Nhóm phụ trách
+Fanpage Viettel Store
+Nhóm Kênh Online
+Fanpage CSKH
+Nhóm Chăm sóc khách hàng
+Fanpage livestream
+Nhóm Social Commerce
+
+Bước 6: Hoàn tất kết nối
+Sau khi thêm đủ agent, người dùng bấm Thêm các nhà cung cấp để hoàn tất quá trình kết nối. Ở đây, cụm “nhà cung cấp” có thể hiểu là agent/nhân viên phụ trách kênh. Nếu viết tài liệu BA, nên dùng từ rõ hơn là: Thêm agent phụ trách kênh tương tác.
+Luồng nghiệp vụ sau khi kết nối thành công
+Sau khi Fanpage được kết nối:
+Khách hàng nhắn tin hoặc bình luận trên Fanpage.
+Facebook gửi dữ liệu tương tác về VSS Chat.
+VSS Chat tạo hoặc cập nhật cuộc hội thoại.
+Cuộc hội thoại được gắn nguồn là kênh Facebook.
+Hệ thống phân phối cuộc hội thoại cho agent phụ trách.
+Agent xử lý hội thoại ngay trong VSS Chat.
+Phản hồi của agent được gửi ngược lại về Facebook cho khách hàng.
+
+
+Giá trị nghiệp vụ
+Tích hợp Facebook giúp doanh nghiệp biến Fanpage thành một kênh chăm sóc khách hàng tập trung trong VSS Chat. Nhân viên không cần xử lý rời rạc trên Facebook mà có thể tiếp nhận, phân phối, phản hồi, gắn nhãn, theo dõi SLA và báo cáo hiệu quả ngay trong một hệ thống chung.
+Mô tả ngắn cho tài liệu BA
+Chức năng Tích hợp Facebook cho phép người dùng kết nối Fanpage Facebook với VSS Chat Platform thông qua tài khoản Facebook có quyền quản trị và đã kích hoạt Facebook Developers. Sau khi chọn Fanpage và thêm agent phụ trách, các tin nhắn/bình luận phát sinh trên Fanpage sẽ được đồng bộ về VSS Chat để hệ thống phân phối và hỗ trợ agent xử lý tập trung.
+XVIII.3. Tích hợp Web
+Tích hợp Website là chức năng dùng để kết nối website của doanh nghiệp với VSS Chat Platform. Sau khi tích hợp thành công, khách truy cập website có thể nhắn tin qua widget/chatbox trên web, và các cuộc hội thoại đó sẽ được đưa về VSS Chat để agent tiếp nhận, phân phối và xử lý.
+Nói đơn giản: Gắn VSS Chat vào website → khách nhắn trên website → hội thoại đổ về VSS Chat → agent xử lý trong hệ thống.
+Mục đích chức năng
+Tạo kênh chat trực tiếp trên website.
+Thu nhận khách hàng tiềm năng từ website.
+Cho phép khách truy cập đặt câu hỏi, yêu cầu tư vấn hoặc để lại thông tin.
+Đưa toàn bộ hội thoại từ website về cùng một nền tảng quản lý.
+Phân công agent phụ trách kênh website.
+Hỗ trợ chăm sóc khách hàng ngay tại thời điểm khách đang truy cập trang.
+Ví dụ: khách vào website Viettel Store, bấm vào biểu tượng chat ở góc màn hình và hỏi về sản phẩm. Tin nhắn đó sẽ được đưa vào VSS Chat Platform để nhân viên tư vấn trả lời.
+Luồng tích hợp chi tiết
+Bước 1: Chọn loại kênh Website
+Người dùng vào phần Thêm kênh tương tác, sau đó chọn biểu tượng Website.
+Ý nghĩa: hệ thống hiểu rằng người dùng đang muốn tạo một kênh chat mới gắn với website, không phải Facebook, Zalo hay kênh khác.
+Bước 2: Nhập thông tin website cần kết nối
+Người dùng cần nhập đầy đủ thông tin của website muốn tích hợp. Các thông tin này thường dùng để hệ thống nhận diện:
+Thông tin
+Ý nghĩa
+Tên website / tên kênh
+Tên để quản lý trong VSS Chat
+URL website
+Địa chỉ website sẽ gắn chat widget
+Thông tin mô tả / cấu hình
+Các thiết lập liên quan đến kênh website
+Mục đích của bước này là tạo hồ sơ cho kênh Website trong hệ thống.
+Bước 3: Tạo kênh tương tác
+Sau khi nhập đầy đủ thông tin, người dùng bấm Tạo kênh tương tác. Khi đó, hệ thống tạo một kênh Website mới trong VSS Chat Platform. Kênh này sẽ là nơi tiếp nhận các cuộc hội thoại phát sinh từ website sau khi được tích hợp.
+Bước 4: Thêm Agent cho kênh tương tác
+Sau khi tạo kênh, người dùng tiếp tục thêm các agent/nhân viên phụ trách kênh Website.
+Ý nghĩa: không phải nhân viên nào cũng nhận hội thoại từ website. Chỉ những agent được thêm vào kênh này mới có thể được phân phối hoặc xử lý các cuộc hội thoại phát sinh từ website. Ví dụ:
+Kênh
+Agent phụ trách
+Website Viettel Store
+Nhóm tư vấn online
+Website CSKH
+Nhóm chăm sóc khách hàng
+Website tuyển dụng
+Nhóm nhân sự
+Bước này rất quan trọng vì nó liên quan đến quy tắc phân phối hội thoại sau này.
+Bước 5: Hệ thống sinh đoạn script tích hợp
+Sau khi thêm agent, hệ thống sẽ tự động tạo một đoạn script. Đây là đoạn mã dùng để gắn VSS Chat vào website.
+Có thể hiểu: Script là cầu nối giữa website và VSS Chat Platform.
+Khi đoạn script được gắn vào mã nguồn website, website sẽ hiển thị widget chat. Đồng thời, mọi tin nhắn khách gửi qua widget đó sẽ được chuyển về đúng kênh Website trong VSS Chat.
+Bước 6: Sao chép script và gắn vào mã nguồn website
+Người dùng bấm Sao chép để copy đoạn script, sau đó gắn đoạn script này vào mã nguồn website. Thông thường script sẽ được gắn vào phần HTML của website, thường gần cuối thẻ body hoặc theo hướng dẫn kỹ thuật của hệ thống. Sau khi website được cập nhật, khách truy cập sẽ thấy biểu tượng chat/widget trên website.
+Bước 7: Hoàn tất hoặc cấu hình nâng cao
+Sau khi gắn script, người dùng quay lại VSS Chat. Tại đây có 2 lựa chọn:
+Lựa chọn
+Ý nghĩa
+Nhiều tùy chọn hơn
+Điều chỉnh thêm cấu hình của kênh Website
+Tiếp tục
+Hoàn tất quá trình liên kết
+Các tùy chọn nâng cao có thể liên quan đến giao diện widget, giờ làm việc, phân phối hội thoại, agent phụ trách hoặc các thiết lập vận hành khác.
+Luồng nghiệp vụ sau khi tích hợp thành công
+Khách hàng truy cập website.
+Widget chat của VSS Chat hiển thị trên website.
+Khách gửi tin nhắn qua widget.
+Hệ thống tạo cuộc hội thoại mới trong VSS Chat.
+Cuộc hội thoại được gắn nguồn là kênh Website.
+Hệ thống phân phối hội thoại cho agent phụ trách.
+Agent trả lời khách ngay trong VSS Chat Platform.
+Khách nhận phản hồi trên widget chat của website.
+Ý nghĩa với BA
+Về mặt BA, có thể mô tả chức năng này như sau: Tích hợp Website cho phép người dùng tạo một kênh tương tác website trong VSS Chat Platform. Sau khi nhập thông tin website, thêm agent phụ trách và gắn đoạn script do hệ thống sinh ra vào mã nguồn website, khách truy cập có thể chat trực tiếp trên website. Các cuộc hội thoại phát sinh sẽ được đồng bộ về VSS Chat để hệ thống phân phối cho agent xử lý.
+Kết luận ngắn gọn
+Tích hợp Website là quá trình tạo kênh website trong VSS Chat, thêm agent phụ trách, lấy đoạn script do hệ thống tạo ra và gắn vào mã nguồn website. Sau khi hoàn tất, website sẽ có chat widget để khách hàng nhắn tin, còn doanh nghiệp có thể quản lý và trả lời toàn bộ hội thoại đó trong VSS Chat Platform.

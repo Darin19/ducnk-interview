@@ -1,0 +1,1006 @@
+
+--- PAGE 1 ---
+ChatGPT - CV
+Insert các testcase vào DB bằng tools gì? ngoài SQL?
+luồng ?
+Không nhất thiết phải dùng câu lệnh SQL trực tiếp. Với bộ testcase AI/HRAI, nên xem việc đưa testcase
+vào DB là một pipeline quản lý dữ liệu kiểm thử, có kiểm tra, version và truy vết.
+1. Các công cụ có thể insert testcase vào DB
+A. Giao diện Test Data Management / Admin UI
+QA nhập hoặc import testcase trên giao diện:
+Nhập thông tin nhân viên giả lập.
+Chọn các feature áp dụng.
+Nhập kết quả AI kỳ vọng.
+Chọn loại cảnh báo.
+Gắn dataset version.
+Upload Excel/CSV hàng loạt.
+Frontend gọi API, backend kiểm tra dữ liệu rồi mới insert DB.
+Đây là cách phù hợp nhất cho QA vì không cần biết SQL và giảm nguy cơ sửa nhầm dữ liệu.
+Luồng:
+QA nhập trên UI
+→ Frontend validate cơ bản
+→ Gọi REST API
+→ Backend validate nghiệp vụ
+→ Insert vào bảng staging
+→ Kiểm tra trùng/sai
+→ Chuyển sang bảng testcase chính thức
+B. REST API bằng Postman hoặc Swagger
+Có thể xây API như:
+http
+POST /api/test-cases
+POST /api/test-cases/bulk
+POST /api/datasets/import
+POST /api/test-runs
+Ví dụ payload:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/23
+
+--- PAGE 2 ---
+JSON
+{
+  "test_case_code": "HRAI_RESIGN_001",
+  "employee_code": "TEST_EMP_0001",
+  "scenario": "Nhân viên có nguy cơ nghỉ việc cao",
+  "features": [
+    {
+      "feature_code": "SALARY_BELOW_PEER",
+      "value": true
+    },
+    {
+      "feature_code": "PERFORMANCE_DECLINE",
+      "value": 25
+    },
+    {
+      "feature_code": "MANAGER_NEGATIVE_COMMENT",
+      "value": true
+    }
+  ],
+  "expected_result": {
+    "risk_type": "RESIGNATION",
+    "risk_level": "HIGH",
+    "minimum_score": 80
+  },
+  "dataset_version": "HRAI_GOLDEN_V1"
+}
+Cách này phù hợp khi:
+QA muốn test API.
+Cần tạo testcase riêng lẻ.
+Muốn tự động hóa bằng CI/CD.
+Hệ thống khác cần đẩy testcase sang.
+Postman không tự insert DB; Postman gọi API, còn backend thực hiện insert.
+C. Python script
+Python phù hợp nhất khi cần sinh hàng trăm hoặc hàng nghìn tổ hợp testcase.
+Công cụ thường dùng:
+pandas: đọc Excel/CSV.
+Faker: sinh nhân viên giả.
+itertools: tạo tổ hợp feature.
+SQLAlchemy: kết nối DB bằng ORM.
+psycopg2: PostgreSQL.
+oracledb: Oracle.
+pyodbc: SQL Server.
+pymysql: MySQL.
+Luồng:
+File cấu hình feature
+→ Python sinh tổ hợp
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/23
+
+--- PAGE 3 ---
+→ Áp dụng rule loại bỏ tổ hợp vô lý
+→ Sinh employee giả lập
+→ Mapping sang schema DB
+→ Validate
+→ Bulk insert vào staging
+→ Sinh báo cáo số testcase đã tạo
+Ví dụ:
+Python
+from sqlalchemy import create_engine
+import pandas as pd
+engine = create_engine(
+    "postgresql+psycopg2://user:password@localhost:5432/hrai_test"
+)
+df = pd.read_excel("hrai_testcases.xlsx")
+required_columns = {
+    "test_case_code",
+    "employee_code",
+    "scenario",
+    "expected_risk_type"
+}
+missing = required_columns - set(df.columns)
+if missing:
+    raise ValueError(f"Thiếu cột: {missing}")
+df.to_sql(
+    name="test_case_staging",
+    con=engine,
+    if_exists="append",
+    index=False,
+    method="multi",
+    chunksize=500
+)
+Trong thực tế, không nên để QA tự viết chuỗi kết nối DB trong script. Nên dùng:
+Secret Manager.
+Environment variable.
+Service account.
+Vault.
+D. Import Excel/CSV
+Đây là cách đơn giản nhất cho QA.
+QA chuẩn bị ﬁle:
+Test Case Code Employee Code Feature Code Feature Value Expected Risk
+TC001 EMP_TEST_01 SALARY_BELOW_PEER true RESIGNATION
+TC001 EMP_TEST_01 PERFORMANCE_DECLINE 25 RESIGNATION
+Sau đó import bằng:
+Giao diện hệ thống.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/23
+
+--- PAGE 4 ---
+DBeaver.
+DataGrip.
+pgAdmin.
+SQL Developer.
+Oracle SQL Loader.
+PostgreSQL COPY.
+SQL Server Import Wizard.
+Tuy nhiên, với dự án chính thức, nên import qua API hoặc service trung gian, không import trực tiếp vào
+bảng production.
+E. ETL / Data Pipeline
+Khi bộ testcase được tạo định kỳ hoặc lấy từ nhiều nguồn, có thể dùng:
+Apache Airﬂow.
+Apache NiFi.
+Talend.
+Pentaho.
+SSIS.
+Azure Data Factory.
+AWS Glue.
+Informatica.
+Ví dụ với Airﬂow:
+Excel trên MinIO/S3
+→ Airflow phát hiện file mới
+→ Đọc file
+→ Validate schema
+→ Chuẩn hóa dữ liệu
+→ Insert staging
+→ Chạy kiểm tra chất lượng
+→ Đẩy sang test dataset
+→ Trigger AI processing
+Airﬂow chủ yếu điều phối. Việc đọc và insert thường do Python operator hoặc ETL job thực hiện.
+F. dbt
+dbt không phải công cụ tốt nhất để nhập dữ liệu thủ công, nhưng rất phù hợp để:
+Biến đổi dữ liệu testcase đã nằm trong DB.
+Tạo bảng feature tổng hợp.
+Tạo dimension/fact.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/23
+
+--- PAGE 5 ---
+Kiểm tra chất lượng dữ liệu.
+Version hóa logic SQL.
+Tạo dataset đầu vào cho AI.
+Ví dụ:
+Raw testcase
+→ dbt staging model
+→ Chuẩn hóa feature
+→ Kiểm tra uniqueness/not null
+→ Tạo bảng AI_INPUT_DATASET
+dbt Seed cũng có thể nạp ﬁle CSV nhỏ vào DB, phù hợp với:
+Danh mục feature.
+Danh mục risk type.
+Bộ testcase mẫu nhỏ.
+Mapping label chuẩn.
+Không nên dùng dbt Seed cho hàng triệu bản ghi.
+G. Low-code / Automation
+Có thể dùng:
+n8n.
+Power Automate.
+Make.
+Retool.
+Appsmith.
+Budibase.
+Ví dụ n8n:
+QA upload Excel
+→ n8n đọc file
+→ Validate từng dòng
+→ Gọi API tạo testcase
+→ Ghi kết quả import
+→ Gửi email/Teams thông báo
+Retool/Appsmith có thể nhanh chóng tạo một màn hình nội bộ cho QA:
+Form tạo testcase.
+Grid chỉnh sửa dữ liệu.
+Upload Excel.
+Nút Generate Test Data.
+Nút Submit Dataset.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/23
+
+--- PAGE 6 ---
+Xem trạng thái xử lý.
+2. Luồng chuẩn nên áp dụng cho HRAI
+Không nên insert tất cả vào một bảng. Nên tách thành các lớp dữ liệu.
+Nguồn testcase
+Excel / UI / Python Generator / API
+                ↓
+1. Testcase Ingestion
+Nhận file hoặc request
+                ↓
+2. Schema Validation
+Kiểm tra cột bắt buộc, kiểu dữ liệu, format
+                ↓
+3. Business Validation
+Kiểm tra tổ hợp feature hợp lệ
+                ↓
+4. Staging Database
+Lưu dữ liệu tạm thời
+                ↓
+5. Data Quality Check
+Trùng testcase, thiếu feature, giá trị bất hợp lý
+                ↓
+6. Dataset Builder
+Tạo hồ sơ nhân viên + feature + expected result
+                ↓
+7. Publish Dataset Version
+Ví dụ HRAI_GOLDEN_V3
+                ↓
+8. Trigger AI
+Airflow/API gửi từng testcase cho AI
+                ↓
+9. AI trả kết quả
+Lưu actual result vào DB
+                ↓
+10. Evaluation Engine
+So sánh expected với actual
+                ↓
+11. QA Review
+PASS / PARTIAL PASS / FAIL + comment
+                ↓
+12. Feedback Dataset
+Tạo dataset mới cho prompt tuning, fine-tuning hoặc regression
+3. Cấu trúc DB khuyến nghị
+Bảng TEST_CASE
+Lưu thông tin chung của testcase.
+TEST_CASE_ID
+TEST_CASE_CODE
+SCENARIO_NAME
+DESCRIPTION
+TEST_TYPE
+DATASET_VERSION
+STATUS
+CREATED_BY
+CREATED_AT
+Bảng TEST_EMPLOYEE
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/23
+
+--- PAGE 7 ---
+Lưu nhân viên giả lập.
+TEST_EMPLOYEE_ID
+EMPLOYEE_CODE
+FULL_NAME
+DEPARTMENT
+POSITION
+JOB_LEVEL
+TENURE_MONTHS
+Bảng FEATURE_CATALOG
+Danh mục feature chuẩn.
+FEATURE_ID
+FEATURE_CODE
+FEATURE_NAME
+DATA_TYPE
+ALLOWED_VALUES
+RISK_GROUP
+DESCRIPTION
+Bảng TEST_CASE_FEATURE
+Xác định testcase hoặc nhân viên có feature nào.
+TEST_CASE_ID
+TEST_EMPLOYEE_ID
+FEATURE_ID
+FEATURE_VALUE
+FEATURE_SOURCE
+EFFECTIVE_DATE
+Ví dụ:
+Test case Nhân viên Feature Giá trị
+TC001 EMP_TEST_01 PERFORMANCE_DECLINE 25%
+TC001 EMP_TEST_01 SALARY_BELOW_PEER TRUE
+TC001 EMP_TEST_01 NEGATIVE_MANAGER_COMMENT TRUE
+Đây chính là bảng trả lời câu hỏi: nhân viên này có feature nào và feature này được dùng cho
+testcase nào.
+Bảng EXPECTED_RESULT
+TEST_CASE_ID
+EXPECTED_RISK_TYPE
+EXPECTED_RISK_LEVEL
+EXPECTED_MIN_SCORE
+EXPECTED_MAX_SCORE
+EXPECTED_REASONING
+EXPECTED_RECOMMENDATION
+Bảng TEST_EXECUTION
+Mỗi lần testcase được chạy tạo một bản ghi.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/23
+
+--- PAGE 8 ---
+EXECUTION_ID
+TEST_CASE_ID
+MODEL_VERSION
+PROMPT_VERSION
+DATASET_VERSION
+STARTED_AT
+FINISHED_AT
+EXECUTION_STATUS
+Bảng AI_ACTUAL_RESULT
+EXECUTION_ID
+ACTUAL_RISK_TYPE
+ACTUAL_RISK_LEVEL
+ACTUAL_SCORE
+ACTUAL_REASONING
+ACTUAL_RECOMMENDATION
+RAW_RESPONSE
+Bảng QA_FEEDBACK
+EXECUTION_ID
+QA_RESULT
+QA_SCORE
+ERROR_TYPE
+COMMENT
+CORRECTED_REASONING
+CORRECTED_OUTPUT
+REVIEWED_BY
+REVIEWED_AT
+4. Luồng insert cụ thể qua UI và API
+Trường hợp tạo một testcase
+QA mở màn hình “Tạo testcase”
+→ Chọn scenario: Nguy cơ nghỉ việc
+→ Chọn nhân viên giả lập
+→ Chọn feature từ Feature Catalog
+→ Nhập giá trị từng feature
+→ Nhập kết quả kỳ vọng
+→ Bấm Lưu nháp
+→ API ghi vào staging
+→ Backend validate
+→ QA bấm Publish
+→ Hệ thống ghi vào TEST_CASE và TEST_CASE_FEATURE
+Trường hợp import hàng loạt
+QA tải file template Excel
+→ Điền 500 testcase
+→ Upload lên UI
+→ Backend lưu file vào MinIO/S3
+→ Tạo IMPORT_JOB
+→ Worker đọc file
+→ Validate từng dòng
+→ Dòng đúng insert staging
+→ Dòng sai trả file error report
+→ QA sửa và import lại
+→ QA xác nhận publish
+→ Tạo dataset version mới
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/23
+
+--- PAGE 9 ---
+Nên có kết quả import như:
+Tổng số dòng: 5.000
+Hợp lệ: 4.850
+Không hợp lệ: 150
+Trùng testcase: 40
+Sai mã feature: 35
+Sai kiểu dữ liệu: 55
+Thiếu expected result: 20
+5. Phương án phù hợp nhất cho dự án của bạn
+Tôi đề xuất kết hợp:
+Retool/Appsmith hoặc UI nội bộ
+        ↓
+REST API Spring Boot/.NET
+        ↓
+PostgreSQL/Oracle staging
+        ↓
+Python Test Data Generator
+        ↓
+Airflow điều phối chạy AI
+        ↓
+QA Review UI
+        ↓
+Feedback Dataset Versioning
+Vai trò từng công cụ:
+Công cụ Vai trò
+UI/Retool QA tạo, sửa, import testcase
+REST API Kiểm soát logic và quyền truy cập
+Python/Faker Sinh tổ hợp nhân viên và feature
+PostgreSQL/Oracle Lưu testcase, execution, feedback
+Airﬂow Điều phối chạy hàng loạt
+dbt Chuẩn hóa dataset và kiểm tra chất lượng
+MinIO/S3 Lưu ﬁle nguồn và phiên bản dataset
+Git/DVC/MLﬂow Quản lý version prompt, dataset, model
+Grafana/Power BI Theo dõi tỷ lệ pass/fail và regression
+Điểm quan trọng nhất là: QA không nên insert thẳng vào bảng nghiệp vụ chính bằng SQL. QA nên
+thao tác qua UI, API hoặc ﬁle import; dữ liệu đi qua staging, validation và publish để có thể kiểm soát lỗi,
+rollback và truy vết phiên bản.
+Cần làm rõ
+1. Insert dữ liệu nhân viên (chỉ gồm các dữ liệu) để test
+2. Insert dữ liệu nhân viên gồm các tín hiệu sau feature programming để test AI. 
+Thực ra tôi sẽ test bước 2 trước để xác định khả năng chính xác của AI trong việc suy luận và phân 
+loại nhân sự. Bước 1 test sau vì nó khá đơn giản, chỉ cần kiểm tra từ dữ liệu => tín hiệu chính xác là 
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/23
+
+--- PAGE 10 ---
+OK
+Đề xuất tools kết hợp với Datagrips
+Show moreShow less
+Cách tách của bạn là hợp lý. Nên coi đây là hai lớp kiểm thử độc lập, và thực hiện Bước 2 trước để
+tránh việc lỗi của Feature Programming làm nhiễu kết quả đánh giá AI.
+1. Phân biệt chính xác hai bước kiểm thử
+Bước 2 — Test AI bằng dữ liệu đã có feature
+Đây là bài test:
+Nhân viên + các tín hiệu/feature đã xác định
+→ AI suy luận
+→ AI phân loại nhân sự
+→ So sánh với kết quả kỳ vọng
+Bước này không chạy Feature Programming.
+Ví dụ đầu vào:
+Nhân viên: TEST_EMP_001
+Feature:
+- Hiệu suất giảm liên tục: TRUE
+- Lương thấp hơn nhóm tương đương: TRUE
+- Có bình luận tiêu cực của quản lý: TRUE
+- Thâm niên trên 3 năm: TRUE
+- Có dấu hiệu nghỉ việc trong lịch sử tương tác: TRUE
+Kết quả kỳ vọng:
+Risk type: RESIGNATION
+Risk level: HIGH
+Expected score: 80–100
+Expected reasoning:
+- Hiệu suất suy giảm
+- Thu nhập kém cạnh tranh
+- Phản hồi quản lý tiêu cực
+Mục tiêu là xác định:
+AI có chọn đúng loại cảnh báo không.
+AI có phân loại đúng mức độ không.
+AI có sử dụng đúng các feature không.
+AI có suy luận thêm thông tin không tồn tại không.
+Câu giải thích có logic, tự nhiên và phù hợp nghiệp vụ không.
+AI có nhầm giữa tương quan và nguyên nhân không.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/23
+
+--- PAGE 11 ---
+Bước 1 — Test Feature Programming bằng dữ liệu nhân sự thô
+Đây là bài test:
+Dữ liệu nhân sự thô
+→ Feature Programming
+→ Sinh tín hiệu/feature
+→ So sánh feature thực tế với feature kỳ vọng
+Ví dụ đầu vào chỉ gồm dữ liệu thô:
+Lương hiện tại: 18 triệu
+Lương trung bình cùng ngạch: 24 triệu
+Điểm hiệu suất:
+- Tháng 1: 90
+- Tháng 2: 80
+- Tháng 3: 65
+Nhận xét quản lý:
+"Nhân viên gần đây ít chủ động và chưa hoàn thành đúng tiến độ."
+Kết quả feature kỳ vọng:
+SALARY_BELOW_PEER = TRUE
+SALARY_GAP_PERCENT = 25
+PERFORMANCE_DECLINE = TRUE
+PERFORMANCE_DECLINE_RATE = 27.78
+NEGATIVE_MANAGER_COMMENT = TRUE
+Ở bước này chưa cần quan tâm AI có kết luận nhân viên sắp nghỉ việc hay không. Chỉ cần kiểm tra:
+Dữ liệu thô → Feature sinh ra có chính xác không?
+2. Kiến trúc kiểm thử nên sử dụng
+Nên tạo hai đường chạy riêng biệt:
+                     ┌─────────────────────────────┐
+                     │ BƯỚC 1: FEATURE VALIDATION  │
+                     │                             │
+Dữ liệu nhân sự thô  │ → Feature Programming      │
+                     │ → Actual Feature            │
+                     │ → So với Expected Feature   │
+                     └─────────────────────────────┘
+                     ┌─────────────────────────────┐
+                     │ BƯỚC 2: AI VALIDATION       │
+                     │                             │
+Feature có sẵn       │ → Bỏ qua Feature Programming│
+                     │ → AI phân tích              │
+                     │ → So với Expected AI Output │
+                     └─────────────────────────────┘
+Cần có trường phân biệt chế độ xử lý:
+input_mode = RAW_DATA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/23
+
+--- PAGE 12 ---
+hoặc:
+input_mode = FEATURE_READY
+Khi FEATURE_READY, hệ thống phải lấy trực tiếp feature đã insert và không được tính lại hoặc ghi đè
+feature.
+3. Bộ công cụ nên kết hợp với DataGrip
+Bộ công cụ cốt lõi đề xuất
+Công cụ Vai trò
+DataGrip Quản lý DB, xem bảng, chạy query, kiểm tra dữ liệu
+Excel/CSV QA thiết kế testcase và expected result
+Python + pandas Đọc testcase, kiểm tra và chuẩn hóa dữ liệu
+Faker Sinh thông tin nhân viên giả
+python-oracledb hoặc
+SQLAlchemy Bulk insert dữ liệu vào Oracle
+Postman Trigger API chạy AI hoặc Feature Programming
+pytest So sánh actual với expected tự động
+Git Quản lý version testcase, script và SQL
+Airﬂow Điều phối batch lớn, dùng khi quy mô tăng
+dbt Kiểm tra và chuẩn hóa Feature Programming nếu phần feature chủ yếu được viết bằng SQL
+DataGrip có thể import trực tiếp ﬁle CSV/TSV vào bảng, phù hợp với các đợt dữ liệu nhỏ hoặc thao tác
+kiểm tra thủ công. Với dữ liệu lớn hoặc cần chạy lặp lại, nên để Python thực hiện bulk insert thay vì phụ
+thuộc hoàn toàn vào thao tác trên giao diện. 
+pytest hỗ trợ parameterized testing, tức là cùng một hàm kiểm thử có thể chạy qua hàng trăm testcase
+gồm input và expected output khác nhau. 
+Bộ công cụ tối ưu cho trường hợp của bạn
+Tôi đề xuất dùng:
+Excel/CSV
+    ↓
+Python: pandas + Faker + python-oracledb
+    ↓
+Oracle Test Database
+    ↕
+DataGrip
+    ↓
+Postman gọi API
+    ↓
+AI / Feature Programming
+    ↓
+pytest đối chiếu kết quả
+JetBrains+1
+docs.pytest.org
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/23
+
+--- PAGE 13 ---
+Trong đó:
+DataGrip dùng để quản lý và kiểm tra.
+Python dùng để sinh và insert dữ liệu hàng loạt.
+Postman dùng để kích hoạt luồng hệ thống.
+pytest dùng để chấm Pass/Fail tự động.
+Excel là giao diện thiết kế testcase ban đầu cho QA.
+4. Thiết kế bảng DB cho hai bước
+4.1. Bảng quản lý testcase chung
+SQL
+QA_TEST_CASE
+------------
+TEST_CASE_ID
+TEST_CASE_CODE
+TEST_CASE_NAME
+TEST_OBJECTIVE
+TEST_STAGE
+INPUT_MODE
+DATASET_VERSION
+STATUS
+CREATED_BY
+CREATED_AT
+Ví dụ:
+TEST_CASE_CODE TEST_STAGE INPUT_MODE
+AI_RESIGN_001 AI_INFERENCE FEATURE_READY
+FEATURE_SALARY_001 FEATURE_ENGINEERING RAW_DATA
+4.2. Bảng nhân viên test
+SQL
+QA_TEST_EMPLOYEE
+----------------
+TEST_EMPLOYEE_ID
+TEST_CASE_ID
+EMPLOYEE_CODE
+FULL_NAME
+DEPARTMENT
+POSITION
+JOB_LEVEL
+START_DATE
+IS_TEST_DATA
+DATASET_VERSION
+Quy ước mã:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 13/23
+
+--- PAGE 14 ---
+TST_AI_000001
+TST_AI_000002
+TST_FE_000001
+Trong đó:
+TST_AI: nhân viên dùng để test AI bằng feature có sẵn.
+TST_FE: nhân viên dùng để test Feature Programming.
+Không nên dùng mã nhân viên thật.
+5. Bước 2: Insert nhân viên cùng feature để test AI
+5.1. Các bảng cần có
+Bảng feature đầu vào
+SQL
+QA_TEST_FEATURE_INPUT
+---------------------
+TEST_CASE_ID
+TEST_EMPLOYEE_ID
+FEATURE_CODE
+FEATURE_VALUE
+FEATURE_VALUE_NUMBER
+FEATURE_VALUE_TEXT
+FEATURE_DATA_TYPE
+FEATURE_SOURCE
+FEATURE_VERSION
+Ví dụ:
+EMPLOYEE FEATURE_CODE VALUE
+TST_AI_001 PERFORMANCE_DECLINE TRUE
+TST_AI_001 PERFORMANCE_DECLINE_RATE 28
+TST_AI_001 SALARY_BELOW_PEER TRUE
+TST_AI_001 NEGATIVE_MANAGER_COMMENT TRUE
+Bảng kết quả AI kỳ vọng
+SQL
+QA_EXPECTED_AI_RESULT
+---------------------
+TEST_CASE_ID
+EXPECTED_CLASSIFICATION
+EXPECTED_RISK_TYPE
+EXPECTED_RISK_LEVEL
+EXPECTED_MIN_SCORE
+EXPECTED_MAX_SCORE
+EXPECTED_REASON_CODES
+EXPECTED_REASONING
+EXPECTED_RECOMMENDATION
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 14/23
+
+--- PAGE 15 ---
+Bảng kết quả AI thực tế
+SQL
+QA_ACTUAL_AI_RESULT
+-------------------
+RUN_ID
+TEST_CASE_ID
+TEST_EMPLOYEE_ID
+MODEL_VERSION
+PROMPT_VERSION
+ACTUAL_CLASSIFICATION
+ACTUAL_RISK_TYPE
+ACTUAL_RISK_LEVEL
+ACTUAL_SCORE
+ACTUAL_REASONING
+ACTUAL_RECOMMENDATION
+RAW_RESPONSE
+CREATED_AT
+5.2. Luồng thực hiện
+1. QA thiết kế testcase trên Excel
+        ↓
+2. Python đọc Excel
+        ↓
+3. Validate mã feature và kiểu dữ liệu
+        ↓
+4. Insert QA_TEST_CASE
+        ↓
+5. Insert QA_TEST_EMPLOYEE
+        ↓
+6. Insert QA_TEST_FEATURE_INPUT
+        ↓
+7. Insert QA_EXPECTED_AI_RESULT
+        ↓
+8. DataGrip kiểm tra dữ liệu đã insert
+        ↓
+9. Postman gọi API chạy AI với input_mode=FEATURE_READY
+        ↓
+10. AI đọc trực tiếp feature test
+        ↓
+11. AI ghi kết quả vào QA_ACTUAL_AI_RESULT
+        ↓
+12. pytest so sánh expected và actual
+        ↓
+13. QA đánh giá thủ công phần reasoning
+5.3. File Excel cho Bước 2
+Nên có ba sheet.
+Sheet TestCase
+TestCaseCode EmployeeCode Scenario ExpectedRisk ExpectedLevel
+AI_RESIGN_001 TST_AI_001 Nguy cơ nghỉ việc cao RESIGNATION HIGH
+Sheet FeatureInput
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 15/23
+
+--- PAGE 16 ---
+TestCaseCode EmployeeCode FeatureCode FeatureValue
+AI_RESIGN_001 TST_AI_001 PERFORMANCE_DECLINE TRUE
+AI_RESIGN_001 TST_AI_001 SALARY_BELOW_PEER TRUE
+AI_RESIGN_001 TST_AI_001 NEGATIVE_MANAGER_COMMENT TRUE
+Sheet ExpectedAIResult
+TestCaseCode RiskType Level MinScore ExpectedReasonCode
+AI_RESIGN_001 RESIGNATION HIGH 80 PERFORMANCE_DECLINE
+6. Vai trò cụ thể của DataGrip trong Bước 2
+DataGrip không nên là công cụ chính để sinh hàng nghìn testcase. Nó nên được dùng cho sáu việc:
+1. Tạo và quản lý schema test
+APP_AI_QA
+Hoặc các bảng có preﬁx:
+QA_TEST_
+2. Import nhanh một số testcase
+Với 10–50 testcase, có thể import CSV trực tiếp:
+Right-click Table
+→ Import/Export
+→ Import Data from File
+→ Chọn CSV
+→ Mapping cột
+→ Import
+DataGrip có chức năng import dữ liệu dạng bảng từ ﬁle vào schema hoặc table. 
+3. Kiểm tra feature của từng nhân viên
+SQL
+SELECT
+    e.employee_code,
+    f.feature_code,
+    COALESCE(
+        TO_CHAR(f.feature_value_number),
+        f.feature_value_text
+    ) AS feature_value
+FROM qa_test_employee e
+JOIN qa_test_feature_input f
+    ON f.test_employee_id = e.test_employee_id
+WHERE e.employee_code = 'TST_AI_001'
+ORDER BY f.feature_code;
+JetBrains+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 16/23
+
+--- PAGE 17 ---
+4. Kiểm tra expected và actual
+SQL
+SELECT
+    tc.test_case_code,
+    ex.expected_risk_type,
+    ac.actual_risk_type,
+    ex.expected_risk_level,
+    ac.actual_risk_level,
+    ac.actual_score,
+    CASE
+        WHEN ex.expected_risk_type = ac.actual_risk_type
+         AND ex.expected_risk_level = ac.actual_risk_level
+        THEN 'PASS'
+        ELSE 'FAIL'
+    END AS test_result
+FROM qa_test_case tc
+JOIN qa_expected_ai_result ex
+    ON ex.test_case_id = tc.test_case_id
+JOIN qa_actual_ai_result ac
+    ON ac.test_case_id = tc.test_case_id;
+5. Phân tích lỗi
+Ví dụ tìm các trường hợp AI phân loại sai dù có cùng feature:
+SQL
+SELECT
+    f.feature_code,
+    f.feature_value_text,
+    COUNT(*) AS total_cases,
+    SUM(
+        CASE
+            WHEN ex.expected_risk_type <> ac.actual_risk_type
+            THEN 1
+            ELSE 0
+        END
+    ) AS failed_cases
+FROM qa_test_feature_input f
+JOIN qa_expected_ai_result ex
+    ON ex.test_case_id = f.test_case_id
+JOIN qa_actual_ai_result ac
+    ON ac.test_case_id = f.test_case_id
+GROUP BY
+    f.feature_code,
+    f.feature_value_text;
+6. Cleanup dữ liệu sau test
+SQL
+DELETE FROM qa_actual_ai_result
+WHERE run_id = :run_id;
+DELETE FROM qa_test_feature_input
+WHERE test_case_id IN (
+    SELECT test_case_id
+    FROM qa_test_case
+    WHERE dataset_version = :dataset_version
+);
+Nên chạy cleanup trong transaction và kiểm tra số bản ghi trước khi commit.
+7. Python kết hợp với DataGrip như thế nào?
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 17/23
+
+--- PAGE 18 ---
+Python chịu trách nhiệm
+Đọc Excel/CSV.
+Sinh mã nhân viên test.
+Sinh tổ hợp feature.
+Kiểm tra feature không hợp lệ.
+Insert nhiều bảng theo đúng thứ tự.
+Rollback nếu một bước lỗi.
+Ghi log số bản ghi thành công/thất bại.
+Xóa và dựng lại dataset theo version.
+DataGrip chịu trách nhiệm
+Quan sát kết quả Python đã insert.
+Query kiểm tra.
+Phân tích các testcase fail.
+Sửa nhanh một số dữ liệu thử nghiệm.
+Kiểm tra stored procedure, view và job.
+Hỗ trợ debug với developer/data engineer.
+Hai công cụ không thay thế nhau:
+Python = tạo và nạp dữ liệu có thể tái chạy
+DataGrip = quản trị, quan sát và điều tra dữ liệu
+8. Bước 1: Insert dữ liệu nhân sự thô để test Feature
+Programming
+Sau khi chất lượng suy luận AI đã đạt, chuyển sang Bước 1.
+8.1. Không insert feature ở bước này
+Chỉ insert vào các bảng dữ liệu nguồn mô phỏng:
+QA_EMPLOYEE_RAW
+QA_SALARY_RAW
+QA_PERFORMANCE_RAW
+QA_ATTENDANCE_RAW
+QA_MANAGER_COMMENT_RAW
+QA_DISCIPLINE_RAW
+QA_CAREER_RAW
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 18/23
+
+--- PAGE 19 ---
+SQL
+QA_SALARY_RAW
+-------------
+EMPLOYEE_CODE
+MONTH
+ACTUAL_SALARY
+PEER_AVERAGE_SALARY
+JOB_LEVEL
+SQL
+QA_PERFORMANCE_RAW
+------------------
+EMPLOYEE_CODE
+EVALUATION_MONTH
+PERFORMANCE_SCORE
+TASK_COMPLETION_RATE
+KPI_RESULT
+8.2. Bảng feature kỳ vọng
+SQL
+QA_EXPECTED_FEATURE
+-------------------
+TEST_CASE_ID
+TEST_EMPLOYEE_ID
+FEATURE_CODE
+EXPECTED_VALUE_NUMBER
+EXPECTED_VALUE_TEXT
+TOLERANCE
+8.3. Bảng feature thực tế
+Feature Programming ghi ra:
+SQL
+QA_ACTUAL_FEATURE
+-----------------
+RUN_ID
+TEST_EMPLOYEE_ID
+FEATURE_CODE
+ACTUAL_VALUE_NUMBER
+ACTUAL_VALUE_TEXT
+CALCULATION_VERSION
+CREATED_AT
+8.4. Luồng Bước 1
+Excel chứa dữ liệu nhân sự thô
+        ↓
+Python insert các bảng RAW
+        ↓
+DataGrip kiểm tra dữ liệu nguồn
+        ↓
+Postman gọi API Feature Programming
+hoặc chạy Airflow DAG
+        ↓
+Feature Programming sinh feature
+        ↓
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 19/23
+
+--- PAGE 20 ---
+Ghi QA_ACTUAL_FEATURE
+        ↓
+pytest so với QA_EXPECTED_FEATURE
+        ↓
+PASS: Feature đúng
+FAIL: Feature Programming sai
+Sau khi feature đã PASS, có thể chạy tiếp:
+Actual Feature
+→ AI
+→ Kiểm tra end-to-end
+9. pytest nên kiểm tra những gì?
+Test Feature Programming
+Python
+assert actual_feature_code == expected_feature_code
+assert actual_boolean_value == expected_boolean_value
+assert abs(actual_number - expected_number) <= tolerance
+Test AI classiﬁcation
+Python
+assert actual_risk_type == expected_risk_type
+assert actual_risk_level == expected_risk_level
+assert expected_min_score <= actual_score <= expected_max_score
+Test reasoning
+Không nên so sánh toàn bộ câu chữ tuyệt đối vì AI có thể diễn đạt khác nhau.
+Nên kiểm tra:
+- Có nhắc đến feature bắt buộc không?
+- Có sử dụng feature không tồn tại không?
+- Có mâu thuẫn với dữ liệu đầu vào không?
+- Có đưa đúng nhân viên vào phần giải thích không?
+- Có vi phạm mẫu câu hoặc nguyên tắc ngôn ngữ không?
+Ví dụ:
+Python
+required_reasons = [
+    "PERFORMANCE_DECLINE",
+    "SALARY_BELOW_PEER"
+]
+for reason in required_reasons:
+    assert reason in actual_reason_codes
+10. Khi nào cần dbt và Airﬂow?
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 20/23
+
+--- PAGE 21 ---
+dbt
+Dùng dbt nếu Feature Programming chủ yếu được xây bằng:
+SQL.
+View.
+Materialized view.
+Stored procedure.
+Các bảng trung gian.
+Các phép tổng hợp theo tháng/quý.
+dbt Seed có thể nạp các CSV nhỏ, có version vào DB; phù hợp với danh mục feature, mapping và một
+golden dataset nhỏ. Không nên dùng Seed làm công cụ nạp khối lượng testcase lớn. 
+Ví dụ:
+Raw employee tables
+→ dbt staging
+→ dbt intermediate
+→ dbt feature models
+→ QA_ACTUAL_FEATURE
+Airﬂow
+Airﬂow chỉ cần thiết khi muốn:
+Chạy hàng nghìn nhân viên.
+Chạy nhiều model hoặc prompt version.
+Tự động chạy regression mỗi ngày.
+Điều phối load data →  feature →  AI →  evaluation.
+Retry khi một bước lỗi.
+Airﬂow DAG mô tả các task, dependency và thứ tự thực hiện của workﬂow, nên phù hợp với pipeline
+kiểm thử batch về sau. 
+Giai đoạn đầu chưa cần Airﬂow. Postman và Python đã đủ.
+11. Bộ công cụ nên triển khai theo từng giai đoạn
+Giai đoạn đầu — Test Bước 2
+DataGrip
++ Excel
++ Python/pandas
++ Faker
++ python-oracledb
++ Postman
+docs.getdbt.com+1
+Apache Airﬂow+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 21/23
+
+--- PAGE 22 ---
++ pytest
++ Git
+Đây là bộ phù hợp nhất.
+Giai đoạn mở rộng — Test Bước 1 và regression
+Bộ công cụ giai đoạn đầu
++ dbt nếu Feature Programming bằng SQL
++ Airflow nếu chạy batch tự động
++ MLflow nếu cần quản lý model/prompt/run
+12. Cấu trúc source code khuyến nghị
+hrai-ai-qa/
+│
+├── data/
+│   ├── feature_ready/
+│   │   ├── test_cases.xlsx
+│   │   └── feature_catalog.csv
+│   │
+│   └── raw_employee/
+│       ├── employees.csv
+│       ├── salary.csv
+│       ├── performance.csv
+│       └── manager_comments.csv
+│
+├── sql/
+│   ├── 00_create_qa_schema.sql
+│   ├── 01_create_test_tables.sql
+│   ├── 02_validation_queries.sql
+│   └── 99_cleanup_test_data.sql
+│
+├── scripts/
+│   ├── load_feature_ready_data.py
+│   ├── load_raw_employee_data.py
+│   ├── trigger_ai.py
+│   └── cleanup_dataset.py
+│
+├── tests/
+│   ├── test_ai_classification.py
+│   ├── test_ai_reasoning.py
+│   └── test_feature_programming.py
+│
+└── config/
+    ├── feature_rules.yaml
+    └── test_environment.yaml
+Kết luận
+Luồng triển khai phù hợp nhất là:
+BƯỚC 2 TRƯỚC
+Excel testcase
+→ Python insert nhân viên + feature
+→ DataGrip kiểm tra
+→ Postman trigger AI
+→ pytest chấm classification
+→ QA chấm reasoning
+Sau khi AI suy luận ổn định:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 22/23
+
+--- PAGE 23 ---
+BƯỚC 1
+Excel dữ liệu nhân sự thô
+→ Python insert raw data
+→ Trigger Feature Programming
+→ So sánh actual feature với expected feature
+→ Khi feature PASS mới chạy AI end-to-end
+DataGrip nên là trung tâm quan sát và điều tra dữ liệu; Python mới là công cụ chính để sinh,
+insert, cleanup và tái tạo dataset kiểm thử.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 23/23

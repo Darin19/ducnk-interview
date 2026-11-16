@@ -1,0 +1,4884 @@
+
+--- PAGE 1 ---
+Phân biệt luồng OCR VLM
+Phân biệt 2 luồng, giải thích chi tiết từng công nghệ áp dụng (ví dụ Paddle)CR 3.0, Qwen,...)
+1. Bản chất khác nhau của hai pipeline
+Sơ đồ không thể hiện luồng “OCR xong rồi mới chạy VLM”. Đây là hai phương án xử lý song song cùng
+nhận tài liệu đầu vào:
+Tiêu chí Pipeline 1 – OCR truyền thống Pipeline 2 – VLM
+Cách xử lý Tách thành nhiều mô hình chuyên biệt Một mô hình đa phương thức xử lý gần end-to- end
+Luồng chính Phát hiện vùng →  phát hiện chữ →  nhận dạng chữ →  trích xuất trường Ảnh tài liệu →  prompt →  JSON/Markdown
+Dữ liệu trung
+gian
+Bounding box, text OCR, tọa độ,
+conﬁdence
+Token hình ảnh và token ngôn ngữ bên trong
+VLM
+Mô hình tiêu
+biểu
+PaddleOCR, PP-Structure, LayoutLMv3,
+Qwen text nhỏ Qwen2.5-VL/Qwen3-VL
+Tính ổn định Cao, dễ kiểm soát từng bước Linh hoạt nhưng có tính sinh nội dung
+Khả năng giải
+thích lỗi
+Biết lỗi ở detection, recognition hay
+extraction Khó xác định chính xác lỗi phát sinh ở đâu
+Tài liệu phù
+hợp
+Hóa đơn, phiếu thu, biểu mẫu, chứng từ
+có cấu trúc tương đối ổn định
+Tài liệu bố cục lạ, bảng phức tạp, hợp đồng, biểu
+đồ, tài liệu chưa từng huấn luyện
+Chi phí xử lý Thường thấp hơn, nhanh hơn GPU và VRAM lớn hơn, latency cao hơn
+Nguy cơ chính Lỗi bước trước truyền sang bước sau Hallucination, tự suy diễn trường không có
+Serving NVIDIA Triton vLLM
+Có thể hiểu đơn giản:
+Pipeline 1 đọc chữ trước, sau đó mới hiểu nội dung.
+Pipeline 2 nhìn trực tiếp tài liệu và vừa đọc vừa hiểu.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 1/128
+
+--- PAGE 2 ---
+2. Dữ liệu huấn luyện trong sơ đồ
+SROIE
+SROIE là bộ dữ liệu phục vụ ba bài toán:
+1. Xác định vị trí văn bản trên hóa đơn.
+2. Nhận dạng nội dung OCR.
+3. Trích xuất trường quan trọng như tên cửa hàng, ngày, địa chỉ, tổng tiền.
+Bộ dữ liệu của cuộc thi ICDAR 2019 gồm khoảng 1.000 ảnh hóa đơn được gán nhãn. 
+FUNSD
+FUNSD dành cho biểu mẫu scan có chất lượng không đồng đều. Ngoài chữ và tọa độ, dữ liệu còn có
+nhãn ngữ nghĩa như:
+Header.
+Question/ﬁeld label.
+Answer/ﬁeld value.
+Other.
+Quan hệ giữa nhãn và giá trị.
+FUNSD gồm 199 biểu mẫu scan được gán nhãn đầy đủ, thường được dùng để huấn luyện hoặc đánh giá
+LayoutLM. 
+CORD
+CORD được dùng cho bài toán hiểu hóa đơn bán lẻ, đặc biệt là:
+Phân loại vùng thông tin.
+Nhận diện thông tin cửa hàng.
+Tổng tiền, thuế, ngày giao dịch.
+Danh sách line item.
+Tên hàng, số lượng, đơn giá.
+CORD hữu ích hơn SROIE khi cần trích xuất bảng chi tiết sản phẩm, thay vì chỉ một số key ﬁeld cấp tài
+liệu.
+VN Receipts
+arXiv
+arXiv+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 2/128
+
+--- PAGE 3 ---
+Đây nên là bộ dữ liệu nội bộ hoặc bộ dữ liệu tiếng Việt được bổ sung vì các bộ public không phản ánh
+đầy đủ:
+Dấu tiếng Việt.
+Font hóa đơn Việt Nam.
+Tiền tệ VNĐ, VND, đ.
+Mã số thuế.
+Số hóa đơn điện tử.
+Ngày tháng dạng dd/MM/yyyy.
+Các từ viết tắt như MST, ĐVT, SL, CK, VAT.
+Hóa đơn mờ, in nhiệt, nhàu, nghiêng.
+Bảng hàng hóa có nhiều dòng.
+Trong dự án thực tế, VN Receipts mới là dữ liệu quyết định chất lượng production. Các bộ SROIE,
+FUNSD, CORD chủ yếu dùng để warm-up, pretrain hoặc benchmark.
+3. Pipeline 1 – OCR modular pipeline
+Luồng đầy đủ nên được hiểu như sau:
+PDF/ảnh
+→ Tiền xử lý ảnh
+→ Phân tích bố cục
+→ Phát hiện vùng chữ
+→ Nhận dạng nội dung chữ
+→ Hiểu cấu trúc và trích xuất thực thể
+→ Chuẩn hóa/kiểm tra nghiệp vụ
+→ JSON hoặc Markdown
+3.1. Tiền xử lý ảnh – phần chưa thể hiện trong sơ đồ
+Trước Layout Detection, hệ thống thường phải thực hiện:
+Chuyển PDF thành ảnh theo từng trang.
+Kiểm tra và sửa hướng trang.
+Deskew – sửa ảnh bị nghiêng.
+Denoise – giảm nhiễu.
+Deblur – xử lý mờ ở mức nhất định.
+Dewarp – làm phẳng ảnh chụp cong.
+Tăng tương phản.
+Resize nhưng vẫn giữ tỷ lệ.
+Loại bỏ viền đen.
+Phát hiện trang trống.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 3/128
+
+--- PAGE 4 ---
+Tách nhiều hóa đơn nằm trong cùng một ảnh.
+PaddleOCR 3.x có thể cung cấp một phần các module như document orientation, document unwarping
+và text-line orientation trong pipeline OCR.
+3.2. Layout Detection – phát hiện bố cục
+Mục đích
+Layout Detection không đọc nội dung chữ. Nó trả lời câu hỏi:
+Trên trang này có những khu vực nào và mỗi khu vực thuộc loại gì?
+Ví dụ một hóa đơn có thể được chia thành:
+JSON
+[
+  {"type": "header", "bbox": [20, 30, 900, 250]},
+  {"type": "merchant_info", "bbox": [20, 250, 900, 420]},
+  {"type": "table", "bbox": [20, 450, 900, 1300]},
+  {"type": "total", "bbox": [500, 1320, 900, 1500]},
+  {"type": "footer", "bbox": [20, 1520, 900, 1700]}
+]
+Công nghệ có thể áp dụng
+Trong PaddleOCR 3.x, PP-StructureV3 có thể thực hiện:
+Layout detection.
+Table recognition.
+Formula recognition.
+Chart understanding.
+Khôi phục thứ tự đọc.
+Chuyển tài liệu thành Markdown và JSON. 
+Đối với hóa đơn hoặc hợp đồng, các lớp layout có thể gồm:
+Title.
+Paragraph.
+Table.
+Table caption.
+Header/footer.
+Image.
+Stamp.
+Signature.
+Checkbox.
+PaddlePaddle+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 4/128
+
+--- PAGE 5 ---
+Key-value block.
+Đầu ra
+Loại region.
+Bounding box hoặc polygon.
+Conﬁdence.
+Thứ tự đọc.
+Quan hệ cha–con giữa các region.
+3.3. Text Detection – phát hiện vùng có chữ
+Text Detection xác định:
+Dòng chữ nằm ở đâu.
+Tọa độ bốn góc của dòng chữ.
+Conﬁdence của vùng chữ.
+Ví dụ:
+JSON
+{
+  "bbox": [[92, 120], [430, 118], [432, 154], [94, 158]],
+  "detection_score": 0.991
+}
+Ở bước này mô hình chưa biết dòng đó viết gì.
+Các detector thường phải xử lý được:
+Chữ ngang.
+Chữ nghiêng.
+Text cong.
+Chữ nhỏ trong bảng.
+Chữ dính logo.
+Nền màu.
+Hóa đơn in nhiệt bị nhạt.
+Trong PaddleOCR, detection và recognition là hai module riêng. Điều này giúp có thể thay detector mà
+không cần thay recognizer.
+3.4. Text Recognition – nhận dạng ký tự
+Sau khi detector cắt từng vùng chữ, recognizer biến ảnh chữ thành chuỗi:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 5/128
+
+--- PAGE 6 ---
+Ảnh crop → "TỔNG TIỀN THANH TOÁN: 1.250.000 VNĐ"
+Đầu ra nên có:
+JSON
+{
+  "text": "TỔNG TIỀN THANH TOÁN: 1.250.000 VNĐ",
+  "recognition_score": 0.973,
+  "bbox": [420, 1280, 910, 1335]
+}
+PaddleOCR 3.0 là gì?
+PaddleOCR 3.0 không phải một model duy nhất mà là một hệ sinh thái Document AI. Phiên bản 3.x
+đưa vào các pipeline quan trọng như:
+PP-OCRv5: OCR tổng quát.
+PP-StructureV3: phân tích tài liệu phức tạp.
+PP-ChatOCR v4: kết hợp OCR và mô hình ngôn ngữ để hỏi đáp/trích xuất thông tin tài liệu.
+Pipeline OCR tổng quát có thể dùng PP-OCRv3, v4 hoặc v5; tài liệu chính thức hiện dùng PP-OCRv5
+server làm cấu hình mặc định trong PaddleOCR 3.x. 
+Lưu ý quan trọng cho tiếng Việt
+Không nên lấy model mặc định rồi giả định rằng nó đã tối ưu hoàn toàn cho hóa đơn tiếng Việt. Cần
+kiểm thử riêng đối với:
+ă â đ ê ô ơ ư.
+Dấu hỏi, ngã, sắc, huyền, nặng.
+Chuỗi trộn chữ và số.
+Mã hợp đồng.
+Mã vận đơn.
+Mã số thuế.
+Số tiền có dấu chấm/phẩy.
+Thực tế thường cần:
+1. Chuẩn bị ảnh crop từng dòng hoặc từng từ.
+2. Gán transcript chính xác.
+3. Bổ sung bộ ký tự tiếng Việt.
+4. Fine-tune recognition model.
+5. Đánh giá bằng CER và WER.
+PaddlePaddle+1
+paddleocr.ai
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 6/128
+
+--- PAGE 7 ---
+3.5. LayoutLMv3 – hiểu chữ dựa trên vị trí
+Sau OCR, hệ thống có một danh sách:
+JSON
+[
+  {
+    "text": "Số hóa đơn",
+    "bbox": [40, 200, 180, 240]
+  },
+  {
+    "text": "00001235",
+    "bbox": [220, 200, 350, 240]
+  }
+]
+OCR chỉ biết có hai chuỗi chữ. LayoutLMv3 giúp hệ thống hiểu rằng:
+"Số hóa đơn" là nhãn.
+"00001235" là giá trị.
+Hai thành phần có quan hệ với nhau do nội dung và vị trí không gian.
+LayoutLMv3 kết hợp ba loại thông tin:
+1. Text: token OCR.
+2. Layout: tọa độ 2D của token.
+3. Visual: các patch từ ảnh tài liệu.
+Mô hình được pretrain bằng masked language modeling, masked image modeling và word-patch
+alignment, sau đó có thể ﬁne-tune cho form understanding, receipt understanding, document
+classiﬁcation hoặc entity extraction. 
+Dữ liệu huấn luyện LayoutLMv3
+Mỗi token cần có:
+JSON
+{
+  "text": "1.250.000",
+  "bbox": [670, 1280, 850, 1320],
+  "label": "B-TOTAL_AMOUNT"
+}
+Một tập nhãn BIO có thể là:
+B-INVOICE_NO
+I-INVOICE_NO
+B-INVOICE_DATE
+B-SELLER_NAME
+B-TAX_CODE
+B-TOTAL_AMOUNT
+B-CURRENCY
+B-ITEM_NAME
+B-QUANTITY
+B-UNIT_PRICE
+O
+arXiv+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 7/128
+
+--- PAGE 8 ---
+Đối với form, có thể huấn luyện thêm relation extraction:
+"Số hợp đồng" --key_value_relation--> "01/2026/HĐKT"
+Ưu điểm
+Tọa độ được sử dụng trực tiếp.
+Ổn định với form có cấu trúc.
+Dễ đánh giá bằng entity-level precision, recall, F1.
+Không phụ thuộc hoàn toàn vào prompt.
+Ít tự bịa trường.
+Nhược điểm
+Phụ thuộc chất lượng OCR.
+Phải gán nhãn token và bounding box.
+Khi template thay đổi mạnh, hiệu quả có thể giảm.
+Bảng nhiều dòng và quan hệ phức tạp cần xử lý bổ sung.
+3.6. sLLM hoặc Qwen text-only ở cuối OCR pipeline
+Trong sơ đồ, LayoutLMv3 / sLLM có nghĩa là có thể chọn một trong hai hướng.
+Hướng LayoutLMv3
+Dùng model token classiﬁcation và relation extraction chuyên biệt.
+Hướng sLLM
+Sau khi PaddleOCR/PP-Structure chuyển tài liệu thành text hoặc Markdown, đưa nội dung đó vào mô
+hình ngôn ngữ nhỏ:
+OCR Markdown
+→ Qwen text model
+→ JSON theo schema
+Ví dụ prompt:
+Từ nội dung hóa đơn dưới đây, hãy trích xuất:
+invoice_no, invoice_date, seller_name, tax_code,
+total_amount, currency và line_items.
+Chỉ sử dụng thông tin có trong tài liệu.
+Trường không tồn tại phải trả về null.
+Không suy diễn.
+Qwen ở đây là Qwen text model, không phải Qwen-VL. Nó không nhìn ảnh gốc mà chỉ xử lý kết quả
+OCR.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 8/128
+
+--- PAGE 9 ---
+Khi sLLM tốt hơn LayoutLMv3
+Số trường thường xuyên thay đổi.
+Cần tóm tắt hoặc suy luận nghiệp vụ.
+Tài liệu dài.
+Muốn cấu hình schema bằng prompt.
+Không đủ dữ liệu để gán nhãn toàn bộ token.
+Khi LayoutLMv3 tốt hơn
+Schema ổn định.
+Cần latency thấp.
+Cần conﬁdence và khả năng audit rõ ràng.
+Dữ liệu nhạy cảm, hạn chế hành vi sinh tự do.
+Số lượng tài liệu rất lớn.
+3.7. Chuẩn hóa và validation
+Đây là bước cực kỳ quan trọng nhưng sơ đồ chưa vẽ riêng.
+Ví dụ:
+"1.250.000 đ" → 1250000
+"10/6/26" → 2026-06-10
+"0101 234 567" → "0101234567"
+Sau đó kiểm tra rule:
+Tổng tiền = tổng các line item ± thuế ± giảm giá.
+Ngày hết hạn ≥  ngày hiệu lực.
+Mã số thuế đúng độ dài.
+Số lượng × đơn giá ≈  thành tiền.
+Tỷ lệ thanh toán không vượt 100%.
+Tổng các đợt thanh toán không vượt giá trị hợp đồng.
+Currency thuộc danh mục cho phép.
+Pipeline 1 có lợi thế vì có thể lưu conﬁdence cho từng tầng:
+Detection confidence
+× Recognition confidence
+× Entity confidence
+× Business-rule validation
+Từ đó thực hiện conﬁdence gating:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 9/128
+
+--- PAGE 10 ---
+Conﬁdence ≥  0,95: tự động nhập hệ thống.
+0,80–0,95: người dùng review.
+< 0,80: chuyển VLM hoặc nhập thủ công.
+4. Pipeline 2 – VLM end-to-end
+Luồng thứ hai:
+Ảnh tài liệu
+→ Layout detection/cropping
+→ Qwen-VL
+→ Sinh JSON/Markdown
+→ Schema validation
+Điểm khác biệt là không bắt buộc phải có text OCR trung gian.
+4.1. Layout Detection và Region Cropping
+Trong pipeline VLM, layout detection thường không bắt buộc, nhưng vẫn rất hữu ích.
+Thay vì gửi nguyên một trang A4 độ phân giải cao, hệ thống có thể cắt:
+Header.
+Bảng line item.
+Tổng tiền.
+Chữ ký.
+Con dấu.
+Điều khoản thanh toán.
+Sau đó gửi từng crop vào VLM.
+Vì sao phải crop?
+Chữ nhỏ trở nên rõ hơn.
+Giảm số visual token.
+Giảm VRAM và latency.
+Tránh bỏ sót vùng nằm cuối trang.
+Dễ xử lý trang cực dài.
+Có thể dùng prompt riêng cho từng vùng.
+Tách bảng khỏi paragraph để tăng độ chính xác.
+PaddleOCR/PP-StructureV3 trong pipeline này chỉ có thể được dùng để:
+Phát hiện layout.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 10/128
+
+--- PAGE 11 ---
+Crop region.
+Xác định reading order.
+Tiền xử lý tài liệu.
+Nó không nhất thiết phải thực hiện OCR đầy đủ.
+4.2. Qwen2.5-VL
+Qwen2.5-VL nhận đồng thời:
+Ảnh hoặc nhiều ảnh.
+Prompt bằng ngôn ngữ tự nhiên.
+Schema đầu ra.
+Có thể kèm ví dụ few-shot.
+Mô hình được phát hành với các kích thước 3B, 7B và 72B. Qwen công bố khả năng nhận diện text, chart,
+icon, layout, định vị bằng bounding box/point và sinh dữ liệu có cấu trúc cho invoice, form và table.
+Ví dụ đầu vào:
+[Ảnh hóa đơn]
+Hãy trích xuất dữ liệu theo schema sau.
+Không được suy diễn.
+Nếu không thấy trường, trả về null.
+Số tiền phải chuyển thành số nguyên VND.
+Schema:
+JSON
+{
+  "invoice_no": "string|null",
+  "invoice_date": "YYYY-MM-DD|null",
+  "seller": {
+    "name": "string|null",
+    "tax_code": "string|null"
+  },
+  "line_items": [
+    {
+      "name": "string",
+      "quantity": "number|null",
+      "unit_price": "number|null",
+      "amount": "number|null"
+    }
+  ],
+  "total_amount": "number|null"
+}
+VLM có thể trả ra gần như trực tiếp:
+JSON
+{
+  "invoice_no": "00001235",
+  "invoice_date": "2026-06-10",
+Qwen
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 11/128
+
+--- PAGE 12 ---
+  "seller": {
+    "name": "Công ty ABC",
+    "tax_code": "0101234567"
+  },
+  "line_items": [
+    {
+      "name": "Máy tính xách tay",
+      "quantity": 2,
+      "unit_price": 15000000,
+      "amount": 30000000
+    }
+  ],
+  "total_amount": 33000000
+}
+4.3. Vì sao gọi là end-to-end?
+Bên trong Qwen-VL đã có:
+Vision encoder để đọc ảnh.
+Projector/connector để chuyển visual feature.
+Language model để hiểu và sinh nội dung.
+Do đó, thay vì triển khai riêng:
+Detector + Recognizer + Layout model + Entity model
+ta sử dụng:
+Image + Prompt → VLM → Structured output
+Tuy nhiên, “end-to-end” không có nghĩa là production chỉ cần một model. Vẫn phải có:
+Image preprocessing.
+Page splitting/cropping.
+Prompt management.
+JSON schema validation.
+Business-rule validation.
+Retry/fallback.
+Human review.
+Logging và audit.
+4.4. Điểm mạnh của Qwen-VL
+Hiểu bố cục mới
+VLM có thể xử lý tài liệu chưa có template trong tập training tốt hơn pipeline entity classiﬁcation cố định.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 12/128
+
+--- PAGE 13 ---
+Hiểu ngữ nghĩa
+Ví dụ hợp đồng ghi:
+Bên B thanh toán 30% trong vòng 15 ngày kể từ ngày nghiệm thu.
+VLM có thể sinh:
+JSON
+{
+  "payment_rate": 30,
+  "payment_due_condition": "15 ngày kể từ ngày nghiệm thu"
+}
+OCR thuần chỉ trả về câu chữ, chưa hiểu được cấu trúc nghiệp vụ.
+Xử lý bảng và quan hệ phức tạp
+VLM thường thuận lợi hơn khi bảng có:
+Merge cell.
+Header nhiều tầng.
+Ghi chú chen giữa bảng.
+Nhiều cột không có đường kẻ.
+Quan hệ giữa hình ảnh và text.
+Thay đổi schema bằng prompt
+Muốn bổ sung một trường mới có thể thay prompt/schema trước khi quyết định ﬁne-tune lại model.
+4.5. Điểm yếu của VLM
+Hallucination
+Mô hình có thể:
+Sinh số hóa đơn không tồn tại.
+Điền nhầm giá trị gần đó.
+Tự suy luận ngày hết hạn.
+Gộp hai dòng hàng.
+Bỏ sót dòng trong bảng dài.
+JSON không bảo đảm tuyệt đối
+Dù model có khả năng sinh JSON ổn định, production vẫn phải:
+Parse JSON.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 13/128
+
+--- PAGE 14 ---
+Validate bằng JSON Schema/Pydantic.
+Retry nếu JSON lỗi.
+Không cho phép thêm ﬁeld ngoài schema.
+Kiểm tra data type.
+Kiểm tra business rule.
+Conﬁdence không đáng tin như OCR
+Nếu yêu cầu VLM tự trả:
+JSON
+{"confidence": 0.99}
+con số đó không nhất thiết là xác suất đã được calibration. Nên tính độ tin cậy từ:
+Kết quả đối chiếu OCR.
+Business-rule validation.
+Mức đồng thuận giữa nhiều lần chạy.
+Field presence.
+Evidence bounding box.
+Kết quả từ model thứ hai.
+Chi phí cao
+VLM phải xử lý visual token và sinh token đầu ra, nên thông thường tốn GPU hơn pipeline OCR chuyên
+biệt.
+5. Unsloth dùng để làm gì?
+Unsloth không phải OCR model và cũng không phải inference server.
+Nó là framework giúp ﬁne-tune LLM/VLM hiệu quả hơn, đặc biệt theo hướng:
+LoRA.
+QLoRA.
+4-bit training.
+Supervised Fine-Tuning.
+Fine-tune vision layer.
+Fine-tune language layer.
+Fine-tune attention/MLP.
+Freeze một số thành phần để giảm VRAM.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 14/128
+
+--- PAGE 15 ---
+Unsloth hỗ trợ ﬁne-tune các vision-language model như Qwen2.5-VL và cho phép chọn ﬁne-tune vision,
+language hoặc các module attention/MLP. 
+Dataset dùng cho Unsloth/Qwen-VL
+Một sample có dạng:
+JSON
+{
+  "image": "receipt_001.jpg",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Trích xuất hóa đơn theo schema đã cho."
+    },
+    {
+      "role": "assistant",
+      "content": "{\"invoice_no\":\"00001235\",\"total_amount\":1250000}"
+    }
+  ]
+}
+Đối với hợp đồng:
+JSON
+{
+  "image": "contract_page_04.jpg",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Trích xuất các mốc thanh toán và điều kiện tương ứng."
+    },
+    {
+      "role": "assistant",
+      "content": "{\"payment_milestones\":[...]}"
+    }
+  ]
+}
+Khi nào cần ﬁne-tune?
+Nên ﬁne-tune khi:
+Prompt engineering đã đạt giới hạn.
+Tài liệu có ngôn ngữ nghiệp vụ riêng.
+Model hay bỏ sót một nhóm trường cố định.
+Cần output JSON nhất quán.
+Cần đọc biểu mẫu đặc thù doanh nghiệp.
+Cần hiểu từ viết tắt và quy tắc tiếng Việt.
+Không nên ﬁne-tune ngay khi chưa có benchmark rõ ràng. Trước tiên cần thử:
+1. Base model.
+2. Prompt chuẩn.
+Unsloth - Train and
+Run Models Locally
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 15/128
+
+--- PAGE 16 ---
+3. Region cropping.
+4. Few-shot example.
+5. Schema constraint.
+6. Validation.
+Sau đó mới so sánh với model ﬁne-tune.
+6. PyTorch và Hugging Face trong sơ đồ
+PyTorch
+PyTorch là framework dùng để:
+Load model.
+Fine-tune LayoutLMv3.
+Fine-tune Qwen.
+Xây custom model.
+Chạy training loop.
+Export model sang ONNX hoặc runtime khác.
+PyTorch không phải một mô hình OCR.
+Hugging Face
+Hugging Face thường được dùng cho:
+Transformers.
+Model Hub.
+Datasets.
+Tokenizer.
+Processor cho LayoutLM/Qwen-VL.
+Trainer.
+PEFT/LoRA.
+Quản lý checkpoint.
+Trong Pipeline 1, LayoutLMv3 thường được triển khai bằng PyTorch + Hugging Face Transformers. Trong
+Pipeline 2, Qwen-VL cũng thường được tải qua Transformers trước khi ﬁne-tune hoặc serve.
+7. Triton Server dùng cho Pipeline 1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 16/128
+
+--- PAGE 17 ---
+NVIDIA Triton Inference Server phù hợp với OCR pipeline vì nó có thể serve nhiều model chuyên biệt:
+Model 1: layout detector
+Model 2: text detector
+Model 3: text recognizer
+Model 4: LayoutLM/entity extractor
+Triton hỗ trợ ensemble model, cho phép mô tả chuỗi nhiều model và kết nối tensor đầu ra của model
+này với đầu vào model tiếp theo. Nó cũng hỗ trợ dynamic batching để gộp các request, tăng throughput
+GPU. 
+Ví dụ repository:
+model_repository/
+├── layout_detector/
+│   ├── 1/model.onnx
+│   └── config.pbtxt
+├── text_detector/
+├── text_recognizer/
+├── entity_extractor/
+└── document_ocr_ensemble/
+    └── config.pbtxt
+Triton chịu trách nhiệm
+Load model lên GPU.
+Batch request.
+Quản lý nhiều version model.
+Health check.
+Metrics.
+Model warm-up.
+Scale nhiều instance.
+Chạy ONNX Runtime, TensorRT, PyTorch hoặc Python backend.
+Triton không chịu trách nhiệm
+Xác thực người dùng.
+Nhận ﬁle nghiệp vụ.
+Lưu DB.
+Routing OCR/VLM.
+Business-rule validation.
+Quản lý trạng thái tác vụ.
+Các việc đó thuộc FastAPI và application service.
+8. vLLM Server dùng cho Pipeline 2
+NVIDIA Docs+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 17/128
+
+--- PAGE 18 ---
+vLLM là inference engine được thiết kế cho LLM/VLM, tập trung vào:
+High-throughput serving.
+Quản lý KV cache.
+Continuous batching.
+PagedAttention.
+OpenAI-compatible API.
+Streaming output.
+Phục vụ nhiều request đồng thời.
+vLLM hiện hỗ trợ multimodal input và cung cấp API theo kiểu OpenAI-compatible, phù hợp để serve
+Qwen-VL. 
+Ví dụ luồng:
+FastAPI
+→ gửi image + prompt tới vLLM
+→ vLLM chạy Qwen-VL
+→ trả generated JSON
+→ FastAPI validate kết quả
+vLLM không dùng để huấn luyện. Unsloth thực hiện ﬁne-tuning; checkpoint sau khi huấn luyện mới
+được deploy lên vLLM.
+9. FastAPI và Docker
+FastAPI
+FastAPI là lớp API/application orchestration:
+Endpoint upload PDF/ảnh.
+Kiểm tra định dạng và dung lượng.
+Xác thực JWT/API key.
+Tạo document_id.
+Chọn Pipeline 1 hoặc 2.
+Gọi Triton/vLLM.
+Validate JSON.
+Lưu DB.
+Trả trạng thái xử lý.
+Cung cấp API review/correction.
+FastAPI là Python web framework dựa trên type hint và thường chạy với ASGI server như Uvicorn.
+vLLM+1
+FastAPI+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 18/128
+
+--- PAGE 19 ---
+Ví dụ endpoint:
+POST /documents
+GET  /documents/{id}/status
+GET  /documents/{id}/result
+POST /documents/{id}/review
+POST /documents/{id}/reprocess
+Docker
+Docker đóng gói:
+Source code.
+Python dependency.
+Model runtime.
+CUDA dependency phù hợp.
+Cấu hình khởi động.
+Health check.
+Docker không phải một bước đứng sau vLLM như cách sơ đồ dễ khiến người xem hiểu. Triton, vLLM và
+FastAPI đều có thể được đóng gói trong các Docker container riêng. FastAPI cũng có hướng dẫn
+chính thức về triển khai ứng dụng trong container. 
+10. Điểm cần chỉnh lại trong kiến trúc của sơ đồ
+Phần deployment hiện tại đang thể hiện:
+Triton → FastAPI
+vLLM → Docker
+Cách thể hiện này chưa chính xác về vai trò công nghệ.
+Kiến trúc hợp lý hơn là:
+                    ┌──────────────────────┐
+Client/Application →│ FastAPI / API Gateway│
+                    └──────────┬───────────┘
+                               │
+                    Document Router
+                     ┌─────────┴─────────┐
+                     │                   │
+             Pipeline 1             Pipeline 2
+          Triton OCR Server       vLLM VLM Server
+                     │                   │
+                     └─────────┬─────────┘
+                               │
+                    Validation Engine
+                               │
+                  JSON / Markdown / Database
+Và toàn bộ các service được đóng gói như sau:
+FastAPI
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 19/128
+
+--- PAGE 20 ---
+Docker/Kubernetes
+├── fastapi-document-service
+├── triton-ocr-service
+├── vllm-qwen-vl-service
+├── validation-service
+├── PostgreSQL
+├── Object Storage
+└── Redis/Kafka nếu xử lý bất đồng bộ
+Nói cách khác:
+FastAPI: cửa tiếp nhận và điều phối.
+Triton: phục vụ các model OCR.
+vLLM: phục vụ Qwen-VL.
+Docker: đóng gói cả ba thành phần.
+PostgreSQL/Object Storage: lưu metadata, ﬁle và kết quả.
+Queue: điều phối job nếu tài liệu nhiều trang hoặc lưu lượng lớn.
+11. Cách kết hợp hai pipeline hiệu quả nhất
+Không nên lựa chọn cứng chỉ một pipeline. Mô hình production tốt thường là OCR-ﬁrst, VLM-fallback.
+Routing đề xuất
+1. Nhận tài liệu
+2. Phân loại document type
+3. Kiểm tra chất lượng ảnh
+4. Nếu template quen thuộc:
+      chạy Pipeline OCR
+5. Kiểm tra confidence và business rules
+6. Nếu:
+      - confidence thấp
+      - thiếu trường
+      - layout lạ
+      - bảng phức tạp
+      - OCR lỗi nhiều
+   thì chuyển Pipeline VLM
+7. Đối chiếu kết quả OCR và VLM
+8. Trường xung đột → Human Review
+9. Kết quả hợp lệ → nhập hệ thống nghiệp vụ
+Ví dụ điều kiện routing
+Điều kiện Pipeline
+Hóa đơn theo mẫu quen thuộc, ảnh rõ OCR
+Hợp đồng nhiều trang OCR →  Markdown →  Qwen text
+Bảng merge cell phức tạp VLM
+Trang có con dấu/chữ ký và annotation VLM
+Trường số tiền quan trọng OCR và VLM đối chiếu
+OCR conﬁdence thấp VLM fallback
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 20/128
+
+--- PAGE 21 ---
+Điều kiện Pipeline
+Tài liệu mới chưa phân loại VLM
+Xử lý hàng trăm nghìn trang OCR primary
+12. Áp dụng cho các chứng từ XNK và hợp đồng
+Với các use case Invoice, Packing List, Bill of Lading, C/O và Contract mà anh đang làm, tôi đề xuất:
+Invoice/Packing List
+PaddleOCR/PP-Structure
+→ OCR bảng
+→ LayoutLMv3 hoặc Qwen text
+→ Rule đối soát quantity, amount, weight
+Pipeline OCR nên là luồng chính vì cần:
+Số liệu chính xác.
+Dễ truy vết.
+Conﬁdence từng trường.
+Xử lý số lượng lớn.
+Đối soát bằng rule.
+Bill of Lading
+Dùng OCR primary, VLM fallback cho:
+Bố cục hãng tàu khác nhau.
+Container table.
+Shipper/consignee/notify party.
+Port of loading/discharge.
+Chữ nhỏ và nhiều vùng phân tán.
+Hợp đồng
+Luồng phù hợp hơn:
+PP-StructureV3
+→ Khôi phục paragraph/table thành Markdown
+→ Qwen text model phân tích điều khoản
+→ Qwen-VL xử lý riêng trang có bảng, dấu, chữ ký hoặc layout khó
+Không nên gửi toàn bộ hợp đồng 50–100 trang vào VLM một lần. Nên:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 21/128
+
+--- PAGE 22 ---
+1. Tách trang.
+2. Phân tích layout.
+3. Chunk theo điều khoản.
+4. Lưu page reference.
+5. Trích xuất dữ liệu.
+6. Tổng hợp cấp tài liệu.
+13. Bộ chỉ số đánh giá hai pipeline
+Pipeline OCR
+Tầng Chỉ số
+Layout detection Precision, Recall, mAP
+Text detection Precision, Recall, H-mean
+Text recognition CER, WER
+Entity extraction Precision, Recall, F1
+Table extraction Cell accuracy, TEDS
+End-to-end Field exact match
+Pipeline VLM
+Chỉ số Ý nghĩa
+JSON validity rate Tỷ lệ output parse được
+Field exact match Giá trị trường chính xác hoàn toàn
+Normalized edit distance Sai khác chuỗi
+Table structure accuracy Đúng hàng, cột, merge cell
+Hallucination rate Sinh trường không có trong tài liệu
+Missing-ﬁeld rate Bỏ sót trường
+Evidence accuracy Giá trị có đúng vùng ảnh dẫn chứng không
+Chỉ số nghiệp vụ cuối cùng
+Tỷ lệ tài liệu tự động hoàn toàn.
+Tỷ lệ phải review.
+Số trường phải sửa trung bình.
+Thời gian xử lý/trang.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 22/128
+
+--- PAGE 23 ---
+Chi phí/trang.
+Tỷ lệ nhập sai vào hệ thống.
+Tỷ lệ đối soát thất bại.
+Tỷ lệ tài liệu phải chạy fallback.
+Kết luận
+Pipeline 1 – PaddleOCR + LayoutLMv3/sLLM phù hợp làm luồng chính cho chứng từ doanh nghiệp vì
+nhanh, dễ kiểm soát, có conﬁdence và thuận lợi cho đối soát số liệu.
+Pipeline 2 – Qwen-VL + Unsloth + vLLM phù hợp cho tài liệu bố cục phức tạp, tài liệu mới, bảng khó và
+các yêu cầu cần hiểu ngữ nghĩa sâu.
+Kiến trúc thực tế tốt nhất là:
+OCR xử lý phần lớn tài liệu; VLM hỗ trợ ngoại lệ, kiểm tra chéo và xử lý tài liệu phức tạp;
+rule engine cùng human review bảo đảm độ chính xác cuối cùng.
+Conﬁdence là gì?
+Conﬁdence là điểm thể hiện mức độ tin cậy của mô hình đối với kết quả mà nó dự đoán.
+Ví dụ OCR đọc một vùng ảnh và trả về:
+JSON
+{
+  "text": "Tổng tiền: 1.250.000 VNĐ",
+  "confidence": 0.97
+}
+0.97 nghĩa là mô hình đánh giá kết quả này có độ tin cậy rất cao. Tuy nhiên, không nên hiểu tuyệt đối
+rằng “chắc chắn đúng 97%”, vì conﬁdence có thể chưa được hiệu chỉnh thành xác suất thực tế.
+Conﬁdence trong từng bước OCR
+1. Detection conﬁdence
+Thể hiện mô hình tin rằng vùng vừa phát hiện thực sự chứa chữ.
+JSON
+{
+  "bbox": [100, 220, 450, 270],
+  "detection_confidence": 0.99
+}
+Ý nghĩa:
+0.99: gần như chắc chắn đây là vùng chữ.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 23/128
+
+--- PAGE 24 ---
+0.55: có thể là chữ, logo, đường kẻ hoặc nhiễu.
+0.20: khả năng cao không phải chữ.
+Detection conﬁdence chưa đánh giá chữ được đọc đúng hay sai.
+2. Recognition conﬁdence
+Thể hiện mức tin cậy đối với chuỗi ký tự đã nhận dạng.
+JSON
+{
+  "text": "Mã số thuế: 0101234567",
+  "recognition_confidence": 0.96
+}
+Ví dụ ảnh mờ có thể bị đọc thành:
+JSON
+{
+  "text": "Mã số thuế: 010I234S67",
+  "recognition_confidence": 0.61
+}
+Conﬁdence thấp cho biết kết quả nên được kiểm tra lại.
+3. Entity extraction conﬁdence
+Sau OCR, LayoutLM hoặc mô hình NLP xác định một giá trị thuộc trường nghiệp vụ nào.
+Ví dụ:
+JSON
+{
+  "text": "1.250.000",
+  "entity": "TOTAL_AMOUNT",
+  "entity_confidence": 0.93
+}
+Mô hình tin rằng 1.250.000 là tổng tiền, chứ không phải đơn giá hoặc tiền thuế.
+Có trường hợp OCR đọc đúng chữ nhưng entity extraction sai:
+JSON
+{
+  "text": "125.000",
+  "recognition_confidence": 0.98,
+  "entity": "TOTAL_AMOUNT",
+  "entity_confidence": 0.54
+}
+Ở đây:
+OCR đọc 125.000 khá chắc chắn.
+Nhưng mô hình không chắc đó có phải tổng tiền hay không.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 24/128
+
+--- PAGE 25 ---
+4. Business validation conﬁdence
+Đây không nhất thiết là conﬁdence do AI sinh ra, mà là kết quả kiểm tra bằng quy tắc nghiệp vụ.
+Ví dụ:
+Số lượng × Đơn giá = Thành tiền
+2 × 500.000 = 1.000.000
+Nếu chứng từ ghi thành tiền là 1.000.000, rule validation đạt.
+Nếu ghi 10.000.000, hệ thống phải cảnh báo dù OCR conﬁdence có thể rất cao. Mô hình có thể đọc đúng
+một số tiền đang in trên tài liệu, nhưng số tiền đó vẫn không hợp lệ về nghiệp vụ.
+Conﬁdence tổng hợp
+Một trường có thể mang nhiều điểm:
+JSON
+{
+  "field": "total_amount",
+  "value": 1250000,
+  "detection_confidence": 0.99,
+  "recognition_confidence": 0.96,
+  "entity_confidence": 0.91,
+  "business_validation": true
+}
+Có thể tính điểm tổng hợp theo trọng số:
+Overall confidence
+= 20% Detection
++ 35% Recognition
++ 35% Entity extraction
++ 10% Validation
+Ví dụ:
+0,2 × 0,99
++ 0,35 × 0,96
++ 0,35 × 0,91
++ 0,1 × 1,00
+= 0,9525
+Conﬁdence tổng hợp khoảng 95,25%.
+Không nên mặc định nhân trực tiếp tất cả các điểm, vì kết quả có thể bị giảm quá mạnh. Công thức phải
+được thiết kế và kiểm nghiệm trên dữ liệu thực tế.
+Conﬁdence gating
+Conﬁdence được sử dụng để quyết định hệ thống có tự động xử lý hay cần con người kiểm tra.
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 25/128
+
+--- PAGE 26 ---
+Conﬁdence Cách xử lý
+≥  0,95 Tự động xác nhận và nhập hệ thống
+0,80–0,95 Hiển thị cho người dùng kiểm tra
+< 0,80 Chạy lại bằng VLM hoặc yêu cầu nhập thủ công
+Ví dụ hóa đơn:
+JSON
+{
+  "invoice_no": {
+    "value": "00001235",
+    "confidence": 0.98,
+    "action": "AUTO_ACCEPT"
+  },
+  "tax_code": {
+    "value": "010I234S67",
+    "confidence": 0.67,
+    "action": "HUMAN_REVIEW"
+  }
+}
+Trên màn hình review, trường conﬁdence thấp thường được:
+Tô vàng hoặc đỏ.
+Đặt cạnh ảnh crop gốc.
+Cho phép người dùng sửa.
+Lưu lại giá trị trước và sau khi sửa để tái huấn luyện.
+Conﬁdence của VLM và LLM
+Với PaddleOCR hoặc mô hình classiﬁcation, conﬁdence thường được lấy từ phân phối xác suất nội bộ
+của mô hình.
+Với Qwen-VL hoặc LLM, vấn đề phức tạp hơn. Không nên chỉ yêu cầu model tự viết:
+JSON
+{
+  "value": "1.250.000",
+  "confidence": 0.99
+}
+Con số 0.99 có thể chỉ là nội dung model tự sinh, không phải xác suất đã được kiểm chứng.
+Conﬁdence của VLM nên được xác định dựa trên nhiều tín hiệu:
+Giá trị có xuất hiện thực sự trong ảnh hay không.
+OCR và VLM có cùng kết quả không.
+Chạy nhiều lần có cho cùng kết quả không.
+Kết quả có vượt qua rule nghiệp vụ không.
+JSON có đúng schema không.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 26/128
+
+--- PAGE 27 ---
+Model có cung cấp đúng vùng bằng chứng không.
+Trường đó có bị bỏ trống hoặc suy diễn không.
+Ví dụ:
+JSON
+{
+  "field": "contract_value",
+  "value": 500000000,
+  "ocr_match": true,
+  "vlm_consistency": true,
+  "business_rule_passed": true,
+  "evidence_bbox_found": true,
+  "overall_confidence": 0.97
+}
+Một lưu ý quan trọng
+Conﬁdence cao không đồng nghĩa chắc chắn đúng.
+Mô hình có thể rất tự tin nhưng vẫn sai, ví dụ:
+Đọc nhầm 8 thành 3.
+Lấy tổng trước thuế thành tổng thanh toán.
+Gán ngày ký thành ngày hiệu lực.
+Bỏ sót một dòng cuối bảng.
+Ghép giá trị của hai cột gần nhau.
+Vì vậy, với các trường quan trọng như:
+Tổng tiền.
+Mã số thuế.
+Số hợp đồng.
+Số tài khoản.
+Mốc thanh toán.
+Ngày hiệu lực.
+Số lượng hàng hóa.
+cần kết hợp conﬁdence + validation rule + đối chiếu tài liệu + human review, thay vì chỉ dựa vào
+conﬁdence của model.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 27/128
+
+--- PAGE 28 ---
+Giải thích chi tiết pipeline 1
+BA làm những gì nếu triển khai theo pipeline này. Công việc training, kiểm tra chất lượng QA diễn 
+ra như thế nào
+1. Pipeline 1 thực chất làm gì?
+Pipeline 1 là kiến trúc OCR theo từng tầng chuyên biệt:
+Tài liệu đầu vào
+→ Tiền xử lý
+→ Phân tích bố cục
+→ Phát hiện vùng chữ
+→ Nhận dạng nội dung chữ
+→ Khôi phục cấu trúc
+→ Trích xuất trường nghiệp vụ
+→ Chuẩn hóa và kiểm tra dữ liệu
+→ JSON/Markdown
+→ Hệ thống nghiệp vụ
+Ưu điểm lớn nhất là mỗi tầng có đầu vào, đầu ra, chỉ số chất lượng và lỗi riêng. Khi sai, đội dự án có thể
+xác định lỗi nằm ở ảnh đầu vào, layout, OCR, entity extraction hay business rule.
+PaddleOCR 3.x cung cấp pipeline OCR tổng quát với các model thuộc PP-OCR và có thể kết hợp PP-
+StructureV3 để phân tích layout, bảng, công thức, thứ tự đọc và xuất Markdown. 
+2. Giải thích chi tiết từng bước Pipeline 1
+Bước 0. Ingestion và tiền xử lý tài liệu
+Bước này chưa được thể hiện rõ trong sơ đồ nhưng bắt buộc phải có trong thực tế.
+Đầu vào
+PDF điện tử.
+PDF scan.
+PaddlePaddle+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 28/128
+
+--- PAGE 29 ---
+Ảnh JPG, PNG, TIFF.
+File nhiều trang.
+Ảnh chụp từ điện thoại.
+File được tải từ email, folder, DMS hoặc hệ thống nghiệp vụ.
+Các xử lý chính
+1. Kiểm tra định dạng, dung lượng và số trang.
+2. Tính hash để phát hiện tài liệu trùng.
+3. Tách PDF thành từng trang.
+4. Chuẩn hóa DPI, thường quy về một mức thống nhất.
+5. Xoay đúng chiều trang.
+6. Sửa nghiêng, méo hoặc cong.
+7. Giảm nhiễu và tăng tương phản.
+8. Loại bỏ trang trắng.
+9. Kiểm tra ảnh quá mờ, quá tối hoặc mất góc.
+10. Gán document_id, page_id, nguồn ﬁle và thời gian tiếp nhận.
+Đầu ra mẫu
+JSON
+{
+  "document_id": "DOC-20260610-0001",
+  "file_name": "invoice_001.pdf",
+  "document_type": "UNKNOWN",
+  "page_count": 3,
+  "pages": [
+    {
+      "page_id": "DOC-20260610-0001-P01",
+      "image_path": "storage/.../page_01.png",
+      "width": 2480,
+      "height": 3508,
+      "quality_status": "PASS"
+    }
+  ]
+}
+BA cần quan tâm
+Chấp nhận những định dạng nào?
+Dung lượng tối đa?
+Tài liệu nhiều trang được xử lý thế nào?
+File lỗi có trả thông báo cho người dùng không?
+Có cho phép người dùng xoay/cắt lại ảnh không?
+File gốc được lưu bao lâu?
+Dữ liệu nhạy cảm có cần mã hóa hoặc che thông tin không?
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 29/128
+
+--- PAGE 30 ---
+Bước 1. Phân loại tài liệu
+Mặc dù sơ đồ bắt đầu bằng Layout Detection, production thường cần phân loại trước:
+Invoice / Packing List / Bill of Lading / C/O / Contract / Phụ lục...
+Việc phân loại có thể dựa trên:
+Tên ﬁle.
+Metadata.
+Từ khóa OCR sơ bộ.
+Model image classiﬁcation.
+Quy tắc nguồn thư mục.
+Người dùng chọn loại tài liệu khi upload.
+Vì sao cần phân loại?
+Vì mỗi loại tài liệu có:
+Bộ trường khác nhau.
+Layout khác nhau.
+Business rule khác nhau.
+Model hoặc cấu hình OCR khác nhau.
+Mức độ quan trọng khác nhau.
+Ví dụ:
+Loại tài liệu Một số trường chính
+Invoice Invoice No., Date, Seller, Buyer, Currency, Total
+Packing List Package, Quantity, Net Weight, Gross Weight
+Bill of Lading BL No., Shipper, Consignee, Vessel, Ports
+Contract Contract No., Parties, Value, Eﬀective Date, Payment Terms
+Bước 2. Layout Detection
+Layout Detection xác định các vùng cấu trúc trên trang:
+Header.
+Paragraph.
+Table.
+Title.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 30/128
+
+--- PAGE 31 ---
+Footer.
+Logo.
+Signature.
+Stamp.
+Checkbox.
+Key-value block.
+Ảnh hoặc biểu đồ.
+Ví dụ:
+JSON
+{
+  "region_id": "R01",
+  "region_type": "TABLE",
+  "bbox": [120, 650, 2300, 2500],
+  "confidence": 0.97,
+  "reading_order": 4
+}
+Mục tiêu
+Layout Detection chưa đọc chữ. Nó trả lời:
+Vùng nào là bảng, vùng nào là đoạn văn, vùng nào là chữ ký và thứ tự đọc của chúng là gì?
+PP-StructureV3 được thiết kế cho phân tích tài liệu phức tạp, bao gồm layout detection, table
+recognition, khôi phục reading order và chuyển kết quả sang Markdown. 
+Lỗi thường gặp
+Nhầm bảng thành ảnh.
+Gộp hai bảng thành một.
+Tách một paragraph thành nhiều vùng.
+Không nhận ra footer.
+Con dấu che chữ làm sai vùng.
+Sai thứ tự đọc ở tài liệu hai cột.
+Bước 3. Text Detection
+Text Detection tìm vị trí từng dòng hoặc từng cụm chữ.
+Đầu ra:
+JSON
+{
+  "text_region_id": "T001",
+  "polygon": [
+    [153, 204],
+PaddlePaddle
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 31/128
+
+--- PAGE 32 ---
+    [820, 201],
+    [824, 253],
+    [155, 256]
+  ],
+  "detection_confidence": 0.991
+}
+Ở bước này hệ thống mới biết:
+Đây là một vùng có khả năng chứa chữ.
+Nó chưa biết nội dung là gì.
+Các tình huống khó
+Chữ quá nhỏ.
+Chữ nghiêng.
+Font in nhiệt.
+Chữ đè lên watermark.
+Con dấu che một phần.
+Đường kẻ bảng đi qua ký tự.
+Nhiều màu nền.
+Chữ sát mép ảnh.
+Bước 4. Text Recognition
+Text Recognition nhận ảnh crop từ bước Detection và chuyển thành chuỗi ký tự.
+JSON
+{
+  "text_region_id": "T001",
+  "text": "TỔNG TIỀN THANH TOÁN",
+  "recognition_confidence": 0.982
+}
+PaddleOCR tách text detection và text recognition thành các module riêng, nhờ đó có thể thay hoặc ﬁne-
+tune từng thành phần theo dữ liệu thực tế. Pipeline OCR tổng quát của PaddleOCR 3.x hỗ trợ các dòng
+PP-OCR khác nhau và mặc định hiện sử dụng model thuộc PP-OCRv5. 
+Với tiếng Việt cần kiểm tra đặc biệt
+Dấu tiếng Việt.
+0, O, D, Đ.
+1, I, l.
+5, S.
+Dấu chấm và dấu phẩy trong số tiền.
+Mã số thuế.
+PaddlePaddle+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 32/128
+
+--- PAGE 33 ---
+Số hợp đồng.
+Mã container.
+Mã vận đơn.
+Chuỗi kết hợp chữ, số và ký tự đặc biệt.
+Ví dụ:
+Ảnh gốc: 01/2026/HĐKT-VCM
+OCR sai: O1/2026/HDKT-VCM
+Recognition conﬁdence có thể cao nhưng vẫn sai một ký tự quan trọng, nên phải có validation và test
+theo ﬁeld.
+Bước 5. Khôi phục cấu trúc tài liệu
+OCR thường trả về nhiều dòng rời rạc. Hệ thống phải khôi phục:
+Thứ tự đọc.
+Paragraph.
+Hàng và cột của bảng.
+Merge cell.
+Key nằm bên trái và value nằm bên phải.
+Key nằm trên và value nằm dưới.
+Quan hệ giữa các trang.
+Ví dụ OCR thô:
+Tên hàng
+Số lượng
+Đơn giá
+Máy tính xách tay
+2
+15.000.000
+Kết quả sau tái cấu trúc:
+JSON
+{
+  "line_items": [
+    {
+      "item_name": "Máy tính xách tay",
+      "quantity": 2,
+      "unit_price": 15000000
+    }
+  ]
+}
+Đây là tầng thường xảy ra lỗi:
+Dịch cột.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 33/128
+
+--- PAGE 34 ---
+Ghép nhầm hàng.
+Bỏ sót dòng cuối.
+Đọc header như dữ liệu.
+Ghép số lượng của dòng này với đơn giá của dòng khác.
+Bước 6. Trích xuất dữ liệu bằng LayoutLMv3 hoặc sLLM
+Pipeline trong hình cho phép hai phương án.
+Phương án 6A. LayoutLMv3
+LayoutLMv3 nhận đồng thời:
+Text OCR.
+Tọa độ bounding box.
+Thông tin hình ảnh.
+Nhãn cần dự đoán.
+Mô hình được thiết kế cho Document AI, kết hợp thông tin ngôn ngữ, hình ảnh và bố cục để phục vụ các
+bài toán như form understanding, receipt understanding và document classiﬁcation. 
+Ví dụ token đầu vào:
+JSON
+[
+  {
+    "text": "Số",
+    "bbox": [100, 100, 140, 130]
+  },
+  {
+    "text": "hợp",
+    "bbox": [145, 100, 200, 130]
+  },
+  {
+    "text": "đồng",
+    "bbox": [205, 100, 270, 130]
+  },
+  {
+    "text": "01/2026/HĐKT",
+    "bbox": [400, 100, 650, 130]
+  }
+]
+Kết quả gán nhãn:
+Số             B-CONTRACT_LABEL
+hợp            I-CONTRACT_LABEL
+đồng           I-CONTRACT_LABEL
+01/2026/HĐKT   B-CONTRACT_NO
+Sau đó relation extraction ghép:
+arXiv+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 34/128
+
+--- PAGE 35 ---
+"Số hợp đồng" → "01/2026/HĐKT"
+Phù hợp khi
+Bộ trường ổn định.
+Volume tài liệu lớn.
+Cần xử lý nhanh.
+Cần conﬁdence theo trường.
+Có khả năng chuẩn bị dữ liệu gán nhãn.
+Muốn hạn chế sinh nội dung ngoài tài liệu.
+Phương án 6B. OCR + sLLM
+OCR chuyển tài liệu thành text hoặc Markdown, sau đó đưa vào mô hình ngôn ngữ nhỏ:
+PaddleOCR/PP-Structure
+→ Markdown
+→ sLLM
+→ JSON
+Ví dụ prompt:
+Trích xuất thông tin hợp đồng theo schema:
+contract_no, party_a, party_b, contract_value,
+effective_date, expiry_date, payment_milestones.
+Không được suy diễn.
+Trường không có trong tài liệu trả về null.
+Phù hợp khi
+Bộ trường thường xuyên thay đổi.
+Cần hiểu điều khoản.
+Cần tóm tắt.
+Cần trích quan hệ phức tạp.
+Chưa đủ dữ liệu để huấn luyện LayoutLMv3.
+Rủi ro
+LLM có thể bỏ sót hoặc suy diễn.
+JSON có thể sai format.
+Khó lấy conﬁdence đáng tin cậy.
+Tài liệu dài phải chunk và quản lý tham chiếu trang.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 35/128
+
+--- PAGE 36 ---
+Bước 7. Chuẩn hóa dữ liệu
+Kết quả AI thường chưa thể đưa trực tiếp vào hệ thống nghiệp vụ.
+Ví dụ chuẩn hóa:
+"1.250.000 VNĐ"    → 1250000
+"10 tháng 6 2026"  → "2026-06-10"
+"0101 234 567"     → "0101234567"
+"30 %"             → 30
+Phải xử lý:
+Kiểu dữ liệu.
+Định dạng ngày.
+Tiền tệ.
+Dấu phân cách số.
+Đơn vị đo.
+Mã danh mục.
+Khoảng trắng.
+Viết hoa/thường.
+Chuẩn Unicode.
+Giá trị null.
+Bước 8. Business-rule validation
+Đây là bước BA tham gia rất sâu.
+Ví dụ rule cho Invoice:
+Total Amount = Subtotal + VAT - Discount
+Rule cho Packing List:
+Gross Weight ≥ Net Weight
+Rule cho hợp đồng:
+Effective Date ≤ Expiry Date
+Tổng giá trị các đợt thanh toán ≤ Giá trị hợp đồng
+Tổng tỷ lệ thanh toán ≤ 100%
+Kết quả:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 36/128
+
+--- PAGE 37 ---
+JSON
+{
+  "field": "total_amount",
+  "value": 1250000,
+  "ocr_confidence": 0.97,
+  "entity_confidence": 0.94,
+  "validation_status": "PASS",
+  "final_status": "AUTO_ACCEPT"
+}
+Nếu OCR conﬁdence cao nhưng rule sai, trường vẫn phải chuyển sang review.
+Bước 9. Human Review
+Các trường có vấn đề được đưa vào màn hình kiểm tra:
+Ảnh tài liệu bên trái.
+Form dữ liệu bên phải.
+Highlight vùng ảnh tương ứng.
+Trường conﬁdence thấp tô vàng hoặc đỏ.
+Người dùng sửa và xác nhận.
+Lưu giá trị AI dự đoán và giá trị người dùng sửa.
+Ví dụ:
+JSON
+{
+  "predicted_value": "010I234S67",
+  "corrected_value": "0101234567",
+  "corrected_by": "user_001",
+  "correction_reason": "OCR_CHARACTER_ERROR"
+}
+Dữ liệu correction là nguồn rất quan trọng cho vòng retraining tiếp theo.
+Bước 10. Serving và tích hợp
+Triton có thể phục vụ các model của Pipeline 1, quản lý model instance và dynamic batching để gộp
+request, qua đó tăng throughput đối với model stateless. 
+Luồng hợp lý:
+Client
+→ FastAPI
+→ Job Queue
+→ Triton
+   ├── Layout Model
+   ├── Text Detection Model
+   ├── Recognition Model
+   └── Entity Extraction Model
+→ Validation Service
+NVIDIA Docs+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 37/128
+
+--- PAGE 38 ---
+→ Database
+→ Client
+3. BA làm những gì trong dự án Pipeline 1?
+BA không trực tiếp tối ưu loss function hoặc viết training loop, nhưng BA quyết định phần lớn việc
+model phải học gì, dữ liệu phải được gán nhãn thế nào và kết quả nào được coi là đúng.
+Giai đoạn 1. Khảo sát nghiệp vụ và chốt phạm vi
+BA thực hiện:
+1. Thu thập danh sách loại tài liệu.
+2. Xác định nguồn phát sinh.
+3. Xác định volume/ngày, tháng, năm.
+4. Xác định số lượng template.
+5. Khảo sát chất lượng ﬁle thực tế.
+6. Xác định hệ thống nhận đầu ra.
+7. Xác định trường nào bắt buộc.
+8. Xác định trường nào có thể nhập thủ công.
+9. Xác định SLA xử lý.
+10. Xác định trường có ảnh hưởng tài chính hoặc pháp lý.
+Deliverable
+Document Inventory.
+As-is Process.
+To-be Process.
+Scope Matrix.
+Document Type Catalog.
+Data Source Mapping.
+Business Risk Matrix.
+Ví dụ:
+Document type Nguồn Volume/tháng Template Độ ưu tiên
+Invoice Email NCC 15.000 120 Cao
+Packing List Email/Folder 8.000 50 Cao
+Contract QLHĐ 2.000 Không cố định Cao
+C/O Folder 3.000 20 Trung bình
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 38/128
+
+--- PAGE 39 ---
+Giai đoạn 2. Xây dựng Field Catalog
+BA phải định nghĩa từng trường:
+Thuộc tính Ví dụ
+Field code contract_value
+Tên nghiệp vụ Giá trị hợp đồng
+Kiểu dữ liệu Decimal
+Bắt buộc Có
+Nhiều giá trị Không
+Đơn vị VND/USD
+Nguồn trong tài liệu Phần thông tin chung
+Có thể suy diễn Không
+Validation > 0
+Mức quan trọng Critical
+Conﬁdence threshold 0,98
+Khi lỗi Human review
+Đây là tài liệu nền cho:
+Annotation.
+Training.
+API.
+UI review.
+Test case.
+Nghiệm thu.
+Giai đoạn 3. Viết Annotation Guideline
+BA phối hợp với AI Engineer và Data Lead để quy định cách gán nhãn.
+Ví dụ câu:
+Tổng giá trị hợp đồng là 1.200.000.000 đồng, đã bao gồm VAT.
+Cần quy định rõ:
+contract_value = 1.200.000.000
+currency = VND
+vat_included = true
+Các trường hợp phải xử lý trong guideline:
+Một trường xuất hiện nhiều lần.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 39/128
+
+--- PAGE 40 ---
+Giá trị ở phụ lục khác hợp đồng gốc.
+Tài liệu song ngữ.
+Giá trị viết bằng số và bằng chữ khác nhau.
+Trường không tồn tại.
+Trường bị che.
+Giá trị nằm ở nhiều dòng.
+Bảng kéo dài qua nhiều trang.
+Điều khoản thanh toán có nhiều mốc.
+Có cả giá trị trước thuế và sau thuế.
+BA phải quyết định ngữ nghĩa nghiệp vụ đúng, không để annotator tự suy đoán.
+Giai đoạn 4. Thiết kế business rule và conﬁdence workﬂow
+BA định nghĩa:
+Trường nào được auto-accept?
+Trường nào luôn phải review?
+Trường nào bắt buộc kiểm tra chéo?
+Khi confidence thấp thì chuyển đi đâu?
+Ví dụ:
+Trường Ngưỡng đề xuất Xử lý
+Tên NCC 0,90 Auto-accept
+Số hợp đồng 0,98 Review nếu thấp hơn
+Giá trị hợp đồng 0,99 Luôn chạy rule
+Ngày hết hạn 0,97 So sánh ngày hiệu lực
+Điều khoản thanh toán 0,90 Human review
+Số tài khoản 0,995 Luôn review/đối chiếu
+Các ngưỡng này không lấy tùy ý; phải được hiệu chỉnh từ kết quả test thực tế và mức độ rủi ro nghiệp
+vụ.
+Giai đoạn 5. Viết yêu cầu hệ thống
+BA đặc tả:
+API upload.
+API lấy trạng thái.
+API lấy kết quả.
+API gửi correction.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 40/128
+
+--- PAGE 41 ---
+Cơ chế xử lý bất đồng bộ.
+Trạng thái job.
+Retry.
+Timeout.
+Log.
+Version model.
+Quyền truy cập.
+Màn hình review.
+Audit trail.
+Ví dụ trạng thái:
+UPLOADED
+→ PREPROCESSING
+→ OCR_PROCESSING
+→ EXTRACTING
+→ VALIDATING
+→ NEED_REVIEW / COMPLETED / FAILED
+Giai đoạn 6. Thiết kế màn hình review
+BA/UI cần xác định:
+Hiển thị ảnh và form song song.
+Click ﬁeld thì highlight bounding box.
+Cho zoom, rotate và chuyển trang.
+Phân biệt AI value và corrected value.
+Hiển thị conﬁdence.
+Hiển thị lý do validation fail.
+Phím tắt xác nhận.
+Phân quyền người kiểm tra.
+Cơ chế double-check với tài liệu quan trọng.
+Lưu lịch sử chỉnh sửa.
+Giai đoạn 7. UAT và nghiệm thu
+BA:
+1. Chuẩn bị test dataset đại diện.
+2. Xây expected result.
+3. Xác định ﬁeld nào phải exact match.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 41/128
+
+--- PAGE 42 ---
+4. Phân loại lỗi theo mức độ.
+5. Tổ chức UAT với người dùng nghiệp vụ.
+6. Ghi nhận false positive, false negative.
+7. Phân tích nguyên nhân.
+8. Chốt tiêu chí go-live.
+9. Theo dõi pilot.
+10. Quản lý change request sau triển khai.
+4. Quy trình training Pipeline 1
+Không phải tất cả thành phần đều phải huấn luyện lại ngay. Nên chạy pretrained model trước, đo gap,
+rồi chỉ ﬁne-tune tầng không đạt yêu cầu.
+Giai đoạn 1. Thu thập dữ liệu
+Dữ liệu phải đại diện cho production:
+Nhiều nhà cung cấp.
+Nhiều template.
+Ảnh rõ và mờ.
+Scan và ảnh chụp.
+Có dấu, chữ ký, watermark.
+Tài liệu một trang và nhiều trang.
+Bảng ngắn và dài.
+Tiếng Việt, tiếng Anh, song ngữ.
+File mới và ﬁle lịch sử.
+Không chỉ lấy tài liệu đẹp vì model sẽ đạt điểm cao ở test nhưng thất bại khi chạy thực tế.
+Giai đoạn 2. Làm sạch và ẩn dữ liệu
+Thực hiện:
+Xóa ﬁle trùng.
+Xóa ﬁle hỏng không thể sử dụng.
+Kiểm tra trang thiếu.
+Che hoặc mã hóa dữ liệu cá nhân khi cần.
+Gán document type.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 42/128
+
+--- PAGE 43 ---
+Gán template/vendor.
+Gán mức chất lượng ảnh.
+Quản lý quyền truy cập dataset.
+Giai đoạn 3. Chia dataset
+Nên chia:
+Training set
+Validation set
+Test set
+Golden/UAT set
+Điểm quan trọng là không chia ngẫu nhiên từng trang một cách đơn giản nếu nhiều trang thuộc cùng
+tài liệu hoặc cùng template.
+Ví dụ hợp lý:
+Tất cả trang của một hợp đồng chỉ nằm trong một tập.
+Một số template hoặc nhà cung cấp được giữ lại để test khả năng tổng quát hóa.
+Golden set được khóa, không đưa trở lại training.
+Nếu cùng một mẫu hóa đơn xuất hiện ở cả train và test với khác số hóa đơn, kết quả test có thể cao giả
+tạo.
+Giai đoạn 4. Gán nhãn
+Nhãn Layout
+JSON
+{
+  "label": "TABLE",
+  "bbox": [100, 500, 2300, 2600]
+}
+Nhãn Text Detection
+JSON
+{
+  "polygon": [[100,100],[500,100],[500,150],[100,150]]
+}
+Nhãn Recognition
+JSON
+{
+  "image_crop": "crop_001.png",
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 43/128
+
+--- PAGE 44 ---
+  "transcript": "CÔNG TY TM&XNK VIETTEL"
+}
+Nhãn Entity
+JSON
+{
+  "text": "1.250.000.000",
+  "label": "CONTRACT_VALUE",
+  "bbox": [500, 200, 800, 250]
+}
+Nhãn Relation
+JSON
+{
+  "from": "KEY_CONTRACT_NO",
+  "to": "VALUE_CONTRACT_NO",
+  "relation": "KEY_VALUE"
+}
+Nhãn bảng
+Số hàng.
+Số cột.
+Cell.
+Row span.
+Column span.
+Cell text.
+Header/data cell.
+Giai đoạn 5. Kiểm tra chất lượng annotation
+Không nên đưa dữ liệu vào training ngay sau lần gán nhãn đầu tiên.
+Quy trình phù hợp:
+Annotator A gán nhãn
+→ Annotator B kiểm tra
+→ Reviewer nghiệp vụ xử lý tranh chấp
+→ Tool validation kiểm tra format
+→ Dataset được phê duyệt
+Cần kiểm tra:
+Thiếu nhãn.
+Bounding box lệch.
+Transcript sai.
+Sai loại entity.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 44/128
+
+--- PAGE 45 ---
+Sai quan hệ key-value.
+Nhãn không nhất quán giữa annotator.
+Bảng bị thiếu dòng/cột.
+Trường null nhưng annotator tự suy diễn.
+BA tham gia xử lý các trường hợp không rõ về nghiệp vụ.
+Giai đoạn 6. Training từng module
+6.1. Layout Model
+Đầu vào:
+Ảnh trang.
+Bounding box và class của region.
+Model học cách phân biệt:
+Title / Text / Table / Signature / Stamp / Footer...
+6.2. Text Detection Model
+Đầu vào:
+Ảnh.
+Polygon vùng chữ.
+Model học phát hiện vị trí chữ.
+6.3. Text Recognition Model
+Đầu vào:
+Ảnh crop dòng chữ.
+Transcript đúng.
+Model học chuyển ảnh thành ký tự.
+6.4. LayoutLMv3
+Đầu vào:
+Token OCR.
+Bounding box.
+Ảnh.
+Entity label.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 45/128
+
+--- PAGE 46 ---
+Có thể có relation label.
+Model học nhận diện:
+INVOICE_NO
+CONTRACT_VALUE
+SELLER_NAME
+PAYMENT_DATE
+...
+6.5. sLLM nếu sử dụng
+Có thể bắt đầu bằng:
+1. Prompt engineering.
+2. Few-shot example.
+3. Output schema.
+4. Sau đó mới SFT/LoRA nếu base model chưa đạt.
+Dữ liệu training có dạng:
+JSON
+{
+  "input": "Nội dung OCR/Markdown...",
+  "instruction": "Trích xuất thông tin hợp đồng",
+  "output": {
+    "contract_no": "01/2026/HĐKT",
+    "contract_value": 1200000000
+  }
+}
+Giai đoạn 7. Error analysis và retraining
+Sau mỗi lần training phải lập bảng lỗi:
+Loại lỗi Ví dụ Tầng nguyên nhân
+Missed text Bỏ sót dòng cuối Detection
+Character error 0 thành O Recognition
+Wrong ﬁeld Đơn giá thành tổng tiền Entity extraction
+Wrong row Ghép sai item Table reconstruction
+Invalid result Tổng tiền không khớp Validation
+Template drift Mẫu NCC mới Dataset
+Không retrain một cách chung chung. Phải xác định đúng tầng gây lỗi.
+5. QA kiểm tra chất lượng như thế nào?
+QA cho AI Document Understanding gồm hai phần:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 46/128
+
+--- PAGE 47 ---
+1. Model QA: model có nhận dạng đúng không?
+2. System QA: toàn bộ workﬂow có hoạt động đúng không?
+6. Model QA theo từng tầng
+6.1. Layout Detection
+Kiểm tra:
+Region có được phát hiện không?
+Bounding box có bao đủ vùng không?
+Có nhầm loại region không?
+Có đúng reading order không?
+Chỉ số thường dùng:
+Precision.
+Recall.
+IoU.
+mAP.
+6.2. Text Detection
+Kiểm tra:
+Có bỏ sót dòng chữ không?
+Có nhận logo/nhiễu thành text không?
+Polygon có quá rộng hoặc quá hẹp không?
+Chỉ số:
+Precision.
+Recall.
+H-mean.
+6.3. Text Recognition
+Kiểm tra:
+Đúng từng ký tự.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 47/128
+
+--- PAGE 48 ---
+Đúng toàn bộ từ hoặc dòng.
+Đúng dấu tiếng Việt.
+Đúng chuỗi số quan trọng.
+Chỉ số:
+Character Error Rate – CER.
+Word Error Rate – WER.
+Exact Match.
+Đối với mã hợp đồng hoặc mã số thuế, Exact Match quan trọng hơn việc “gần đúng”.
+6.4. Entity Extraction
+Kiểm tra:
+Có lấy đúng trường không?
+Có bỏ sót trường không?
+Có lấy nhầm giá trị khác không?
+Có lấy đủ giá trị nhiều dòng không?
+Chỉ số:
+Precision.
+Recall.
+F1.
+Field Exact Match.
+6.5. Table Extraction
+Kiểm tra:
+Đủ số dòng.
+Đủ số cột.
+Đúng merge cell.
+Đúng giá trị từng cell.
+Không dịch hàng/cột.
+Chỉ số có thể gồm:
+Cell Exact Match.
+Row Accuracy.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 48/128
+
+--- PAGE 49 ---
+Table Exact Match.
+TEDS.
+6.6. End-to-end QA
+Đây là tầng quan trọng nhất với nghiệp vụ.
+Ví dụ expected:
+JSON
+{
+  "invoice_no": "INV-2026-001",
+  "invoice_date": "2026-06-10",
+  "total_amount": 1250000
+}
+Actual:
+JSON
+{
+  "invoice_no": "INV-2026-OO1",
+  "invoice_date": "2026-06-10",
+  "total_amount": 1250000
+}
+Dù chỉ sai hai ký tự, trường invoice_no phải tính là sai hoàn toàn.
+Các chỉ số cần theo dõi:
+Field accuracy theo từng trường.
+Document accuracy.
+Tỷ lệ tài liệu không cần sửa.
+Số trường sửa trung bình/tài liệu.
+Tỷ lệ tự động xử lý hoàn toàn.
+Tỷ lệ chuyển human review.
+False accept rate.
+False reject rate.
+Thời gian xử lý/trang.
+Chi phí xử lý/trang.
+7. Test Matrix QA phải bao phủ
+Không chỉ test theo loại tài liệu mà phải test theo nhiều chiều:
+Nhóm Trường hợp
+Chất lượng ảnh Rõ, mờ, tối, nghiêng, mất góc
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 49/128
+
+--- PAGE 50 ---
+Nhóm Trường hợp
+Nguồn PDF điện tử, scan, điện thoại
+Ngôn ngữ Việt, Anh, song ngữ
+Template Cũ, mới, chưa từng train
+Số trang 1, 10, 100 trang
+Bảng Có viền, không viền, merge cell
+Nội dung Dấu, chữ ký, watermark
+Số liệu Dấu chấm/phẩy, nhiều currency
+Hệ thống Timeout, retry, ﬁle lỗi
+Bảo mật Sai quyền, ﬁle độc hại, dữ liệu nhạy cảm
+8. Conﬁdence calibration và QA
+QA không chỉ kiểm tra giá trị đúng hay sai mà còn kiểm tra conﬁdence có phản ánh đúng độ tin cậy
+không.
+Ví dụ:
+Conﬁdence Tổng trường Trường đúng Accuracy thực tế
+0,95–1,00 10.000 9.850 98,5%
+0,90–0,95 5.000 4.600 92,0%
+0,80–0,90 4.000 3.200 80,0%
+Nếu model cho conﬁdence trên 0,98 nhưng accuracy thực tế chỉ 90%, conﬁdence chưa được calibration
+tốt và không thể dùng làm ngưỡng auto-accept.
+QA phối hợp với AI Engineer để tìm ngưỡng:
+≥ 0,98 và rule pass → Auto-accept
+0,85–0,98          → Human review
+< 0,85             → Reprocess/manual
+Ngưỡng phải khác nhau theo ﬁeld và rủi ro.
+9. Regression test sau mỗi lần retraining
+Mỗi model version phải chạy lại:
+1. Golden dataset.
+2. Bộ lỗi cũ.
+3. Bộ template phổ biến.
+4. Bộ template hiếm.
+5. Bộ dữ liệu chất lượng xấu.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 50/128
+
+--- PAGE 51 ---
+6. Bộ ﬁeld quan trọng.
+7. Performance test.
+Ví dụ:
+Model v1 sửa được lỗi mã số thuế
+nhưng lại giảm accuracy bảng line item
+Nếu chỉ nhìn overall accuracy, đội dự án có thể không phát hiện regression này.
+Báo cáo nên so sánh:
+Chỉ số Model v1 Model v2 Kết luận
+Invoice No. Exact Match 96,5% 98,1% Tăng
+Tax Code Exact Match 97,0% 99,0% Tăng
+Line Item Accuracy 94,0% 92,5% Giảm
+Latency/page 1,2s 1,6s Giảm hiệu năng
+10. System QA ngoài chất lượng AI
+QA vẫn phải test như hệ thống phần mềm thông thường.
+Functional test
+Upload ﬁle.
+Xóa ﬁle.
+Xử lý nhiều trang.
+Hiển thị trạng thái.
+Review và sửa dữ liệu.
+Lưu correction.
+Export JSON/Excel.
+Đẩy dữ liệu downstream.
+Integration test
+Object Storage.
+Triton.
+Database.
+API hệ thống QLHĐ/ERP/RPA.
+Queue.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 51/128
+
+--- PAGE 52 ---
+SSO và phân quyền.
+Performance test
+Bao nhiêu tài liệu/phút?
+Bao nhiêu trang đồng thời?
+Timeout ở ﬁle 100 trang?
+GPU có đầy bộ nhớ không?
+Queue backlog xử lý thế nào?
+Triton hỗ trợ chạy nhiều model instance và dynamic batching, nhưng vẫn phải benchmark với kích thước
+ảnh, batch size và lưu lượng thực tế của dự án. 
+Reliability test
+Service OCR bị restart.
+Triton không phản hồi.
+Một trang lỗi trong ﬁle nhiều trang.
+Job chạy trùng.
+Retry có tạo dữ liệu trùng không?
+Kết quả có idempotent không?
+Security test
+Kiểm tra ﬁle giả mạo extension.
+Malware scan.
+Phân quyền xem tài liệu.
+Audit log.
+Mã hóa dữ liệu.
+Không đưa tài liệu nhạy cảm vào log.
+11. Ví dụ một test case hoàn chỉnh
+Test case: Trích xuất giá trị hợp đồng
+Input
+Hợp đồng PDF 12 trang, scan 300 DPI.
+Expected
+NVIDIA Docs+1
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 52/128
+
+--- PAGE 53 ---
+JSON
+{
+  "contract_no": "08/2026/HĐKT-VCM",
+  "contract_value": 2350000000,
+  "currency": "VND",
+  "effective_date": "2026-06-01"
+}
+Điều kiện đạt
+contract_no: exact match.
+contract_value: exact numeric match.
+currency: đúng danh mục.
+effective_date: đúng ISO date.
+Bounding box chỉ đúng vị trí trên trang.
+Không lấy giá trị phụ lục hoặc giá trị bảo lãnh.
+Conﬁdence của contract_value đạt ngưỡng.
+Business rule không báo lỗi.
+Tổng thời gian xử lý dưới SLA.
+Các biến thể cần test
+Giá trị viết bằng số và chữ.
+Có cả giá trước VAT và sau VAT.
+Có phụ lục điều chỉnh giá.
+Giá trị xuất hiện trong header/footer.
+Con dấu che một phần số tiền.
+Tài liệu song ngữ.
+12. Phân vai trong dự án
+Vai trò Trách nhiệm chính
+BA Field catalog, business rule, annotation rule, workﬂow, UAT, acceptance criteria
+AI/ML Engineer Model, training, tuning, metric, conﬁdence calibration
+Data Engineer Ingestion, dataset pipeline, versioning, storage
+Annotator Gán nhãn theo guideline
+Data Reviewer Kiểm tra chất lượng annotation
+QA Test model, API, UI, integration, performance, regression
+Backend FastAPI, orchestration, DB, downstream integration
+DevOps/MLOps Triton, Docker, GPU, deployment, monitoring
+Key User Xác nhận kết quả nghiệp vụ và UAT
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 53/128
+
+--- PAGE 54 ---
+Điểm quan trọng nhất về vai trò BA
+BA không chỉ viết SRS cho màn hình upload tài liệu. Trong Pipeline 1, BA phải biến nghiệp vụ thành các
+cấu phần mà AI có thể học và QA có thể kiểm chứng:
+Tài liệu nghiệp vụ
+→ Field Catalog
+→ Annotation Guideline
+→ Business Rules
+→ Output Schema
+→ Confidence Workflow
+→ Test Dataset
+→ Acceptance Criteria
+Nếu các tài liệu này không rõ, annotator sẽ gán nhãn không nhất quán, model học sai, QA không biết
+kết quả nào được coi là đúng và dự án rất khó nghiệm thu.
+sLLM là gì, đề xuất model
+1. sLLM là gì?
+sLLM thường được hiểu là Small Large Language Model hoặc gần nghĩa với SLM – Small Language
+Model: mô hình ngôn ngữ có kích thước nhỏ hơn các LLM hàng chục hoặc hàng trăm tỷ tham số.
+Không có một ngưỡng cố định để xác định bao nhiêu tham số thì được gọi là sLLM. Trong dự án doanh
+nghiệp, thuật ngữ này thường chỉ các model đủ nhỏ để:
+Triển khai on-premise.
+Chạy trên một hoặc vài GPU.
+Có latency thấp.
+Fine-tune bằng LoRA/QLoRA.
+Phục vụ số lượng request lớn.
+Giảm chi phí so với model 30B–100B+.
+Vẫn đủ khả năng hiểu văn bản, trích xuất dữ liệu và sinh JSON.
+Trong Pipeline 1, sLLM không đọc trực tiếp ảnh tài liệu. Ảnh đã được PaddleOCR xử lý trước.
+Ảnh/PDF
+→ PaddleOCR
+→ Text + bounding box + Markdown
+→ sLLM
+→ JSON nghiệp vụ
+→ Validation
+Do đó, trong sơ đồ nên hiểu:
+LayoutLMv3 / sLLM
+là hai phương án trích xuất thông tin sau OCR, không nhất thiết phải dùng cả hai cùng lúc.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 54/128
+
+--- PAGE 55 ---
+2. sLLM làm gì trong OCR Pipeline?
+Giả sử PaddleOCR trả về nội dung:
+HỢP ĐỒNG MUA BÁN SỐ: 08/2026/HĐKT-VCM
+Bên A: Công ty TM&XNK Viettel
+Bên B: Công ty ABC
+Tổng giá trị hợp đồng:
+1.250.000.000 VNĐ, đã bao gồm thuế GTGT.
+Bên A thanh toán 30% trong vòng 10 ngày kể từ ngày ký;
+70% còn lại trong vòng 15 ngày kể từ ngày nghiệm thu.
+sLLM nhận phần text hoặc Markdown này và chuyển thành:
+JSON
+{
+  "contract_no": "08/2026/HĐKT-VCM",
+  "party_a": "Công ty TM&XNK Viettel",
+  "party_b": "Công ty ABC",
+  "contract_value": 1250000000,
+  "currency": "VND",
+  "vat_included": true,
+  "payment_milestones": [
+    {
+      "rate": 30,
+      "due_condition": "Trong vòng 10 ngày kể từ ngày ký"
+    },
+    {
+      "rate": 70,
+      "due_condition": "Trong vòng 15 ngày kể từ ngày nghiệm thu"
+    }
+  ]
+}
+Các nhiệm vụ chính của sLLM
+Trích xuất trường nghiệp vụ
+Số hợp đồng.
+Đối tác.
+Giá trị hợp đồng.
+Ngày hiệu lực.
+Điều khoản thanh toán.
+Mốc giao hàng.
+Điều kiện nghiệm thu.
+Bảo lãnh, bảo hành.
+Invoice number, seller, buyer, total amount.
+Hiểu quan hệ ngữ nghĩa
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 55/128
+
+--- PAGE 56 ---
+OCR chỉ đọc được:
+30% trong vòng 10 ngày kể từ ngày ký
+sLLM hiểu được:
+JSON
+{
+  "payment_rate": 30,
+  "payment_trigger": "contract_signed",
+  "payment_term_days": 10
+}
+Chuẩn hóa dữ liệu
+"1 tỷ 250 triệu đồng" → 1250000000
+"10/6/2026"           → "2026-06-10"
+"Ba mươi phần trăm"   → 30
+Tuy nhiên, việc chuẩn hóa cuối cùng vẫn nên có code và rule engine kiểm tra lại.
+Phân loại nội dung
+Đây là điều khoản thanh toán hay điều khoản bảo hành?
+Đây là tổng giá trị hợp đồng hay giá trị bảo lãnh?
+Đây là ngày ký hay ngày hiệu lực?
+Đây là bên mua hay bên bán?
+Sinh structured output
+sLLM có thể sinh:
+JSON.
+Markdown.
+Danh sách key-value.
+Bảng dữ liệu.
+Kết quả theo JSON Schema.
+vLLM hiện hỗ trợ structured output theo JSON Schema, regex, grammar hoặc tập giá trị lựa chọn, giúp
+hạn chế model sinh JSON sai cấu trúc. 
+3. sLLM khác LayoutLMv3 thế nào?
+Tiêu chí LayoutLMv3 sLLM
+Đầu vào Token OCR + bounding box + ảnh Text/Markdown OCR + prompt
+Cách hoạt động Token classiﬁcation, relation extraction Sinh dữ liệu theo instruction
+Cần gán nhãn Token, bbox, entity BIO, relation Input OCR và JSON expected
+vLLM
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 56/128
+
+--- PAGE 57 ---
+Tiêu chí LayoutLMv3 sLLM
+Bộ trường thay đổi Khó thay đổi hơn Thay schema/prompt tương đối dễ
+Hiểu điều khoản dài Hạn chế hơn Tốt hơn
+Conﬁdence từng entity Tương đối rõ Không nên tin conﬁdence tự sinh
+Hallucination Thấp hơn Cao hơn
+Latency Thường thấp và ổn định hơn Cao hơn tùy số token
+Tài liệu phù hợp Form, hóa đơn, mẫu ổn định Hợp đồng, văn bản dài, schema linh hoạt
+Chọn LayoutLMv3 khi
+Invoice, receipt hoặc form có cấu trúc ổn định.
+Bộ trường ít thay đổi.
+Cần throughput cao.
+Cần conﬁdence từng token/entity.
+Có đủ dữ liệu gán nhãn bounding box.
+Không cần suy luận sâu về điều khoản.
+Chọn sLLM khi
+Hợp đồng có cách diễn đạt đa dạng.
+Trường thông tin nằm trong đoạn văn dài.
+Cần hiểu điều kiện, mốc thời gian và quan hệ.
+Bộ trường thường xuyên được bổ sung.
+Cần tóm tắt hoặc phân loại điều khoản.
+Không muốn gán nhãn BIO cho từng token.
+Trong dự án thực tế, có thể kết hợp:
+PaddleOCR
+→ LayoutLMv3 trích field cố định
+→ sLLM phân tích điều khoản phức tạp
+→ Rule Engine
+→ Human Review
+4. Model tôi đề xuất
+Lựa chọn chính: Qwen3-4B-Instruct-2507
+Đây là model phù hợp nhất để bắt đầu triển khai sLLM trong Pipeline 1.
+Qwen3-4B-Instruct-2507 có:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 57/128
+
+--- PAGE 58 ---
+4 tỷ tham số.
+Chế độ non-thinking cố định.
+Context dài 262.144 token.
+Khả năng instruction following và multilingual tốt.
+Có thể triển khai bằng Transformers, vLLM hoặc SGLang.
+Không sinh khối <think>...</think>, thuận lợi cho tác vụ trích xuất JSON ổn định. 
+Vì sao phù hợp với Document Understanding?
+Đủ nhỏ để triển khai riêng
+4B phù hợp với mục tiêu:
+Self-host/on-premise.
+Phục vụ nhiều request.
+Fine-tune LoRA.
+Quantization.
+Chi phí thấp hơn model 9B–30B.
+Non-thinking phù hợp với extraction
+Tác vụ OCR extraction chủ yếu cần:
+Đọc nội dung
+→ Ánh xạ trường
+→ Trả JSON
+Không cần model sinh chuỗi suy luận dài. Model thinking có thể:
+Tăng latency.
+Tăng token đầu ra.
+Khó kiểm soát format.
+Chèn giải thích ngoài JSON.
+Không mang lại lợi ích tương xứng cho trường đơn giản.
+Context dài
+Có thể xử lý:
+Nhiều trang OCR.
+Hợp đồng dài.
+Markdown có bảng.
+Nhiều điều khoản liên quan.
+Hugging Face
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 58/128
+
+--- PAGE 59 ---
+Dù model hỗ trợ context rất dài, production vẫn nên chunk tài liệu theo phần hoặc điều khoản để giảm
+chi phí và tránh bỏ sót thông tin.
+Cấu hình đề xuất
+Model: Qwen/Qwen3-4B-Instruct-2507
+Serving: vLLM
+Output: JSON Schema
+Temperature: 0–0.2
+Top-p: thấp hoặc mặc định ổn định
+Fine-tuning: LoRA/QLoRA khi cần
+Đây là cấu hình tôi khuyến nghị làm baseline production.
+Lựa chọn mới hơn để benchmark: Qwen3.5-4B
+Qwen3.5-4B là model phát hành năm 2026, hỗ trợ uniﬁed vision-language, 201 ngôn ngữ và tương thích
+với Transformers, vLLM, SGLang. 
+Model này có thể nhận text OCR như một model ngôn ngữ bình thường. Tuy nhiên:
+Pipeline 1 đã dùng PaddleOCR nên khả năng vision không phải lợi ích chính.
+Runtime multimodal có thể phức tạp hơn model text-only.
+Cần benchmark latency và tài nguyên trước khi chọn.
+Có thể đưa Qwen3.5-4B vào PoC để so sánh trực tiếp với Qwen3-4B-Instruct-2507 về:
+Field Exact Match.
+JSON validity.
+Hallucination.
+Latency.
+VRAM.
+Khả năng hiểu tiếng Việt chuyên ngành.
+Lựa chọn độ chính xác cao hơn: Qwen3.5-9B
+Đối với hợp đồng phức tạp, có nhiều điều khoản pháp lý, điều kiện thanh toán và phụ lục, có thể
+benchmark Qwen3.5-9B.
+Model 9B được phát hành chính thức trong dòng Qwen3.5 và tương thích với vLLM. 
+Phù hợp khi:
+Độ chính xác quan trọng hơn latency.
+Hợp đồng dài và cách diễn đạt đa dạng.
+Cần phân tích nhiều quan hệ giữa điều khoản.
+Hugging Face
+Hugging Face
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 59/128
+
+--- PAGE 60 ---
+Có GPU đủ mạnh.
+Số tài liệu không quá lớn hoặc có thể batching.
+Không nên dùng 9B cho mọi tài liệu. Có thể routing:
+Invoice đơn giản      → Qwen 4B
+Hợp đồng phức tạp     → Qwen 9B
+Confidence thấp       → Qwen 9B hoặc Human Review
+5. Các model thay thế để benchmark
+Phi-4-mini-instruct
+Phi-4-mini của Microsoft có 3,8 tỷ tham số và context 128K, được thiết kế cho instruction và reasoning
+trong một model nhỏ. 
+Ưu điểm:
+Nhẹ.
+Context dài.
+Phù hợp triển khai tiết kiệm.
+Có thể dùng cho extraction và classiﬁcation.
+Điểm cần kiểm tra kỹ:
+Khả năng xử lý tiếng Việt có dấu.
+Thuật ngữ hợp đồng/XNK Việt Nam.
+Khả năng giữ đúng JSON.
+Khả năng xử lý OCR noise.
+Phi-4-mini nên là model đối chứng, nhưng tôi không chọn làm model chính trước Qwen đối với dữ liệu
+tiếng Việt.
+Gemma 4 E4B
+Gemma 4 E4B là model hiệu dụng khoảng 4,5B tham số, hỗ trợ context 128K, đa ngôn ngữ trên 140
+ngôn ngữ và được thiết kế cho triển khai từ thiết bị tới server. 
+Có thể benchmark nếu doanh nghiệp muốn:
+Hệ sinh thái Google.
+Apache 2.0.
+Model đa phương thức.
+Khả năng chạy trên môi trường tài nguyên hạn chế.
+Microsoft Azure
+Google AI for
+Developers
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 60/128
+
+--- PAGE 61 ---
+Tuy nhiên, vẫn phải đo riêng chất lượng tiếng Việt và document extraction. Số lượng ngôn ngữ hỗ trợ
+không đồng nghĩa model sẽ xử lý mọi thuật ngữ nghiệp vụ tiếng Việt tốt như nhau.
+6. Khuyến nghị lựa chọn theo use case
+Use case Model đề xuất
+Hóa đơn, phiếu thu, form đơn giản LayoutLMv3 hoặc Qwen3-4B
+Invoice/Packing List nhiều template Qwen3-4B-Instruct-2507
+Trích xuất hợp đồng Qwen3-4B baseline, Qwen3.5-9B cho trường khó
+Phân tích điều khoản thanh toán Qwen3.5-9B
+Tóm tắt hợp đồng Qwen3.5-9B
+Chạy edge hoặc tài nguyên rất thấp Phi-4-mini hoặc model 1B–4B đã ﬁne-tune
+Volume cực lớn LayoutLMv3 primary, sLLM fallback
+Schema thay đổi thường xuyên Qwen3-4B
+Field cố định, yêu cầu audit chặt LayoutLMv3
+7. Kiến trúc đề xuất cụ thể
+PaddleOCR 3.x
+├── Layout Detection
+├── Text Detection
+├── Text Recognition
+└── Table / Reading-order Reconstruction
+          │
+          ▼
+OCR Normalization Service
+├── Sửa khoảng trắng
+├── Chuẩn hóa Unicode
+├── Giữ page number
+├── Giữ bounding box
+└── Chuyển sang Markdown
+          │
+          ▼
+Qwen3-4B-Instruct-2507
+├── Document classification
+├── Field extraction
+├── Relation extraction
+├── Clause classification
+└── JSON generation
+          │
+          ▼
+JSON Schema Validation
+          │
+          ▼
+Business Rule Engine
+├── Kiểm tra số tiền
+├── Kiểm tra ngày
+├── Kiểm tra tỷ lệ thanh toán
+├── Kiểm tra trường bắt buộc
+└── Đối chiếu giữa chứng từ
+          │
+          ▼
+Auto Accept / Human Review
+Nên giữ bounding box và page number trong nội dung gửi sLLM:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 61/128
+
+--- PAGE 62 ---
+[PAGE=2][BLOCK=15][BBOX=100,500,900,620]
+Tổng giá trị hợp đồng: 1.250.000.000 VNĐ
+Kết quả trả về:
+JSON
+{
+  "contract_value": {
+    "value": 1250000000,
+    "currency": "VND",
+    "evidence": {
+      "page": 2,
+      "block_id": 15
+    }
+  }
+}
+Nhờ đó người dùng có thể click vào trường và hệ thống highlight đúng vị trí tài liệu.
+8. Prompt phù hợp cho sLLM
+Bạn là hệ thống trích xuất dữ liệu hợp đồng.
+Nhiệm vụ:
+Trích xuất dữ liệu từ nội dung OCR theo JSON Schema được cung cấp.
+Nguyên tắc:
+1. Chỉ sử dụng thông tin xuất hiện trong nội dung.
+2. Không suy diễn hoặc tự bổ sung.
+3. Nếu không tìm thấy trường, trả về null.
+4. Giữ page và block_id làm bằng chứng.
+5. Phân biệt giá trị hợp đồng, giá trị bảo lãnh và giá trị thanh toán.
+6. Số tiền phải chuyển thành kiểu số.
+7. Ngày tháng phải chuẩn hóa thành YYYY-MM-DD.
+8. Chỉ trả về JSON, không giải thích.
+Đầu ra bắt buộc theo schema:
+JSON
+{
+  "contract_no": null,
+  "contract_value": null,
+  "currency": null,
+  "effective_date": null,
+  "expiry_date": null,
+  "payment_milestones": [],
+  "evidence": {}
+}
+9. Có cần ﬁne-tune không?
+Không nên ﬁne-tune ngay từ đầu.
+Thứ tự phù hợp:
+Base model
+→ Prompt chuẩn
+→ JSON Schema
+→ Few-shot examples
+→ Business rule
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 62/128
+
+--- PAGE 63 ---
+→ Đánh giá trên Golden Set
+→ Sau đó mới quyết định fine-tune
+Fine-tune khi xuất hiện lỗi lặp lại:
+Nhầm giá trị hợp đồng với giá trị bảo lãnh.
+Không hiểu thuật ngữ nội bộ.
+Bỏ sót các mốc thanh toán.
+Không xử lý tốt OCR noise.
+JSON thường sai trường.
+Không phân biệt hợp đồng gốc và phụ lục.
+Không nhận diện đúng các loại chứng từ Việt Nam.
+Dữ liệu ﬁne-tune phải sử dụng text OCR thực tế có lỗi, không chỉ dùng văn bản đã được con người làm
+sạch. Nếu chỉ train bằng text sạch, model có thể hoạt động tốt trong test nhưng suy giảm mạnh với OCR
+production.
+Kết luận lựa chọn
+Đối với Pipeline 1 trong sơ đồ:
+Model chính nên dùng: Qwen3-4B-Instruct-2507.
+Lý do:
+Nhỏ và dễ triển khai.
+Non-thinking, phù hợp sinh JSON.
+Context dài.
+Đa ngôn ngữ tốt.
+Tương thích trực tiếp với vLLM.
+Dễ LoRA/QLoRA.
+Đủ khả năng xử lý OCR text, hợp đồng và chứng từ tiếng Việt.
+Thiết kế model routing phù hợp là:
+PaddleOCR
+→ Qwen3-4B-Instruct-2507 xử lý mặc định
+→ Qwen3.5-9B xử lý tài liệu khó
+→ Rule validation
+→ Human Review khi xung đột
+Kịch bản OCR RPA.docx
+Document
+Với bài toán quản lý hợp đồng, khá đơn giản vì ảnh, ﬁle được up lên hệ thống QLHĐ sẽ gọi trigger 
+API => OCR xử lý và trả về kết quả cũng qua API để tự auto ﬁll
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 63/128
+
+--- PAGE 64 ---
+==> Hãy miêu tả chi tiết hơn cách triển khai này trong thực tế
+Với bài toán mà có nhiều loại giấy tờ trong bộ hồ sơ (ví dụ liên quan đến hồ sơ hải quan), các bộ hồ 
+sơ lưu trên Drive. Hãy cho tôi luồng ingestion chuẩn để trigger API xử lý, chuẩn hóa tên thư mục, 
+tên ﬁle...
+Show moreShow less
+Trong tài liệu anh cung cấp, bài toán được chia thành hai mức: OCR một hợp đồng để tự điền hệ
+thống QLHĐ và OCR cả bộ chứng từ XNK để tạo tờ khai nháp, đối soát Invoice–Packing List–B/L–
+Contract.  Hai bài toán nên dùng chung OCR Engine nhưng có hai cơ chế ingestion và
+orchestration khác nhau.
+I. Luồng OCR tích hợp trực tiếp với hệ thống Quản lý hợp đồng
+1. Nguyên tắc triển khai
+Không nên thiết kế theo kiểu:
+Người dùng upload → QLHĐ chờ OCR xử lý xong → trả kết quả
+Vì một hợp đồng có thể nhiều trang, thời gian OCR không ổn định và dễ làm request bị timeout.
+Nên triển khai theo cơ chế asynchronous job:
+Người dùng upload
+→ QLHĐ lưu file
+→ Tạo OCR Job
+→ OCR xử lý nền
+→ Callback kết quả
+→ QLHĐ auto-fill vào bản nháp
+→ Người dùng kiểm tra và lưu
+OCR chỉ nên tự điền vào bản nháp hợp đồng, không tự động phê duyệt hoặc ghi nhận hợp đồng chính
+thức.
+2. Các thành phần thực tế
+┌─────────────────────────────┐
+│ Hệ thống Quản lý hợp đồng   │
+│ - Upload                     │
+│ - Form hợp đồng              │
+│ - Review kết quả OCR         │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│ Contract Backend            │
+│ - Document Service          │
+│ - OCR Job Service           │
+│ - Mapping Service           │
+│ - Callback API              │
+└──────────────┬──────────────┘
+│
+Kịch bản OCR RPA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 64/128
+
+--- PAGE 65 ---
+               │
+               ▼
+┌─────────────────────────────┐
+│ OCR/IDP Platform            │
+│ - Preprocessing             │
+│ - PaddleOCR                 │
+│ - Layout/Table processing   │
+│ - sLLM/Entity extraction    │
+│ - Validation                │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│ Storage và hạ tầng          │
+│ - Object Storage            │
+│ - PostgreSQL                │
+│ - Redis/Kafka/RabbitMQ      │
+│ - Triton/vLLM               │
+└─────────────────────────────┘
+3. Luồng xử lý chi tiết
+Bước 1. Người dùng tải hợp đồng lên QLHĐ
+Người dùng có thể:
+Tạo mới hồ sơ hợp đồng.
+Chọn loại hợp đồng nếu đã biết.
+Tải PDF, ảnh scan hoặc DOCX/PDF điện tử.
+Bấm “Trích xuất thông tin”.
+Hệ thống QLHĐ thực hiện ngay:
+1. Kiểm tra extension và MIME type.
+2. Kiểm tra dung lượng.
+3. Quét malware.
+4. Kiểm tra PDF có mật khẩu không.
+5. Tính SHA-256 để phát hiện trùng ﬁle.
+6. Lưu ﬁle gốc vào Object Storage.
+7. Tạo bản ghi tài liệu.
+Ví dụ:
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "contract_draft_id": "CTR-DRAFT-00089",
+  "file_name": "Hop_dong_ABC.pdf",
+  "storage_key": "contracts/2026/06/DOC-20260610-000125.pdf",
+  "sha256": "a7d31...",
+  "page_count": 16,
+  "status": "UPLOADED"
+}
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 65/128
+
+--- PAGE 66 ---
+Bước 2. Hệ thống QLHĐ tạo OCR Job
+Backend không gửi trực tiếp toàn bộ ﬁle dạng Base64 nếu ﬁle lớn. Nên gửi:
+document_id.
+Temporary signed URL.
+Loại tài liệu.
+Schema cần trích xuất.
+URL callback.
+Metadata nghiệp vụ.
+Idempotency key.
+Ví dụ:
+http
+POST /api/v1/ocr/jobs
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "business_object_id": "CTR-DRAFT-00089",
+  "document_type": "CONTRACT",
+  "schema_code": "CONTRACT_EXTRACTION_V2",
+  "file_url": "signed-storage-url",
+  "callback_url": "https://qlhd.internal/api/ocr/callback",
+  "idempotency_key": "DOC-20260610-000125-SHA256-A7D31",
+  "metadata": {
+    "source_system": "QLHD",
+    "business_unit": "VCM",
+    "uploaded_by": "158114",
+    "language": ["vi", "en"]
+  }
+}
+OCR Platform trả ngay:
+JSON
+{
+  "job_id": "OCR-JOB-000998",
+  "status": "QUEUED",
+  "accepted_at": "2026-06-10T10:30:00+07:00"
+}
+QLHĐ chuyển trạng thái:
+UPLOADED → OCR_QUEUED
+Bước 3. OCR Platform kiểm tra đầu vào
+OCR Platform thực hiện:
+Kiểm tra signed URL còn hạn.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 66/128
+
+--- PAGE 67 ---
+Tải ﬁle vào vùng staging.
+Kiểm tra hash.
+Kiểm tra số trang.
+Chuyển DOCX thành PDF nếu được hỗ trợ.
+Tách PDF thành ảnh theo trang.
+Xác định PDF text hay PDF scan.
+Kiểm tra chất lượng từng trang.
+Ví dụ kết quả kiểm tra:
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "page_count": 16,
+  "digital_text_pages": 3,
+  "scanned_pages": 13,
+  "rotated_pages": [7],
+  "low_quality_pages": [12],
+  "input_status": "ACCEPTED"
+}
+Với PDF đã có text layer, có thể lấy text trực tiếp trước, chỉ OCR những trang scan. Đây là cách giảm thời
+gian và tăng độ chính xác.
+Bước 4. Tiền xử lý tài liệu
+Theo từng trang:
+Xoay đúng chiều.
+Deskew.
+Denoise.
+Tăng độ tương phản.
+Loại viền đen.
+Phát hiện trang trắng.
+Làm phẳng ảnh chụp cong.
+Chuẩn hóa DPI.
+Phát hiện hai trang bị chụp chung một ảnh.
+Đầu ra phải lưu cả:
+Ảnh gốc.
+Ảnh đã tiền xử lý.
+Thông số xử lý.
+Quan hệ trang gốc–trang xử lý.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 67/128
+
+--- PAGE 68 ---
+Bước 5. OCR và tái cấu trúc
+Pipeline 1 thực hiện:
+Layout Detection
+→ Text Detection
+→ Text Recognition
+→ Reading Order
+→ Paragraph/Table reconstruction
+Kết quả trung gian nên giữ dạng block:
+JSON
+{
+  "page": 2,
+  "block_id": "P02-B015",
+  "block_type": "PARAGRAPH",
+  "bbox": [120, 680, 2210, 890],
+  "text": "Tổng giá trị hợp đồng là 1.250.000.000 VNĐ...",
+  "ocr_confidence": 0.972
+}
+Không nên chỉ giữ một chuỗi text toàn tài liệu, vì sau này cần:
+Highlight vùng bằng chứng.
+Kiểm tra lỗi.
+Cho người dùng click vào trường.
+Tái huấn luyện.
+Audit.
+Bước 6. Trích xuất trường hợp đồng
+OCR text/Markdown được đưa vào LayoutLM hoặc sLLM để trích xuất:
+Số hợp đồng.
+Loại hợp đồng.
+Ngày ký.
+Bên A.
+Bên B.
+Mã số thuế.
+Địa chỉ.
+Người đại diện.
+Phạm vi hợp đồng.
+Giá trị trước thuế.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 68/128
+
+--- PAGE 69 ---
+Thuế VAT.
+Tổng giá trị.
+Ngày hiệu lực.
+Ngày hết hạn.
+Điều khoản thanh toán.
+Các mốc thanh toán.
+Tài khoản ngân hàng.
+Bảo lãnh.
+Bảo hành.
+Chữ ký, con dấu.
+Kết quả mỗi trường nên bao gồm cả evidence:
+JSON
+{
+  "contract_value": {
+    "raw_value": "1.250.000.000 VNĐ",
+    "normalized_value": 1250000000,
+    "currency": "VND",
+    "confidence": 0.978,
+    "source": {
+      "page": 2,
+      "block_id": "P02-B015",
+      "bbox": [120, 680, 2210, 890],
+      "source_text": "Tổng giá trị hợp đồng là 1.250.000.000 VNĐ"
+    }
+  }
+}
+Bước 7. Chuẩn hóa và kiểm tra nghiệp vụ
+Không trả thẳng kết quả model về QLHĐ. Cần qua lớp validation.
+Chuẩn hóa
+"1.250.000.000 đồng" → 1250000000
+"10 tháng 6 năm 2026" → 2026-06-10
+"0101 234 567" → 0101234567
+"Ba mươi phần trăm" → 30
+Rule hợp đồng
+Ngày hết hạn không nhỏ hơn ngày hiệu lực.
+Tổng các đợt thanh toán không vượt giá trị hợp đồng.
+Tổng tỷ lệ thanh toán không vượt 100%.
+Giá trị sau thuế phải hợp lý với giá trị trước thuế và VAT.
+Mã số thuế đúng định dạng.
+Số hợp đồng không được trùng trong cùng đơn vị.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 69/128
+
+--- PAGE 70 ---
+Tài khoản ngân hàng chỉ nhận ký tự hợp lệ.
+Bên A và B không được trùng nhau.
+Trường bắt buộc không được null.
+Ví dụ:
+JSON
+{
+  "validation_summary": {
+    "status": "NEED_REVIEW",
+    "passed_rules": 18,
+    "warning_rules": 2,
+    "failed_rules": 0
+  },
+  "warnings": [
+    {
+      "code": "PAYMENT_RATE_NOT_EQUAL_100",
+      "message": "Tổng tỷ lệ các đợt thanh toán là 95%"
+    }
+  ]
+}
+Bước 8. OCR callback về QLHĐ
+OCR Platform gọi callback:
+http
+POST /api/ocr/callback
+JSON
+{
+  "job_id": "OCR-JOB-000998",
+  "document_id": "DOC-20260610-000125",
+  "business_object_id": "CTR-DRAFT-00089",
+  "status": "COMPLETED_WITH_WARNING",
+  "schema_code": "CONTRACT_EXTRACTION_V2",
+  "model_version": "contract-extractor-2.4.1",
+  "fields": {
+    "contract_no": {
+      "value": "08/2026/HĐKT-VCM",
+      "confidence": 0.991,
+      "page": 1,
+      "bbox": [850, 310, 1500, 365]
+    },
+    "contract_value": {
+      "value": 1250000000,
+      "currency": "VND",
+      "confidence": 0.978,
+      "page": 2,
+      "bbox": [120, 680, 2210, 890]
+    }
+  },
+  "validation_status": "NEED_REVIEW"
+}
+Callback phải có:
+Chữ ký số request hoặc HMAC.
+Timestamp.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 70/128
+
+--- PAGE 71 ---
+Request ID.
+Idempotency key.
+Cơ chế retry.
+Khả năng chống callback giả.
+Bước 9. QLHĐ mapping và tự động điền form
+QLHĐ không nên phụ thuộc trực tiếp vào tên ﬁeld của model. Nên có bảng mapping:
+OCR ﬁeld QLHĐ ﬁeld
+contract_no CONTRACT.CONTRACT_NUMBER
+party_a.name CONTRACT.PARTY_A_NAME
+party_b.tax_code CONTRACT.PARTY_B_TAX_CODE
+contract_value CONTRACT.TOTAL_VALUE
+effective_date CONTRACT.EFFECTIVE_DATE
+Mapping nên quản lý theo schema_version.
+QLHĐ tự điền theo chính sách:
+Trạng thái Cách xử lý
+Conﬁdence cao, rule pass Điền và đánh dấu xanh
+Conﬁdence trung bình Điền nhưng đánh dấu vàng
+Conﬁdence thấp Không tự điền hoặc đánh dấu đỏ
+Rule fail Chuyển review bắt buộc
+Không tìm thấy Để trống
+Bước 10. Người dùng review
+Màn hình tốt nhất là:
+┌──────────────────────────┬─────────────────────────────┐
+│ PDF / ảnh hợp đồng       │ Form hợp đồng              │
+│                          │                             │
+│ Vùng được highlight      │ Số HĐ: 08/2026/HĐKT       │
+│ khi chọn một field       │ Confidence: 99,1%          │
+│                          │                             │
+│ Zoom / chuyển trang      │ Giá trị: 1.250.000.000     │
+│                          │ Confidence: 97,8%          │
+└──────────────────────────┴─────────────────────────────┘
+Người dùng:
+1. Kiểm tra trường cảnh báo.
+2. Sửa dữ liệu sai.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 71/128
+
+--- PAGE 72 ---
+3. Xác nhận kết quả OCR.
+4. Lưu bản nháp.
+5. Tiếp tục quy trình trình ký/phê duyệt.
+Mọi chỉnh sửa phải lưu:
+JSON
+{
+  "field": "contract_no",
+  "predicted_value": "O8/2026/HĐKT",
+  "corrected_value": "08/2026/HĐKT",
+  "reason": "OCR_CHARACTER_ERROR",
+  "corrected_by": "158114",
+  "corrected_at": "2026-06-10T10:42:00+07:00"
+}
+Đây là nguồn dữ liệu feedback để cải thiện model.
+4. Trạng thái xử lý hợp đồng
+UPLOADED
+→ VALIDATING_FILE
+→ OCR_QUEUED
+→ OCR_PROCESSING
+→ EXTRACTING
+→ VALIDATING_RESULT
+→ AUTO_FILLED
+→ NEED_REVIEW
+→ USER_CONFIRMED
+→ COMPLETED
+Nhánh lỗi:
+VALIDATING_FILE → REJECTED_FILE
+OCR_PROCESSING → OCR_FAILED
+CALLBACK → CALLBACK_FAILED
+NEED_REVIEW → MANUAL_ENTRY
+5. Các tình huống ngoại lệ cần xử lý
+Trường hợp Cách xử lý
+PDF có mật khẩu Báo người dùng mở khóa
+Ảnh quá mờ Chuyển NEED_REUPLOAD
+Hợp đồng thiếu trang Cảnh báo số trang/ngắt nội dung
+Upload cùng ﬁle hai lần Dùng SHA-256 phát hiện trùng
+Người dùng bấm OCR nhiều lần Dùng idempotency key
+OCR service timeout Retry qua queue
+Callback thất bại OCR retry; QLHĐ có API polling dự phòng
+Model trả JSON lỗi Schema validation và retry
+Người dùng sửa ﬁle sau OCR Tạo version tài liệu mới
+Phụ lục điều chỉnh giá trị Không ghi đè hợp đồng gốc nếu chưa có rule
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 72/128
+
+--- PAGE 73 ---
+II. Luồng ingestion cho bộ hồ sơ hải quan lưu trên Drive
+Bài toán bộ hồ sơ khác bài toán hợp đồng ở ba điểm:
+1. Một hồ sơ gồm nhiều ﬁle.
+2. Phải xác định ﬁle nào thuộc cùng một lô hàng.
+3. Phải kiểm tra tính đầy đủ và đối soát giữa nhiều chứng từ.
+Luồng chuẩn nên là:
+Drive
+→ Drive Watcher
+→ Ingestion Service
+→ Chuẩn hóa hồ sơ
+→ Đăng ký file
+→ Phân loại chứng từ
+→ OCR từng file
+→ Tổng hợp theo bộ hồ sơ
+→ Đối soát
+→ Tạo tờ khai nháp
+1. Không nên để OCR tự suy đoán ﬁle nào thuộc cùng hồ sơ
+Khóa liên kết chính phải đến từ:
+Mã lô hàng.
+Shipment ID.
+Booking ID.
+Bill of Lading number.
+Hoặc hồ sơ đã được tạo trước trong hệ thống.
+Không nên chỉ dựa vào OCR để ghép ﬁle vì:
+Số B/L có thể chưa xuất hiện ở hợp đồng.
+Invoice và Packing List có thể có số khác nhau.
+Một ﬁle có thể chứa nhiều lô.
+Tên đối tác có thể viết khác nhau.
+OCR có thể nhận nhầm mã.
+Cách an toàn nhất là: mỗi thư mục đại diện cho một bộ hồ sơ/lô hàng.
+2. Cấu trúc thư mục chuẩn trên Drive
+Cấp thư mục tổng
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 73/128
+
+--- PAGE 74 ---
+XNK_DOCUMENTS/
+└── 2026/
+    └── 06/
+        └── 202606_IMPORT_SHP000123_SAMSUNG/
+Quy tắc tên thư mục hồ sơ:
+{YYYYMM}_{IMPORT|EXPORT}_{SHIPMENT_ID}_{PARTNER_CODE}
+Ví dụ:
+202606_IMPORT_SHP000123_SAMSUNG
+202606_EXPORT_SHP000456_LAO_TEL
+Không nên dùng tên như:
+Hồ sơ mới
+Lô hàng anh Nam
+Bộ chứng từ tháng 6
+Scan mới nhất
+vì không xác định được duy nhất.
+Cấu trúc bên trong hồ sơ
+202606_IMPORT_SHP000123_SAMSUNG/
+├── 01_INCOMING/
+├── 02_CANONICAL/
+├── 03_OCR_RESULT/
+├── 04_NEED_REVIEW/
+├── 05_APPROVED/
+├── 90_QUARANTINE/
+└── 99_ARCHIVE/
+Ý nghĩa
+Thư mục Mục đích
+01_INCOMING Người dùng tải ﬁle gốc vào
+02_CANONICAL File đã kiểm tra và chuẩn hóa
+03_OCR_RESULT JSON, Markdown, báo cáo OCR
+04_NEED_REVIEW Chứng từ thiếu/sai/cần người kiểm tra
+05_APPROVED Hồ sơ đã được xác nhận
+90_QUARANTINE File lỗi, sai định dạng, không xác định
+99_ARCHIVE Phiên bản cũ hoặc hồ sơ đã hoàn tất
+Trong thực tế, không nhất thiết phải di chuyển ﬁle nhiều lần nếu Drive được dùng để cộng tác. Có thể
+giữ nguyên ﬁle và quản lý trạng thái trong database. Tuy nhiên, thư mục 01_INCOMING và 90_QUARANTINE
+vẫn rất hữu ích.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 74/128
+
+--- PAGE 75 ---
+3. Quy chuẩn tên ﬁle
+Cấu trúc đề xuất:
+{SHIPMENT_ID}_{DOC_TYPE}_{DOC_NO}_{ISSUE_DATE}_{PARTY_CODE}_{VERSION}.{EXT}
+Ví dụ:
+SHP000123_INV_INV889_20260608_SAMSUNG_V01.pdf
+SHP000123_PL_PL889_20260608_SAMSUNG_V01.xlsx
+SHP000123_BL_MAEU1234567_20260609_MAERSK_V01.pdf
+SHP000123_CO_CO7788_20260609_KR_V01.pdf
+SHP000123_CTR_HD2026012_20260530_SAMSUNG_V01.pdf
+Mã loại chứng từ
+Mã Loại tài liệu
+INV Commercial Invoice
+PL Packing List
+BL Bill of Lading
+AWB Air Waybill
+CO Certiﬁcate of Origin
+CTR Contract
+DEC Customs Declaration
+PERMIT Giấy phép
+INS Insurance
+CERT Chứng nhận
+OTHER Khác
+Quy tắc tên ﬁle
+Không dùng dấu tiếng Việt.
+Không dùng khoảng trắng.
+Dùng chữ in hoa cho mã.
+Ngày theo YYYYMMDD.
+Chỉ dùng _, -, ..
+Có version V01, V02.
+Không ghi “ﬁnal”, “ﬁnal2”, “mới nhất”.
+Không biết số chứng từ thì dùng NA.
+Không biết ngày thì dùng 00000000.
+Không tự đoán thông tin để đặt tên.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 75/128
+
+--- PAGE 76 ---
+Ví dụ chưa rõ số Invoice:
+SHP000123_INV_NA_00000000_SAMSUNG_V01.pdf
+Sau khi OCR xác định được thông tin, hệ thống có thể đề xuất đổi thành tên chuẩn.
+Tên gốc vẫn phải được lưu trong metadata:
+JSON
+{
+  "original_file_name": "scan hoa don moi nhat.pdf",
+  "canonical_file_name": "SHP000123_INV_INV889_20260608_SAMSUNG_V01.pdf"
+}
+4. Manifest của bộ hồ sơ
+Mỗi thư mục hồ sơ nên có một ﬁle metadata hoặc một bản ghi tương ứng trong database.
+Ví dụ manifest.json:
+JSON
+{
+  "shipment_id": "SHP000123",
+  "direction": "IMPORT",
+  "partner_code": "SAMSUNG",
+  "created_at": "2026-06-10T08:00:00+07:00",
+  "drive_folder_id": "DRIVE-FOLDER-99881",
+  "expected_documents": [
+    {
+      "document_type": "CONTRACT",
+      "required": true,
+      "minimum_count": 1
+    },
+    {
+      "document_type": "INVOICE",
+      "required": true,
+      "minimum_count": 1
+    },
+    {
+      "document_type": "PACKING_LIST",
+      "required": true,
+      "minimum_count": 1
+    },
+    {
+      "document_type": "BILL_OF_LADING",
+      "required": true,
+      "minimum_count": 1
+    },
+    {
+      "document_type": "CERTIFICATE_OF_ORIGIN",
+      "required": false,
+      "minimum_count": 0
+    }
+  ],
+  "status": "COLLECTING_DOCUMENTS"
+}
+Manifest giải quyết được bài toán:
+Hồ sơ phải có những loại giấy tờ nào.
+Loại nào bắt buộc.
+Loại nào có thể có nhiều ﬁle.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 76/128
+
+--- PAGE 77 ---
+Hồ sơ hiện thiếu gì.
+Khi nào đủ điều kiện chạy đối soát.
+Ai là người phụ trách.
+5. Cơ chế phát hiện ﬁle mới trên Drive
+Có hai cách.
+Cách 1. Event-driven – khuyến nghị
+Người dùng upload file
+→ Drive phát sinh change event
+→ Drive Watcher nhận thông báo
+→ Gọi Ingestion API
+Ưu điểm:
+Gần realtime.
+Không phải quét toàn bộ Drive.
+Giảm số API call.
+Phù hợp khi volume lớn.
+Cách 2. Polling định kỳ
+Scheduler mỗi 1–5 phút
+→ Quét các folder đăng ký
+→ Lấy file mới/chỉnh sửa
+→ So sánh với lần quét trước
+Dùng khi:
+Hạ tầng webhook khó triển khai.
+Drive không cung cấp sự kiện phù hợp trong môi trường hiện tại.
+Cần một cơ chế dự phòng.
+Production có thể dùng event-driven làm chính và polling làm cơ chế đối soát dự phòng.
+6. Luồng ingestion từng bước
+Bước 1. Drive Watcher nhận sự kiện
+Sự kiện ban đầu chỉ nên được coi là tín hiệu:
+JSON
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 77/128
+
+--- PAGE 78 ---
+{
+  "drive_file_id": "FILE-88981",
+  "drive_folder_id": "FOLDER-99881",
+  "event_type": "FILE_CREATED",
+  "event_time": "2026-06-10T10:15:00+07:00"
+}
+Không gọi OCR ngay lập tức vì ﬁle có thể vẫn đang upload hoặc đồng bộ.
+Bước 2. Debounce và kiểm tra ﬁle đã ổn định
+Ingestion Service chờ một khoảng ngắn, sau đó kiểm tra:
+File size không thay đổi.
+Revision không thay đổi.
+File tải xuống được.
+Không phải temporary ﬁle.
+Không phải shortcut.
+Không phải ﬁle đang upload dở.
+Trạng thái:
+DISCOVERED → STABILIZING → READY_TO_INGEST
+Bước 3. Kiểm tra sự kiện trùng
+Không dùng mỗi tên ﬁle làm khóa.
+Khóa idempotency nên gồm:
+Drive File ID + Revision ID + SHA-256
+Ví dụ:
+FILE-88981-REV03-A7D31F...
+Điều này ngăn:
+Rename tạo thêm job.
+Di chuyển thư mục tạo thêm job.
+Drive gửi lặp event.
+Người dùng bấm xử lý nhiều lần.
+Bước 4. Xác định hồ sơ cha
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 78/128
+
+--- PAGE 79 ---
+Ingestion Service đọc đường dẫn:
+XNK_DOCUMENTS/2026/06/202606_IMPORT_SHP000123_SAMSUNG/01_INCOMING
+Từ đó lấy:
+JSON
+{
+  "shipment_id": "SHP000123",
+  "direction": "IMPORT",
+  "partner_code": "SAMSUNG"
+}
+Sau đó kiểm tra shipment_id có tồn tại trong database không.
+Nếu thư mục không đúng chuẩn:
+→ QUARANTINE_FOLDER_INVALID
+Không nên tự ý ghép vào hồ sơ gần giống.
+Bước 5. Kiểm tra ﬁle
+MIME type.
+Extension thực.
+Dung lượng.
+Virus/malware.
+PDF password.
+Số trang.
+File hỏng.
+File trùng nội dung.
+Quyền truy cập.
+Có thuộc folder được theo dõi không.
+File sai được chuyển logic sang:
+90_QUARANTINE
+Kèm lý do:
+JSON
+{
+  "error_code": "PASSWORD_PROTECTED_PDF",
+  "message": "PDF được bảo vệ bằng mật khẩu",
+  "action_required": "UPLOAD_UNLOCKED_FILE"
+}
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 79/128
+
+--- PAGE 80 ---
+Bước 6. Chuẩn hóa tên ﬁle
+Ingestion Service thử đọc thông tin từ:
+1. Tên ﬁle hiện tại.
+2. Metadata của Drive.
+3. Folder cha.
+4. OCR/classiﬁcation sơ bộ.
+Nếu tên chưa chuẩn, có hai phương án:
+Phương án an toàn
+Không đổi tên ﬁle người dùng.
+Lưu canonical_file_name trong database.
+Hiển thị đề xuất đổi tên.
+Phương án tự động
+Đổi tên sau khi xác định đủ thông tin.
+Lưu tên cũ.
+Ghi audit log.
+Không đổi nếu ﬁle đang được người khác sử dụng.
+Bước 7. Đăng ký tài liệu
+JSON
+{
+  "document_id": "XNK-DOC-000998",
+  "shipment_id": "SHP000123",
+  "drive_file_id": "FILE-88981",
+  "drive_revision_id": "REV03",
+  "original_file_name": "scan1.pdf",
+  "canonical_file_name": "SHP000123_INV_NA_00000000_SAMSUNG_V01.pdf",
+  "document_type": "UNKNOWN",
+  "sha256": "A7D31F...",
+  "status": "REGISTERED"
+}
+Bước 8. Phân loại chứng từ
+Nếu tên ﬁle đã chuẩn thì có thể lấy DOC_TYPE từ tên.
+Nếu chưa rõ:
+Classifier
+→ Invoice
+→ Packing List
+→ Bill of Lading
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 80/128
+
+--- PAGE 81 ---
+→ C/O
+→ Contract
+→ Other
+Kết quả:
+JSON
+{
+  "document_type": "COMMERCIAL_INVOICE",
+  "classification_confidence": 0.983,
+  "action": "AUTO_CLASSIFIED"
+}
+Conﬁdence thấp:
+→ NEED_DOCUMENT_CLASSIFICATION
+Người dùng chọn loại tài liệu trước khi chạy extraction.
+Bước 9. Tạo OCR Job cho từng ﬁle
+http
+POST /api/v1/ocr/jobs
+JSON
+{
+  "document_id": "XNK-DOC-000998",
+  "business_object_id": "SHP000123",
+  "document_type": "COMMERCIAL_INVOICE",
+  "schema_code": "XNK_INVOICE_V3",
+  "file_url": "temporary-download-url",
+  "callback_url": "https://ingestion.internal/api/ocr/callback",
+  "metadata": {
+    "source": "GOOGLE_DRIVE",
+    "shipment_id": "SHP000123",
+    "drive_file_id": "FILE-88981"
+  }
+}
+Mỗi chứng từ được xử lý độc lập để một ﬁle lỗi không làm toàn bộ hồ sơ thất bại.
+Bước 10. Nhận kết quả OCR
+Ví dụ Invoice:
+JSON
+{
+  "document_id": "XNK-DOC-000998",
+  "document_type": "COMMERCIAL_INVOICE",
+  "fields": {
+    "invoice_no": "INV889",
+    "invoice_date": "2026-06-08",
+    "seller": "SAMSUNG ELECTRONICS",
+    "buyer": "VIETTEL COMMERCE",
+    "currency": "USD",
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 81/128
+
+--- PAGE 82 ---
+    "total_amount": 250000,
+    "incoterm": "CIF",
+    "line_items": [
+      {
+        "item_code": "SM-A556",
+        "description": "Mobile phone",
+        "quantity": 1000,
+        "unit_price": 250,
+        "amount": 250000
+      }
+    ]
+  }
+}
+Kết quả được lưu theo hai cấp:
+Document-level result
+Shipment-level normalized data
+Không nên ghi đè ngay dữ liệu của ﬁle này lên ﬁle khác.
+7. Tổng hợp ở cấp bộ hồ sơ
+Sau khi từng ﬁle OCR xong, Dossier Orchestrator xây ma trận:
+Loại chứng từ Trạng thái Số lượng Kết quả
+Contract Đã có 1 Đã trích xuất
+Invoice Đã có 1 Đã trích xuất
+Packing List Đã có 1 Đã trích xuất
+Bill of Lading Đã có 1 Đã trích xuất
+C/O Thiếu 0 Không bắt buộc
+Trạng thái hồ sơ:
+COLLECTING_DOCUMENTS
+→ DOCUMENTS_COMPLETE
+→ EXTRACTING
+→ READY_FOR_RECONCILIATION
+8. Đối soát nhiều chứng từ
+Hệ thống tạo một canonical data model:
+JSON
+{
+  "shipment_id": "SHP000123",
+  "goods": [
+    {
+      "item_code": "SM-A556",
+      "invoice_quantity": 1000,
+      "packing_list_quantity": 1000,
+      "contract_quantity": 1000,
+      "bl_quantity": null
+    }
+  ]
+}
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 82/128
+
+--- PAGE 83 ---
+Sau đó chạy rule.
+Các rule phổ biến
+Invoice với Packing List
+Invoice.Quantity = PackingList.Quantity
+Invoice.ItemDescription ≈ PackingList.ItemDescription
+Invoice.NetWeight ≤ PackingList.GrossWeight
+Invoice với Contract
+Invoice.Seller = Contract.PartyB
+Invoice.Buyer = Contract.PartyA
+Invoice.TotalAmount ≤ Contract.RemainingValue
+Invoice.Currency = Contract.Currency
+Packing List với B/L
+PackingList.PackageCount = BL.PackageCount
+PackingList.GrossWeight ≈ BL.GrossWeight
+ContainerNo phải khớp
+Invoice với tờ khai nháp
+Invoice.TotalAmount = Declaration.InvoiceValue
+Invoice.Currency = Declaration.Currency
+HS code phải hợp lệ
+Kết quả đối soát
+JSON
+{
+  "shipment_id": "SHP000123",
+  "reconciliation_status": "NEED_REVIEW",
+  "differences": [
+    {
+      "field": "gross_weight",
+      "packing_list_value": 12500,
+      "bill_of_lading_value": 12350,
+      "difference": 150,
+      "severity": "HIGH",
+      "status": "OPEN"
+    }
+  ]
+}
+Các sai lệch tạo thành:
+Cảnh báo.
+Ticket.
+Task cho nhân viên.
+Dashboard theo dõi.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 83/128
+
+--- PAGE 84 ---
+9. Tạo draft tờ khai hải quan
+Chỉ khi:
+Đủ chứng từ bắt buộc.
+Các trường critical đã có.
+Không có lỗi đối soát mức nghiêm trọng chưa xử lý.
+HS code đã xác nhận.
+Người phụ trách đã review.
+Hệ thống mới tạo payload:
+JSON
+{
+  "shipment_id": "SHP000123",
+  "declaration_type": "IMPORT",
+  "seller": {},
+  "buyer": {},
+  "invoice": {},
+  "goods_lines": [],
+  "containers": [],
+  "incoterm": "CIF",
+  "currency": "USD",
+  "total_value": 250000,
+  "status": "DRAFT"
+}
+Sau đó:
+Gọi API hệ thống khai báo nếu có.
+Hoặc RPA mở phần mềm khai báo và tự điền.
+Chỉ lưu bản nháp.
+Người dùng kiểm tra trước khi truyền chính thức.
+10. State machine chuẩn cho ingestion
+Cấp ﬁle
+DISCOVERED
+→ STABILIZING
+→ REGISTERED
+→ VALIDATING
+→ CLASSIFYING
+→ QUEUED
+→ OCR_PROCESSING
+→ EXTRACTED
+→ NORMALIZED
+→ NEED_REVIEW / COMPLETED
+→ ARCHIVED
+Nhánh lỗi:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 84/128
+
+--- PAGE 85 ---
+VALIDATING → QUARANTINED
+OCR_PROCESSING → RETRYING
+RETRYING → FAILED
+Cấp bộ hồ sơ
+CREATED
+→ COLLECTING_DOCUMENTS
+→ DOCUMENTS_COMPLETE
+→ EXTRACTING
+→ RECONCILING
+→ NEED_REVIEW
+→ READY_FOR_DECLARATION
+→ DECLARATION_DRAFT_CREATED
+→ APPROVED
+→ ARCHIVED
+III. Điểm quan trọng khi triển khai thực tế
+1. API trước, RPA sau
+Thứ tự ưu tiên:
+API tích hợp
+→ Database/file integration
+→ RPA chỉ dùng khi hệ thống đích không có API
+Không nên dùng RPA để:
+Theo dõi thư mục Drive nếu có API.
+Tải ﬁle thủ công.
+Copy-paste giữa các hệ thống có API.
+Đổi tên ﬁle bằng thao tác UI.
+RPA nên tập trung vào phần hệ thống khai báo cũ hoặc hệ thống bên ngoài không cung cấp API.
+2. File gốc phải bất biến
+Không xóa hoặc ghi đè ﬁle gốc sau OCR.
+Nên lưu:
+File gốc.
+File canonical.
+Kết quả OCR.
+Kết quả đã sửa.
+Model version.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 85/128
+
+--- PAGE 86 ---
+Schema version.
+Audit log.
+3. Không trigger theo tên ﬁle đơn thuần
+Phải sử dụng:
+Drive File ID + Revision + Hash
+Nếu không, việc rename hoặc move ﬁle có thể tạo nhiều OCR job trùng nhau.
+4. Tách version của ﬁle
+Nếu người dùng tải Invoice sửa đổi:
+SHP000123_INV_INV889_20260608_SAMSUNG_V01.pdf
+SHP000123_INV_INV889_20260608_SAMSUNG_V02.pdf
+Phải quy định:
+V02 là bản mới.
+V01 không bị xóa.
+Kết quả đối soát phải chạy lại.
+Tờ khai nháp cũ chuyển trạng thái OUTDATED.
+Lưu lý do thay thế.
+5. Monitoring cần có
+Số ﬁle được phát hiện.
+Số ﬁle bị quarantine.
+Thời gian ingestion.
+Thời gian OCR.
+Tỷ lệ classify sai.
+Tỷ lệ tài liệu phải review.
+Tỷ lệ callback thất bại.
+Số job bị trùng.
+Hồ sơ thiếu chứng từ.
+Hồ sơ có sai lệch.
+Queue backlog.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 86/128
+
+--- PAGE 87 ---
+Số ﬁle theo từng loại chứng từ.
+IV. Các tài liệu BA cần xây dựng
+Để triển khai hai luồng trên, BA cần đặc tả tối thiểu:
+Tài liệu Nội dung
+Document Type Catalog Danh mục hợp đồng, Invoice, PL, B/L, C/O…
+Folder Convention Quy tắc cấu trúc Drive
+File Naming Convention Quy tắc tên và version
+Folder Manifest Chứng từ bắt buộc theo từng loại hồ sơ
+Field Catalog Danh sách trường cho từng chứng từ
+API Mapping OCR ﬁeld ↔  QLHĐ/tờ khai
+Ingestion State Machine Trạng thái ﬁle và hồ sơ
+Validation Rule Catalog Rule từng tài liệu và rule đối soát
+Conﬁdence Policy Auto-ﬁll, review, reject
+Error Handling Matrix Lỗi, retry, quarantine, thông báo
+Review Workﬂow Ai kiểm tra, ai phê duyệt
+Audit Requirement File gốc, kết quả OCR, lịch sử sửa
+Acceptance Criteria Chỉ số chính xác và SLA
+Kiến trúc tổng thể nên được chốt theo nguyên tắc:
+QLHĐ:
+Upload một tài liệu
+→ OCR job bất đồng bộ
+→ Callback
+→ Auto-fill bản nháp
+→ Human confirmation
+Hồ sơ hải quan:
+Drive folder đại diện một shipment
+→ Ingestion từng file
+→ Chuẩn hóa và phân loại
+→ OCR độc lập
+→ Tổng hợp cấp hồ sơ
+→ Đối soát chéo
+→ Tạo draft tờ khai
+→ Human confirmation
+1. làm rõ từng bước lớn do công nghệ gì đảm nhận
+2. Giải thích ý nghĩa từng trường mà bạn nêu để người chưa làm cũng hiểu, đặc biệt là các trường 
+lạ
+  
+"schema_code": "CONTRACT_EXTRACTION_V2",
+  "callback_url": "https://qlhd.internal/api/ocr/callback",
+  "idempotency_key": "DOC-20260610-000125-SHA256-A7D31",
+Show moreShow less
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 87/128
+
+--- PAGE 88 ---
+Trong kịch bản anh mô tả, OCR chịu trách nhiệm đọc và trích xuất dữ liệu; hệ thống QLHĐ hoặc lớp tích
+hợp chịu trách nhiệm gọi API, lưu kết quả và tự điền form. Với hồ sơ hải quan, cần thêm lớp ingestion để
+quản lý nhiều ﬁle, phân loại chứng từ, kiểm tra hồ sơ và đối soát giữa Invoice, Packing List, B/L, C/O, hợp
+đồng. 
+Một điểm cần làm rõ: “trigger API” ở đây nên hiểu là sự kiện nghiệp vụ phát sinh sau khi upload ﬁle
+thành công, không nên dùng database trigger để gọi OCR.
+I. Kiến trúc tổng thể cho bài toán QLHĐ
+Người dùng
+   │
+   ▼
+Giao diện QLHĐ
+   │ Upload hợp đồng
+   ▼
+QLHĐ Backend
+   ├── Lưu metadata vào Database
+   ├── Lưu file vào Object Storage
+   └── Tạo yêu cầu OCR
+           │
+           ▼
+OCR Orchestrator / OCR API
+   ├── Tiền xử lý file
+   ├── PaddleOCR
+   ├── sLLM / LayoutLM
+   ├── Chuẩn hóa dữ liệu
+   └── Kiểm tra rule
+           │
+           ▼
+Callback API của QLHĐ
+   │
+   ▼
+Mapping dữ liệu → Auto-fill bản nháp
+   │
+   ▼
+Người dùng kiểm tra và xác nhận
+II. Từng bước lớn do công nghệ nào đảm nhận?
+Bước 1. Người dùng tải hợp đồng lên QLHĐ
+Công nghệ đảm nhận
+Thành phần Công nghệ có thể dùng
+Giao diện upload React, Angular, Vue
+Backend QLHĐ Java Spring Boot, .NET, Node.js hoặc FastAPI
+Lưu ﬁle MinIO, Amazon S3, Ceph hoặc ﬁle server
+Lưu thông tin ﬁle PostgreSQL, Oracle, SQL Server
+Kiểm tra virus ClamAV hoặc công cụ ATTT của doanh nghiệp
+Backend thực hiện
+Kịch bản OCR RPA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 88/128
+
+--- PAGE 89 ---
+1. Kiểm tra định dạng ﬁle.
+2. Kiểm tra dung lượng.
+3. Kiểm tra ﬁle có mật khẩu không.
+4. Kiểm tra virus.
+5. Tính mã hash để phát hiện ﬁle trùng.
+6. Lưu ﬁle.
+7. Tạo bản ghi tài liệu.
+8. Phát sinh sự kiện yêu cầu OCR.
+Tại sao phải tách ﬁle và metadata?
+File PDF được lưu ở Object Storage, còn database chỉ lưu thông tin quản lý:
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "original_file_name": "Hop dong ABC.pdf",
+  "storage_path": "contracts/2026/06/DOC-20260610-000125.pdf",
+  "file_size": 5234189,
+  "sha256": "A7D31F...",
+  "uploaded_by": "158114",
+  "status": "UPLOADED"
+}
+Không nên lưu trực tiếp ﬁle PDF lớn vào bảng nghiệp vụ nếu không có lý do đặc biệt.
+Bước 2. QLHĐ tạo một OCR Job
+Sau khi ﬁle được lưu thành công, QLHĐ gọi OCR API.
+Công nghệ đảm nhận
+Công việc Công nghệ
+Gọi OCR API REST API qua HTTPS
+API OCR FastAPI, Spring Boot hoặc .NET
+Xử lý bất đồng bộ RabbitMQ, Kafka, Redis Queue
+Theo dõi trạng thái PostgreSQL/Redis
+Xác thực giữa hệ thống JWT, API Key, OAuth2 hoặc HMAC
+Vì sao phải tạo Job?
+OCR không phải lúc nào cũng trả kết quả trong 1–2 giây. Một hợp đồng có thể có 30–100 trang. Vì vậy
+QLHĐ chỉ gửi yêu cầu và nhận lại một job_id.
+QLHĐ gửi yêu cầu
+→ OCR trả “đã tiếp nhận”
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 89/128
+
+--- PAGE 90 ---
+→ OCR xử lý nền
+→ OCR gọi callback khi hoàn thành
+Đây gọi là asynchronous processing — xử lý bất đồng bộ.
+Không nên làm
+QLHĐ gọi OCR
+→ Giữ request chờ 2 phút
+→ OCR trả kết quả
+Cách này dễ timeout, đặc biệt khi ﬁle lớn hoặc GPU đang có nhiều job.
+Bước 3. Queue tiếp nhận và điều phối Job
+Công nghệ đảm nhận
+RabbitMQ: phù hợp hàng đợi tác vụ OCR.
+Kafka: phù hợp khi khối lượng sự kiện lớn và cần lưu lịch sử event.
+Redis Queue/Celery: đơn giản, phù hợp PoC hoặc hệ thống vừa.
+Kubernetes Job: dùng cho các tác vụ xử lý độc lập, nặng.
+Ý nghĩa
+Queue giống như “hàng chờ xử lý”:
+Job 001: hợp đồng 10 trang
+Job 002: hợp đồng 50 trang
+Job 003: Invoice 2 trang
+Worker OCR lấy từng job ra xử lý tùy theo tài nguyên GPU.
+Queue giúp:
+Không mất yêu cầu khi OCR server tạm thời bận.
+Retry khi lỗi.
+Giới hạn số job đồng thời.
+Theo dõi backlog.
+Ưu tiên tài liệu quan trọng.
+Bước 4. OCR Service lấy ﬁle
+OCR Service không nhất thiết nhận toàn bộ ﬁle dưới dạng Base64. QLHĐ có thể cấp một đường dẫn tải
+ﬁle tạm thời.
+Công nghệ đảm nhận
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 90/128
+
+--- PAGE 91 ---
+S3/MinIO Presigned URL.
+HTTPS nội bộ.
+Google Drive API nếu nguồn là Drive.
+Network ﬁle system nếu triển khai hoàn toàn nội bộ.
+Ví dụ:
+JSON
+{
+  "file_url": "https://storage.internal/...signed-url..."
+}
+OCR Service dùng URL này để tải ﬁle về vùng xử lý tạm.
+Vì sao dùng signed URL?
+Signed URL là đường dẫn:
+Chỉ có hiệu lực trong thời gian ngắn.
+Chỉ cho phép tải đúng một ﬁle.
+Không phải cung cấp tài khoản storage cho OCR Service.
+Hạn chế truy cập trái phép.
+Bước 5. Kiểm tra và tiền xử lý ﬁle
+Công nghệ đảm nhận
+Công việc Công nghệ
+Đọc PDF PyMuPDF, PDFium, Apache PDFBox
+Chuyển PDF thành ảnh PyMuPDF, Poppler
+Xử lý ảnh OpenCV, Pillow
+Phát hiện trang có text layer PDF parser
+Xoay, deskew OpenCV, PaddleOCR preprocessing
+Phát hiện chất lượng ảnh OpenCV hoặc model image quality
+Xử lý thực tế
+1. Kiểm tra ﬁle có mở được không.
+2. Đếm số trang.
+3. Phân biệt PDF điện tử và PDF scan.
+4. Tách từng trang.
+5. Xoay trang.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 91/128
+
+--- PAGE 92 ---
+6. Sửa nghiêng.
+7. Giảm nhiễu.
+8. Tăng tương phản.
+9. Đánh dấu trang quá mờ.
+10. Chuyển về kích thước/DPI chuẩn.
+Nếu PDF đã có text layer tốt, có thể lấy text trực tiếp và chỉ OCR các trang scan.
+Bước 6. Layout Detection
+Công nghệ đảm nhận
+PaddleOCR PP-Structure.
+LayoutParser.
+Model detection dựa trên YOLO/RT-DETR.
+Model layout riêng đã ﬁne-tune.
+Nhiệm vụ
+Phát hiện trên trang có:
+Tiêu đề.
+Đoạn văn.
+Bảng.
+Header/footer.
+Chữ ký.
+Con dấu.
+Điều khoản.
+Vùng key-value.
+Đầu ra:
+JSON
+{
+  "page": 2,
+  "region_id": "REGION-015",
+  "region_type": "TABLE",
+  "bbox": [100, 600, 2250, 2500],
+  "confidence": 0.97
+}
+bbox là tọa độ vùng trên ảnh.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 92/128
+
+--- PAGE 93 ---
+Bước 7. Text Detection và Text Recognition
+Công nghệ đảm nhận
+PaddleOCR 3.x.
+PP-OCRv5 hoặc model OCR được ﬁne-tune tiếng Việt.
+Triton Inference Server nếu cần phục vụ model quy mô lớn.
+Text Detection làm gì?
+Tìm vị trí dòng chữ.
+JSON
+{
+  "bbox": [120, 200, 900, 260],
+  "detection_confidence": 0.99
+}
+Text Recognition làm gì?
+Đọc nội dung trong vùng đó.
+JSON
+{
+  "text": "Số hợp đồng: 08/2026/HĐKT-VCM",
+  "recognition_confidence": 0.98
+}
+OCR ở bước này mới đọc được chữ, chưa chắc đã hiểu đây là trường “số hợp đồng”.
+Bước 8. Khôi phục cấu trúc
+Công nghệ đảm nhận
+PaddleOCR PP-Structure.
+Python processing.
+Table reconstruction algorithms.
+Heuristic dựa trên tọa độ.
+Model table recognition.
+Nhiệm vụ
+Ghép các dòng thành đoạn.
+Khôi phục thứ tự đọc.
+Nhận diện hàng/cột bảng.
+Xác định key nằm cạnh value.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 93/128
+
+--- PAGE 94 ---
+Giữ lại trang và tọa độ nguồn.
+Ví dụ OCR đọc thành nhiều dòng:
+Tổng giá trị hợp đồng
+1.250.000.000
+VNĐ
+Lớp tái cấu trúc ghép thành:
+Tổng giá trị hợp đồng: 1.250.000.000 VNĐ
+Bước 9. Trích xuất trường nghiệp vụ
+Công nghệ đảm nhận
+Có hai phương án.
+Phương án A — LayoutLMv3
+Dùng khi:
+Bộ trường tương đối cố định.
+Mẫu hợp đồng ổn định.
+Cần conﬁdence từng entity.
+Cần tốc độ cao.
+LayoutLMv3 nhận:
+Text OCR.
+Bounding box.
+Ảnh trang.
+Vị trí tương quan giữa các đoạn.
+Phương án B — sLLM
+Ví dụ:
+Qwen3-4B-Instruct.
+Qwen 7B/8B.
+Phi Mini.
+Gemma nhỏ.
+sLLM nhận nội dung OCR/Markdown và schema yêu cầu:
+Hãy trích xuất:
+- số hợp đồng
+- ngày ký
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 94/128
+
+--- PAGE 95 ---
+- bên A
+- bên B
+- giá trị hợp đồng
+- thời hạn
+- các đợt thanh toán
+Kết quả:
+JSON
+{
+  "contract_no": "08/2026/HĐKT-VCM",
+  "signing_date": "2026-06-01",
+  "contract_value": 1250000000,
+  "currency": "VND"
+}
+Bước 10. Chuẩn hóa dữ liệu
+Công nghệ đảm nhận
+Python/Java/.NET code.
+Rule engine.
+Regex.
+Dictionary/master data.
+Có thể sử dụng Drools nếu rule phức tạp.
+Ví dụ
+"1.250.000.000 VNĐ" → 1250000000
+"01 tháng 06 năm 2026" → 2026-06-01
+"0101 234 567" → 0101234567
+"Ba mươi phần trăm" → 30
+Không nên giao hoàn toàn việc chuẩn hóa cho LLM vì các trường tài chính cần kết quả xác định.
+Bước 11. Kiểm tra business rule
+Công nghệ đảm nhận
+Validation Service viết bằng Java/Python/.NET.
+Rule Engine.
+Các câu lệnh kiểm tra database.
+Master data của QLHĐ.
+Một số rule
+Ngày hết hạn ≥ Ngày hiệu lực
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 95/128
+
+--- PAGE 96 ---
+Tổng tỷ lệ thanh toán ≤ 100%
+Tổng giá trị thanh toán ≤ Giá trị hợp đồng
+Giá trị trước VAT + VAT ≈ Tổng giá trị
+Số hợp đồng không trùng
+Đây là lớp nghiệp vụ, không phải OCR model.
+Bước 12. OCR gọi callback về QLHĐ
+Công nghệ đảm nhận
+OCR Backend gọi REST API.
+Callback endpoint do backend QLHĐ cung cấp.
+HTTPS + JWT/HMAC.
+Retry mechanism.
+Dead-letter queue nếu callback lỗi nhiều lần.
+Luồng:
+OCR xử lý xong
+→ POST kết quả tới callback_url
+→ QLHĐ xác nhận đã nhận
+→ OCR đánh dấu callback thành công
+Nếu QLHĐ đang bảo trì:
+Callback lần 1 thất bại
+→ chờ 30 giây
+→ callback lần 2
+→ chờ 2 phút
+→ callback lần 3
+Bước 13. QLHĐ mapping dữ liệu và auto-ﬁll
+Công nghệ đảm nhận
+Backend QLHĐ.
+Mapping conﬁguration.
+Database.
+Frontend React/Angular/Vue.
+OCR có thể gọi trường là:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 96/128
+
+--- PAGE 97 ---
+contract_value
+QLHĐ có thể lưu trong cột:
+TOTAL_CONTRACT_AMOUNT
+Vì vậy cần bảng mapping:
+Trường OCR Trường QLHĐ
+contract_no CONTRACT_NUMBER
+party_a.name PARTY_A_NAME
+party_b.tax_code PARTY_B_TAX_CODE
+contract_value TOTAL_CONTRACT_AMOUNT
+QLHĐ tự điền vào bản nháp, không tự phê duyệt.
+III. Giải thích toàn bộ các trường trong request OCR
+Ví dụ request đầy đủ:
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "business_object_id": "CTR-DRAFT-00089",
+  "document_type": "CONTRACT",
+  "schema_code": "CONTRACT_EXTRACTION_V2",
+  "file_url": "https://storage.internal/signed-url",
+  "callback_url": "https://qlhd.internal/api/ocr/callback",
+  "idempotency_key": "DOC-20260610-000125-SHA256-A7D31",
+  "metadata": {
+    "source_system": "QLHD",
+    "business_unit": "VCM",
+    "uploaded_by": "158114",
+    "language": ["vi", "en"]
+  }
+}
+1. document_id
+JSON
+"document_id": "DOC-20260610-000125"
+Ý nghĩa
+Mã duy nhất của ﬁle trong hệ thống.
+Nó giống “số căn cước” của tài liệu.
+Dùng để
+Tra cứu trạng thái OCR.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 97/128
+
+--- PAGE 98 ---
+Liên kết ﬁle gốc với kết quả OCR.
+Tìm lịch sử xử lý.
+Phân biệt hai ﬁle có cùng tên.
+Lưu audit log.
+Ai tạo?
+QLHĐ tạo khi ﬁle được upload.
+Không nên dùng gì thay thế?
+Không nên dùng tên ﬁle vì người dùng có thể upload nhiều ﬁle cùng tên:
+hopdong.pdf
+hopdong.pdf
+hopdong.pdf
+2. business_object_id
+JSON
+"business_object_id": "CTR-DRAFT-00089"
+Ý nghĩa
+Mã đối tượng nghiệp vụ mà tài liệu thuộc về.
+Trong trường hợp này:
+document_id là mã ﬁle.
+business_object_id là mã bản nháp hợp đồng.
+Một bản nháp hợp đồng có thể có nhiều ﬁle:
+CTR-DRAFT-00089
+├── Hợp đồng chính
+├── Phụ lục 01
+├── Giấy ủy quyền
+└── Báo giá
+Ví dụ với hồ sơ hải quan
+JSON
+"business_object_id": "SHP000123"
+Nghĩa là ﬁle thuộc hồ sơ lô hàng SHP000123.
+3. document_type
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 98/128
+
+--- PAGE 99 ---
+JSON
+"document_type": "CONTRACT"
+Ý nghĩa
+Loại tài liệu đang được xử lý.
+Ví dụ:
+CONTRACT
+INVOICE
+PACKING_LIST
+BILL_OF_LADING
+CERTIFICATE_OF_ORIGIN
+CUSTOMS_DECLARATION
+Tại sao cần?
+Mỗi loại tài liệu có:
+Bộ trường khác nhau.
+Model hoặc prompt khác nhau.
+Rule khác nhau.
+Màn hình review khác nhau.
+Invoice không thể dùng chung hoàn toàn bộ trường với hợp đồng.
+4. schema_code
+JSON
+"schema_code": "CONTRACT_EXTRACTION_V2"
+Đây là trường dễ gây nhầm nhất.
+Hiểu đơn giản
+schema_code cho OCR biết:
+“Với tài liệu này, anh cần trích xuất bộ trường nào, theo cấu trúc và phiên bản nào?”
+Tách tên
+CONTRACT       = loại tài liệu hợp đồng
+EXTRACTION     = nhiệm vụ trích xuất dữ liệu
+V2             = phiên bản số 2
+Ví dụ phiên bản V1
+JSON
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 99/128
+
+--- PAGE 100 ---
+{
+  "contract_no": "",
+  "signing_date": "",
+  "party_a": "",
+  "party_b": "",
+  "contract_value": ""
+}
+Phiên bản V2 bổ sung
+JSON
+{
+  "contract_no": "",
+  "signing_date": "",
+  "party_a": {
+    "name": "",
+    "tax_code": "",
+    "address": "",
+    "representative": ""
+  },
+  "party_b": {
+    "name": "",
+    "tax_code": "",
+    "address": "",
+    "representative": ""
+  },
+  "contract_value": {
+    "before_tax": 0,
+    "vat": 0,
+    "after_tax": 0,
+    "currency": ""
+  },
+  "payment_milestones": []
+}
+Tại sao phải có version?
+Vì hệ thống thay đổi theo thời gian.
+Nếu không có version:
+QLHĐ cũ yêu cầu 10 trường.
+OCR mới trả 20 trường.
+Backend cũ có thể lỗi hoặc mapping sai.
+Có V1, V2 giúp hai bên biết chính xác format đang dùng.
+schema_code không nhất thiết là database schema
+Nó thường là mã cấu hình nghiệp vụ, có thể liên kết với:
+JSON Schema.
+Danh sách ﬁeld.
+Prompt của sLLM.
+Model version.
+Validation rule.
+Mapping đầu ra.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 100/128
+
+--- PAGE 101 ---
+Ví dụ bảng cấu hình:
+Schema code Loại tài liệu Trường Trạng thái
+CONTRACT_EXTRACTION_V1 Hợp đồng 10 Ngừng dùng
+CONTRACT_EXTRACTION_V2 Hợp đồng 24 Đang dùng
+INVOICE_EXTRACTION_V3 Invoice 18 + line items Đang dùng
+5. file_url
+JSON
+"file_url": "https://storage.internal/signed-url"
+Ý nghĩa
+Đường dẫn để OCR Service tải ﬁle.
+Vì sao không gửi luôn ﬁle?
+Nếu ﬁle 100 MB được encode Base64:
+Request rất lớn.
+Tốn thêm bộ nhớ.
+Dễ timeout.
+Khó retry.
+Vì vậy QLHĐ lưu ﬁle trước, sau đó đưa đường dẫn tải cho OCR.
+Yêu cầu an toàn
+URL chỉ có hiệu lực 5–15 phút.
+Chỉ đọc, không cho ghi/xóa.
+Chỉ truy cập đúng ﬁle.
+Dùng HTTPS.
+Không ghi URL đầy đủ vào log lâu dài.
+6. callback_url
+JSON
+"callback_url": "https://qlhd.internal/api/ocr/callback"
+Hiểu đơn giản
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 101/128
+
+--- PAGE 102 ---
+Đây là địa chỉ mà OCR phải gọi lại khi hoàn thành.
+Có thể hiểu như QLHĐ nói với OCR:
+“Khi xử lý xong, hãy gửi kết quả về địa chỉ này.”
+Luồng
+1. QLHĐ gọi OCR API
+2. OCR trả job_id
+3. OCR xử lý trong nền
+4. OCR gọi callback_url
+5. QLHĐ nhận kết quả
+Callback khác API upload thế nào?
+API Chiều gọi
+OCR Job API QLHĐ gọi OCR
+Callback API OCR gọi ngược lại QLHĐ
+Callback URL do ai cung cấp?
+Đội phát triển QLHĐ xây endpoint này.
+Ví dụ:
+http
+POST /api/ocr/callback
+Callback cần kiểm tra
+Request có đúng từ OCR Service không?
+Chữ ký HMAC có hợp lệ không?
+job_id có tồn tại không?
+document_id có khớp không?
+Kết quả đã nhận trước đó chưa?
+Schema version có hỗ trợ không?
+7. idempotency_key
+JSON
+"idempotency_key": "DOC-20260610-000125-SHA256-A7D31"
+Đây cũng là trường lạ nhưng rất quan trọng.
+Hiểu đơn giản
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 102/128
+
+--- PAGE 103 ---
+idempotency_key là mã dùng để ngăn hệ thống tạo nhiều job trùng nhau.
+Ví dụ:
+1. Người dùng bấm nút “Trích xuất” hai lần.
+2. Mạng chậm, frontend tự retry.
+3. QLHĐ không biết request đầu đã thành công nên gửi lại.
+4. Drive gửi cùng một event hai lần.
+Nếu không có idempotency_key:
+Một file → tạo 3 OCR Job → xử lý 3 lần → tốn GPU → callback 3 lần
+Nếu có idempotency_key:
+Request 1 → tạo OCR-JOB-001
+Request 2 cùng key → trả lại OCR-JOB-001
+Không tạo job mới
+Cấu tạo ví dụ
+DOC-20260610-000125-SHA256-A7D31
+Trong đó:
+DOC-20260610-000125: mã tài liệu.
+SHA256-A7D31: phần mã hash của nội dung ﬁle.
+Nếu ﬁle bị thay đổi, hash thay đổi, hệ thống được phép tạo job mới.
+Tại sao chỉ dùng document_id chưa đủ?
+Vì cùng một tài liệu có thể có phiên bản mới:
+Document ID: DOC-001
+Revision 1: hash ABC
+Revision 2: hash XYZ
+Nếu chỉ dùng DOC-001, phiên bản mới có thể bị hiểu nhầm là request trùng.
+Quy tắc tốt hơn
+document_id + revision_id + file_hash + schema_code
+Ví dụ:
+DOC-001-REV02-A7D31-CONTRACT_EXTRACTION_V2
+Như vậy:
+Cùng ﬁle, cùng schema: không xử lý lại.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 103/128
+
+--- PAGE 104 ---
+File đổi nội dung: tạo job mới.
+Schema đổi từ V1 lên V2: được phép xử lý lại.
+8. metadata
+JSON
+"metadata": {
+  "source_system": "QLHD",
+  "business_unit": "VCM",
+  "uploaded_by": "158114",
+  "language": ["vi", "en"]
+}
+Ý nghĩa
+Thông tin bổ sung giúp OCR hiểu ngữ cảnh và phục vụ truy vết.
+Metadata không nhất thiết là dữ liệu cần trích xuất.
+source_system
+JSON
+"source_system": "QLHD"
+File đến từ hệ thống nào.
+Ví dụ:
+QLHD
+GOOGLE_DRIVE
+EMAIL
+DMS
+ERP
+MOBILE_APP
+Dùng để:
+Thống kê.
+Routing kết quả.
+Audit.
+Áp dụng cấu hình theo nguồn.
+business_unit
+JSON
+"business_unit": "VCM"
+Đơn vị nghiệp vụ sở hữu tài liệu.
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 104/128
+
+--- PAGE 105 ---
+VCM.
+Trung tâm Xuất nhập khẩu.
+Phòng Pháp chế.
+Phòng Tài chính.
+Dùng để:
+Phân quyền.
+Chọn rule.
+Chọn mẫu tài liệu.
+Thống kê chi phí OCR.
+uploaded_by
+JSON
+"uploaded_by": "158114"
+Mã người dùng đã tải ﬁle lên.
+Không nhất thiết là tên hoặc email.
+Dùng để:
+Audit.
+Gửi thông báo.
+Gán task review.
+Tra cứu lịch sử.
+language
+JSON
+"language": ["vi", "en"]
+Ngôn ngữ có thể xuất hiện trong tài liệu.
+vi: tiếng Việt.
+en: tiếng Anh.
+OCR có thể dùng thông tin này để:
+Chọn recognition model.
+Chọn bộ ký tự.
+Chọn prompt.
+Chọn từ điển hậu xử lý.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 105/128
+
+--- PAGE 106 ---
+IV. Các trường trong response khi tạo OCR Job
+OCR thường trả:
+JSON
+{
+  "job_id": "OCR-JOB-000998",
+  "status": "QUEUED",
+  "accepted_at": "2026-06-10T10:30:00+07:00"
+}
+job_id
+Mã của một lần xử lý OCR.
+Khác với document_id:
+Mã Ý nghĩa
+document_id Mã ﬁle
+job_id Mã một lần chạy OCR
+Một ﬁle có thể được OCR lại:
+DOC-001
+├── OCR-JOB-001: Schema V1
+├── OCR-JOB-002: Schema V2
+└── OCR-JOB-003: model mới
+status
+JSON
+"status": "QUEUED"
+Trạng thái hiện tại.
+Status Ý nghĩa
+QUEUED Đang chờ xử lý
+PROCESSING Đang OCR
+EXTRACTING Đang trích xuất trường
+VALIDATING Đang kiểm tra rule
+NEED_REVIEW Cần người kiểm tra
+COMPLETED Hoàn thành
+FAILED Thất bại
+accepted_at
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 106/128
+
+--- PAGE 107 ---
+JSON
+"accepted_at": "2026-06-10T10:30:00+07:00"
+Thời điểm OCR Service tiếp nhận yêu cầu.
+Dùng để:
+Đo SLA.
+Theo dõi thời gian chờ.
+Phân tích hiệu năng.
+Điều tra khiếu nại.
+V. Các trường trong callback kết quả
+Ví dụ:
+JSON
+{
+  "job_id": "OCR-JOB-000998",
+  "document_id": "DOC-20260610-000125",
+  "business_object_id": "CTR-DRAFT-00089",
+  "status": "COMPLETED_WITH_WARNING",
+  "schema_code": "CONTRACT_EXTRACTION_V2",
+  "model_version": "contract-extractor-2.4.1",
+  "fields": {
+    "contract_no": {
+      "raw_value": "08/2026/HĐKT-VCM",
+      "normalized_value": "08/2026/HĐKT-VCM",
+      "confidence": 0.991,
+      "page": 1,
+      "bbox": [850, 310, 1500, 365]
+    }
+  }
+}
+model_version
+JSON
+"model_version": "contract-extractor-2.4.1"
+Phiên bản model đã tạo kết quả.
+Dùng để:
+Audit.
+So sánh chất lượng model.
+Regression test.
+Điều tra trường hợp model cũ và mới trả khác nhau.
+Không nên chỉ lưu kết quả mà không biết model nào đã sinh ra nó.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 107/128
+
+--- PAGE 108 ---
+raw_value
+JSON
+"raw_value": "1.250.000.000 VNĐ"
+Giá trị nguyên bản đọc được từ tài liệu.
+Phục vụ kiểm tra và audit.
+normalized_value
+JSON
+"normalized_value": 1250000000
+Giá trị đã chuẩn hóa để đưa vào database.
+Ví dụ:
+Raw: 01 tháng 06 năm 2026
+Normalized: 2026-06-01
+confidence
+JSON
+"confidence": 0.991
+Điểm tin cậy của kết quả.
+Không nên hiểu tuyệt đối là “đúng 99,1%”, mà là tín hiệu để quyết định:
+Tự điền.
+Cần review.
+Từ chối.
+Chạy lại.
+page
+JSON
+"page": 1
+Giá trị nằm ở trang nào.
+Trang thường được đánh số từ 1 cho người dùng, nhưng một số hệ thống kỹ thuật đánh từ 0. Hai bên
+phải thống nhất.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 108/128
+
+--- PAGE 109 ---
+bbox
+JSON
+"bbox": [850, 310, 1500, 365]
+Tọa độ vùng chứa giá trị trên trang.
+Thông thường:
+[x_min, y_min, x_max, y_max]
+Nhờ đó khi người dùng bấm vào trường “Số hợp đồng”, giao diện có thể highlight đúng vị trí trên PDF.
+COMPLETED_WITH_WARNING
+JSON
+"status": "COMPLETED_WITH_WARNING"
+Nghĩa là OCR đã hoàn thành, nhưng có một số cảnh báo:
+Có trường conﬁdence thấp.
+Thiếu một trường không bắt buộc.
+Rule chưa hoàn toàn khớp.
+Có trang chất lượng kém.
+Không giống FAILED, vì hệ thống vẫn có kết quả để người dùng kiểm tra.
+VI. Công nghệ đảm nhận từng bước ingestion trên Drive
+Google Drive
+→ Drive Watcher
+→ Ingestion Service
+→ File Validation
+→ Naming/Folder Normalization
+→ Document Classification
+→ OCR Job
+→ Dossier Aggregation
+→ Reconciliation
+→ Draft declaration
+Bước Công nghệ chính Vai trò
+Theo dõi ﬁle mới Google Drive API, webhook hoặc polling Phát hiện ﬁle mới/thay đổi
+Chống event trùng Redis/PostgreSQL + idempotency key Không tạo nhiều job
+Kiểm tra ﬁle ổn định Ingestion Service Tránh đọc ﬁle đang upload dở
+Kiểm tra ﬁle ClamAV, MIME validation, PDF parser Bảo đảm ﬁle hợp lệ
+Chuẩn hóa thư mục Java/Python service + regex Kiểm tra quy tắc tên folder
+Chuẩn hóa tên ﬁle Rule engine + metadata Tạo canonical ﬁle name
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 109/128
+
+--- PAGE 110 ---
+Bước Công nghệ chính Vai trò
+Phân loại giấy tờ PaddleOCR, classiﬁer hoặc sLLM Xác định Invoice/PL/B/L/C/O
+Lưu metadata PostgreSQL/Oracle Quản lý ﬁle và hồ sơ
+Lưu bản sao chuẩn MinIO/S3 Giữ ﬁle bất biến
+OCR từng ﬁle PaddleOCR + LayoutLM/sLLM Trích xuất dữ liệu
+Tổng hợp hồ sơ Dossier Orchestrator Gom ﬁle theo shipment
+Kiểm tra đủ giấy tờ Manifest + rule engine Xác định thiếu chứng từ
+Đối soát Validation/Reconciliation Service So sánh dữ liệu giữa chứng từ
+Tạo bản nháp API hoặc RPA Điền hệ thống khai báo
+VII. Các thuật ngữ lạ trong ingestion Drive
+Webhook
+Là cơ chế Drive chủ động báo:
+“Có ﬁle mới hoặc ﬁle vừa thay đổi.”
+Không cần hệ thống liên tục hỏi Drive.
+Polling
+Hệ thống định kỳ hỏi Drive:
+“Từ lần kiểm tra trước đến giờ có ﬁle mới không?”
+Ví dụ chạy 5 phút/lần.
+Debounce/Stabilizing
+Chờ ﬁle ổn định trước khi xử lý.
+Khi người dùng upload ﬁle 500 MB, Drive có thể phát event trước khi ﬁle thực sự tải xong. Ingestion
+Service chờ cho đến khi dung lượng và revision không còn thay đổi.
+MIME type
+Loại nội dung thực tế của ﬁle.
+Ví dụ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 110/128
+
+--- PAGE 111 ---
+application/pdf
+image/png
+image/jpeg
+Không nên chỉ tin phần mở rộng .pdf, vì một ﬁle độc hại có thể được đổi tên thành PDF.
+SHA-256
+Thuật toán tạo “dấu vân tay” cho ﬁle.
+Hai ﬁle có cùng nội dung thường có cùng SHA-256.
+Dùng để:
+Phát hiện ﬁle trùng.
+Kiểm tra ﬁle bị thay đổi.
+Xây idempotency key.
+Đảm bảo ﬁle OCR đúng là ﬁle được upload.
+Canonical ﬁle name
+Tên ﬁle chuẩn mà hệ thống sử dụng.
+Ví dụ tên người dùng:
+scan mới nhất final 2.pdf
+Tên chuẩn:
+SHP000123_INV_INV889_20260608_SAMSUNG_V02.pdf
+Hệ thống vẫn phải lưu cả tên gốc và tên chuẩn.
+Manifest
+Danh sách giấy tờ dự kiến phải có trong một bộ hồ sơ.
+Ví dụ:
+JSON
+{
+  "shipment_id": "SHP000123",
+  "required_documents": [
+    "CONTRACT",
+    "INVOICE",
+    "PACKING_LIST",
+    "BILL_OF_LADING"
+  ],
+  "optional_documents": [
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 111/128
+
+--- PAGE 112 ---
+    "CERTIFICATE_OF_ORIGIN"
+  ]
+}
+Manifest giúp hệ thống biết hồ sơ đã đủ giấy tờ chưa.
+Quarantine
+Khu vực cách ly ﬁle không hợp lệ:
+File có virus.
+PDF có mật khẩu.
+File hỏng.
+Không xác định được hồ sơ.
+Sai cấu trúc thư mục.
+Không nhận dạng được loại tài liệu.
+File không bị xóa, mà được giữ để người dùng xử lý.
+Revision
+Phiên bản của ﬁle trên Drive.
+Một ﬁle có thể giữ nguyên Drive File ID nhưng nội dung được cập nhật nhiều lần:
+FILE-001 / REV01
+FILE-001 / REV02
+FILE-001 / REV03
+Vì vậy ingestion phải dùng cả File ID và Revision ID.
+Dossier
+Dossier có thể hiểu là bộ hồ sơ nghiệp vụ.
+Trong XNK:
+Một dossier = một hồ sơ/lô hàng
+Nó chứa nhiều document:
+Shipment SHP000123
+├── Contract
+├── Invoice
+├── Packing List
+├── Bill of Lading
+└── C/O
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 112/128
+
+--- PAGE 113 ---
+Orchestrator
+Là dịch vụ điều phối.
+Nó không trực tiếp OCR mà quyết định:
+File nào xử lý trước.
+Chờ những ﬁle nào.
+Khi nào hồ sơ đủ giấy tờ.
+Khi nào chạy đối soát.
+Khi nào tạo tờ khai nháp.
+Khi nào cần human review.
+VIII. Payload đề xuất dễ hiểu hơn cho triển khai thật
+JSON
+{
+  "document_id": "DOC-20260610-000125",
+  "business_object": {
+    "type": "CONTRACT_DRAFT",
+    "id": "CTR-DRAFT-00089"
+  },
+  "document_type": "CONTRACT",
+  "extraction_config": {
+    "schema_code": "CONTRACT_EXTRACTION_V2",
+    "language": ["vi", "en"]
+  },
+  "file": {
+    "file_name": "Hop dong ABC.pdf",
+    "download_url": "https://storage.internal/signed-url",
+    "sha256": "A7D31F..."
+  },
+  "callback": {
+    "url": "https://qlhd.internal/api/ocr/callback",
+    "authentication_type": "HMAC"
+  },
+  "idempotency_key": "DOC-20260610-000125-A7D31-CONTRACT_EXTRACTION_V2",
+  "context": {
+    "source_system": "QLHD",
+    "business_unit": "VCM",
+    "uploaded_by": "158114"
+  }
+}
+Cấu trúc này dài hơn nhưng người mới tham gia dự án dễ hiểu hơn vì các trường được chia thành nhóm:
+Đối tượng nghiệp vụ.
+Cấu hình trích xuất.
+Thông tin ﬁle.
+Thông tin callback.
+Ngữ cảnh xử lý.
+Điểm cốt lõi của toàn bộ luồng là phân vai rõ:
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 113/128
+
+--- PAGE 114 ---
+QLHĐ Backend
+→ Quản lý hồ sơ, file, người dùng, form và trạng thái nghiệp vụ
+OCR Platform
+→ Đọc tài liệu, trích xuất và trả dữ liệu
+Validation Service
+→ Kiểm tra dữ liệu và business rule
+Callback API
+→ Nhận kết quả bất đồng bộ
+Mapping Service
+→ Chuyển trường OCR sang trường QLHĐ
+Frontend
+→ Hiển thị auto-fill, confidence, bằng chứng và cho người dùng xác nhận
+Luồng thông báo và xử lý lỗi, review khi mức conﬁdence thấp
+Dưới đây là luồng chuẩn để thông báo, xử lý lỗi và tổ chức review khi conﬁdence thấp cho cả bài
+toán OCR hợp đồng và bộ chứng từ hải quan. Với các chứng từ XNK, hệ thống còn phải kiểm tra chéo
+Invoice, Packing List, B/L, hợp đồng và sinh cảnh báo chênh lệch trước khi tạo tờ khai nháp. 
+1. Nguyên tắc xử lý
+Không nên chỉ có hai trạng thái “thành công” và “thất bại”. Kết quả OCR cần chia thành ít nhất bốn
+nhóm:
+Kết quả Ý nghĩa Cách xử lý
+Hoàn thành tốt Các trường đủ tin cậy, rule hợp lệ Auto-ﬁll bản nháp
+Hoàn thành có cảnh
+báo
+OCR có kết quả nhưng một số trường
+cần kiểm tra Auto-ﬁll một phần và tạo task review
+Không thể xử lý tự
+động Ảnh quá mờ, sai loại tài liệu, thiếu trang Yêu cầu upload lại hoặc nhập thủ công
+Lỗi kỹ thuật Timeout, mất kết nối, GPU lỗi, callback lỗi Retry tự động, không yêu cầu người dùng thao tác ngay
+Điểm quan trọng là phải phân biệt:
+Lỗi dữ liệu/tài liệu: người dùng hoặc nghiệp vụ phải xử lý.
+Lỗi kỹ thuật: hệ thống tự retry hoặc đội kỹ thuật xử lý.
+Conﬁdence thấp: không phải lỗi hoàn toàn; vẫn có thể auto-ﬁll để người dùng kiểm tra.
+Rule nghiệp vụ không đạt: dù conﬁdence cao vẫn phải review.
+2. Luồng tổng thể
+Người dùng upload tài liệu
+        │
+        ▼
+QLHĐ tạo OCR Job
+│
+Kịch bản OCR RPA
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 114/128
+
+--- PAGE 115 ---
+        │
+        ▼
+OCR kiểm tra file
+        │
+        ├── File không hợp lệ
+        │       → REJECTED / NEED_REUPLOAD
+        │       → Thông báo người dùng
+        │
+        ▼
+OCR xử lý và trích xuất
+        │
+        ▼
+Đánh giá từng trường
+        ├── Confidence cao + Rule pass
+        │       → AUTO_ACCEPT
+        │
+        ├── Confidence trung bình
+        │       → AUTO_FILL + NEED_REVIEW
+        │
+        ├── Confidence thấp
+        │       → Không tự xác nhận
+        │       → REVIEW_REQUIRED
+        │
+        └── Không nhận dạng được
+                → MISSING / MANUAL_ENTRY
+        │
+        ▼
+Đánh giá toàn bộ tài liệu
+        │
+        ├── COMPLETED
+        ├── COMPLETED_WITH_WARNING
+        ├── NEED_REVIEW
+        ├── NEED_REUPLOAD
+        └── FAILED_TECHNICAL
+        │
+        ▼
+Callback về QLHĐ
+        │
+        ▼
+Auto-fill form + tạo task + gửi thông báo
+        │
+        ▼
+Người dùng review, sửa và xác nhận
+        │
+        ▼
+Lưu kết quả cuối + audit log + feedback training
+3. Phân ngưỡng conﬁdence
+Không nên dùng chung một ngưỡng cho mọi trường. Ngưỡng phải dựa trên rủi ro nghiệp vụ.
+3.1. Ví dụ ngưỡng chung
+Conﬁdence Trạng thái Xử lý
+Từ 0,98 trở lên Tin cậy cao Auto-ﬁll, màu xanh
+0,85 đến dưới 0,98 Cần kiểm tra Auto-ﬁll, màu vàng
+Dưới 0,85 Tin cậy thấp Không xác nhận tự động, màu đỏ
+Không tìm thấy Missing Để trống, yêu cầu nhập
+Đây chỉ là mức khởi đầu. Sau khi chạy thử phải hiệu chỉnh bằng dữ liệu thực tế.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 115/128
+
+--- PAGE 116 ---
+3.2. Ngưỡng theo từng trường hợp đồng
+Trường Mức rủi ro Chính sách đề xuất
+Tên hợp đồng Thấp Có thể auto-ﬁll từ 0,90
+Tên đối tác Trung bình Auto-ﬁll từ 0,95
+Số hợp đồng Cao Auto-ﬁll từ 0,98
+Mã số thuế Cao Từ 0,99 và phải đúng format
+Giá trị hợp đồng Rất cao Conﬁdence cao vẫn phải chạy rule
+Số tài khoản Rất cao Luôn review hoặc đối chiếu master data
+Ngày hiệu lực Cao Phải so với ngày hết hạn
+Điều khoản thanh toán Cao Human review do nội dung phức tạp
+Người đại diện Trung bình Review nếu không khớp dữ liệu đối tác
+Ví dụ trường giá trị hợp đồng có conﬁdence 0,995 nhưng:
+Giá trị trước thuế + VAT ≠ Tổng giá trị thanh toán
+thì vẫn phải chuyển review.
+4. Đánh giá conﬁdence ở nhiều tầng
+Một trường không chỉ có một conﬁdence duy nhất.
+Ví dụ:
+JSON
+{
+  "field": "contract_value",
+  "raw_value": "1.250.000.000 VNĐ",
+  "normalized_value": 1250000000,
+  "scores": {
+    "text_detection": 0.99,
+    "text_recognition": 0.97,
+    "entity_extraction": 0.93
+  },
+  "business_validation": {
+    "status": "PASS"
+  },
+  "final_confidence": 0.95
+}
+Ý nghĩa:
+text_detection: mô hình có chắc vùng đó chứa chữ không.
+text_recognition: mô hình có chắc đã đọc đúng chuỗi ký tự không.
+entity_extraction: mô hình có chắc đó là giá trị hợp đồng, thay vì giá trị bảo lãnh hoặc đơn giá
+không.
+business_validation: kết quả có hợp lệ theo nghiệp vụ không.
+final_confidence: điểm tổng hợp dùng cho workﬂow.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 116/128
+
+--- PAGE 117 ---
+Không nên chỉ dựa vào conﬁdence của OCR recognition vì OCR có thể đọc đúng số nhưng lấy nhầm loại
+trường.
+5. Trạng thái ở cấp trường
+Mỗi ﬁeld nên có trạng thái riêng.
+JSON
+{
+  "contract_no": {
+    "value": "08/2026/HĐKT-VCM",
+    "confidence": 0.991,
+    "review_status": "AUTO_ACCEPTED"
+  },
+  "tax_code": {
+    "value": "010I234S67",
+    "confidence": 0.73,
+    "review_status": "REVIEW_REQUIRED",
+    "warning_code": "LOW_CONFIDENCE"
+  },
+  "contract_value": {
+    "value": 1250000000,
+    "confidence": 0.98,
+    "review_status": "REVIEW_REQUIRED",
+    "warning_code": "BUSINESS_RULE_FAILED"
+  },
+  "bank_account": {
+    "value": null,
+    "confidence": null,
+    "review_status": "MANUAL_INPUT_REQUIRED",
+    "warning_code": "FIELD_NOT_FOUND"
+  }
+}
+Các trạng thái đề xuất:
+Trạng thái Ý nghĩa
+AUTO_ACCEPTED Hệ thống chấp nhận tự động
+AUTO_FILLED_NEED_REVIEW Đã điền nhưng người dùng cần kiểm tra
+REVIEW_REQUIRED Bắt buộc kiểm tra trước khi lưu
+MANUAL_INPUT_REQUIRED Không trích xuất được, phải nhập
+USER_CONFIRMED Người dùng xác nhận đúng
+USER_CORRECTED Người dùng đã sửa
+REJECTED Người dùng xác nhận giá trị OCR sai hoặc không áp dụng
+6. Trạng thái ở cấp tài liệu
+Trạng thái tài liệu được tổng hợp từ các ﬁeld và rule.
+Trạng thái Ý nghĩa
+COMPLETED Không còn trường bắt buộc phải review
+COMPLETED_WITH_WARNING Có kết quả nhưng tồn tại cảnh báo không nghiêm trọng
+NEED_REVIEW Có ít nhất một trường bắt buộc kiểm tra
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 117/128
+
+--- PAGE 118 ---
+Trạng thái Ý nghĩa
+NEED_REUPLOAD File không đủ chất lượng để xử lý
+PARTIALLY_PROCESSED Một số trang thành công, một số trang lỗi
+FAILED_TECHNICAL Lỗi hạ tầng hoặc hệ thống
+FAILED_BUSINESS Tài liệu không đúng loại hoặc không hợp lệ nghiệp vụ
+CANCELLED Job bị hủy
+Ví dụ quy tắc tổng hợp:
+Nếu có trường Critical bị missing
+→ NEED_REVIEW
+Nếu ảnh không đọc được quá 30% số trang
+→ NEED_REUPLOAD
+Nếu chỉ một trường Optional confidence thấp
+→ COMPLETED_WITH_WARNING
+Nếu tất cả trường Required đạt ngưỡng và rule pass
+→ COMPLETED
+7. Callback khi có conﬁdence thấp
+OCR vẫn callback kết quả, không coi conﬁdence thấp là lỗi kỹ thuật.
+JSON
+{
+  "job_id": "OCR-JOB-000998",
+  "document_id": "DOC-20260610-000125",
+  "status": "NEED_REVIEW",
+  "summary": {
+    "total_fields": 24,
+    "auto_accepted_fields": 17,
+    "review_required_fields": 5,
+    "missing_fields": 2,
+    "failed_rules": 1
+  },
+  "fields": {
+    "contract_no": {
+      "value": "08/2026/HĐKT-VCM",
+      "confidence": 0.991,
+      "review_status": "AUTO_ACCEPTED",
+      "page": 1,
+      "bbox": [850, 310, 1500, 365]
+    },
+    "tax_code": {
+      "value": "010I234S67",
+      "confidence": 0.73,
+      "review_status": "REVIEW_REQUIRED",
+      "warning_code": "LOW_CONFIDENCE",
+      "warning_message": "Mã số thuế có ký tự không chắc chắn",
+      "page": 2,
+      "bbox": [480, 425, 960, 475]
+    }
+  },
+  "failed_rules": [
+    {
+      "rule_code": "PAYMENT_TOTAL_RATE",
+      "message": "Tổng tỷ lệ thanh toán được trích xuất là 95%, không bằng 100%",
+      "severity": "HIGH"
+    }
+  ]
+}
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 118/128
+
+--- PAGE 119 ---
+QLHĐ căn cứ vào response để:
+1. Điền các trường đã nhận dạng.
+2. Đánh dấu trường cần review.
+3. Tạo task.
+4. Gửi thông báo.
+5. Không cho chuyển sang bước phê duyệt nếu trường critical chưa được xác nhận.
+8. Màn hình review
+8.1. Bố cục đề xuất
+┌────────────────────────────┬─────────────────────────────────┐
+│ Tài liệu PDF               │ Form thông tin hợp đồng         │
+│                            │                                 │
+│ Vùng đang kiểm tra         │ Số hợp đồng     [08/... ]  Xanh │
+│ được highlight             │ Mã số thuế      [010I...]  Đỏ   │
+│                            │ Giá trị HĐ       [1,25 tỷ]  Vàng │
+│ Zoom / xoay / chuyển trang │ Ngày hiệu lực   [01/06]    Xanh │
+│                            │                                 │
+│                            │ [Lưu nháp] [Xác nhận review]    │
+└────────────────────────────┴─────────────────────────────────┘
+8.2. Quy ước màu
+Màu Ý nghĩa
+Xanh Conﬁdence cao và rule pass
+Vàng Conﬁdence trung bình hoặc có cảnh báo
+Đỏ Conﬁdence thấp, thiếu dữ liệu hoặc rule fail
+Xám Không tìm thấy hoặc chưa xử lý
+Xanh dương Người dùng đã xác nhận
+Không nên chỉ dùng màu; cần thêm icon và nội dung vì người dùng có thể gặp vấn đề nhận biết màu.
+8.3. Khi người dùng chọn một ﬁeld
+Ví dụ chọn “Mã số thuế”, hệ thống phải:
+1. Chuyển tới đúng trang.
+2. Highlight bbox.
+3. Hiển thị đoạn text OCR gốc.
+4. Hiển thị conﬁdence.
+5. Hiển thị lý do cảnh báo.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 119/128
+
+--- PAGE 120 ---
+6. Cho phép sửa.
+7. Có thể phóng to vùng crop.
+Ví dụ:
+Mã số thuế dự đoán: 010I234S67
+Confidence: 73%
+Cảnh báo: Có khả năng ký tự “I” là số “1”
+Nguồn: Trang 2, vùng được đánh dấu
+9. Luồng review của người dùng
+Task được tạo
+→ Reviewer mở tài liệu
+→ Hệ thống tự chuyển đến trường lỗi đầu tiên
+→ Reviewer đối chiếu ảnh gốc
+→ Xác nhận hoặc sửa
+→ Chuyển sang trường tiếp theo
+→ Kiểm tra các warning nghiệp vụ
+→ Nhập trường missing
+→ Xác nhận hoàn tất review
+Mỗi trường có ba thao tác cơ bản:
+Xác nhận đúng: giữ nguyên giá trị OCR.
+Chỉnh sửa: nhập giá trị đúng.
+Không áp dụng: trường không tồn tại trong tài liệu hoặc không thuộc hợp đồng này.
+Điều kiện hoàn tất review
+Chỉ cho phép bấm “Hoàn tất review” khi:
+Tất cả ﬁeld bắt buộc đã có giá trị.
+Tất cả ﬁeld màu đỏ đã được xử lý.
+Các rule nghiêm trọng đã pass hoặc có lý do override.
+Người dùng có đủ quyền.
+Không có người khác đang sửa cùng bản ghi.
+10. Phân công task review
+Task review có thể gán theo:
+Người upload.
+Người phụ trách hợp đồng.
+Phòng Pháp chế.
+Nhân sự XNK phụ trách lô hàng.
+Nhóm chuyên trách OCR validation.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 120/128
+
+--- PAGE 121 ---
+Mức độ nghiêm trọng.
+Ví dụ:
+JSON
+{
+  "task_id": "REVIEW-TASK-000312",
+  "document_id": "DOC-20260610-000125",
+  "task_type": "OCR_REVIEW",
+  "priority": "HIGH",
+  "assigned_to": "USER-158114",
+  "due_at": "2026-06-10T16:00:00+07:00",
+  "reasons": [
+    "LOW_CONFIDENCE_CRITICAL_FIELD",
+    "BUSINESS_RULE_FAILED"
+  ]
+}
+Mức độ ưu tiên
+Mức Ví dụ
+Critical Số tài khoản, tổng giá trị, mã số thuế, HS code
+High Số hợp đồng, ngày hết hạn, mốc thanh toán
+Medium Địa chỉ, người đại diện
+Low Ghi chú, mô tả phụ
+11. Luồng thông báo
+Không phải mọi thay đổi đều gửi email. Nên dùng nhiều tầng thông báo.
+11.1. Thông báo trong ứng dụng
+Hiển thị ngay trên QLHĐ:
+OCR đã xử lý xong hợp đồng 08/2026/HĐKT.
+Có 5 trường cần kiểm tra và 2 trường chưa tìm thấy.
+Bấm vào thông báo mở thẳng màn hình review.
+11.2. Email hoặc notiﬁcation nội bộ
+Dùng khi:
+Có trường critical.
+Task sắp quá SLA.
+OCR thất bại và cần upload lại.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 121/128
+
+--- PAGE 122 ---
+Hồ sơ hải quan thiếu chứng từ.
+Sai lệch giữa nhiều chứng từ.
+11.3. Nhắc việc/escalation
+Ví dụ:
+Sau 2 giờ chưa review → nhắc người phụ trách
+Sau 8 giờ chưa review → báo trưởng nhóm
+Quá hạn 1 ngày → đưa vào dashboard cảnh báo
+11.4. Tránh gửi quá nhiều thông báo
+Nên gộp:
+Hồ sơ SHP000123:
+- 3 chứng từ đã xử lý
+- 1 chứng từ cần review
+- 1 chứng từ còn thiếu
+- 2 cảnh báo đối soát
+Thay vì gửi năm thông báo riêng.
+12. Thông báo cho bộ hồ sơ hải quan
+Ở cấp bộ hồ sơ, cần tách thông báo cấp ﬁle và cấp dossier.
+Ví dụ:
+Hồ sơ SHP000123 chưa sẵn sàng tạo tờ khai:
+1. Thiếu C/O.
+2. Packing List có Gross Weight 12.500 kg.
+3. B/L có Gross Weight 12.350 kg.
+4. HS code trên Invoice có confidence 72%.
+Trạng thái hồ sơ:
+DOCUMENTS_COMPLETE
+→ OCR_COMPLETED
+→ RECONCILIATION_WARNING
+→ NEED_REVIEW
+→ READY_FOR_DECLARATION
+Không được tạo tờ khai nháp khi còn cảnh báo mức Critical chưa được xử lý.
+13. Phân loại lỗi
+13.1. Lỗi ﬁle đầu vào
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 122/128
+
+--- PAGE 123 ---
+Mã lỗi Ý nghĩa Xử lý
+UNSUPPORTED_FILE_TYPE Sai định dạng Yêu cầu upload đúng định dạng
+FILE_TOO_LARGE File vượt giới hạn Nén hoặc chia ﬁle
+PASSWORD_PROTECTED_PDF PDF có mật khẩu Yêu cầu mở khóa
+CORRUPTED_FILE File hỏng Upload lại
+LOW_IMAGE_QUALITY Ảnh quá mờ Scan/chụp lại
+MISSING_PAGE Có dấu hiệu thiếu trang Người dùng xác nhận hoặc bổ sung
+WRONG_DOCUMENT_TYPE Upload sai loại tài liệu Chọn lại loại
+Những lỗi này không nên retry tự động nhiều lần vì kết quả vẫn không thay đổi.
+13.2. Lỗi kỹ thuật tạm thời
+Mã lỗi Ví dụ Xử lý
+OCR_SERVICE_TIMEOUT OCR quá thời gian Retry
+MODEL_UNAVAILABLE Model chưa load hoặc lỗi GPU Retry/chuyển instance
+STORAGE_TEMPORARY_ERROR Không tải được ﬁle Retry
+QUEUE_UNAVAILABLE Queue tạm lỗi Retry
+DATABASE_TIMEOUT DB phản hồi chậm Retry
+CALLBACK_TIMEOUT QLHĐ không nhận callback Retry callback
+Nên áp dụng exponential backoﬀ:
+Lần 1: sau 30 giây
+Lần 2: sau 2 phút
+Lần 3: sau 10 phút
+Lần 4: sau 30 phút
+Sau số lần tối đa, chuyển sang Dead Letter Queue.
+13.3. Lỗi không thể tự phục hồi
+Lỗi Xử lý
+Model trả sai schema liên tục Chuyển kỹ thuật kiểm tra
+Không hỗ trợ ngôn ngữ Xử lý thủ công
+Tài liệu không thuộc phạm vi Từ chối
+Model version không tương thích schema Dừng job, cảnh báo vận hành
+File chứa quá nhiều trang Chia ﬁle hoặc xử lý đặc biệt
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 123/128
+
+--- PAGE 124 ---
+14. Dead Letter Queue là gì?
+Dead Letter Queue – DLQ là hàng đợi chứa các job đã retry nhiều lần nhưng vẫn lỗi.
+Ví dụ:
+OCR callback QLHĐ thất bại 5 lần
+→ Đưa message vào DLQ
+→ Cảnh báo vận hành
+→ Nhân sự kỹ thuật kiểm tra
+DLQ giúp:
+Không mất job.
+Không retry vô hạn.
+Có danh sách lỗi cần xử lý.
+Có thể chạy lại thủ công sau khi khắc phục.
+15. Khi callback lỗi
+OCR xử lý thành công nhưng QLHĐ không nhận được kết quả là tình huống thường gặp.
+Luồng đúng:
+OCR xử lý xong
+→ Lưu kết quả vào DB OCR
+→ Gọi callback QLHĐ
+→ Callback lỗi
+→ Đánh dấu CALLBACK_PENDING
+→ Retry callback
+→ Nếu vẫn lỗi, chuyển DLQ
+Không được chạy lại toàn bộ OCR chỉ vì callback lỗi.
+QLHĐ cũng nên có API polling dự phòng:
+http
+GET /api/v1/ocr/jobs/{job_id}
+Nhờ đó QLHĐ có thể chủ động lấy kết quả nếu callback không tới.
+16. Xử lý ﬁle nhiều trang bị lỗi một phần
+Ví dụ hợp đồng 20 trang:
+18 trang đọc tốt.
+Trang 12 quá mờ.
+Trang 17 bị lỗi render.
+Không nên đánh toàn bộ job là FAILED.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 124/128
+
+--- PAGE 125 ---
+Nên trả:
+JSON
+{
+  "status": "PARTIALLY_PROCESSED",
+  "page_summary": {
+    "total_pages": 20,
+    "successful_pages": 18,
+    "failed_pages": [12, 17]
+  },
+  "action_required": "REVIEW_OR_REUPLOAD_FAILED_PAGES"
+}
+Người dùng có thể:
+Upload lại riêng trang 12 và 17.
+Xác nhận các trang đó không quan trọng.
+Nhập thủ công trường liên quan.
+17. Audit log khi review
+Mỗi thay đổi phải lưu đầy đủ:
+JSON
+{
+  "field": "tax_code",
+  "predicted_value": "010I234S67",
+  "final_value": "0101234567",
+  "previous_confidence": 0.73,
+  "action": "USER_CORRECTED",
+  "correction_reason": "OCR_CHARACTER_ERROR",
+  "reviewed_by": "158114",
+  "reviewed_at": "2026-06-10T11:20:00+07:00",
+  "model_version": "contract-extractor-2.4.1"
+}
+Audit log phục vụ:
+Truy vết nghiệp vụ.
+Đánh giá chất lượng OCR.
+Huấn luyện lại model.
+Phân tích nhóm lỗi.
+Giải trình khi dữ liệu auto-ﬁll sai.
+18. Dữ liệu sửa được dùng để cải thiện model thế nào?
+Không nên đưa trực tiếp mọi correction vào training.
+Luồng chuẩn:
+Người dùng sửa dữ liệu
+→ Lưu feedback
+→ Data Reviewer kiểm tra
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 125/128
+
+--- PAGE 126 ---
+→ Xác nhận correction đúng
+→ Đưa vào Golden/Training Dataset
+→ Retrain hoặc fine-tune
+→ Regression test
+→ Deploy model version mới
+Các correction có thể được phân loại:
+Loại lỗi Tầng cần cải thiện
+Không phát hiện được dòng Text Detection
+Đọc I thành 1 Text Recognition
+Đọc đúng nhưng gán sai ﬁeld Entity extraction/sLLM
+Sai hàng/cột Table reconstruction
+Chuẩn hóa sai ngày/số tiền Normalization
+Rule cảnh báo sai Business rule
+19. Dashboard vận hành và QA
+Cần theo dõi tối thiểu:
+Số OCR Job thành công.
+Số job lỗi kỹ thuật.
+Số ﬁle cần upload lại.
+Tỷ lệ tài liệu cần review.
+Số ﬁeld trung bình cần sửa.
+Field nào hay có conﬁdence thấp.
+Tỷ lệ false accept.
+Tỷ lệ auto-ﬁll hoàn toàn.
+Thời gian từ upload đến callback.
+Thời gian chờ review.
+Số task quá SLA.
+Số callback trong DLQ.
+Accuracy theo model version.
+Accuracy theo loại tài liệu/template/NCC.
+Đặc biệt phải theo dõi false accept: hệ thống tự chấp nhận kết quả sai. Đây nguy hiểm hơn việc chuyển
+quá nhiều trường sang review.
+20. Chính sách đề xuất cho QLHĐ
+Trường thông thường
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 126/128
+
+--- PAGE 127 ---
+Confidence ≥ 0,95 và rule pass
+→ Auto-fill
+Trường critical
+Confidence ≥ 0,98 và rule pass
+→ Auto-fill nhưng vẫn hiển thị evidence
+Confidence < 0,98
+→ Review bắt buộc
+Số tài khoản, giá trị hợp đồng, điều khoản thanh toán
+Luôn chạy rule
+Luôn cho người dùng thấy nguồn
+Có thể bắt buộc xác nhận trước khi trình ký
+Điều kiện khóa workﬂow
+Không cho chuyển hợp đồng sang “Trình phê duyệt” khi:
+Còn ﬁeld Critical chưa review.
+Còn rule mức High/Critical chưa xử lý.
+Có trang lỗi chưa xác nhận.
+Kết quả OCR thuộc schema/model không được hỗ trợ.
+Review chưa được người có quyền hoàn tất.
+21. State machine đầy đủ
+UPLOADED
+→ OCR_QUEUED
+→ OCR_PROCESSING
+→ OCR_RESULT_RECEIVED
+→ AUTO_FILLED
+        │
+        ├── Không cảnh báo
+        │       → READY_FOR_CONFIRMATION
+        │       → USER_CONFIRMED
+        │       → COMPLETED
+        │
+        └── Có cảnh báo
+                → REVIEW_TASK_CREATED
+                → IN_REVIEW
+                → USER_CORRECTED / USER_CONFIRMED
+                → VALIDATION_RERUN
+                        │
+                        ├── Pass
+                        │       → COMPLETED
+                        │
+                        └── Fail
+                                → REVIEW_REQUIRED
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 127/128
+
+--- PAGE 128 ---
+Nhánh lỗi:
+OCR_PROCESSING
+→ TECHNICAL_ERROR
+→ RETRYING
+→ OCR_PROCESSING
+RETRYING vượt giới hạn
+→ FAILED_TECHNICAL
+→ OPERATIONS_ALERTED
+FILE_VALIDATION_FAILED
+→ NEED_REUPLOAD
+→ USER_NOTIFIED
+Thiết kế tốt nhất là coi OCR như một trợ lý điền dữ liệu, không phải nguồn quyết định cuối cùng. Các
+giá trị đủ tin cậy được tự động điền; giá trị không chắc chắn được đưa đúng người kiểm tra, đúng vị trí
+tài liệu và kèm lý do rõ ràng.
+Printed using ChatGPT to PDF, powered by PDFCrowd HTML to PDF API. 128/128

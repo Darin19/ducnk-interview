@@ -1,0 +1,635 @@
+
+--- PAGE 1 ---
+AI Hub – System Feature Description
+1. System Overview
+AI Hub is an internal AI asset lifecycle management platform designed to help AI teams manage, govern,
+reuse, and share AI assets in a secure and standardized way. The system supports the full lifecycle of
+datasets and models, from registration, metadata management, data source control, approval workflows,
+access permission, training job management, model evaluation, model registry, deployment approval, and
+long-term asset governance.
+The platform is inspired by modern AI asset platforms such as dataset and model hubs, where users can
+discover reusable datasets and models through searchable catalogs, view detailed asset cards, manage
+versions, track usage, understand lineage, and collaborate across teams. However, unlike public AI hubs,
+this system is designed for enterprise usage, with stronger approval workflows, role-based and data-level
+permissions, audit trails, governance rules, and internal compliance controls.
+The main goal of AI Hub is to ensure that datasets and models are not stored or used in an uncontrolled
+way. Instead, every asset should have clear ownership, metadata, usage scope, access rules, lifecycle status,
+approval history, and traceability.
+2. Dataset Management
+The Dataset Management module allows users to register, manage, search, publish, reuse, and govern
+datasets within the organization.
+Each dataset has a dedicated Dataset Card, which contains essential information such as dataset name,
+description, owner, sponsor, contributor, owning department, business domain, data source, data type, data
+format, sensitivity level, usage scope, license information, update frequency, version, schema, labeling
+information, and related models or projects.
+The system supports dataset templates to standardize the registration process. Administrators can
+configure different dataset templates for different business domains or data types. For example, a
+computer vision dataset, tabular dataset, text dataset, log dataset, or speech dataset may require different
+metadata fields, validation rules, and required documents.
+Key dataset features include:
+Dataset registration and profile management.
+Dataset card with standardized metadata.
+Dataset template configuration.
+Dataset version management.
+Dataset ownership and department mapping.
+Dataset status tracking.
+• 
+• 
+• 
+• 
+• 
+• 
+1
+
+--- PAGE 2 ---
+Dataset source and file management.
+Dataset schema and field definition.
+Dataset label and weight configuration.
+Dataset usage scope definition.
+Dataset lineage and relationship tracking.
+Dataset publishing to the internal catalog.
+Dataset search, filter, and discovery.
+Dataset access control and permission management.
+Dataset audit trail and activity history.
+A dataset can be created as a draft first. After required metadata and documents are completed, the
+dataset can be submitted for registration approval. Once approved, the dataset becomes an official internal
+asset. Depending on its status and usage scope, it may later be published to the internal catalog so other
+authorized users can discover and request access to it.
+3. Data Source Management
+The Data Source Management module controls the origin and connection information of datasets. A data
+source can be a database, file storage, internal system, API, data warehouse, data lake, manual upload,
+external provider, or purchased data package.
+Data source information is treated as metadata, but some actions related to data sources may require
+approval because they affect data governance and security. For example, adding a new source, changing
+the source connection, uploading new data, refreshing data, deleting source files, or downloading source
+data may need to follow controlled workflows.
+Key data source features include:
+Register data source information for datasets.
+Define source type, system name, connection method, owner, department, and refresh frequency.
+Manage uploaded files and source attachments.
+Track source status and availability.
+Control actions such as view, edit, upload, update, delete, and download.
+Maintain source-level audit logs.
+Link one dataset to one or multiple data sources.
+Support approval for sensitive data source actions.
+The system should clearly separate metadata from approval workflows. Information such as data type, data
+origin, source system, sensitivity level, and schema are dataset or data source metadata. However, actions
+such as adding a new data source, importing data, changing a data source, downloading data, or deleting
+source data can be controlled by approval workflows.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+2
+
+--- PAGE 3 ---
+4. Model Management and Model Registry
+The Model Management module allows AI teams to register, manage, evaluate, share, and deploy machine
+learning models. Similar to dataset cards, each model has a dedicated Model Card containing key model
+information, technical details, intended use, training data, evaluation results, limitations, version history,
+deployment status, and related datasets.
+The Model Registry stores approved model versions and allows users to track which model version was
+trained with which dataset version, which parameters were used, what evaluation metrics were achieved,
+and whether the model is approved for staging or production.
+Key model features include:
+Model registration and profile management.
+Model card with standardized metadata.
+Model template configuration.
+Model version management.
+Model artifact management.
+Model lineage tracking.
+Linkage between model, dataset, training job, and evaluation result.
+Model evaluation and benchmarking results.
+Model status tracking.
+Model sharing and access control.
+Model promotion to staging or production.
+Model retirement or deprecation management.
+Model metadata may include model name, description, model type, algorithm, framework, task type, owner,
+sponsor, contributor, department, related dataset, training job, evaluation metrics, performance constraints,
+intended use, limitation, risk note, and deployment environment.
+5. Approval Workflow Management
+AI Hub provides a flexible approval workflow engine to control important actions related to datasets,
+models, data sources, training jobs, and deployment. The system supports multi-level approval, parallel
+approval, conditional routing, automatic routing, and reusable approval steps.
+The goal is not to create too many separate approval flows. Instead, the system should reuse common
+approval patterns across different processes to provide a consistent and optimized user experience.
+Main approval workflows include:
+Asset purchase or asset request approval.
+Dataset or model registration approval.
+Dataset or model sharing approval.
+Dataset or model edit and delete approval.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+1. 
+2. 
+3. 
+4. 
+3
+
+--- PAGE 4 ---
+Dataset data source approval.
+Training job approval.
+Model deployment or promotion approval.
+Each workflow may include common steps such as requester submission, owner review, data steward
+review, security review, department approval, sponsor approval, final approval, notification, and status
+update.
+The workflow engine should support:
+Configurable approval steps.
+Sequential approval.
+Parallel approval.
+Conditional approval routing.
+Automatic approver assignment based on department, asset owner, data sensitivity, asset type, or
+action type.
+Delegation and reassignment.
+Approval comments and rejection reasons.
+Request cancellation.
+Change request handling.
+Approval history tracking.
+SLA and pending task tracking.
+Email and in-system notification integration.
+For example, a dataset registration request may require Data Owner approval and Data Steward review. A
+model deployment request may require Model Owner approval, Technical Lead review, Security review, and
+final approval from the responsible department or sponsor.
+6. Dataset and Model Lifecycle Status
+The system should manage clear lifecycle statuses for datasets and models. Each status determines what
+actions are allowed and which roles can perform those actions.
+Example dataset statuses:
+Draft: Dataset is being created and can be edited by the creator.
+Submitted: Dataset has been submitted for approval.
+Under Review: Dataset is being reviewed by approvers.
+Change Requested: Approver requests additional information or correction.
+Approved: Dataset registration has been approved.
+Published: Dataset is visible in the internal catalog for authorized users.
+In Use: Dataset is being used by one or more projects, models, or training jobs.
+Suspended: Dataset is temporarily blocked due to quality, security, or compliance issues.
+Deprecated: Dataset is no longer recommended for new usage.
+Archived: Dataset is retained for historical reference.
+Deleted: Dataset has been logically deleted according to governance rules.
+5. 
+6. 
+7. 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+4
+
+--- PAGE 5 ---
+Example model statuses:
+Draft: Model information is being created.
+Registered: Model has been registered in the system.
+Under Review: Model is being reviewed.
+Approved: Model registration has been approved.
+Training Requested: A training job has been requested.
+Training Running: Model training is in progress.
+Training Completed: Training job has finished successfully.
+Evaluation Pending: Model is waiting for evaluation or benchmark review.
+Validated: Model has passed evaluation criteria.
+Staging: Model has been promoted to staging.
+Production: Model has been approved for production use.
+Deprecated: Model is no longer recommended.
+Archived: Model is retained for traceability.
+Status-based permission is important. For example, a draft dataset may be editable by the creator, but an
+approved or published dataset may require an approval request before it can be modified or deleted.
+7. Permission and Access Control
+AI Hub provides both function-level permission and data-level permission to support strict data governance
+requirements.
+Function-level permission controls what a user can do in the system, such as creating datasets, approving
+requests, managing templates, configuring workflows, uploading data sources, registering models, or
+deploying models.
+Data-level permission controls which datasets, models, or data sources a user can view, edit, use, download,
+share, or approve. Access can be based on role, department, ownership, project membership, asset status,
+sensitivity level, and usage scope.
+Example roles include:
+Global Admin: Manages system-wide configuration, roles, permissions, workflow templates, and
+governance settings.
+Local Admin: Manages configuration and users within a department or business unit.
+Data Owner: Owns datasets and is responsible for business approval, usage scope, and data
+accountability.
+Data Steward: Reviews dataset quality, metadata completeness, data standards, and governance
+compliance.
+Model Owner: Owns model information, model lifecycle, and model usage.
+AI Engineer / Data Scientist: Uses datasets, creates training jobs, registers models, and views
+evaluation results.
+Reviewer / Approver: Reviews and approves assigned workflow requests.
+Contributor: Contributes datasets, models, labels, documents, or technical information.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+5
+
+--- PAGE 6 ---
+Viewer: Can search and view permitted assets.
+Auditor: Can view audit logs, approval history, and governance records.
+Typical permissions include:
+View dataset.
+Create dataset.
+Edit dataset.
+Delete dataset.
+Submit dataset for approval.
+Publish dataset.
+Share dataset.
+Use dataset.
+Download dataset.
+View data source.
+Edit data source.
+Upload or update data source.
+Delete data source.
+Register model.
+Edit model.
+Submit model for approval.
+View model artifact.
+Share model.
+Request training job.
+Approve training job.
+Promote model to staging.
+Promote model to production.
+View audit logs.
+Manage templates.
+Manage approval workflows.
+The permission matrix should be dynamic. The same user may have different permissions depending on
+the asset status. For example, a Data Owner may edit a draft dataset directly, but must submit a change
+request to edit an approved or published dataset.
+8. Dataset Catalog and Search
+The Dataset Catalog allows users to discover available datasets across the organization. It works like an
+internal searchable hub where users can browse, filter, compare, and request access to datasets.
+The search experience should be convenient and powerful, especially when the number of datasets
+becomes large.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+6
+
+--- PAGE 7 ---
+Search and discovery features include:
+Keyword search by dataset name, description, tag, owner, department, domain, source system, or
+related project.
+Filter by asset type, domain, department, owner, contributor, data type, data source, sensitivity level,
+status, usage scope, update frequency, created date, updated date, and published status.
+Tag-based discovery.
+Sort by newest, most used, most downloaded, recently updated, highest quality score, or most
+relevant.
+Dataset detail page with metadata, version, schema, labels, usage rules, related models, and
+approval history.
+Recommended datasets based on domain, task type, previous usage, or related models.
+Favorite or bookmark datasets.
+Recently viewed datasets.
+Request access or request sharing directly from the catalog.
+Published datasets should be visible in the catalog according to user permissions. Unpublished or restricted
+datasets should only be visible to authorized users such as owners, contributors, approvers, and
+administrators.
+9. Label and Annotation Management
+Datasets may include a label system to support supervised learning, evaluation, quality control, and dataset
+balancing. The system allows users to define labels, label groups, label descriptions, class weights, and
+annotation rules.
+This does not necessarily require a separate approval workflow unless the organization decides that label
+changes have high impact. In most cases, label information can be managed as part of dataset metadata or
+dataset version updates.
+Key label management features include:
+Define label categories and label values.
+Configure label description and guideline.
+Set label weight or class weight.
+Track label distribution.
+Manage label version changes.
+Link labels to dataset versions.
+Support annotation guideline attachments.
+Show label quality indicators if available.
+Track contributors or annotators if needed.
+For example, an image classification dataset may include labels such as “normal”, “defect”, “blurred”, or
+“unknown”. Each label can have a description, example, weight, and quality note. A text classification
+dataset may include labels such as “positive”, “neutral”, “negative”, “spam”, or “sensitive”.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+7
+
+--- PAGE 8 ---
+10. Training Job Management
+The Training Job Management module allows users to request, configure, approve, execute, and track
+model training jobs.
+A training job connects datasets, model configuration, compute resources, training parameters, output
+model artifacts, and evaluation results. Since training may consume significant resources and may involve
+sensitive datasets, training job execution can be controlled by an approval workflow.
+Key training job features include:
+Create training job request.
+Select dataset and dataset version.
+Select model type, base model, or existing model version.
+Configure training parameters.
+Define compute resource requirements.
+Submit training job for approval.
+Track approval status.
+Execute training job after approval.
+Monitor job status, logs, progress, and errors.
+Store output model artifact.
+Link training result to model registry.
+Track dataset-model lineage.
+Notify users when training is approved, rejected, failed, or completed.
+Training job statuses may include Draft, Submitted, Under Review, Approved, Queued, Running, Failed,
+Completed, Cancelled, and Archived.
+11. Model Evaluation and Benchmarking
+The Model Evaluation module helps teams evaluate model performance before the model is approved for
+further usage, staging, or production deployment.
+Evaluation results should be linked to the model version, dataset version, benchmark dataset, evaluation
+method, metric definition, and reviewer comments.
+Key evaluation features include:
+Record evaluation metrics.
+Compare model versions.
+Benchmark models against internal datasets.
+Track accuracy, precision, recall, F1-score, latency, throughput, robustness, fairness, or other task-
+specific metrics.
+Upload evaluation reports.
+Link evaluation results to approval workflows.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+8
+
+--- PAGE 9 ---
+Show model performance history.
+Support pass/fail criteria.
+Support reviewer comments and risk notes.
+This module helps users understand not only which model performs better, but also under what dataset,
+condition, version, and evaluation method the result was achieved.
+12. Model Deployment and Promotion
+The Model Deployment module controls the promotion of models from development to staging or
+production. Deployment or promotion should require approval because it can affect business operations,
+system stability, security, and end-user experience.
+Key deployment features include:
+Request model promotion to staging.
+Request model promotion to production.
+Select model version and deployment environment.
+Attach evaluation result and approval evidence.
+Validate required deployment checklist.
+Review operational readiness.
+Approve or reject deployment request.
+Track deployment status.
+Record deployment history.
+Support rollback reference to previous model version.
+Mark old model versions as deprecated when needed.
+Deployment statuses may include Requested, Under Review, Approved for Staging, Staging, Approved for
+Production, Production, Rollback Requested, Deprecated, and Archived.
+13. Notification and Email Template Management
+AI Hub supports automatic notification through email and in-system messages. Notifications are triggered
+by workflow events, approval tasks, status changes, access requests, training job updates, deployment
+updates, and system reminders.
+Administrators can configure email templates for different scenarios to ensure consistent communication.
+Key notification features include:
+Email template management.
+In-system notification center.
+Automatic email sending based on workflow events.
+Approval request notification.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+9
+
+--- PAGE 10 ---
+Approval reminder.
+Rejection notification.
+Change request notification.
+Training job status notification.
+Dataset or model sharing notification.
+Deployment approval notification.
+Configurable recipients based on requester, owner, sponsor, approver, contributor, department, or
+role.
+Email templates may include dynamic variables such as asset name, asset type, requester, approver, request
+reason, status, due date, approval link, and comment.
+14. Template Management
+AI Hub provides template management to standardize dataset and model registration. Templates help
+ensure that required information is collected consistently and that different asset types can have different
+metadata structures.
+Key template features include:
+Dataset template management.
+Model template management.
+Required field configuration.
+Optional field configuration.
+Field type configuration.
+Validation rule configuration.
+Default value configuration.
+Template versioning.
+Template activation and deactivation.
+Template mapping by domain, asset type, or department.
+For example, a tabular dataset template may require schema, primary key, data dictionary, refresh
+frequency, and data quality rules. A model template may require algorithm, framework, input/output
+format, training dataset, evaluation metric, intended use, and limitation.
+15. Audit Trail and Governance History
+AI Hub records important actions and changes to support accountability, compliance, and traceability.
+Audit trail features include:
+Track asset creation, update, deletion, publication, sharing, download, and approval actions.
+Track changes to dataset metadata, model metadata, data source information, labels, versions, and
+permissions.
+Store approval history with approver, decision, comment, and timestamp.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+10
+
+--- PAGE 11 ---
+Track who accessed, downloaded, or used a dataset or model.
+Track training job execution history.
+Track model deployment and promotion history.
+Support audit log search and export for authorized users.
+Audit history is essential for enterprise AI governance because it helps answer important questions such as
+who created the dataset, who approved it, who used it, which model was trained with it, and which model
+version was deployed.
+16. Dashboard and Reporting
+The Dashboard module provides visibility into AI asset usage, approval workload, dataset quality, model
+lifecycle, and governance status.
+Dashboard features include:
+Total datasets and models.
+Dataset status summary.
+Model status summary.
+Pending approval requests.
+Training job status.
+Deployment status.
+Most used datasets.
+Recently published datasets.
+Recently updated models.
+Assets by department.
+Assets by domain.
+Sensitive datasets by status.
+Approval SLA tracking.
+Dataset and model reuse statistics.
+Audit and compliance indicators.
+This helps administrators, managers, data owners, and AI teams monitor the health and maturity of the
+internal AI asset ecosystem.
+17. Business Value
+AI Hub brings significant value to enterprise AI development by improving dataset and model governance,
+reducing duplicated work, increasing asset reuse, strengthening traceability, and reducing legal, security,
+and operational risks.
+The platform helps AI teams know which datasets and models already exist, who owns them, whether they
+are approved, how they can be used, which version is reliable, and what approval is required before using,
+sharing, training, or deploying them.
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+• 
+11
+
+--- PAGE 12 ---
+By combining catalog discovery, metadata standardization, approval workflows, permission control, lifecycle
+statuses, training job tracking, model registry, evaluation records, and audit logs, AI Hub provides a
+complete foundation for scalable and compliant AI development across departments.
+12

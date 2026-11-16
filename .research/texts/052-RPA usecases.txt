@@ -1,0 +1,206 @@
+I. NHÓM 1 – CHỨNG TỪ & KHAI BÁO HẢI QUAN
+UC1 – OCR bộ chứng từ xuất nhập khẩu & RPA Tự động lập form & hồ sơ khai báo hải quan
+Mục tiêu: Chuẩn hóa dữ liệu đầu vào cho toàn bộ quy trình XNK.
+Đầu vào
+Invoice
+Packing List
+Bill of Lading
+C/O
+Contract (PDF / scan / ảnh)
+OCR làm gì
+Nhận dạng & trích dữ liệu:
+Seller / Buyer
+Invoice No, Date
+Tên hàng, mô tả
+Số lượng, trọng lượng
+Trị giá
+Điều kiện giao hàng.
+HS code (nếu có).
+RPA Tự động lập form & hồ sơ khai báo
+Lưu dữ liệu.
+Gắn dữ liệu theo từng lô hang.
+Mapping dữ liệu sang form khai.
+Tự điền các màn hình khai báo.
+Tạo bộ hồ sơ khai.
+UC2 – Đối soát chứng từ (Contract – Invoice – PL – Tờ khai)
+Đầu vào
+Hợp đồng
+Invoice
+Packing List
+Tờ khai
+OCR làm gì
+Trích các trường cần so khớp:
+Tên hàng
+Số lượng
+Trị giá
+Điều kiện giao hàng
+RPA làm gì
+Tự động so sánh dữ liệu giữa các chứng từ
+Phát hiện:
+lệch số lượng
+lệch trị giá
+sai mô tả
+sai điều kiện giao hàng
+Đầu ra
+Bảng chênh lệch chứng từ
+Danh sách cảnh báo
+
+II. NHÓM 2 – VẬN HÀNH LÔ HÀNG & DỊCH VỤ LOGISTICS
+UC3 – Theo dõi trạng thái lô hàng & lịch tàu
+Đầu vào
+Số vận đơn
+Số container
+Website hãng tàu / forwarder
+RPA làm gì
+Tự đăng nhập website tra cứu
+Lấy:
+ETD
+ETA
+Trạng thái container / BL
+Cập nhật về file / hệ thống
+Đầu ra
+Bảng theo dõi tiến độ lô hàng
+Báo cáo trạng thái cho khách / nội bộ
+
+UC4 – Tạo booking & gửi yêu cầu cho forwarder / hãng tàu
+Đầu vào
+Thông tin lô hàng:
+Cảng đi – cảng đến
+Số kiện
+Trọng lượng
+Lịch dự kiến
+OCR làm gì
+Trích thông tin từ booking request / chứng từ (nếu là file scan)
+RPA làm gì
+Tự điền form booking trên web
+Hoặc tự soạn email booking theo mẫu
+Gửi booking
+Đầu ra
+Booking request đã gửi
+Log gửi booking
+
+UC5 – Tự động lập bộ hồ sơ hoàn tất lô hàng / thanh toán
+Đầu vào
+Invoice
+BL
+PL
+Tờ khai
+Phiếu phí
+OCR làm gì
+Nhận dạng loại chứng từ
+Trích metadata:
+số lô
+số invoice
+khách hàng
+RPA làm gì
+Tự gom file theo lô
+Tự tạo folder theo chuẩn
+Tự đặt tên file
+Đầu ra
+Bộ hồ sơ hoàn chỉnh cho từng lô hang
+UC6 – Tổng hợp chi phí & lập đề nghị xuất hóa đơn
+Đầu vào
+Phiếu phí logistics
+Hóa đơn dịch vụ
+File phát sinh
+OCR làm gì
+Trích:
+loại phí
+số tiền
+ngày
+đơn vị thu
+RPA làm gì
+Tổng hợp chi phí theo:
+lô hàng
+khách hàng
+hợp đồng
+Tạo file đề nghị xuất hóa đơn
+Đầu ra
+Bảng tổng hợp chi phí
+File đề nghị xuất hóa đơn dịch vụ
+
+III. NHÓM 3 – DỰ ÁN & SẢN PHẨM MỚI
+UC7 – OCR & tổng hợp báo giá nhiều nhà cung cấp
+Đầu vào
+Báo giá NCC (PDF / scan / email)
+OCR làm gì
+Trích:
+Tên hàng
+model
+đơn giá
+thời gian giao hàng
+điều kiện thanh toán
+RPA làm gì
+Chuẩn hóa về 1 template
+Gộp nhiều báo giá thành 1 bảng so sánh
+Đầu ra
+Bảng so sánh báo giá các nhà cung cấp
+UC8 – Lập bảng dự toán / costing cho dự án & sản phẩm mới
+Đầu vào
+BOM
+báo giá NCC
+chi phí logistics
+chi phí thuế – phí ước tính
+OCR làm gì
+Trích dữ liệu từ báo giá, chứng từ chi phí
+RPA làm gì
+Tự tính:
+tổng giá mua
+tổng logistics
+tổng chi phí
+giá vốn
+biên lợi nhuận
+Sinh file costing
+Đầu ra
+File dự toán / costing cho dự án, sản phẩm mới
+
+IV. NHÓM 4 – TÍCH HỢP & TỰ ĐỘNG HÓA CHO HỆ THỐNG QLHĐ (đã có sẵn)
+(Không làm lại chức năng QLHĐ – chỉ tự động đưa dữ liệu và đối soát)
+UC9 – OCR hợp đồng → tự động nhập hợp đồng & mốc thanh toán vào QLHĐ
+Đầu vào
+Hợp đồng ủy thác
+Hợp đồng dự án
+Phụ lục hợp đồng (PDF / scan)
+OCR làm gì
+Trích:
+số hợp đồng
+tên khách hàng / đối tác
+ngày hiệu lực
+ngày hết hạn
+giá trị hợp đồng
+các đợt thanh toán:
+tỷ lệ / số tiền
+hạn thanh toán
+RPA làm gì
+Tự đăng nhập hệ thống QLHĐ
+Tự nhập:
+thông tin hợp đồng
+các giai đoạn / đợt thanh toán
+Tự đính kèm file hợp đồng
+Đầu ra
+Hợp đồng và các mốc thanh toán đã có sẵn trên QLHĐ
+
+UC10 – Đối soát thanh toán thực tế ↔ kế hoạch trên QLHĐ
+Đầu vào
+Danh sách mốc thanh toán trên QLHĐ
+Sao kê ngân hàng / chứng từ thu tiền / file kế toán
+OCR làm gì
+Trích:
+số tiền
+ngày thanh toán
+nội dung chuyển khoản
+mã hợp đồng (nếu có)
+RPA làm gì
+Lấy kế hoạch thanh toán từ QLHĐ
+Tự so khớp:
+số tiền
+thời điểm
+hợp đồng
+Tự cập nhật trạng thái lên QLHĐ:
+đã thanh toán
+thanh toán thiếu
+thanh toán trễ
+Đầu ra
+Danh sách mốc thanh toán:
+đúng hạn / trễ hạn / thiếu tiền
+Trạng thái được cập nhật trực tiếp trên QLHĐ

@@ -1,0 +1,1769 @@
+
+--- PAGE 1 ---
+1/49
+ChatGPT - CV
+nêu ra 2-3 usecases đã áp dụng RPA và OCR, nói chi tiết 
+việc tôi đã làm, các giấy tờ liên quan. Hãy mô tả như thật, 
+có những yếu tố thực tế 
+Dựa trên tài liệu hiện có, nên mô tả dự án theo hướng anh đã tham gia khảo sát, phân
+tích, lựa chọn use case, thiết kế giải pháp, chuẩn bị dữ liệu, phối hợp PoC/UAT và đưa
+một số hạng mục vào phạm vi nâng cấp hệ thống. Riêng RPA/OCR của QLHĐ đang được
+thể hiện trong tờ trình như một hạng mục cần xây dựng cùng 31 yêu cầu nâng cấp, nên
+không nên khẳng định toàn bộ đã vận hành production nếu thực tế chưa go-live. 
+Có thể chọn ba use case dưới đây để kể trong CV và phỏng vấn.
+1. OCR hợp đồng và RPA tự động nhập dữ liệu vào hệ thống QLHĐ
+Bối cảnh nghiệp vụ
+Trung tâm Xuất nhập khẩu quản lý nhiều hợp đồng, phụ lục và các đợt thanh toán. Trước
+đây, nhân viên phải mở từng file PDF hoặc bản scan, đọc nội dung rồi nhập thủ công vào
+hệ thống QLHĐ.
+Một hợp đồng có thể dài hàng chục trang, trong đó thông tin không nằm tập trung tại
+một vị trí. Thông tin chung thường ở trang đầu, giá trị hợp đồng nằm tại điều khoản giá
+trị, còn kế hoạch thanh toán lại nằm ở điều khoản thanh toán hoặc phụ lục. Việc nhập tay
+dễ phát sinh sai số tiền, sai thời hạn hoặc bỏ sót một đợt thanh toán.
+Use case được thiết kế để OCR trích xuất thông tin hợp đồng, sau đó RPA tạo bản ghi hợp
+đồng và các mốc thanh toán trên QLHĐ. 
+Các loại giấy tờ đầu vào
+Hợp đồng ủy thác xuất nhập khẩu.
+Hợp đồng dự án.
+Hợp đồng mua bán hoặc cung cấp dịch vụ.
+Phụ lục điều chỉnh giá trị, tiến độ hoặc thời hạn.
+Bảng tiến độ thực hiện hợp đồng.
+Điều khoản hoặc phụ lục thanh toán.
+File PDF điện tử, PDF scan hoặc ảnh chụp.
+
+--- PAGE 2 ---
+2/49
+Luồng xử lý thực tế
+Bước 1: Tiếp nhận và phân loại tài liệu
+Người dùng tải hợp đồng lên màn hình hoặc đặt file vào thư mục đầu vào. Hệ thống nhận
+dạng đây là hợp đồng chính hay phụ lục, đồng thời kiểm tra file có đọc được hay không,
+có thiếu trang hoặc bị khóa mật khẩu hay không.
+Bước 2: OCR bóc tách dữ liệu
+OCR trích xuất các trường chính:
+Số hợp đồng.
+Loại hợp đồng.
+Tên khách hàng hoặc đối tác.
+Mã số thuế, địa chỉ, người đại diện nếu có.
+Ngày ký, ngày hiệu lực, ngày hết hạn.
+Giá trị trước thuế, thuế VAT, tổng giá trị.
+Loại tiền tệ.
+Đơn vị thực hiện và người phụ trách.
+Các đợt thanh toán: tỷ lệ, số tiền, điều kiện và hạn thanh toán.
+Thông tin bảo lãnh, nghiệm thu hoặc thanh lý nếu nằm trong phạm vi.
+Dữ liệu sau OCR được chuẩn hóa, ví dụ chuyển ngày về cùng một định dạng, loại bỏ dấu
+phân cách hàng nghìn, chuẩn hóa mã tiền tệ và chuyển tỷ lệ thanh toán về dạng số.
+Bước 3: Kiểm tra nghiệp vụ
+Không cho bot nhập thẳng dữ liệu chưa kiểm soát. Tôi xác định các rule như:
+Tổng giá trị các đợt thanh toán không được vượt giá trị hợp đồng.
+Tổng tỷ lệ thanh toán thông thường phải bằng 100%.
+Ngày hết hạn không được nhỏ hơn ngày hiệu lực.
+Số hợp đồng và đối tác không được trùng với bản ghi đã tồn tại.
+Phụ lục phải tham chiếu được đến hợp đồng gốc.
+Trường OCR có confidence thấp phải được người dùng xác nhận.
+Nếu phụ lục thay đổi giá trị hoặc thời hạn thì phải lưu lịch sử trước và sau điều chỉnh.
+Ví dụ, hợp đồng quy định ba đợt thanh toán 30% – 60% – 10%, nhưng OCR chỉ nhận được
+hai đợt. Hệ thống không tạo dữ liệu hoàn chỉnh mà đưa hồ sơ vào trạng thái Needs
+Review và highlight phần điều khoản cần kiểm tra.
+Bước 4: RPA nhập QLHĐ
+
+--- PAGE 3 ---
+3/49
+Sau khi người dùng xác nhận:
+1. Bot đăng nhập bằng tài khoản dịch vụ có quyền giới hạn.
+2. Tìm kiếm hợp đồng theo số hợp đồng và đối tác để tránh nhập trùng.
+3. Tạo bản ghi hợp đồng ở trạng thái nháp.
+4. Điền thông tin chung.
+5. Tạo từng giai đoạn hoặc đợt thanh toán.
+6. Đính kèm file hợp đồng gốc và phụ lục.
+7. Lưu log thời gian chạy, dữ liệu đã nhập và lỗi phát sinh.
+8. Thông báo cho chuyên viên phụ trách kiểm tra và trình phê duyệt.
+Bot chỉ tạo draft, không tự phê duyệt hợp đồng hoặc xác nhận thanh toán. Đây là điểm
+kiểm soát quan trọng vì dữ liệu hợp đồng có giá trị pháp lý và tài chính.
+Việc tôi đã làm
+Tôi có thể mô tả vai trò của mình như sau:
+Ngoài ra, tôi:
+Lập quy trình As-is và To-be.
+Xây dựng data dictionary và bảng mapping OCR–QLHĐ.
+Thiết kế màn hình kiểm tra kết quả OCR, highlight dữ liệu confidence thấp.
+Xác định trạng thái: New, Extracted, Needs Review, Validated, RPA Processing,
+Completed và Failed.
+Viết BRD/SRS, user story, acceptance criteria và exception matrix.
+Chuẩn bị tập hợp đồng mẫu cho việc cấu hình và đánh giá OCR.
+Thiết kế test case cho hợp đồng nhiều trang, scan mờ, có dấu đỏ, song ngữ và nhiều
+phụ lục.
+Phối hợp developer hoặc vendor kiểm tra logic OCR và luồng bot.
+Thực hiện UAT, ghi nhận lỗi và xác nhận dữ liệu sau khi bot nhập vào QLHĐ.
+Tham gia tổng hợp phạm vi RPA/OCR trong gói nâng cấp QLHĐ cùng các yêu cầu
+nâng cấp khác.
+Tài liệu CV của anh cũng thể hiện vai trò bao gồm xây dựng BRD/SRS, data mapping,
+business rules, kiểm tra dữ liệu, UAT, hỗ trợ development và triển khai các module
+OCR/RPA. 
+Tôi làm việc với Trung tâm Xuất nhập khẩu và các đơn vị liên quan để khảo sát quy
+trình nhập hợp đồng hiện tại, thu thập bộ hợp đồng mẫu và xác định các trường dữ
+liệu cần quản lý trên QLHĐ. Tôi xây dựng document-field mapping giữa nội dung hợp
+đồng, kết quả OCR và các trường trên hệ thống; đồng thời định nghĩa rule kiểm tra giá
+trị, thời hạn, đợt thanh toán, xử lý trùng và xử lý phụ lục.
+
+--- PAGE 4 ---
+4/49
+2. OCR bộ chứng từ xuất nhập khẩu, đối soát và tạo draft hồ sơ khai
+báo
+Bối cảnh nghiệp vụ
+Mỗi lô hàng thường có một bộ chứng từ do nhiều bên phát hành. Nhân viên xuất nhập
+khẩu phải đọc từng tài liệu, nhập lại dữ liệu vào file theo dõi và phần mềm khai báo, sau
+đó kiểm tra xem các chứng từ có thống nhất với nhau hay không.
+Các chứng từ của cùng một lô có thể dùng cách viết tên hàng khác nhau, khác đơn vị tính
+hoặc có sai lệch nhỏ về số lượng, trọng lượng và trị giá. Nếu không phát hiện trước khi
+khai, doanh nghiệp có thể phải sửa hồ sơ hoặc giải trình lại.
+Tài liệu dự án xác định OCR sẽ bóc tách Invoice, Packing List, Bill of Lading, C/O và
+Contract; RPA mapping dữ liệu sang form khai, tạo hồ sơ và cập nhật báo cáo theo dõi. 
+Các giấy tờ liên quan
+Commercial Invoice.
+Packing List.
+Bill of Lading hoặc Air Waybill.
+Certificate of Origin – C/O.
+Hợp đồng ngoại thương.
+Booking confirmation.
+Tờ khai hải quan bản nháp hoặc bản đã đăng ký.
+Chứng từ vận chuyển, container hoặc phiếu cân nếu có.
+File theo dõi lô hàng trên Excel hoặc Google Sheet.
+Luồng OCR và RPA
+OCR phân loại tài liệu và trích xuất:
+Seller, Buyer, Consignee, Shipper.
+Invoice No. và Invoice Date.
+Tên hàng, model, mô tả hàng hóa.
+Số lượng và đơn vị tính.
+Đơn giá và trị giá.
+Gross Weight, Net Weight.
+Số kiện.
+Số container, số seal.
+Cảng đi, cảng đến.
+Incoterms.
+
+--- PAGE 5 ---
+5/49
+HS code nếu có trên chứng từ.
+Số vận đơn và ngày vận đơn.
+Chuẩn hóa dữ liệu:
+Chuyển các đơn vị như PCS, SET, BOX về danh mục dùng chung.
+Chuẩn hóa USD, VND hoặc loại tiền khác.
+Xử lý dấu phẩy, dấu chấm trong số tiền.
+Gộp bảng line-item bị tách qua nhiều trang.
+Chuẩn hóa HS code về đúng số ký tự.
+Liên kết toàn bộ chứng từ theo shipment, BL hoặc invoice number.
+Đối soát theo rule:
+Tổng Invoice phải bằng tổng các dòng hàng.
+Số lượng Invoice phải phù hợp với Packing List.
+Gross Weight không được nhỏ hơn Net Weight.
+Số container trên BL phải tồn tại trong bộ chứng từ.
+Điều kiện giao hàng trên hợp đồng và Invoice phải thống nhất.
+Trị giá và loại tiền trên hợp đồng phải phù hợp với Invoice.
+Nếu có tờ khai nháp, so sánh dữ liệu trên tờ khai với bộ chứng từ gốc.
+Kết quả là một bảng chênh lệch, ví dụ:
+Trường Invoice Packing List BL Kết quả
+Số lượng 1.000 998 — Cảnh báo lệch 2
+Gross Weight — 2.450 kg 2.450 kg Khớp
+Incoterms CIF — — Hợp lệ
+Container — ABCD1234567 ABCD1234567 Khớp
+RPA thực hiện:
+Tạo hoặc cập nhật dòng theo dõi lô hàng.
+Điền dữ liệu lên màn hình khai báo theo mapping.
+Lưu tờ khai ở trạng thái nháp.
+Tạo checklist chứng từ còn thiếu.
+Đính kèm hoặc liên kết tới file nguồn.
+Cập nhật trạng thái bot lên Google Sheet.
+Gửi thông báo nếu hồ sơ có chênh lệch cần xử lý.
+Hệ thống chỉ tạo draft; chuyên viên xuất nhập khẩu vẫn là người kiểm tra HS code, thuế
+suất và thực hiện submit cuối cùng. Cách này phù hợp hơn việc bot tự truyền tờ khai vì
+
+--- PAGE 6 ---
+6/49
+vẫn đảm bảo kiểm soát nghiệp vụ.
+Việc tôi đã làm
+Tôi khảo sát quy trình xử lý một lô hàng từ khi nhận bộ chứng từ đến khi lập hồ sơ khai
+báo. Sau đó tôi:
+Xây dựng ma trận Document–Field, chỉ rõ trường nào lấy từ Invoice, Packing List, BL,
+C/O hoặc Contract.
+Xác định khóa liên kết giữa các tài liệu như Shipment No., Invoice No., BL No. và
+Container No.
+Thiết kế rule đối soát số lượng, trị giá, trọng lượng, Incoterms và container.
+Xác định trường bắt buộc, trường tùy chọn và nguồn dữ liệu ưu tiên khi hai tài liệu
+không thống nhất.
+Thiết kế màn hình đối chiếu các chứng từ cạnh nhau và highlight phần sai lệch.
+Định nghĩa cơ chế confidence gating: trường nhận dạng thấp không được tự động
+chuyển cho bot.
+Chuẩn bị các bộ chứng từ mẫu gồm PDF điện tử, scan mờ, file nhiều trang và bảng
+hàng hóa dài.
+Viết test case cho các trường hợp thiếu chứng từ, trùng Invoice, một BL có nhiều
+container hoặc một Invoice có nhiều trang.
+Kiểm tra output JSON/CSV của OCR trước khi mapping sang form.
+Phối hợp UAT với người dùng nghiệp vụ và theo dõi các lỗi RPA như timeout, thay đổi
+giao diện, mất phiên đăng nhập hoặc dữ liệu nhập dở.
+Tài liệu dự án cũng mô tả đầu ra là tờ khai hải quan, báo cáo Google Sheet, bảng chênh
+lệch chứng từ và danh sách cảnh báo. 
+3. OCR hồ sơ mua sắm và tự động tổng hợp báo giá nhà cung cấp
+Bối cảnh nghiệp vụ
+Trong hoạt động đầu tư và mua sắm, một hồ sơ thường có nhiều báo giá từ các nhà cung
+cấp. Mỗi nhà cung cấp sử dụng một template khác nhau: có bên báo giá đã gồm VAT, có
+bên chưa gồm VAT; có bên gộp nhiều sản phẩm thành combo; tên model và điều kiện bảo
+hành cũng được viết không thống nhất.
+Nhân viên phải mở từng file, copy dữ liệu sang Excel rồi tự xây dựng bảng so sánh. Đây là
+công việc lặp lại nhưng vẫn cần người nghiệp vụ đánh giá cuối cùng.
+Use case được lựa chọn gồm OCR hồ sơ đề xuất đầu tư/mua sắm và OCR tổng hợp hồ sơ
+chào giá thành bảng so sánh. 
+
+--- PAGE 7 ---
+7/49
+Hồ sơ đầu vào
+Phiếu đề xuất đầu tư hoặc mua sắm.
+Tờ trình hoặc thuyết minh dự án.
+Danh mục hàng hóa, BOM hoặc yêu cầu kỹ thuật.
+Báo giá nhà cung cấp.
+Hồ sơ chào hàng hoặc hồ sơ dự thầu.
+Catalogue và tài liệu kỹ thuật.
+Kế hoạch giao hàng.
+Điều kiện bảo hành, thanh toán và hiệu lực báo giá.
+File PDF, scan, Word hoặc Excel.
+Dữ liệu OCR cần trích xuất
+Từ hồ sơ đề xuất:
+Đơn vị đề xuất.
+Tên dự án hoặc hạng mục mua sắm.
+Mục tiêu đầu tư.
+Tổng mức đầu tư dự kiến.
+Thời gian thực hiện.
+Loại hình đầu tư hoặc mua sắm.
+Người đề xuất và đơn vị sử dụng.
+Từ báo giá:
+Tên nhà cung cấp.
+Mã số thuế.
+Tên hàng hoặc dịch vụ.
+Model, part number, cấu hình.
+Số lượng và đơn vị tính.
+Đơn giá.
+VAT và tổng giá trị.
+Thời gian giao hàng.
+Thời hạn hiệu lực báo giá.
+Thời gian bảo hành.
+Điều kiện thanh toán.
+Xuất xứ và hãng sản xuất nếu có.
+RPA xử lý
+Chuẩn hóa nhiều báo giá về một template.
+Ghép các dòng sản phẩm tương đương vào cùng một nhóm so sánh.
+Quy đổi đơn vị tính và loại tiền nếu cần.
+
+--- PAGE 8 ---
+8/49
+Phân biệt giá trước VAT và sau VAT.
+Tính tổng giá trị theo từng nhà cung cấp.
+Tạo hồ sơ đề xuất trên phân hệ Đầu tư mua sắm.
+Điền các trường thông tin chung.
+Đính kèm tài liệu gốc.
+Sinh bảng so sánh chào giá để chuyên viên kiểm tra.
+Đánh dấu báo giá thiếu thời gian giao hàng, bảo hành hoặc điều kiện thanh toán.
+Một tình huống thực tế phải xử lý là nhà cung cấp A báo giá 100 triệu chưa VAT, nhà cung
+cấp B báo giá 108 triệu đã gồm VAT. Hệ thống không được so sánh trực tiếp hai con số
+mà phải chuẩn hóa về cùng cơ sở trước thuế hoặc sau thuế.
+Tương tự, nếu một nhà cung cấp báo “máy chủ + RAM + ổ cứng” thành một combo, còn
+bên khác tách thành ba dòng, hệ thống chỉ gợi ý mapping. Người nghiệp vụ vẫn phải xác
+nhận hai cấu hình có thực sự tương đương hay không.
+Việc tôi đã làm
+Làm việc với Phòng Pháp chế & Đầu tư để thu thập hồ sơ đề xuất và báo giá mẫu.
+Phân tích sự khác nhau giữa biểu mẫu của các nhà cung cấp.
+Xây dựng mẫu dữ liệu chuẩn cho bảng so sánh.
+Định nghĩa logic chuẩn hóa VAT, tiền tệ, đơn vị tính và thời gian giao hàng.
+Thiết kế rule phát hiện hồ sơ thiếu hoặc hết hiệu lực.
+Xác định cách match sản phẩm theo model, part number và cấu hình thay vì chỉ dựa
+vào tên.
+Thiết kế màn hình cho phép người dùng xác nhận các dòng mà OCR hoặc thuật toán
+chưa match chắc chắn.
+Viết yêu cầu chức năng, rule, acceptance criteria và test scenario.
+Chuẩn bị bộ dữ liệu kiểm thử có báo giá dạng bảng, báo giá scan và báo giá song
+ngữ.
+Kiểm tra bảng so sánh sau khi bot tổng hợp và đối chiếu lại với file gốc.
+Thiết kế cơ chế lưu file nguồn, kết quả OCR và lịch sử chỉnh sửa để phục vụ kiểm tra,
+kiểm toán.
+Bot chỉ hỗ trợ tổng hợp và nhập liệu, không tự động lựa chọn nhà cung cấp. Quyết định
+lựa chọn vẫn do hội đồng hoặc người có thẩm quyền thực hiện.
+Các tài liệu BA và tài liệu dự án tôi đã tạo hoặc tham gia
+Khi nhà tuyển dụng hỏi “cụ thể anh tạo những tài liệu gì?”, có thể trả lời:
+Biên bản khảo sát nghiệp vụ.
+
+--- PAGE 9 ---
+9/49
+Sơ đồ quy trình As-is và To-be.
+Danh sách và ma trận ưu tiên use case RPA/OCR.
+BRD/SRS hoặc Functional Specification.
+Document Classification Matrix.
+Document–Field Mapping.
+Data Dictionary.
+Business Rule Catalogue.
+OCR Confidence and Validation Rules.
+Exception Handling Matrix.
+RPA Process Definition Document.
+Wireframe màn hình upload, validation và theo dõi bot.
+User story và acceptance criteria.
+Test case, bộ dữ liệu test và UAT scenario.
+Biên bản UAT/nghiệm thu.
+Tài liệu hướng dẫn sử dụng.
+Runbook vận hành bot và danh sách lỗi thường gặp.
+Báo cáo kết quả PoC hoặc đánh giá độ chính xác OCR.
+Cách trả lời ngắn trong phỏng vấn
+Tại Viettel Commerce, tôi tham gia initiative RPA/OCR cho các quy trình quản lý hợp
+đồng, xuất nhập khẩu và mua sắm. Vai trò của tôi bắt đầu từ khảo sát quy trình thủ
+công, thu thập chứng từ mẫu, lựa chọn use case, xây dựng data mapping và business
+rule, đến thiết kế màn hình validation, phối hợp PoC, kiểm thử OCR và UAT bot RPA.
+Một use case tiêu biểu là OCR hợp đồng và tự động nhập số hợp đồng, đối tác, giá trị,
+thời hạn và các đợt thanh toán vào QLHĐ. Use case thứ hai xử lý bộ Invoice–Packing
+List–Bill of Lading–Contract, đối soát số lượng, trị giá và trọng lượng trước khi bot tạo
+draft hồ sơ khai báo. Use case thứ ba tổng hợp nhiều báo giá nhà cung cấp thành một
+bảng so sánh chuẩn hóa cho quy trình đầu tư mua sắm. Trong cả ba trường hợp, tôi
+thiết kế theo mô hình human-in-the-loop: bot chỉ nhập bản nháp hoặc tổng hợp dữ
+liệu, còn người nghiệp vụ kiểm tra và phê duyệt cuối cùng.
+Với dự án HRAI, phân tích dữ liệu nhân sự để xác định dự 
+báo loại rủi ro, đưa nhận xét, phân loại tích cực, bình 
+thường, tiêu cực thì một kiến trúc hoàn chỉnh cần có 
+những gì
+
+--- PAGE 10 ---
+10/49
+model Qwen nào phù hợp?
+Có lớp Roberta để phân tích ngữ nghĩa nhận xét của Quản 
+lý không?
+Có lớp Machine Learning để chấm điểm trọng số không? 
+Model nào phù hợp
+Với phạm vi HRAI One trong CV — phân tích dữ liệu nhân sự, dự báo nghỉ việc, vi phạm kỷ
+luật/tài chính, suy giảm năng suất, mức độ gắn kết, đồng thời hỗ trợ đánh giá thăng tiến
+và tăng bậc lương — kiến trúc hợp lý không phải là một model Qwen đọc toàn bộ dữ liệu
+rồi tự kết luận. 
+Nên thiết kế theo kiến trúc hybrid AI:
+1. Kiến trúc tổng thể đề xuất
+NLP model hiểu nhận xét dạng văn bản + Machine Learning chấm xác suất rủi ro từ
+dữ liệu có cấu trúc + Rule Engine áp dụng quy định nghiệp vụ + LLM Qwen tạo nhận
+xét và giải thích.
+HRM / ERP / Chấm công / KPI / Đào tạo / Kỷ luật / Giao dịch
+                        +
+            Nhận xét của quản lý, khảo sát nhân sự
+                        │
+                        ▼
+              Data Ingestion & Integration
+          API / Batch / CDC / Kafka / Airflow
+                        │
+                        ▼
+                 HR Data Lakehouse
+        Raw Zone → Standardized Zone → Feature Mart
+                        │
+          ┌─────────────┴─────────────┐
+          ▼                           ▼
+  Structured Feature Store      Text Processing Store
+  KPI, lương, chấm công,        Nhận xét quản lý,
+  biến động, lịch sử...         đánh giá định kỳ...
+          │                           │
+          │                           ▼
+          │                PhoBERT / RoBERTa Layer
+          │                - Sentiment
+          │                - Aspect classification
+          │                - Risk signal extraction
+          │                - Text embedding
+          │                           │
+          └─────────────┬─────────────┘
+
+--- PAGE 11 ---
+11/49
+2. Không nên chỉ có một đầu ra “tích cực – bình thường –
+tiêu cực”
+Đây là lỗi thiết kế thường gặp. Một nhân viên có thể:
+Có năng suất tốt nhưng nguy cơ nghỉ việc cao.
+Có thái độ tích cực nhưng có dấu hiệu vi phạm quy trình tài chính.
+Có kết quả bình thường nhưng tải công việc tăng bất thường.
+Có tiềm năng thăng tiến nhưng đang suy giảm mức độ gắn kết.
+Vì vậy nên có hai nhóm đầu ra độc lập.
+Nhóm A — Trạng thái tổng quan
+INSUFFICIENT_DATA  rất quan trọng. Không nên ép hệ thống kết luận khi dữ liệu quá ít
+hoặc mâu thuẫn.
+Nhóm B — Xác suất từng loại rủi ro
+                        ▼
+                Risk Prediction Layer
+      CatBoost / LightGBM / XGBoost Survival Models
+                        │
+                        ▼
+          Probability Calibration + SHAP Explanation
+                        │
+                        ▼
+             Business Rule & Policy Engine
+                        │
+                        ▼
+                Risk Aggregation Layer
+       Risk type + probability + severity + evidence
+                        │
+                        ▼
+               Qwen + RAG Explanation Layer
+       Sinh nhận xét, tóm tắt, đề xuất hành động
+                        │
+                        ▼
+          Dashboard / Case Management / Human Review
+                        │
+                        ▼
+          Audit Log / Monitoring / Model Governance
+POSITIVE
+NORMAL
+NEGATIVE
+INSUFFICIENT_DATA
+
+--- PAGE 12 ---
+12/49
+Đây là bài toán multi-label classification, vì một nhân viên có thể đồng thời thuộc nhiều
+nhóm rủi ro.
+Nên tránh dùng từ “chẩn đoán burnout”. Hệ thống chỉ nên đưa ra tín hiệu áp lực công
+việc hoặc suy giảm gắn kết, không kết luận tình trạng sức khỏe tâm thần.
+3. Lớp dữ liệu cần có
+3.1. Dữ liệu hồ sơ nhân sự
+Mã nhân viên.
+Đơn vị, phòng ban, vị trí.
+Chức danh, cấp bậc.
+Ngày vào làm, thâm niên.
+Lịch sử điều chuyển.
+Lịch sử bổ nhiệm, tăng bậc.
+Loại hợp đồng.
+Người quản lý trực tiếp.
+Không nên đưa những thuộc tính nhạy cảm hoặc ít liên quan trực tiếp vào model như
+quan điểm chính trị, tôn giáo, tình trạng sức khỏe, đời sống cá nhân. Giới tính, tuổi hoặc
+thuộc tính bảo vệ khác chỉ nên được dùng có kiểm soát để kiểm toán thiên lệch, không
+nên dùng làm biến dự báo bất lợi.
+3.2. Dữ liệu hiệu quả công việc
+KPI tháng, quý, năm.
+Tỷ lệ hoàn thành nhiệm vụ.
+Số nhiệm vụ trễ hạn.
+Số nhiệm vụ bị trả lại.
+Chất lượng đầu ra.
+Xu hướng KPI tăng hay giảm.
+Mức độ biến động KPI.
+So sánh với chính nhân viên trong các kỳ trước.
+{
+  "resignation_risk": 0.72,
+  "performance_decline_risk": 0.28,
+  "discipline_risk": 0.12,
+  "financial_anomaly_risk": 0.43,
+  "engagement_decline_risk": 0.66,
+  "workload_pressure_signal": 0.58
+}
+JSON
+
+--- PAGE 13 ---
+13/49
+So sánh với nhóm cùng chức danh.
+Không nên chỉ lấy KPI tháng hiện tại. Cần tạo các đặc trưng theo cửa sổ thời gian:
+3.3. Chấm công và tải công việc
+Ngày nghỉ.
+Đi muộn, về sớm.
+Làm thêm giờ.
+Số ngày làm liên tục.
+Tỷ lệ vắng mặt.
+Số lượng task.
+Số lượng task quá hạn.
+Tần suất phát sinh ngoài giờ.
+Phải phân biệt giữa:
+Làm thêm nhiều vì năng suất cao.
+Làm thêm nhiều vì thiếu người.
+Làm thêm nhiều nhưng kết quả giảm.
+Nghỉ phép hợp lệ với vắng mặt bất thường.
+3.4. Lương, phúc lợi và thăng tiến
+Thời gian từ lần tăng lương gần nhất.
+Thời gian từ lần thăng chức gần nhất.
+Chênh lệch lương so với dải lương của vị trí.
+Số lần được đề xuất nhưng chưa phê duyệt.
+Biến động thu nhập.
+Thưởng, phụ cấp.
+Lộ trình nghề nghiệp.
+3.5. Đào tạo và phát triển
+Khóa học đã hoàn thành.
+Kết quả đào tạo.
+Chứng chỉ.
+Kỹ năng hiện tại.
+KPI_30D
+KPI_90D
+KPI_180D
+KPI_TREND
+KPI_VOLATILITY
+CONSECUTIVE_KPI_DECLINE_MONTHS
+
+--- PAGE 14 ---
+14/49
+Khoảng cách năng lực với vị trí tiếp theo.
+Mức độ tham gia chương trình phát triển.
+Tần suất từ chối hoặc bỏ dở đào tạo.
+3.6. Kỷ luật và giao dịch nghiệp vụ
+Vi phạm quy trình đã được xác nhận.
+Số lần cảnh báo.
+Mức độ vi phạm.
+Trạng thái xử lý.
+Giao dịch bị trả lại.
+Giao dịch bất thường.
+Sai lệch đối soát.
+Vượt hạn mức hoặc phân quyền.
+Tần suất sửa/xóa/hủy giao dịch.
+Hệ thống phải phân biệt:
+Risk prediction: dự báo khả năng phát sinh sự kiện.
+Anomaly detection: phát hiện giao dịch khác thường.
+Confirmed violation: vi phạm đã được xác minh.
+Không được biến một bất thường kỹ thuật thành kết luận nhân viên vi phạm.
+4. Có nên có lớp RoBERTa phân tích nhận xét quản lý?
+Có. Đây là kiến trúc phù hợp.
+Với tiếng Việt, nên dùng PhoBERT-base-v2 làm model đầu tiên thay vì RoBERTa tiếng Anh
+thuần túy. PhoBERT được xây dựng dựa trên phương pháp pre-training của RoBERTa và
+được thiết kế riêng cho tiếng Việt. 
+4.1. PhoBERT nên làm những nhiệm vụ gì?
+Không nên chỉ fine-tune một bài toán sentiment đơn giản. Nên xây dựng model multi-task
+với nhiều output head.
+Head 1 — Phân loại sắc thái
+Head 2 — Phân loại khía cạnh nhận xét
+Hugging Face +1
+Tích cực
+Trung tính
+Tiêu cực
+Không xác định
+
+--- PAGE 15 ---
+15/49
+Một nhận xét có thể liên quan nhiều khía cạnh:
+Ví dụ:
+Kết quả mong muốn:
+Head 3 — Trích xuất tín hiệu rủi ro
+Năng suất
+Chất lượng công việc
+Kỷ luật
+Thái độ
+Hợp tác
+Khả năng học hỏi
+Khả năng lãnh đạo
+Tính chủ động
+Khả năng thích nghi
+Tiềm năng phát triển
+Mức độ gắn kết
+“Nhân viên có chuyên môn tốt nhưng gần đây thường xuyên chậm tiến độ và ít chủ
+động phối hợp.”
+{
+  "overall_sentiment": "negative",
+  "aspects": {
+    "professional_knowledge": {
+      "label": "positive",
+      "probability": 0.92
+    },
+    "delivery": {
+      "label": "negative",
+      "probability": 0.87
+    },
+    "collaboration": {
+      "label": "negative",
+      "probability": 0.81
+    }
+  }
+}
+Dấu hiệu muốn nghỉ việc
+Suy giảm động lực
+Mâu thuẫn với quản lý
+Suy giảm hiệu suất
+Không tuân thủ quy trình
+JSON
+
+--- PAGE 16 ---
+16/49
+Head 4 — Trích xuất bằng chứng
+Model phải trả lại đoạn văn bản làm căn cứ:
+Điều này giúp người quản lý biết AI dựa trên câu nào, thay vì chỉ nhìn thấy một nhãn “tiêu
+cực”.
+Head 5 — Tạo embedding
+Vector ngữ nghĩa của nhận xét được đưa sang model Machine Learning cùng các biến KPI,
+lương, chấm công và lịch sử công việc.
+4.2. Phải xử lý thiên lệch trong nhận xét quản lý
+Nhận xét quản lý không phải sự thật tuyệt đối. Một số quản lý chấm nghiêm, một số quản
+lý chấm dễ hoặc thường dùng ngôn ngữ tiêu cực.
+Cần có các biện pháp:
+So sánh nhận xét với KPI và dữ liệu khách quan.
+Chuẩn hóa theo phong cách đánh giá của từng quản lý.
+Phát hiện nhận xét quá ngắn hoặc chung chung.
+Tách sự kiện khách quan khỏi ý kiến cá nhân.
+Không để một nhận xét duy nhất tạo cảnh báo mức cao.
+Yêu cầu bằng chứng cho những kết luận nghiêm trọng.
+Có ngưỡng low confidence .
+Cho phép HR hoặc quản lý phản hồi model.
+5. Có lớp Machine Learning để chấm điểm trọng số
+không?
+Có, và đây phải là lớp chính để dự báo rủi ro.
+Thiếu kỹ năng
+Thiếu cơ hội phát triển
+Áp lực công việc
+{
+  "risk_signal": "performance_decline",
+  "evidence": "gần đây thường xuyên chậm tiến độ",
+  "confidence": 0.87
+}
+JSON
+
+--- PAGE 17 ---
+17/49
+LLM không nên tự gán trọng số cho KPI, nghỉ phép, lương và nhận xét. Lớp Machine
+Learning có nhiệm vụ học mối quan hệ giữa các đặc trưng lịch sử với sự kiện thực tế.
+Model phù hợp nhất: CatBoost
+CatBoost phù hợp với HRAI vì dữ liệu HR thường gồm rất nhiều trường categorical:
+Phòng ban.
+Chức danh.
+Cấp bậc.
+Loại hợp đồng.
+Vị trí.
+Nhóm nghề.
+Kết quả đánh giá.
+Loại vi phạm.
+Người quản lý.
+CatBoost hỗ trợ trực tiếp numerical, categorical, text và embedding features, nên có thể
+kết hợp dữ liệu HR dạng bảng với vector do PhoBERT tạo ra. 
+Nên xây dựng một model riêng cho từng loại rủi ro:
+Không nên dùng một model multiclass trong đó nhân viên chỉ được chọn một loại rủi ro,
+vì các loại rủi ro có thể đồng thời xảy ra.
+Model đặc biệt cho nghỉ việc: XGBoost AFT
+Nếu chỉ cần dự báo:
+thì CatBoost binary classifier là đủ.
+Nếu cần dự báo:
+thì nên sử dụng survival analysis, chẳng hạn XGBoost Accelerated Failure Time. XGBoost
+có hỗ trợ AFT cho bài toán time-to-event và xử lý được dữ liệu censored — tức những
+CatBoost +2
+CatBoost_Resignation
+CatBoost_PerformanceDecline
+CatBoost_Discipline
+CatBoost_FinancialAnomaly
+CatBoost_EngagementDecline
+CatBoost_PromotionReadiness
+Nhân viên có nghỉ việc trong 90 ngày tới không?
+Còn khoảng bao lâu nhân viên có thể nghỉ việc?
+
+--- PAGE 18 ---
+18/49
+nhân viên chưa nghỉ trong thời gian quan sát. 
+Đầu ra có thể là:
+LightGBM dùng để làm gì?
+LightGBM nên được dùng làm model đối chứng hoặc khi lượng dữ liệu rất lớn. Nó hỗ trợ
+xử lý mất cân bằng lớp thông qua class weight và các tham số sampling riêng cho
+positive/negative class. 
+Logistic Regression vẫn cần giữ
+Dù CatBoost thường mạnh hơn cho dữ liệu phức tạp, vẫn nên giữ Logistic Regression làm
+baseline vì:
+Dễ giải thích.
+Dễ kiểm tra chiều tác động.
+Dễ phát hiện data leakage.
+Có thể dùng làm meta-model tổng hợp điểm.
+Phù hợp khi cần scorecard minh bạch.
+6. “Chấm điểm trọng số” nên thiết kế như thế nào?
+Cần phân biệt ba khái niệm.
+6.1. Risk probability — xác suất do model học
+Ví dụ:
+Đây là xác suất model dự báo từ dữ liệu lịch sử.
+6.2. Business severity — mức độ nghiêm trọng theo nghiệp vụ
+Ví dụ:
+Nghỉ việc của nhân sự hiếm có thể ảnh hưởng lớn.
+Sai lệch giao dịch tài chính có thể cần ưu tiên cao.
+XGBoost Docum… +1
+{
+  "resignation_probability_30d": 0.18,
+  "resignation_probability_90d": 0.57,
+  "resignation_probability_180d": 0.73,
+  "estimated_risk_window": "60-120 days"
+}
+LightGBM Docu… +1
+Nguy cơ nghỉ việc trong 90 ngày: 72%
+JSON
+
+--- PAGE 19 ---
+19/49
+Suy giảm KPI nhẹ chưa cần cảnh báo ngay.
+Severity do doanh nghiệp cấu hình, không phải probability.
+6.3. Priority score — điểm ưu tiên xử lý
+Có thể tính theo mô hình:
+Hoặc dùng một meta-model Logistic Regression học trọng số dựa trên lịch sử xử lý.
+Ví dụ:
+Không nên gọi priority_score = 44% nguy cơ . Hai khái niệm này khác nhau.
+Phương án tốt nhất
+Model CatBoost sinh xác suất từng rủi ro.
+Probability calibration điều chỉnh để xác suất đáng tin cậy hơn.
+Rule Engine xác định severity và ngưỡng cảnh báo.
+Meta-model hoặc công thức minh bạch tạo priority score.
+SHAP giải thích biến nào làm điểm tăng hoặc giảm.
+Scikit-learn cung cấp các cơ chế calibration để hiệu chỉnh xác suất dự báo; SHAP
+TreeExplainer hỗ trợ giải thích đầu ra của các ensemble tree model. 
+7. Qwen nên đảm nhiệm phần nào?
+Qwen không nên là model quyết định nguy cơ chính. Vai trò hợp lý là:
+Đọc kết quả có cấu trúc từ PhoBERT và CatBoost.
+Tóm tắt các tín hiệu.
+Sinh nhận xét dễ hiểu cho HR.
+Giải thích nguyên nhân nhưng không thay đổi xác suất.
+Priority =
+    Risk Probability
+  × Business Severity
+  × Recency Factor
+  × Data Confidence
+{
+  "risk_probability": 0.72,
+  "business_severity": 0.80,
+  "recency_factor": 0.90,
+  "data_confidence": 0.85,
+  "priority_score": 0.44
+}
+Scikit-learn +2
+JSON
+
+--- PAGE 20 ---
+20/49
+Đề xuất bước kiểm tra tiếp theo.
+Tra cứu quy định nhân sự qua RAG.
+So sánh với tiêu chuẩn năng lực hoặc tiêu chí thăng tiến.
+Sinh báo cáo theo template.
+Qwen nào phù hợp?
+Qwen3.5-9B — lựa chọn cân bằng cho hệ thống nội bộ
+Phù hợp nếu:
+Muốn triển khai on-premise.
+Khối lượng request vừa phải.
+Chủ yếu tóm tắt, giải thích và sinh nhận xét.
+Không cần reasoning cực sâu.
+Muốn chi phí GPU hợp lý hơn.
+Qwen3.5-9B hỗ trợ context dài và có thể phục vụ qua các framework như vLLM hoặc
+SGLang; dòng Qwen3.5 cũng được Qwen công bố với phạm vi ngôn ngữ rộng.
+Qwen3.6-35B-A3B — lựa chọn production chất lượng cao
+Phù hợp nếu:
+Có hạ tầng GPU tốt.
+Cần đọc nhiều bằng chứng và chính sách.
+Cần sinh báo cáo chất lượng cao.
+Có RAG và nhiều tool nội bộ.
+Cần xử lý các case phức tạp, mâu thuẫn dữ liệu.
+Qwen3.6-35B-A3B là model mở mới hơn trong dòng Qwen và hỗ trợ context rất dài cùng
+các framework serving production. Tuy nhiên, hệ thống HRAI không nhất thiết phải dùng
+toàn bộ context tối đa; mỗi request chỉ nên truyền dữ liệu cần thiết. 
+Qwen3-Embedding-0.6B — dành cho RAG và semantic search
+Nên dùng model này để:
+Tìm chính sách nhân sự liên quan.
+Tìm tiêu chuẩn năng lực.
+Tìm case lịch sử tương tự.
+Tìm điều khoản kỷ luật hoặc điều kiện thăng tiến.
+So khớp nhận xét với competency framework.
+Hugging Face +1
+Hugging Face +1
+
+--- PAGE 21 ---
+21/49
+Qwen3-Embedding có các phiên bản 0.6B, 4B và 8B; bản 0.6B thường đã đủ cho hệ thống
+tra cứu nội bộ có quy mô vừa. 
+Khuyến nghị cuối cùng về Qwen
+8. Cách kết hợp PhoBERT, CatBoost và Qwen
+Ví dụ một nhân viên có dữ liệu:
+Bước 1 — PhoBERT
+Bước 2 — CatBoost
+CatBoost nhận:
+KPI trend.
+Qwen +1
+MVP:
+Qwen3.5-9B
+Production cân bằng:
+Qwen3.5-9B + Qwen3-Embedding-0.6B
+Production chất lượng cao:
+Qwen3.6-35B-A3B + Qwen3-Embedding-0.6B/4B
+KPI giảm liên tục 3 tháng
+Làm thêm giờ tăng 40%
+Không tăng lương trong 24 tháng
+Vừa bị điều chuyển
+Nhận xét quản lý: “Có chuyên môn tốt nhưng gần đây ít chủ động,
+thường xuyên đề cập mong muốn tìm môi trường mới”
+{
+  "sentiment": "negative",
+  "aspects": {
+    "professional_ability": 0.91,
+    "engagement_decline": 0.84,
+    "resignation_signal": 0.79
+  },
+  "evidence": [
+    "ít chủ động",
+    "mong muốn tìm môi trường mới"
+  ],
+  "embedding": [0.12, -0.32, 0.55]
+}
+JSON
+
+--- PAGE 22 ---
+22/49
+Overtime trend.
+Salary stagnation.
+Transfer history.
+Tenure.
+Promotion history.
+PhoBERT aspect scores.
+PhoBERT embedding.
+Kết quả:
+Bước 3 — SHAP
+Bước 4 — Rule Engine
+Bước 5 — Qwen sinh nhận xét
+{
+  "resignation_risk_90d": 0.74,
+  "performance_decline_risk": 0.61,
+  "discipline_risk": 0.09
+}
+Các yếu tố làm tăng nguy cơ nghỉ việc:
++ Không tăng lương 24 tháng: +0.18
++ KPI giảm 3 kỳ liên tiếp: +0.14
++ Tín hiệu tìm môi trường mới: +0.13
++ Làm thêm giờ tăng mạnh: +0.09
+Yếu tố làm giảm nguy cơ:
+- Chuyên môn tốt: -0.06
+- Thâm niên ổn định: -0.04
+Nếu:
+resignation_risk > 0.70
+và confidence > 0.75
+và có ít nhất 2 nguồn bằng chứng
+=> Tạo cảnh báo HIGH
+Nhân viên có năng lực chuyên môn tốt nhưng xuất hiện xu hướng suy giảm mức độ
+gắn kết trong ba kỳ gần nhất. Các tín hiệu đáng chú ý gồm KPI giảm liên tiếp, thời
+lượng làm thêm tăng, thời gian dài chưa điều chỉnh thu nhập và nội dung nhận xét đề
+cập mong muốn thay đổi môi trường. Hệ thống đánh giá nguy cơ nghỉ việc trong 90
+JSON
+
+--- PAGE 23 ---
+23/49
+Qwen chỉ diễn đạt lại dữ liệu đã được model và rule engine xác nhận, không tự bịa thêm
+nguyên nhân.
+9. Các thành phần production bắt buộc
+Data Engineering
+ETL/ELT pipeline.
+Data quality rules.
+Employee master data.
+Slowly Changing Dimension cho phòng ban, chức danh.
+Feature Store.
+Text Store.
+Data lineage.
+Version dữ liệu và thời điểm chụp dữ liệu.
+AI/ML Pipeline
+Dataset versioning.
+Labeling workflow.
+Training pipeline.
+Hyperparameter tuning.
+Model registry.
+Model approval.
+Batch inference.
+Online inference.
+Champion/challenger model.
+Evaluation
+Với dữ liệu HR, không nên chỉ dùng accuracy vì sự kiện như nghỉ việc hoặc vi phạm
+thường hiếm.
+Nên theo dõi:
+Precision.
+Recall.
+PR-AUC.
+Recall@Top-K.
+False-positive rate.
+Brier score.
+ngày ở mức cao. Đề xuất HR xác minh qua trao đổi trực tiếp, rà soát khối lượng công
+việc và lộ trình phát triển nghề nghiệp.
+
+--- PAGE 24 ---
+24/49
+Calibration curve.
+Confusion matrix.
+Hiệu quả thực tế sau khi HR can thiệp.
+Việc chia train/test phải theo thời gian, chẳng hạn:
+Không nên random toàn bộ dữ liệu vì dễ đưa thông tin tương lai vào quá khứ.
+Monitoring
+Data drift.
+Prediction drift.
+Concept drift.
+Tỷ lệ cảnh báo theo đơn vị.
+Calibration theo tháng.
+Model performance theo thời gian.
+Bias audit.
+Tỷ lệ HR chấp nhận/từ chối cảnh báo.
+Tỷ lệ cảnh báo không đủ bằng chứng.
+Security và governance
+RBAC/ABAC.
+Mã hóa dữ liệu.
+Che thông tin không cần thiết trước khi gửi LLM.
+Audit log toàn bộ lượt xem và chỉnh sửa.
+Chỉ HR được xem dữ liệu cấp cá nhân.
+Quản lý chỉ xem nhân viên thuộc phạm vi.
+Lưu model version đã sinh từng nhận xét.
+Cho phép người có thẩm quyền phản hồi hoặc điều chỉnh kết quả.
+Không tự động sa thải, kỷ luật, từ chối tăng lương hoặc từ chối thăng chức chỉ dựa
+trên AI.
+10. Bộ model đề xuất hoàn chỉnh
+Thành phần Model đề xuất Nhiệm vụ
+Phân tích nhận xét
+tiếng Việt
+PhoBERT-base-v2 Sentiment, aspect, risk signal,
+evidence
+Train: 2022–2024
+Validation: 2025 H1
+Test: 2025 H2
+
+--- PAGE 25 ---
+25/49
+Thành phần Model đề xuất Nhiệm vụ
+Semantic search/RAG Qwen3-
+Embedding-0.6B
+Tìm chính sách, tiêu chuẩn, case
+tương tự
+Dự báo rủi ro dạng
+bảng
+CatBoostClassifier Nghỉ việc, hiệu suất, kỷ luật, gắn
+kết
+Dự báo thời gian nghỉ
+việc
+XGBoost AFT Time-to-resignation
+Model đối chứng LightGBM Benchmark và dữ liệu lớn
+Model trọng số minh
+bạch
+Logistic Regression Meta-model hoặc scorecard
+Giải thích biến SHAP TreeExplainer Feature contribution
+Sinh nhận xét Qwen3.5-9B On-premise cân bằng
+Sinh báo cáo nâng
+cao
+Qwen3.6-35B-A3B Case phức tạp, RAG, reasoning
+Rule nghiệp vụ Rule Engine Ngưỡng, severity, cảnh báo,
+override
+Kiến trúc phù hợp nhất cho HRAI One
+PhoBERT-base-v2
+        │
+        ├── Sentiment probabilities
+        ├── Aspect probabilities
+        ├── Risk signals
+        └── Text embeddings
+                 │
+                 ▼
+HR Structured Features → CatBoost Models per Risk
+                 │
+                 ▼
+      Calibration + SHAP + Rule Engine
+                 │
+                 ▼
+ Status: Positive / Normal / Negative
+ Risks: Type + Probability + Severity + Evidence
+                 │
+
+--- PAGE 26 ---
+26/49
+Đây là kiến trúc vừa đủ mạnh về AI, vừa giải thích được, có thể triển khai thực tế và đặc
+biệt không giao quyền quyết định nhân sự trực tiếp cho một LLM.
+                 ▼
+    Qwen3.5-9B hoặc Qwen3.6-35B-A3B
+                 │
+                 ▼
+ Nhận xét + Giải thích + Đề xuất xác minh/can thiệp
+Sources
+Sources
+đây là flow OCR đầy đủ, hãy trình bày nó. Đồng thời trình 
+bày flow nghiệp dư nhất
+Sơ đồ này mô tả một Document Understanding System theo kiến trúc hai pipeline,
+không chỉ đơn thuần là OCR đọc chữ. Mục tiêu cuối cùng là biến tài liệu ngân hàng dạng
+PDF/scan/ảnh thành dữ liệu có cấu trúc như JSON hoặc Markdown để hệ thống nghiệp vụ
+có thể sử dụng.
+Điểm quan trọng nhất là hệ thống có hai con đường xử lý:
+Pipeline 1 – OCR truyền thống: ổn định, nhanh, dễ kiểm soát.
+Pipeline 2 – VLM: linh hoạt hơn với bố cục phức tạp, biểu mẫu mới hoặc tài liệu khó
+đọc.
+I. Tổng quan kiến trúc đầy đủ
+Dataset
+   ↓
+
+--- PAGE 27 ---
+27/49
+Kiến trúc này được gọi là Dual Pipeline Architecture vì có hai cơ chế suy luận độc lập
+nhưng cùng sinh ra một định dạng đầu ra chuẩn.
+II. Lớp Dataset
+Trong sơ đồ có các bộ dữ liệu như:
+SROIE Receipt Dataset
+Vietnamese Receipts Dataset
+Một bộ Vietnamese Receipts khác đang bị lặp tên, có thể là lỗi trình bày hoặc đại diện
+cho một dataset nội bộ khác.
+1. Dataset dùng để làm gì?
+Dataset không phải là dữ liệu người dùng upload lúc hệ thống chạy production. Dataset
+được dùng trong giai đoạn:
+Huấn luyện model.
+Fine-tune model.
+Đánh giá độ chính xác.
+So sánh OCR pipeline với VLM pipeline.
+Tạo benchmark.
+Kiểm thử tài liệu tiếng Việt.
+Kiểm thử khả năng nhận dạng bảng, hóa đơn, biên lai.
+Ví dụ một record trong dataset có thể gồm:
+Huấn luyện / Fine-tune / Đánh giá model
+   ↓
+Document Upload
+   ↓
+Preprocessing + Layout Analysis
+   ↓
+Router lựa chọn:
+   ├── Pipeline 1: OCR + LayoutLM/sLLM
+   └── Pipeline 2: VLM
+   ↓
+Output chuẩn hóa: JSON / Markdown
+   ↓
+Serving: Triton hoặc vLLM
+   ↓
+FastAPI
+   ↓
+Docker Deployment
+   ↓
+Ứng dụng người dùng / hệ thống ngân hàng
+
+--- PAGE 28 ---
+28/49
+2. Dataset production thực tế nên bổ sung
+Với banking, ngoài receipt dataset nên có:
+Sao kê ngân hàng.
+Ủy nhiệm chi.
+Giấy nộp tiền.
+Phiếu chuyển khoản.
+Hồ sơ KYC.
+CCCD/hộ chiếu.
+Đơn mở tài khoản.
+Hợp đồng tín dụng.
+Chứng từ giải ngân.
+Hồ sơ tài sản bảo đảm.
+Hóa đơn và chứng từ thanh toán.
+Biểu mẫu viết tay hoặc scan kém chất lượng.
+Dataset nên được chia:
+III. Pipeline 1 – OCR truyền thống
+Pipeline 1 là chuỗi xử lý nhiều bước:
+Ảnh hóa đơn
++
+Bounding boxes của các vùng chữ
++
+Nội dung từng vùng chữ
++
+Nhãn thực thể:
+- Merchant name
+- Date
+- Total amount
+- Tax
+- Address
+Train set
+Validation set
+Test set
+Hard-case set
+Production shadow set
+
+--- PAGE 29 ---
+29/49
+Đây là pipeline mang tính xác định cao, phù hợp với tài liệu có cấu trúc tương đối rõ.
+Bước 1. Layout Detection
+Mục đích
+Phát hiện bố cục của trang tài liệu và phân chia thành các vùng:
+Header.
+Footer.
+Paragraph.
+Table.
+Title.
+Key-value block.
+Signature.
+Stamp.
+Image.
+Checkbox.
+Form section.
+Ví dụ một phiếu chuyển khoản có thể được chia thành:
+Tại sao cần layout detection?
+Nếu OCR chỉ đọc chữ theo thứ tự trái sang phải, trên xuống dưới, kết quả có thể bị lẫn
+giữa các cột.
+Ví dụ:
+Layout Detection
+→ Text Detection
+→ Text Recognition
+→ Entity Extraction
+→ JSON / Markdown
+Vùng 1: Thông tin người chuyển
+Vùng 2: Thông tin người nhận
+Vùng 3: Số tiền
+Vùng 4: Nội dung chuyển khoản
+Vùng 5: Chữ ký và con dấu
+Tên người chuyển: Nguyễn Văn A
+
+--- PAGE 30 ---
+30/49
+OCR không hiểu layout có thể sinh:
+Layout detection giúp giữ đúng cấu trúc của tài liệu.
+Bước 2. Text Detection
+Mục đích
+Xác định vị trí các vùng có chữ và trả về bounding box.
+Ví dụ:
+Ở bước này hệ thống chỉ biết:
+Hệ thống chưa biết nội dung chữ là gì.
+Công nghệ
+PaddleOCR có thể sử dụng các model detection để phát hiện:
+Dòng chữ.
+Word box.
+Text block.
+Chữ nghiêng.
+Chữ xoay.
+Chữ trong bảng.
+Bước 3. Text Recognition
+Mục đích
+Tên người nhận: Trần Văn B
+Tên người chuyển Tên người nhận Nguyễn Văn A Trần Văn B
+{
+  "box": [125, 240, 620, 282],
+  "region_type": "text"
+}
+Tại tọa độ này có chữ.
+JSON
+
+--- PAGE 31 ---
+31/49
+Chuyển ảnh trong từng bounding box thành ký tự.
+Ví dụ vùng ảnh:
+Kết quả OCR:
+Các vấn đề thực tế
+Model recognition phải xử lý:
+Font nhỏ.
+Ảnh mờ.
+Scan lệch.
+Nền có watermark.
+Dấu đỏ chồng lên chữ.
+Chữ ký.
+Tiếng Việt có dấu.
+Dấu chấm và dấu phẩy trong số tiền.
+Mã hợp đồng và mã giao dịch.
+Chữ bị mất nét.
+Ví dụ OCR nhầm:
+thành:
+Do đó phải có bước hậu kiểm và chuẩn hóa dữ liệu.
+Bước 4. LayoutLMv3 hoặc sLLM để trích xuất thực thể
+OCR mới chỉ cung cấp text và vị trí. Hệ thống vẫn phải hiểu:
+Số tiền: 125.000.000 VNĐ
+{
+  "text": "Số tiền: 125.000.000 VNĐ",
+  "confidence": 0.97
+}
+125.000.000
+125.000.OOO
+JSON
+
+--- PAGE 32 ---
+32/49
+Đoạn nào là tên khách hàng.
+Đoạn nào là số tài khoản.
+Đoạn nào là số tiền.
+Đoạn nào là ngày giao dịch.
+Đoạn nào là nội dung thanh toán.
+LayoutLMv3 sử dụng đồng thời:
+Nội dung text.
+Vị trí của text.
+Bố cục trang.
+Thông tin hình ảnh.
+Ví dụ đầu vào:
+Đầu ra:
+Vai trò của sLLM
+Một small language model có thể được đặt sau OCR để:
+Chuẩn hóa dữ liệu.
+Ghép key với value.
+Trích xuất thực thể.
+Chuyển text thô thành JSON.
+Kiểm tra logic.
+Sửa các lỗi OCR đơn giản dựa trên ngữ cảnh.
+Ví dụ:
+[
+  {
+    "text": "Tên khách hàng",
+    "box": [50, 100, 180, 130]
+  },
+  {
+    "text": "Nguyễn Văn A",
+    "box": [220, 100, 450, 130]
+  }
+]
+{
+  "customer_name": "Nguyễn Văn A"
+}
+JSON
+JSON
+
+--- PAGE 33 ---
+33/49
+Tuy nhiên, sLLM không nên tự sửa khi không đủ bằng chứng. Kết quả sửa cần có
+confidence hoặc được đánh dấu để kiểm tra.
+Bước 5. Sinh Output
+Pipeline 1 sinh output theo JSON hoặc Markdown.
+JSON
+Markdown
+OCR: 125.000.OOO VND
+sLLM: 125.000.000 VND
+{
+  "document_type": "bank_transfer_form",
+  "transaction_date": "2026-06-05",
+  "sender": {
+    "name": "Nguyễn Văn A",
+    "account_number": "123456789"
+  },
+  "receiver": {
+    "name": "Trần Văn B",
+    "account_number": "987654321"
+  },
+  "amount": 125000000,
+  "currency": "VND",
+  "content": "Thanh toán hợp đồng 02/2026",
+  "confidence": {
+    "amount": 0.98,
+    "receiver_account": 0.91
+  }
+}
+# Phiếu chuyển khoản
+- Người chuyển: Nguyễn Văn A
+- Tài khoản chuyển: 123456789
+- Người nhận: Trần Văn B
+- Tài khoản nhận: 987654321
+- Số tiền: 125.000.000 VNĐ
+- Nội dung: Thanh toán hợp đồng 02/2026
+JSON
+Markdown
+
+--- PAGE 34 ---
+34/49
+JSON phù hợp để tích hợp hệ thống. Markdown phù hợp để hiển thị, tìm kiếm hoặc cung
+cấp context cho LLM.
+IV. Pipeline 2 – VLM
+Pipeline 2 dùng Vision-Language Model để hiểu tài liệu trực tiếp từ hình ảnh.
+VLM có khả năng nhìn:
+Hình ảnh.
+Bố cục.
+Chữ.
+Bảng.
+Mối quan hệ giữa các thành phần.
+Nội dung ngữ nghĩa của tài liệu.
+Bước 1. Layout Detection
+Trong sơ đồ, VLM vẫn có layout detection trước khi inference.
+Điều này có nghĩa hệ thống có thể:
+Chia tài liệu thành từng trang.
+Cắt vùng bảng.
+Cắt vùng thông tin chính.
+Loại bỏ footer hoặc watermark.
+Tách các block trước khi đưa vào VLM.
+Không nhất thiết gửi nguyên một PDF 100 trang cho model.
+Ví dụ:
+Hoặc:
+Layout Detection
+→ VLM
+→ JSON / Markdown
+Trang 1 → Thông tin chung
+Trang 2 → Bảng giao dịch
+Trang 3 → Điều khoản
+Trang 4 → Chữ ký
+
+--- PAGE 35 ---
+35/49
+Bước 2. VLM end-to-end inference
+VLM nhận trực tiếp hình ảnh hoặc các vùng ảnh và prompt.
+Ví dụ prompt:
+VLM trả về:
+Ưu điểm của VLM
+Hiểu tài liệu không cố định template.
+Hiểu bảng phức tạp.
+Tốt hơn với key-value phân tán.
+Crop 1 → Customer information
+Crop 2 → Transaction table
+Crop 3 → Signature block
+Analyze this bank transfer document.
+Extract:
+- Sender name
+- Sender account
+- Receiver name
+- Receiver account
+- Amount
+- Currency
+- Transaction date
+- Transfer content
+Return valid JSON only.
+Do not infer missing values.
+{
+  "sender_name": "Nguyễn Văn A",
+  "sender_account": "123456789",
+  "receiver_name": "Trần Văn B",
+  "receiver_account": "987654321",
+  "amount": 125000000,
+  "currency": "VND",
+  "transaction_date": "2026-06-05",
+  "transfer_content": "Thanh toán hợp đồng 02/2026"
+}
+JSON
+
+--- PAGE 36 ---
+36/49
+Có thể suy luận quan hệ giữa nhiều vùng.
+Không cần huấn luyện riêng cho từng vị trí field.
+Có thể xử lý biểu mẫu mới nhanh hơn.
+Có khả năng sinh JSON hoặc Markdown trực tiếp.
+Nhược điểm
+Tốn GPU hơn.
+Latency cao hơn.
+Khó kiểm soát hơn OCR pipeline.
+Có nguy cơ hallucination.
+Có thể trả sai format.
+Có thể suy diễn dữ liệu không tồn tại.
+Khó truy vết ký tự cụ thể hơn OCR bounding box.
+Vì vậy VLM cần schema validation và rule validation.
+Vai trò của Unsloth
+Unsloth trong sơ đồ thường được dùng để:
+Fine-tune VLM.
+LoRA/QLoRA training.
+Giảm lượng VRAM khi fine-tune.
+Tăng tốc quá trình huấn luyện.
+Tùy chỉnh model theo chứng từ ngân hàng.
+Huấn luyện model sinh JSON theo schema cố định.
+Ví dụ fine-tune cho các tài liệu:
+Unsloth chủ yếu nằm ở training/fine-tuning workflow, không phải thành phần bắt buộc
+trong mọi inference request.
+Ảnh phiếu chuyển khoản
+→ JSON chuẩn
+Ảnh ủy nhiệm chi
+→ JSON chuẩn
+Ảnh sao kê
+→ Markdown table
+
+--- PAGE 37 ---
+37/49
+V. Tại sao cần hai pipeline?
+Hai pipeline không phải để chạy trùng lặp vô ích. Chúng bổ sung cho nhau.
+Pipeline 1 phù hợp khi
+Template tương đối cố định.
+Khối lượng tài liệu rất lớn.
+Cần tốc độ cao.
+Cần xác định bounding box chính xác.
+Cần audit từng ký tự.
+Cần chi phí inference thấp.
+Các trường dữ liệu rõ ràng.
+Ví dụ:
+Phiếu nộp tiền theo mẫu.
+Biên lai.
+Form giao dịch.
+Chứng từ có cấu trúc cố định.
+Pipeline 2 phù hợp khi
+Tài liệu có layout phức tạp.
+Template thay đổi thường xuyên.
+Có bảng nhiều tầng.
+Key và value nằm xa nhau.
+Có nhiều trang.
+Có ghi chú, dấu, chữ ký hoặc phụ lục.
+Pipeline OCR truyền thống có confidence thấp.
+Ví dụ:
+Hợp đồng tín dụng.
+Sao kê đa định dạng.
+Hồ sơ doanh nghiệp.
+Báo cáo tài chính.
+Hồ sơ KYC không theo mẫu thống nhất.
+VI. Router lựa chọn pipeline
+Sơ đồ không thể hiện rõ router ở tầng process, nhưng FastAPI có vai trò request routing.
+Production thực tế nên có một lớp Document Router.
+
+--- PAGE 38 ---
+38/49
+Ví dụ logic:
+Pseudo-rule:
+Một cách mạnh hơn là chạy Pipeline 1 trước, sau đó chỉ gọi VLM cho những vùng lỗi. Như
+vậy giảm chi phí.
+VII. Serving Layer
+Serving layer là tầng biến model thành dịch vụ inference có thể gọi qua mạng.
+1. Triton Inference Server
+Document uploaded
+       ↓
+Document classifier
+       ↓
+Quality assessment
+       ↓
+Template detection
+       ↓
+Routing decision
+Nếu tài liệu thuộc template chuẩn
+và chất lượng ảnh tốt
+→ Pipeline 1
+Nếu tài liệu có layout mới
+hoặc nhiều bảng phức tạp
+→ Pipeline 2
+Nếu Pipeline 1 có confidence thấp
+→ Fallback sang Pipeline 2
+Nếu hai pipeline mâu thuẫn
+→ Human Review
+IF known_template = true
+   AND image_quality >= 0.80
+   AND expected_fields_detected >= 90%
+THEN OCR_PIPELINE
+ELSE VLM_PIPELINE
+
+--- PAGE 39 ---
+39/49
+Triton phục vụ Pipeline 1.
+Các model có thể được deploy riêng:
+Triton hỗ trợ:
+Model repository.
+Model versioning.
+Dynamic batching.
+GPU inference.
+Concurrent requests.
+Ensemble model.
+Metrics.
+Health check.
+Có thể cấu hình ensemble:
+Thay vì FastAPI phải gọi thủ công từng model.
+2. vLLM Server
+vLLM phục vụ Pipeline 2.
+Nó phù hợp để serve:
+VLM.
+LLM.
+sLLM.
+Model sinh JSON.
+Model tóm tắt tài liệu.
+vLLM hỗ trợ:
+layout_detection
+text_detection
+text_recognition
+layoutlm_entity_extraction
+Input image
+→ Layout model
+→ Detection model
+→ Recognition model
+→ Entity model
+→ Output
+
+--- PAGE 40 ---
+40/49
+Continuous batching.
+Quản lý KV cache.
+Tăng throughput.
+OpenAI-compatible API.
+Streaming.
+Nhiều request đồng thời.
+Ví dụ FastAPI gọi vLLM:
+với image và prompt trích xuất dữ liệu.
+VIII. Deployment Layer
+1. FastAPI
+FastAPI là API Gateway hoặc application service đứng trước hai inference server.
+Nó thực hiện:
+Nhận file upload.
+Kiểm tra file.
+Tạo request ID.
+Xác thực người dùng.
+Phân loại tài liệu.
+Chọn pipeline.
+Gọi Triton hoặc vLLM.
+Chuẩn hóa output.
+Validate schema.
+Trả kết quả.
+Ghi log.
+Xử lý lỗi và retry.
+Ví dụ API:
+Một request có thể gồm:
+POST /v1/chat/completions
+POST /api/v1/documents/extract
+GET  /api/v1/documents/{id}/status
+GET  /api/v1/documents/{id}/result
+POST /api/v1/documents/{id}/review
+
+--- PAGE 41 ---
+41/49
+2. Docker
+Docker không phải là bước xử lý sau FastAPI. Docker là lớp đóng gói toàn bộ service.
+Có thể có các container:
+Docker giúp:
+Môi trường chạy đồng nhất.
+Dễ triển khai.
+Dễ rollback.
+Quản lý dependency.
+Tách service.
+Đảm bảo reproducibility.
+Trong production lớn, Docker thường được chạy trên Kubernetes hoặc OpenShift.
+IX. End User / Client Application
+Người dùng có thể là:
+Nhân viên ngân hàng.
+Bộ phận vận hành.
+Bộ phận kiểm soát hồ sơ.
+Hệ thống core banking.
+LOS – Loan Origination System.
+{
+  "document_type": "auto",
+  "pipeline": "auto",
+  "output_format": "json",
+  "schema": "bank_transfer_v1"
+}
+fastapi-container
+triton-container
+vllm-container
+preprocessing-container
+redis-container
+worker-container
+postgres-container
+minio-container
+JSON
+
+--- PAGE 42 ---
+42/49
+BPM/Workflow.
+CRM.
+DMS.
+Mobile banking backend.
+Hệ thống đối soát.
+Luồng người dùng:
+X. Flow runtime hoàn chỉnh
+Một flow production thực tế nên là:
+Người dùng upload chứng từ
+→ Hệ thống xử lý
+→ Hiển thị dữ liệu OCR
+→ Highlight trường confidence thấp
+→ Người dùng chỉnh sửa
+→ Xác nhận
+→ Dữ liệu được đẩy sang hệ thống nghiệp vụ
+1. Client upload PDF/image
+2. FastAPI kiểm tra MIME type, dung lượng, virus
+3. Lưu file gốc vào Object Storage
+4. Sinh document_id
+5. Chuyển PDF thành ảnh
+6. Deskew, denoise, rotate, crop
+7. Document classification
+8. Template detection
+9. Chọn Pipeline 1 hoặc Pipeline 2
+10. Chạy inference
+11. Chuẩn hóa field
+12. Validate JSON schema
+13. Chạy business rules
+14. Tính confidence
+15. Nếu confidence thấp → Human Review
+16. Nếu hợp lệ → lưu kết quả
+17. Trả dữ liệu cho client
+18. Ghi audit log
+19. Thu thập feedback
+20. Đưa dữ liệu sửa đúng vào training dataset
+
+--- PAGE 43 ---
+43/49
+XI. Những thành phần sơ đồ chưa thể hiện nhưng
+production cần có
+Sơ đồ thể hiện tốt model và serving, nhưng một hệ thống banking production-ready còn
+cần thêm các lớp sau.
+1. Preprocessing
+2. Document Classifier
+Phân loại:
+3. Schema Registry
+Mỗi loại chứng từ có schema riêng:
+4. Validation Engine
+Ví dụ:
+PDF rendering
+Deskew
+Denoise
+Rotation correction
+Contrast enhancement
+Page splitting
+Document quality assessment
+Receipt
+Bank statement
+Transfer form
+ID card
+Loan contract
+Tax document
+Invoice
+KYC form
+bank_transfer_v1
+bank_statement_v2
+customer_kyc_v1
+loan_contract_v3
+Account number phải đúng độ dài
+Ngày giao dịch không được ở tương lai
+Debit + Credit phải cân bằng
+
+--- PAGE 44 ---
+44/49
+5. Human-in-the-loop
+Các trường confidence thấp được chuyển cho người kiểm tra.
+6. Queue và Worker
+Với tài liệu lớn không nên giữ HTTP request chờ inference.
+7. Storage
+Object Storage: file gốc và ảnh từng trang.
+PostgreSQL: metadata, trạng thái, kết quả.
+Elasticsearch: tìm kiếm full-text.
+Redis: cache và trạng thái job.
+8. Observability
+Latency.
+Throughput.
+GPU utilization.
+OCR confidence.
+Field accuracy.
+Error rate.
+Queue depth.
+Model drift.
+Cost per document.
+9. Security
+Đặc biệt quan trọng trong banking:
+TLS.
+Encryption at rest.
+Số tiền bằng chữ phải khớp số tiền bằng số
+Currency phải thuộc danh mục
+Green: confidence ≥ 0.95
+Yellow: 0.80–0.95
+Red: < 0.80
+FastAPI
+→ Kafka/RabbitMQ
+→ OCR Worker/VLM Worker
+→ Result Store
+
+--- PAGE 45 ---
+45/49
+RBAC.
+Audit log.
+Data masking.
+PII redaction.
+Antivirus scanning.
+Tenant isolation.
+Model access control.
+Data retention policy.
+Không gửi dữ liệu khách hàng ra API công cộng trái quy định.
+XII. Flow “nghiệp dư nhất”
+Flow nghiệp dư nhất thường chỉ có:
+Hoặc thêm một bước LLM:
+Ví dụ code logic nghiệp dư:
+Người dùng upload ảnh
+        ↓
+Gọi OCR
+        ↓
+Lấy text
+        ↓
+Hiển thị text
+Upload ảnh
+   ↓
+Tesseract/PaddleOCR
+   ↓
+Plain text
+   ↓
+Gửi toàn bộ text vào ChatGPT/LLM
+   ↓
+“Trích giúp tôi tên, ngày, số tiền”
+   ↓
+Output tự do
+image = upload_file()
+text = ocr(image)
+result = llm("Extract information from this text: " + text)
+return result
+Python
+
+--- PAGE 46 ---
+46/49
+Đặc điểm của flow nghiệp dư
+Không có:
+Phân loại tài liệu.
+Tiền xử lý ảnh.
+Layout detection.
+Bounding box.
+Table recognition.
+Schema cố định.
+Confidence score.
+Validation.
+Business rule.
+Retry.
+Fallback.
+Human review.
+Audit log.
+Model serving.
+Versioning.
+Monitoring.
+Security.
+Queue.
+Storage.
+Feedback loop.
+XIII. Một ví dụ flow nghiệp dư
+Ảnh có nội dung:
+OCR trả về:
+Sau đó dùng regex:
+Tên người nhận: Nguyễn Văn B
+Số tài khoản: 0011001234567
+Số tiền: 50.000.000 VNĐ
+Tên người nhận Nguyễn Văn B
+Số tài khoản 001100I234567
+Số tiền 50.000.OOO VNĐ
+
+--- PAGE 47 ---
+47/49
+Kết quả:
+Không lấy được số tài khoản vì có chữ I .
+Không lấy được số tiền vì có chữ O .
+Không phát hiện lỗi.
+Không có confidence.
+Không có màn hình review.
+Có thể tự động ghi sai dữ liệu vào core banking.
+Đây là lý do OCR chạy được demo chưa có nghĩa là hệ thống sẵn sàng production.
+XIV. Flow nghiệp dư “có vẻ hiện đại” nhưng vẫn yếu
+Một kiểu khác là bỏ OCR truyền thống và gọi thẳng VLM:
+Flow này nhìn hiện đại nhưng vẫn nghiệp dư nếu:
+Không khóa JSON schema.
+Không kiểm tra hallucination.
+Không xác định field bắt buộc.
+Không có confidence.
+Không đối chiếu với ảnh gốc.
+Không kiểm tra tổng tiền.
+Không lưu model version.
+Không có cơ chế review.
+Không bảo vệ dữ liệu ngân hàng.
+VLM có thể sinh ra một trường trông hợp lý nhưng không tồn tại trong tài liệu.
+XV. So sánh flow đầy đủ và flow nghiệp dư
+Số tài khoản:\s*(\d+)
+Số tiền:\s*([\d\.]+)
+Upload PDF
+→ Convert page thành ảnh
+→ Gửi toàn bộ sang VLM
+→ Prompt: “Extract all information”
+→ Trả JSON
+regex
+
+--- PAGE 48 ---
+48/49
+Tiêu chí Flow nghiệp dư Flow đầy đủ
+Input Upload ảnh PDF, ảnh, scan, nhiều
+trang
+Preprocessing Không có Deskew, denoise, rotate,
+crop
+Phân loại tài liệu Không Có document classifier
+Layout Bỏ qua Phân vùng, bảng, key-
+value
+OCR Một model duy nhất Detection + recognition
+Hiểu ngữ nghĩa Regex hoặc prompt
+tự do
+LayoutLM/sLLM/VLM
+Đầu ra Text tự do JSON/Markdown theo
+schema
+Confidence Không Theo field và document
+Validation Không Schema + business rules
+Tài liệu khó Thường thất bại Fallback sang VLM
+Scale Chạy từng file Triton, vLLM, batching
+API Một endpoint đơn
+giản
+Routing, auth, status,
+review
+Deployment Chạy local Docker/Kubernetes
+Lỗi Trả exception Retry, dead-letter,
+fallback
+Review Không Human-in-the-loop
+Audit Không Lưu file, model, output,
+lịch sử
+Monitoring Không Latency, accuracy, drift
+
+--- PAGE 49 ---
+49/49
+Tiêu chí Flow nghiệp dư Flow đầy đủ
+Security Gần như không Encryption, RBAC,
+masking
+Feedback Không Dữ liệu sửa đúng quay
+lại training
+Production banking Không phù hợp Có thể đáp ứng nếu
+hoàn thiện governance
+XVI. Cách trình bày ngắn trong phỏng vấn
+Một điểm nên chỉnh lại trên sơ đồ: Docker không nên được thể hiện như một bước xử lý
+sau vLLM hoặc song song với FastAPI. Chính xác hơn, FastAPI, Triton và vLLM đều được
+đóng gói thành các container Docker; FastAPI đứng trước và routing request đến cả Triton
+lẫn vLLM.
+Hệ thống Document Understanding được thiết kế theo kiến trúc dual pipeline. Pipeline
+thứ nhất sử dụng OCR truyền thống, gồm layout detection, text detection, text
+recognition và LayoutLM hoặc small language model để trích xuất thực thể. Pipeline
+này phù hợp với biểu mẫu chuẩn, có tốc độ cao và dễ audit.
+Pipeline thứ hai sử dụng Vision-Language Model để xử lý tài liệu có layout phức tạp
+hoặc template chưa biết trước. Cả hai pipeline đều trả về JSON hoặc Markdown theo
+schema thống nhất. Các model OCR được phục vụ qua NVIDIA Triton, còn VLM được
+phục vụ qua vLLM. FastAPI chịu trách nhiệm tiếp nhận tài liệu, phân loại, routing
+request, gọi inference server, validate kết quả và trả dữ liệu cho client. Các service được
+đóng gói bằng Docker để bảo đảm môi trường triển khai nhất quán.
+Khác với flow OCR nghiệp dư chỉ upload ảnh, gọi OCR rồi trả text, kiến trúc production
+còn phải có preprocessing, document classification, schema validation, confidence
+scoring, business rule, human review, audit log, monitoring, bảo mật và feedback loop
+để cải thiện model.
