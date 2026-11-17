@@ -115,7 +115,7 @@ Chưa đưa vào pilot: truy đuổi/khống chế người, tự nhận dạng 
 
 ## 4. Kiến trúc tổng thể đề xuất
 
-![Kiến trúc đội robot an ninh VinUni](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/08-vinuni-robot-platform.drawio.png>)
+[Kiến trúc đội robot an ninh VinUni](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/08-vinuni-robot-platform.drawio.png>)
 
 ### 4.1. Phân lớp và công nghệ cụ thể
 
@@ -158,7 +158,7 @@ LangGraph/LLM có thể đề xuất nhiệm vụ mức cao, không thay cả b�
 
 ## 5. Luồng xuyên suốt: camera báo sự kiện → robot xác minh → bảo vệ xử lý
 
-![Luồng nhiệm vụ, handover và xử lý ngoại lệ](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/09-vinuni-mission-flow.drawio.png>)
+[Luồng nhiệm vụ, handover và xử lý ngoại lệ](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/09-vinuni-mission-flow.drawio.png>)
 
 1. Camera ở hành lang phát hiện người trong vùng theo lịch giám sát. Event có camera/site/zone/time/model version/evidence; “có người” chưa đồng nghĩa “người xâm nhập”.
 2. Event service validate/dedupe/correlate; tạo incident `OPEN`, kiểm tra policy đang hiệu lực và hiện trạng camera.
@@ -255,7 +255,7 @@ Không gọi mọi feedback về robot là “fine-tune LLM”. Vision update, n
 
 ### 7.3. Quy trình dữ liệu đến release
 
-![Đánh giá và phát hành AI/robot theo từng tầng](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/10-robot-evaluation-release.drawio.png>)
+[Đánh giá và phát hành AI/robot theo từng tầng](<C:/Users/nguye/OneDrive/Desktop/Phỏng vấn VinDynamics/Sơ đồ kiến trúc/10-robot-evaluation-release.drawio.png>)
 
 1. **Scenario specification:** BA định nghĩa tác vụ/ODD, precondition, success, failure, abort, human takeover; QC lập matrix bao phủ.
 2. **Capture:** engineer/ops ghi camera, sensor, command, state và intervention đồng bộ thời gian; dùng rosbag2/MCAP hoặc format của platform. Thu đúng quyền và giới hạn dữ liệu; đây là công cụ robot đề xuất, chưa phải kinh nghiệm cũ.
